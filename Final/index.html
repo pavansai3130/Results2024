@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>India General Election 2024</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+      <script src="leaflet/index.js"></script>
+      <script src="index.js"></script>
+      <link rel="stylesheet" href="styles.css">
+      <link rel="stylesheet" href="styling.css">
+      <link rel="stylesheet" href="leaflet/index.css"/>
+
+   </head>
+   <body>
+      <nav class="navbar navbar-expand-lg " >
+         <div class="container-fluid">
+            <a class="navbar-brand" href="#">results<span>2024.in</span></a>
+            <button class="navbar-toggler order-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+               <ul class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                     <a class="nav-link" href="#">Big fights</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#">Celebrities</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#"><i class="bi bi-share"></i></a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#"><i class="bi bi-facebook"></i></a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#"><i class="bi bi-whatsapp"></i></a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="#"><i class="bi bi-instagram"></i></a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+      <!-- Common Header -->
+      <header class="header">
+         <div class="container">
+            <div class="row">
+            </div>
+         </div>
+      </header>
+      <!-- Main Content -->
+      <div class="container-fluid main-content" >
+         <!-- Page 1: Landing Page -->
+         <div id="landing-page" >
+            <div class="row">
+               <div class="col-12 col-lg-6 order-2 order-lg-1"  >
+                  <!-- India Map -->
+                  <div class="row justify-content-between g-0 ">
+                     <div class="col-sm-6 col-md-6 d-flex align-items-center">  
+                       
+                        <select class="form-control" id="state-select" onchange="handleSelection()">
+                        <option value="">Select State</option>
+                        <option value="reset">Reset</option> 
+                        <option data-st_code="35" value="35">Andaman and Nicobar Islands</option>
+                        <option data-st_code="37" value="37">Andhra Pradesh</option>
+                        <option data-st_code="12" value="12">Arunachal Pradesh</option>
+                        <option data-st_code="18" value="18">Assam</option>
+                        <option data-st_code="10" value="10">Bihar</option>
+                        <option data-st_code="4" value="4">Chandigarh</option>
+                        <option data-st_code="22" value="22">Chhattisgarh</option>
+                        <option data-st_code="26" value="26">Dadra and Nagar Haveli</option>
+                        <option data-st_code="25" value="25">Daman and Diu</option>
+                        <option data-st_code="7" value="7">Delhi</option>
+                        <option data-st_code="30" value="30">Goa</option>
+                        <option data-st_code="24" value="24">Gujarat</option>
+                        <option data-st_code="6" value="6">Haryana</option>
+                        <option data-st_code="2" value="2">Himachal Pradesh</option>
+                        <option data-st_code="1" value="1">Jammu and Kashmir</option>
+                        <option data-st_code="20" value="20">Jharkhand</option>
+                        <option data-st_code="29" value="29">Karnataka</option>
+                        <option data-st_code="32" value="32">Kerala</option>
+                        <option data-st_code="31" value="31">Lakshadweep</option>
+                        <option data-st_code="23" value="23">Madhya Pradesh</option>
+                        <option data-st_code="27" value="27">Maharashtra</option>
+                        <option data-st_code="14" value="14">Manipur</option>
+                        <option data-st_code="17" value="17">Meghalaya</option>
+                        <option data-st_code="15" value="15">Mizoram</option>
+                        <option data-st_code="13" value="13">Nagaland</option>
+                        <option data-st_code="21" value="21">Odisha</option>
+                        <option data-st_code="34" value="34">Puducherry</option>
+                        <option data-st_code="3" value="3">Punjab</option>
+                        <option data-st_code="8" value="8">Rajasthan</option>
+                        <option data-st_code="11" value="11">Sikkim</option>
+                        <option data-st_code="33" value="33">Tamil Nadu</option>
+                        <option data-st_code="36" value="36">Telangana</option>
+                        <option data-st_code="16" value="16">Tripura</option>
+                        <option data-st_code="9" value="9">Uttar Pradesh</option>
+                        <option data-st_code="5" value="5">Uttarakhand</option>
+                        <option data-st_code="19" value="19">West Bengal</option>
+                    </select>
+                     </div>
+                      <div class="col-6 col-md-4 d-flex justify-content-end align-items-center">
+                        <div class="btn-group  " role="group" >
+                           <button type="button" class="btn btn-primary"style="background-color: #F9FAFB; color: black; border:solid #D0D5DD">2019</button>
+                           <button type="button" class="btn btn-primary"style="background-color: white; color: black;border:solid #D0D5DD">2024</button>
+                         </div>
+
+                     </div>
+                  </div>
+                  <div class="row g-0 mt-3">
+                     <div class="col-sm-6 col-md-8"> </div>
+                     <div class="col-6 col-md-4 d-flex justify-content-end align-items-center">
+                        <div class="btn-group" role="group">
+                           <button type="button" id="state-bt" class="btn btn-primary" style="background-color: #F9FAFB; color: black;border:solid #D0D5DD">States</button>
+                           <button type="button" id="consti-bt" class="btn btn-primary" style="background-color: white; color: black;border:solid #D0D5DD">Constituency</button>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-12"style="border: 1px solid black;" id="india-map" ></div>
+                      <div id="map" style="border: 1px solid black; width: 100%; height:100vh;display: none;">
+                      </div>
+                  </div>
+               </div>
+               <div class="col-12 col-lg-6 order-1 order-lg-2" ">
+                  <!-- Alliance Results -->
+                  <!-- <div id="alliance-results"></div> -->
+                  <!-- Party-wise Results -->
+                  <!-- <div id="party-results"></div> -->
+
+                  <!-- -Alliance Names on Bar- -->
+                  <!-- <div class="allianceName">
+                     <span id="word1">NDA</span>
+                     <span id="word2">I.N.D.I.A</span>
+                     <span id="word3">Others</span>
+                  </div> -->
+                 <!-- -Alliance Names on Bar- -->
+
+                  <div class="bar-container" id="bar-container">
+                     <div class="bar bar-1" id="bar1"></div>
+                     <div class="bar bar-2" id="bar2"></div>
+                     <div class="bar bar-3" id="bar3"></div>
+                     <div class="bar-label" id="bar-label"></div>
+                  </div>
+            <!-- --------------------------------------------------------------------------------------------------- -->
+            <!-- --------------------------------------------------------------------------------------------------- -->
+            <div class="card">
+                     <div class="card-body">
+                        <h5 class="card-title">Column 2</h5>
+                        <p class="card-text">Content for column 2</p>
+                     </div>
+                  </div>
+                  <div id="st" class="table-responsive-sm ">
+                    <table class="table table-bordered" id="stateTable">
+                        <thead>
+                          <tr>
+                            <th class="col-3 col-lg-6" id="stateRow"scope="col">State / Union Territory </th>
+                            <th class="col-3 col-lg-2 "id="NDA" scope="col">NDA</th>
+                            <th class="col-3 col-lg-2" id="INDIA" scope="col">I.N.D.I.A</th>
+                            <th class="col-3 col-lg-2" id="Others" scope="col">Others</th>
+                          </tr>
+                        </thead>
+                        <tr id="referenceRow" >
+                          <td id="stateName">q</td>
+                          <td id="NDASeats">Mark</td>
+                          <td id="INDIASeats">Otto</td>
+                          <td id="OthersSeats">@mdo</td>
+                        </tr>
+                        <tbody id="allianceBody">
+                        </tbody>
+                      </table>
+                  </div>
+                  <!-- Constitunecy Table -->
+                  <div id="Constituency-res"style="display:none">
+                     <!-- <div id="theading"> -->
+                       
+                     <!-- </div> -->
+                     <div class="table-responsive-sm">
+                       <table class="table  table-bordered">
+                         <thead class="thead">
+                           <tr>
+                             <th class="col-3 col-lg-1 align-middle" style="background:#EAECF0; color: #101828;">Constituency</th>
+                             <th class="col-3 col-lg-5 align-middle"style="background: green; text-align: center; color: white; border: none;">Leading/Won</th>
+                             <th class="col-3 col-lg-5 align-middle"style="background: red; text-align: center;color: white;border: none; "> Trailing/Lost</th>
+                             <th class="col-3 col-lg-1 align-middle"style="background:#EAECF0; color: #101828;" color: #101828;>Margin</th>
+                           </tr>
+                         </thead>
+                         <tbody id="table-body">
+                           <!-- Dynamic rows will be inserted here -->
+                         </tbody>
+                       </table>
+                     </div>
+                   </div>
+                   <!-- table2 pavan -->
+                   <div id="Candidate-res" style="display: none;">
+                     <div class="table-responsive-sm">
+                       
+                       <table class="table table-bordered">
+                        <div id="theading2">
+                        </div>
+                         <thead class="thead">
+                           <tr>
+                             <th style="background:#F9FAFB; color: #101828;">Candidate</th>
+                             <th style="background: #F9FAFB; text-align: center; color: 101828; border: none;">Party</th>
+                             <th style="background: #F9FAFB; text-align: center;color: 101828;border: none; ">Votes</th>
+                             <th style="background:#F9FAFB; color: #101828;" color: #101828;>Margin</th>
+                           </tr>
+                         </thead>
+                         <tbody class="candidateBody" id="table-body">
+                           <!-- Dynamic rows will be inserted here -->
+                         </tbody>
+                       </table>
+                     </div>
+                   </div>
+               </div>
+         </div>
+         <!-- Page 2: State Results -->
+         <div id="state-results" style="display: none;">
+            <!-- Similar structure as landing page -->
+         </div>
+      </div>
+      <!-- Common Footer -->
+      <footer class="footer">
+         <div class="container">
+            <p class="text-center">© Gradious Technologies Private Limited 2024</p>
+         </div>
+      </footer>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <script src="./paths.js"></script>
+      <script src="./script.js"></script>
+   </body>
+</html>

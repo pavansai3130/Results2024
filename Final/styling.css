@@ -1,0 +1,237 @@
+body{
+	margin-top: 10px;
+  background-color: #F5F5F5;
+  /* */
+  padding-top: 0;
+  font-family: 'Roboto', sans-serif;
+}
+/* Add your custom styles here */
+.header img {
+  max-height: 50px;
+}
+#map
+{
+  overflow: hidden;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 24px;
+  color: #333;
+}
+
+.total-seats {
+  font-weight: bold;
+}
+
+.footer {
+  margin-top: 50px;
+}
+
+
+/* Add your custom styles here */
+#india-svg {
+  /* position: relative; */
+  /* top: -250px; */
+
+  /* border:2px solid red; */
+  width: 100%; /* Ensure SVG fills the container */
+  height: 100%; /* Maintain aspect ratio */
+}
+
+#india-svg path {
+  fill: #ccc; /* Default color for states */
+  stroke: #000; /* Border color */
+  stroke-width: 1; /* Border width */
+  cursor: pointer; /* Change cursor on hover */
+}
+
+#india-svg path:hover {
+  fill: #f00; /* Highlight color on hover */
+}
+
+
+.navbar-brand {
+  color: #ff4500; /* Adjusted color for 'results' */
+}
+.navbar-brand span {
+  color: #228b22; /* Adjusted color for '2024.in' */
+}
+
+.nav-link{
+  font-size: 24px;
+}
+.navbar{
+  border-bottom: 1px solid #344054;
+}
+a{
+  color: #344054 ;
+  font-weight: 400;
+}
+.navbar-toggler-icon{
+  background-color: #344054 ;
+}
+/* -----------------------Progress----------------*/
+.bar-container {
+  width: 100%;
+  background-color: #f3f3f3;
+  overflow: hidden;
+  margin: 20px 0;
+  position: relative;
+}
+.bar {
+  height: 40px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  color: white;
+  float: left;
+  font-size: 20px;
+  padding: 10px 8px;
+  font-weight: 500;
+}
+.bar-1 {
+  background-color: #2196F3; /* Blue */
+}
+.bar-2 {
+  background-color: #4caf50; /* Green */
+}
+.bar-3 {
+  background-color: #f44336; /* Red */
+}
+/* .bar-label {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+} */
+thead{
+  text-align: center;
+}
+/* Add border-radius to the top theading */
+#theading {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: #EAECF0;
+  padding: 10px;
+  gap: 5px;
+}
+
+#tbody tr:last-child {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* Optional: Add padding to the table body for better aesthetics */
+.table-bordered tbody {
+  padding: 10px;
+}
+#theading div{
+  border-radius: 20px;
+  background:#F2F4F7 ;
+  padding:2px;
+
+}
+#theading span{
+  text-transform: capitalize;
+  font-size: large;
+}
+#theading2{
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: #EAECF0;
+  padding: 10px;
+  gap: 5px;
+
+}
+#theading2 div{
+  border-radius: 20px;
+  background:#F2F4F7 ;
+  padding:2px;
+}
+#theading2 span{
+  text-transform: capitalize;
+  font-size: large;
+}
+
+
+/* .table-responsive-sm
+{
+  height: 200vh;
+  overflow-x: scroll;
+} */
+/* .tdm {
+  font-size: 28px;
+  text-align: center;
+  background: #EAECF0;
+} */
+/* thead{
+  position: sticky;
+  top:0;
+} */
+.constituency-res
+{
+  display: flex;
+}
+.buttons
+{
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+}
+
+
+/* .td1, .td2, .td3 {
+  text-transform: capitalize;
+  color: #344054;
+  background: #F6FEF9;
+  text-align: left;
+} */
+.td1 img{
+  height: 16px;
+  width: 16px;
+  margin-right: 3px;
+}
+.td2 img{
+  height: 16px;
+  width: 16px;
+  margin-right: 3px;
+}
+.td2{
+  background-color: #fffafa;
+}
+.td3{
+  background-color: f9fafb;
+}
+
+
+tr{
+  background-color: white;
+  text-transform: capitalize;
+}
+.tdata{
+  width: 200px;
+  height: 60px;
+}
+.tdata1{
+  width: 140px;
+  height: 60px;
+}
+.tdata1 img{
+  height: 16px;
+  width: 16px;
+}
+.tdata2{
+  width: 180px;
+  height: 60px;
+}
+.tdata3
+{
+  width: 122px;
+  height: 60px;
+}
