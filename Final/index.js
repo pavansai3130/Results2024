@@ -1,3 +1,56 @@
+let breadcrumbConstituency;
+let breadcrumbState;
+document.addEventListener("DOMContentLoaded", function() {
+  const stateSelect = document.getElementById("state-select");
+  breadcrumbState= document.getElementById("breadcrumb-state");
+  breadcrumbConstituency = document.getElementById("breadcrumb-constituency");
+  
+  stateSelect.addEventListener("change", function() {
+      const selectedState = stateSelect.options[stateSelect.selectedIndex].text;
+      
+      if (stateSelect.value === "reset") {
+          resetBreadcrumb();
+          return;
+      }
+      
+      breadcrumbState.textContent = selectedState;
+      breadcrumbState.style.display = "inline";
+      breadcrumbConstituency.style.display = "none";
+      
+      // Assuming you want to load constituency data here
+      // loadConstituencyData(stateSelect.value);
+  });
+  document.getElementById("consti-bt").addEventListener("click",function(){
+    document.getElementById("india-map").style.display="none";
+    document.getElementById("map").style.display="block";
+    document.getElementById("st").style.display="none";
+    document.getElementById("Constituency-res").style.display="block";
+    resetBreadcrumb();
+    stateSelect.selectedIndex = 0; 
+    resetMap();
+  })
+  document.getElementById("state-bt").addEventListener("click",function(){
+    document.getElementById("map").style.display="none";
+    document.getElementById("india-map").style.display="block";
+    document.getElementById("Constituency-res").style.display="none";
+    document.getElementById("st").style.display="block";
+    resetBreadcrumb();
+    stateSelect.selectedIndex = 0; 
+    resetMap();
+  })
+
+});
+
+function resetBreadcrumb() {
+  const breadcrumbState = document.getElementById("breadcrumb-state");
+  const breadcrumbConstituency = document.getElementById("breadcrumb-constituency");
+
+  breadcrumbState.style.display = "none";
+  breadcrumbState.textContent = "";
+
+  breadcrumbConstituency.style.display = "none";
+  breadcrumbConstituency.textContent = "";
+}
 
 const zooming={
     "35": [10,93.3,7],
@@ -154,8 +207,11 @@ function updateMapBounds() {
   }
   let pressed =0; 
 function handleSelection() {
+  document.getElementById("st").style.display="none";
+  document.getElementById("Candidate-res").style.display="block";
     document.getElementById("india-map").style.display="none";
     document.getElementById("map").style.display="block";
+
   const selectElement = document.getElementById('state-select');
   const selectedValue = selectElement.value;
   const text = selectElement.options[selectElement.selectedIndex].text;
@@ -189,6 +245,11 @@ function handleSelection() {
                         document.querySelector("#Constituency-res").style.display = "none";
                         document.querySelector("#Candidate-res").style.display = "block";
                         can = 1;
+                                  
+                          breadcrumbConstituency.textContent = feature.properties.pc_name;
+                           breadcrumbConstituency.style.display = "inline";
+                        
+                     
                         render_table(feature.properties.pc_id);
                     });
         
@@ -222,7 +283,11 @@ function handleSelection() {
                 console.log("change");
                   document.querySelector("#Constituency-res").style.display ="none";
                   document.querySelector("#Candidate-res").style.display = "block";
+                  breadcrumbConstituency.textContent = feature.properties.pc_name;
+                  breadcrumbConstituency.style.display = "inline";
                   render_table(feature.properties.pc_id);
+
+
             });
             layer._leaflet_id = feature.properties.pc_id;  
             }
@@ -325,9 +390,9 @@ tb.innerHTML='';
               td3.classList.add("td3");
               const th = document.getElementById('theading');
               count++;
-  th.innerHTML = `<span>${state}</span><div>${count}Constituencies</div>`;
-  th.style.display="flex";
-  th.style.background="white";
+  // th.innerHTML = `<span>${state}</span><div>${count}Constituencies</div>`;
+  // th.style.display="flex";
+  // th.style.background="white";
           
       } else {
           tr.dataset.pccolor = "#fff";
@@ -400,6 +465,8 @@ function render() {
     th.style.background="white";
    }
    function state_map(value,text){
+    document.getElementById("st").style.display="none";
+    document.getElementById("Candidate-res").style.display="block";
     document.getElementById("india-map").style.display="none";
     document.getElementById("map").style.display="block";
     if (value) {
@@ -485,3 +552,19 @@ function render() {
         
     }
    }
+   function resetMap() {
+    render_whole_table();
+  map.setView(initialView, initialZoom); 
+  if (geo2) {
+      geo2.remove(); 
+  }
+  geo.addTo(map); 
+    // Initial update
+    updateMapBounds();
+      
+    // Update map bounds when the map size changes
+    map.on('resize', delayedBoundsUpdate);
+  document.querySelector("#Candidate-res").style.display = "none";
+  document.querySelector("#Constituency-res").style.display = "block";
+  
+  }

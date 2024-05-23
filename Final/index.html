@@ -58,11 +58,17 @@
             <div class="row">
                <div class="col-12 col-lg-6 order-2 order-lg-1"  >
                   <!-- India Map -->
+                  <nav aria-label="breadcrumb">
+                     <ol class="breadcrumb">
+                         <li class="breadcrumb-item"><a href="#" onclick="resetBreadcrumb()">India</a></li>
+                         <li class="breadcrumb-item" id="breadcrumb-state" style="display: none;"></li>
+                         <li class="breadcrumb-item active" id="breadcrumb-constituency" style="display: none;" aria-current="page"></li>
+                     </ol>
+                 </nav>
                   <div class="row justify-content-between g-0 ">
                      <div class="col-sm-6 col-md-6 d-flex align-items-center">  
-                       
                         <select class="form-control" id="state-select" onchange="handleSelection()">
-                        <option value="">Select State</option>
+                        <option value=" "seelcted>Select State</option>
                         <option value="reset">Reset</option> 
                         <option data-st_code="35" value="35">Andaman and Nicobar Islands</option>
                         <option data-st_code="37" value="37">Andhra Pradesh</option>

@@ -160,6 +160,10 @@ async function fetchGeoJSON(file) {
           document.querySelector("#Constituency-res").style.display = "none";
           document.querySelector("#Candidate-res").style.display = "block";
           can = 1;
+          breadcrumbState.textContent = feature.properties.st_name;
+          breadcrumbState.style.display = "inline";
+          breadcrumbConstituency.textContent = feature.properties.pc_name;
+          breadcrumbConstituency.style.display="inline"
           render_table(feature.properties.pc_id);
         });
         layer._leaflet_id = feature.properties.pc_id;
@@ -223,20 +227,6 @@ $(document).ready(async function () {
   console.log(data);
   console.log(stateDataJson);
   console.log(allianceJson);
-  document.getElementById("consti-bt").addEventListener("click",function(){
-    document.getElementById("india-map").style.display="none";
-    document.getElementById("map").style.display="block";
-    document.getElementById("st").style.display="none";
-    document.getElementById("Constituency-res").style.display="block";
-  })
-  document.getElementById("state-bt").addEventListener("click",function(){
-    document.getElementById("map").style.display="none";
-    document.getElementById("india-map").style.display="block";
-    document.getElementById("Constituency-res").style.display="none";
-    document.getElementById("st").style.display="block";
-   
-  })
-
   // Function to render India map with statewise colors
   function renderIndiaMap() {
     // Implement the logic to render India map using SVG or any other method
@@ -303,6 +293,9 @@ $(document).ready(async function () {
       india = 0,
       others = 0;
       state_map(state_codes[state],state);
+      breadcrumbState.textContent =state;
+      breadcrumbState.style.display = "inline";
+      breadcrumbConstituency.style.display = "none";
     // Implement the logic to fetch and display state-wise results
     const constituencyTable = document.getElementById("stateTable");
     const cells = constituencyTable.getElementsByTagName("th");

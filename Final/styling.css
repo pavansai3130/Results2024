@@ -1,3 +1,29 @@
+/* breadcrumb */
+.breadcrumb {
+  background: none;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.breadcrumb-item {
+  display: inline;
+  font-size: 1rem;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: " > ";
+  color: #6c757d;
+}
+
+.breadcrumb-item a {
+  text-decoration: none;
+  color: black;
+}
+
+.breadcrumb-item a:hover {
+  color: black;
+}
+
 body{
 	margin-top: 10px;
   background-color: #F5F5F5;
