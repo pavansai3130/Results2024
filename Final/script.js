@@ -171,6 +171,12 @@ async function fetchGeoJSON(file) {
     });
 
     geo.addTo(map);
+    geo.setStyle(feature => ({
+      weight: 0.2,
+      color: '#000',
+      fillColor: document.querySelector(`tr[data-pc="${feature.properties.pc_id}"]`)?.dataset.pccolor || '#fff',
+      fillOpacity: 0.9,
+  }));
     updateMapBounds();
     map.on('resize', delayedBoundsUpdate);
     render_whole_table();

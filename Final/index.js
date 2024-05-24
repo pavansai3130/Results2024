@@ -194,9 +194,9 @@ function updateMapBounds() {
                 td3.classList.add("td3");
                 const th = document.getElementById('theading');
                 count++;
-    // th.innerHTML = `<span>ALL</span><div>${count}Constituencies</div>`;
-    // th.style.display="flex";
-    // th.style.background="white";
+    th.innerHTML = `<span>ALL</span><div>${count}Constituencies</div>`;
+    th.style.display="flex";
+    th.style.background="white";
             
         } else {
             tr.dataset.pccolor = "#fff";
@@ -401,9 +401,9 @@ tb.innerHTML='';
               td3.classList.add("td3");
               const th = document.getElementById('theading');
               count++;
-  // th.innerHTML = `<span>${state}</span><div>${count}Constituencies</div>`;
-  // th.style.display="flex";
-  // th.style.background="white";
+  th.innerHTML = `<span>${state}</span><div>${count}Constituencies</div>`;
+  th.style.display="flex";
+  th.style.background="white";
           
       } else {
           tr.dataset.pccolor = "#fff";
