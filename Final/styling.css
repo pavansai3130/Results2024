@@ -4,6 +4,11 @@
   padding: 0;
   margin-bottom: 0;
 }
+.leaflet-interactive:hover
+ {
+    filter: drop-shadow(0.1875rem 0.3125rem 0.125rem rgb(0, 0, 0));
+    border: solid 2px;
+ }
 
 .breadcrumb-item {
   display: inline;

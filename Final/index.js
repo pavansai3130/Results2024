@@ -1,3 +1,4 @@
+
 let breadcrumbConstituency;
 let breadcrumbState;
 let state_button_pressed=1;
@@ -13,13 +14,9 @@ document.addEventListener("DOMContentLoaded", function () {
       resetBreadcrumb();
       return;
     }
-
     breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread_option()">${selectedState}`;
     breadcrumbState.style.display = "inline";
     breadcrumbConstituency.style.display = "none";
-
-    // Assuming you want to load constituency data here
-    // loadConstituencyData(stateSelect.value);
   });
   document.getElementById("consti-bt").addEventListener("click", function () {
     document.getElementById("breadcrumb-india").style.display="block";
@@ -45,10 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
       geo2.remove();
     }
     geo.addTo(map);
-    // Initial update
     updateMapBounds();
-
-    // Update map bounds when the map size changes
     map.on("resize", delayedBoundsUpdate);
   });
 });
@@ -60,15 +54,19 @@ function resetBreadcrumb() {
 
   breadcrumbState.style.display = "none";
   breadcrumbState.textContent = "";
-
+  console.log(state_button_pressed);
   breadcrumbConstituency.style.display = "none";
   breadcrumbConstituency.textContent = "";
   if(state_button_pressed)
-    {geo2.remove(map);
+    {
+    geo2.remove(map);
     geo.addTo(map);
     document.getElementById("map").style.display = "none";
     document.getElementById("india-map").style.display = "block";
-    }else{
+    document.getElementById("stateTabeleContainer").style.display="block";
+    document.getElementById("Constituency-res").style.display="none";
+    }
+    else{
   resetMap();
     }
 }
@@ -221,6 +219,7 @@ function updateMapBounds2() {
 }
 let pressed = 0;
 function handleSelection() {
+// console.log(geo2);
   document.getElementById("breadcrumb-india").style.display="block";
   document.getElementById("stateTabeleContainer").style.display = "none";
   document.getElementById("Candidate-res").style.display = "block";
@@ -246,34 +245,48 @@ function handleSelection() {
           selectedValue;
           ftrs[con].st_code;
         }
-
         geo = L.geoJSON(geoJson, {
           onEachFeature: (feature, layer) => {
-            layer.on("click", (e) => {
-              // layer.on('mouseover', function(event) {
-              //     showBox(feature.properties, layer);
-              // });
-
-              // layer.on('mouseout', function(event) {
-              //     hideBox();
-              // });
-
-              layer.on("click", function (event) {
-                document.querySelector("#Constituency-res").style.display =
-                  "none";
-                document.querySelector("#Candidate-res").style.display =
-                  "block";
-                can = 1;
-
-                breadcrumbConstituency.textContent = feature.properties.pc_name;
-                breadcrumbConstituency.style.display = "inline";
-
-                render_table(feature.properties.pc_id);
-              });
+            layer.on("click", function (event) {
+              console.log("first");
+              document.querySelector("#Constituency-res").style.display = "none";
+              document.querySelector("#Candidate-res").style.display = "block";
+              breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread()">${feature.properties.st_name}`;
+              breadcrumbState.style.display = "inline";
+              breadcrumbConstituency.textContent = feature.properties.pc_name;
+              breadcrumbConstituency.style.display = "inline";
+              render_table(feature.properties.pc_id);
             });
             layer._leaflet_id = feature.properties.pc_id;
           },
         });
+        // geo = L.geoJSON(geoJson, {
+        //   onEachFeature: (feature, layer) => {
+        //     layer.on("click", (e) => {
+        //       // layer.on('mouseover', function(event) {
+        //       //     showBox(feature.properties, layer);
+        //       // });
+
+        //       // layer.on('mouseout', function(event) {
+        //       //     hideBox();
+        //       // });
+
+        //       layer.on("click", function (event) {
+        //         document.querySelector("#Constituency-res").style.display =
+        //           "none";
+        //         document.querySelector("#Candidate-res").style.display =
+        //           "block";
+        //         can = 1;
+
+        //         breadcrumbConstituency.textContent = feature.properties.pc_name;
+        //         breadcrumbConstituency.style.display = "inline";
+
+        //         render_table(feature.properties.pc_id);
+        //       });
+        //     });
+        //     layer._leaflet_id = feature.properties.pc_id;
+        //   },
+        // });
 
         if (pressed) {
           geo2.remove(map);
@@ -461,8 +474,11 @@ function render_table(code) {
     const votes = document.createElement("td");
     votes.textContent = candi[item].votes;
     votes.classList = "tdata2";
-
     row.appendChild(votes);
+    const votes2 = document.createElement("td");
+    votes2.textContent = candi[item].votes;
+    votes2.classList = "tdata3";
+    row.appendChild(votes2);
 
     tbody.appendChild(row);
     count += 1;
@@ -487,7 +503,6 @@ function state_map(value, text) {
   
   if (value) {
     geo.remove(map);
-
     fetch("geo.json")
       .then((res) => res.json())
       .then((geoJson) => {
@@ -497,26 +512,33 @@ function state_map(value, text) {
 
         geo = L.geoJSON(geoJson, {
           onEachFeature: (feature, layer) => {
-            layer.on("click", (e) => {
-              // layer.on('mouseover', function(event) {
-              //     showBox(feature.properties, layer);
-              // });
-
-              // layer.on('mouseout', function(event) {
-              //     hideBox();
-              // });
-
-              layer.on("click", function (event) {
-                document.querySelector("#Constituency-res").style.display =
-                  "none";
-                document.querySelector("#Candidate-res").style.display =
-                  "block";
-                render_table(feature.properties.pc_id);
-              });
+            layer.on("click", function (event) {
+              console.log("first");
+              document.querySelector("#Constituency-res").style.display = "none";
+              document.querySelector("#Candidate-res").style.display = "block";
+              breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread()">${feature.properties.st_name}`;
+              breadcrumbState.style.display = "inline";
+              breadcrumbConstituency.textContent = feature.properties.pc_name;
+              breadcrumbConstituency.style.display = "inline";
+              render_table(feature.properties.pc_id);
             });
             layer._leaflet_id = feature.properties.pc_id;
           },
         });
+    
+        geo.addTo(map);
+        geo.setStyle((feature) => ({
+          weight: 0.2,
+          color: "#000",
+          fillColor:
+            document.querySelector(`tr[data-pc="${feature.properties.pc_id}"]`)
+              ?.dataset.pccolor || "#fff",
+          fillOpacity: 0.9,
+        }));
+        // console.log("rendered");
+        updateMapBounds();
+        map.on("resize", delayedBoundsUpdate);
+        render_whole_table();
 
         if (pressed) {
           geo2.remove(map);
@@ -556,6 +578,7 @@ function state_map(value, text) {
           );
         }
         map.setView([zooming[value][0], zooming[value][1]], zooming[value][2]);
+        geo.remove(map);
         geo2.addTo(map);
         updateMapBounds2();
         map.on("resize", delayedBoundsUpdate2);
@@ -590,9 +613,121 @@ function resetMap() {
 }
 function resetstatebread()
 {
+  geo.remove(map);
   breadcrumbConstituency.style.display = "none";
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";
+  console.log(breadcrumbState.textContent);
+  fetch("geo.json")
+  .then((res) => res.json())
+  .then((geoJson) => {
+    ftrs;
+    for (con in ftrs) {
+      ftrs[con].st_code;
+    }
+    geo = L.geoJSON(geoJson, {
+      onEachFeature: (feature, layer) => {
+        layer.on("click", function (event) {
+          console.log("first");
+          document.querySelector("#Constituency-res").style.display = "none";
+          document.querySelector("#Candidate-res").style.display = "block";
+          breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread()">${feature.properties.st_name}`;
+          breadcrumbState.style.display = "inline";
+          breadcrumbConstituency.textContent = feature.properties.pc_name;
+          breadcrumbConstituency.style.display = "inline";
+          render_table(feature.properties.pc_id);
+        });
+        layer._leaflet_id = feature.properties.pc_id;
+      },
+    });
+
+    // geo = L.geoJSON(geoJson, {
+    //   onEachFeature: (feature, layer) => {
+    //     layer.on("click", (e) => {
+    //       // layer.on('mouseover', function(event) {
+    //       //     showBox(feature.properties, layer);
+    //       // });
+
+    //       // layer.on('mouseout', function(event) {
+    //       //     hideBox();
+    //       // });
+
+    //       layer.on("click", function (event) {
+    //         document.querySelector("#Constituency-res").style.display =
+    //           "none";
+    //         document.querySelector("#Candidate-res").style.display =
+    //           "block";
+    //         can = 1;
+
+    //         breadcrumbConstituency.textContent = feature.properties.pc_name;
+    //         breadcrumbConstituency.style.display = "inline";
+
+    //         render_table(feature.properties.pc_id);
+    //       });
+    //     });
+    //     layer._leaflet_id = feature.properties.pc_id;
+    //   },
+    // });
+
+    if (pressed) {
+      geo2.remove(map);
+    }
+
+    var filteredFeatures = geoJson.features.filter(
+      (feature) => feature.properties.st_code == state_codes[breadcrumbState.textContent]
+    );
+    var filteredGeoJson = { ...geoJson, features: filteredFeatures };
+    geo2 = L.geoJSON(filteredGeoJson, {
+      onEachFeature: (feature, layer) => {
+        //   layer.on('mouseover', function(event) {
+        //     showBox(feature.properties, layer);
+        // });
+
+        // layer.on('mouseout', function(event) {
+        //     hideBox();
+        // });
+
+        layer.on("click", function (event) {
+          console.log("change");
+          document.querySelector("#Constituency-res").style.display =
+            "none";
+          document.querySelector("#Candidate-res").style.display = "block";
+          breadcrumbConstituency.textContent = feature.properties.pc_name;
+          breadcrumbConstituency.style.display = "inline";
+          render_table(feature.properties.pc_id);
+        });
+        layer._leaflet_id = feature.properties.pc_id;
+      },
+    });
+    if (document.querySelector("#Candidate-res").style.display == "block") {
+      document.querySelector("#Candidate-res").style.display = "none";
+      document.querySelector("#Constituency-res").style.display = "block";
+      render_state_table(
+        filteredFeatures.map((feature) => feature.properties),
+        text
+      );
+    }
+    map.setView(
+      [zooming[state_codes[breadcrumbState.textContent]][0], zooming[state_codes[breadcrumbState.textContent]][1]],
+      zooming[state_codes[breadcrumbState.textContent]][2]
+    );
+    console.log(pressed);
+    geo2.addTo(map);
+   
+    updateMapBounds2();
+    map.on("resize", delayedBoundsUpdate2);
+
+    pressed = 1;
+   
+    render();
+    render2();
+
+    render_state_table(
+      filteredFeatures.map((feature) => feature.properties),
+      breadcrumbState.textContent
+    );
+  })
+  .catch((e) => console.error(e));
 }
 function resetstatebread_option()
 {

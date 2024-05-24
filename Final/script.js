@@ -102,6 +102,7 @@ let state_codes = {
   "Himachal Pradesh": 2,
   Haryana: 6,
   "Jammu and Kashmir": 1,
+  "Jammu & Kashmir": 1,
   "NCT Of Delhi": 7,
   "Dadra and Nagar Haveli": 26,
   "West Bengal": 19,
@@ -201,7 +202,7 @@ const stateMaps = {
 let stateDataJson;
 let allianceJson;
 let data = {};
-let ftrs, geo, geo2, map;
+let ftrs, geo ,geo2, map;
 let names = {
   "#F47216": "NDA",
   "#7E7BFC": "I.N.D.I.A",
@@ -226,12 +227,9 @@ async function fetchGeoJSON(file) {
     geo = L.geoJSON(geoJson, {
       onEachFeature: (feature, layer) => {
         layer.on("click", function (event) {
-          // can = 1;
-          // Handle feature click
           console.log("first");
           document.querySelector("#Constituency-res").style.display = "none";
           document.querySelector("#Candidate-res").style.display = "block";
-          can = 1;
           breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread()">${feature.properties.st_name}`;
           breadcrumbState.style.display = "inline";
           breadcrumbConstituency.textContent = feature.properties.pc_name;
@@ -251,10 +249,39 @@ async function fetchGeoJSON(file) {
           ?.dataset.pccolor || "#fff",
       fillOpacity: 0.9,
     }));
-    console.log("rendered");
+    // console.log("rendered");
     updateMapBounds();
     map.on("resize", delayedBoundsUpdate);
     render_whole_table();
+    var filteredFeatures = geoJson.features.filter(
+      (feature) => feature.properties.st_code == 36
+    );
+    var filteredGeoJson = { ...geoJson, features: filteredFeatures };
+    geo2 = L.geoJSON(filteredGeoJson, {
+      onEachFeature: (feature, layer) => {
+        //   layer.on('mouseover', function(event) {
+        //     showBox(feature.properties, layer);
+        // });
+
+        // layer.on('mouseout', function(event) {
+        //     hideBox();
+        // });
+
+        layer.on("click", function (event) {
+          console.log("change");
+          // document.querySelector("#Constituency-res").style.display =
+          //   "none";
+          // document.querySelector("#Candidate-res").style.display = "block";
+          // breadcrumbConstituency.textContent = feature.properties.pc_name;
+          // breadcrumbConstituency.style.display = "inline";
+          // render_table(feature.properties.pc_id);
+        });
+        layer._leaflet_id = feature.properties.pc_id;
+      },
+    });
+
+
+
   } catch (error) {
     console.error("Error loading GeoJSON:", error);
   }
