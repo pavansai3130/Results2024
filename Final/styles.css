@@ -122,15 +122,16 @@ a{
   height: 2.4999rem;
 
 }
-.bar-container {
-  width: 100%;
-  background-color: #f3f3f3;
+#bar-container {
+  /* width: 100%; */
+  /* background-color: #f3f3f3; */
   overflow: hidden;
   position: relative;
   padding: 0;
-  margin: 0;
+  margin: 0 0 ;
   /* border: 0.0624rem solid red; */
   display: flex;
+  border-radius: 3px ;
 }
 .bar {
   /* height: 2.4999rem; */
@@ -164,21 +165,21 @@ a{
 #word1 {
   position: absolute;
   left: 0;
-  font-size: 1.25rem;
+  /* font-size: 1.25rem; */
   font-weight:500;
 }
 
 #word2 {
   position: absolute;
   left: 50%;
-  font-size: 1.25rem;
+  /* font-size: 1.25rem; */
   font-weight:500;
 }
 
 #word3 {
   position: absolute;
   right: 0;
-  font-size: 1.25rem;
+  /* font-size: 1.25rem; */
   font-weight:500;
 }
 /* -------------------------------------------------------------- */
@@ -235,6 +236,11 @@ table{
   background-color: #F9FAFB;
   text-align: center;
 
+}
+#stateLogo{
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-right: 0.5rem;
 }
 
 

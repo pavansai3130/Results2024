@@ -47,7 +47,7 @@
       <!-- Common Header -->
       <header class="header">
          <div class="container">
-            <div class="row">
+            <div class="row "  >
             </div>
          </div>
       </header>
@@ -55,7 +55,7 @@
       <div class="container-fluid main-content" >
          <!-- Page 1: Landing Page -->
          <div id="landing-page" >
-            <div class="row">
+            <div class="row" >
                <div class="col-12 col-lg-6 order-2 order-lg-1"  >
                   <!-- India Map -->
                   <nav aria-label="breadcrumb">
@@ -126,7 +126,7 @@
                      </div>
                   </div>
                   <div class="row">
-                      <div class="col-12"style="border: 1px solid black;" id="india-map" ></div>
+                      <div class="col-12" id="india-map" ></div>
                       <div id="map" style="border: 1px solid black; width: 100%; height:100vh;display: none;">
                       </div>
                   </div>
@@ -138,11 +138,11 @@
                   <!-- <div id="party-results"></div> -->
 
                   <!-- -Alliance Names on Bar- -->
-                  <!-- <div class="allianceName">
+               <div><div class="allianceName">
                      <span id="word1">NDA</span>
                      <span id="word2">I.N.D.I.A</span>
                      <span id="word3">Others</span>
-                  </div> -->
+                  </div>
                  <!-- -Alliance Names on Bar- -->
 
                   <div class="bar-container" id="bar-container">
@@ -151,6 +151,7 @@
                      <div class="bar bar-3" id="bar3"></div>
                      <div class="bar-label" id="bar-label"></div>
                   </div>
+               </div>
             <!-- --------------------------------------------------------------------------------------------------- -->
             <!-- --------------------------------------------------------------------------------------------------- -->
             <div class="card">
@@ -159,8 +160,9 @@
                         <p class="card-text">Content for column 2</p>
                      </div>
                   </div>
-                  <div id="st" class="table-responsive-sm ">
-                    <table class="table table-bordered" id="stateTable">
+                  <div id="stateTabeleContainer" style="margin-top: 0.9375rem;" class="table-responsive-sm ">
+                    <input class="form-control" id="myInput" type="text" placeholder="Search State/Union Territory">
+                    <table class="table table-bordered" style="margin-top: 0.3125rem;" id="stateTable">
                         <thead>
                           <tr>
                             <th class="col-3 col-lg-6" id="stateRow"scope="col">State / Union Territory </th>
