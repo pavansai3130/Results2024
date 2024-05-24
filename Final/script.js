@@ -185,16 +185,16 @@ const stateMaps = {
   Mizoram: "./imgs/Mizoram.png",
   Nagaland: "./imgs/Nagaland.png",
   "NCT Of Delhi": "./imgs/NCT_OF_Delhi.jpeg",
-  Odisha: "./imgs/Odisha.png",
-  Puducherry: "./imgs/Puducherry.png",
-  Punjab: "./imgs/Punjab.jpg",
-  Rajasthan: "./imgs/Rajasthan.png",
-  Sikkim: "./imgs/Sikkim.png",
+  "Odisha": "./imgs/Odisha.png",
+  "Puducherry": "./imgs/Puducherry.png",
+  "Punjab": "./imgs/Punjab.jpg",
+  "Rajasthan": "./imgs/Rajasthan.png",
+  "Sikkim": "./imgs/Sikkim.png",
   "Tamil Nadu": "./imgsTamil_Nadu.jpg",
-  Telangana: "./imgs/Telangana.png",
-  Tripura: "./imgs/Tripura.png",
+  "Telangana": "./imgs/Telangana.png",
+  "Tripura": "./imgs/Tripura.png",
   "Uttar Pradesh": "./imgs/Uttar_Pradesh.png",
-  Uttarakhand: "./imgs/Uttarakhand.png",
+  "Uttarakhand": "./imgs/Uttarakhand.png",
   "West Bengal": "./imgs/West_Bengal.png",
 };
 
@@ -221,16 +221,18 @@ async function fetchGeoJSON(file) {
       );
 
     // Initialize the map and add the GeoJSON layer
+    console.log(L);
     map = L.map("map", { attributionControl: false, zoomSnap: 0.2 });
     geo = L.geoJSON(geoJson, {
       onEachFeature: (feature, layer) => {
         layer.on("click", function (event) {
           // can = 1;
           // Handle feature click
+          console.log("first");
           document.querySelector("#Constituency-res").style.display = "none";
           document.querySelector("#Candidate-res").style.display = "block";
           can = 1;
-          breadcrumbState.textContent = feature.properties.st_name;
+          breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread()">${feature.properties.st_name}`;
           breadcrumbState.style.display = "inline";
           breadcrumbConstituency.textContent = feature.properties.pc_name;
           breadcrumbConstituency.style.display = "inline";
@@ -249,6 +251,7 @@ async function fetchGeoJSON(file) {
           ?.dataset.pccolor || "#fff",
       fillOpacity: 0.9,
     }));
+    console.log("rendered");
     updateMapBounds();
     map.on("resize", delayedBoundsUpdate);
     render_whole_table();
@@ -370,10 +373,11 @@ $(document).ready(async function () {
     let nda = 0,
       india = 0,
       others = 0;
+      document.getElementById("breadcrumb-india").style.display="block";
+      breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread2()">${state}`;
+      breadcrumbState.style.display = "inline";
+      breadcrumbConstituency.style.display = "none";
     state_map(state_codes[state], state);
-    breadcrumbState.textContent = state;
-    breadcrumbState.style.display = "inline";
-    breadcrumbConstituency.style.display = "none";
     // Implement the logic to fetch and display state-wise results
     const constituencyTable = document.getElementById("stateTable");
     const cells = constituencyTable.getElementsByTagName("th");
@@ -472,4 +476,27 @@ $(document).ready(async function () {
       $(this).toggle(match);
     });
   });
+  $("#candidateinput").on("keyup", function () {
+    var value = $(this).val().toLowerCase();
+    $("#table-body tr").filter(function () {
+      var text = $(this).text().toLowerCase();
+      var words = text.split(/\s+/); // Split text into words
+      var match = words.some(function (word) {
+        return word.startsWith(value);
+      });
+      $(this).toggle(match);
+    });
+  });
+  $("#stateinput").on("keyup", function () {
+    var value = $(this).val().toLowerCase();
+    $("#table-body tr").filter(function () {
+      var text = $(this).text().toLowerCase();
+      var words = text.split(/\s+/); // Split text into words
+      var match = words.some(function (word) {
+        return word.startsWith(value);
+      });
+      $(this).toggle(match);
+    });
+  });
+
 });

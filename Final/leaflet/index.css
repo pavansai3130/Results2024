@@ -259,7 +259,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 /* visual tweaks */
 
 .leaflet-container {
-	background: white;
+	background: #F5F5F5;
 	outline-offset: 1px;
 	}
 .leaflet-container a {

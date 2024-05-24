@@ -1,5 +1,6 @@
 let breadcrumbConstituency;
 let breadcrumbState;
+let state_button_pressed=1;
 document.addEventListener("DOMContentLoaded", function () {
   const stateSelect = document.getElementById("state-select");
   breadcrumbState = document.getElementById("breadcrumb-state");
@@ -13,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    breadcrumbState.textContent = selectedState;
+    breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread_option()">${selectedState}`;
     breadcrumbState.style.display = "inline";
     breadcrumbConstituency.style.display = "none";
 
@@ -21,15 +22,17 @@ document.addEventListener("DOMContentLoaded", function () {
     // loadConstituencyData(stateSelect.value);
   });
   document.getElementById("consti-bt").addEventListener("click", function () {
+    document.getElementById("breadcrumb-india").style.display="block";
+    state_button_pressed=0;
     document.getElementById("india-map").style.display = "none";
     document.getElementById("map").style.display = "block";
     document.getElementById("stateTabeleContainer").style.display = "none";
     document.getElementById("Constituency-res").style.display = "block";
     resetBreadcrumb();
     stateSelect.selectedIndex = 0;
-    resetMap();
   });
   document.getElementById("state-bt").addEventListener("click", function () {
+    state_button_pressed=1;
     document.getElementById("map").style.display = "none";
     document.getElementById("india-map").style.display = "block";
     document.getElementById("Constituency-res").style.display = "none";
@@ -53,14 +56,21 @@ document.addEventListener("DOMContentLoaded", function () {
 function resetBreadcrumb() {
   const breadcrumbState = document.getElementById("breadcrumb-state");
   const breadcrumbConstituency = document.getElementById(
-    "breadcrumb-constituency"
-  );
+    "breadcrumb-constituency");
 
   breadcrumbState.style.display = "none";
   breadcrumbState.textContent = "";
 
   breadcrumbConstituency.style.display = "none";
   breadcrumbConstituency.textContent = "";
+  if(state_button_pressed)
+    {geo2.remove(map);
+    geo.addTo(map);
+    document.getElementById("map").style.display = "none";
+    document.getElementById("india-map").style.display = "block";
+    }else{
+  resetMap();
+    }
 }
 
 const zooming = {
@@ -211,6 +221,7 @@ function updateMapBounds2() {
 }
 let pressed = 0;
 function handleSelection() {
+  document.getElementById("breadcrumb-india").style.display="block";
   document.getElementById("stateTabeleContainer").style.display = "none";
   document.getElementById("Candidate-res").style.display = "block";
   document.getElementById("india-map").style.display = "none";
@@ -325,7 +336,6 @@ function handleSelection() {
 }
 function render_state_table(feature, state) {
   let count = 0;
-
   const tb = document.getElementById("table-body");
   tb.innerHTML = "";
   for (let i of feature) {
@@ -473,6 +483,8 @@ function state_map(value, text) {
   document.getElementById("Candidate-res").style.display = "block";
   document.getElementById("india-map").style.display = "none";
   document.getElementById("map").style.display = "block";
+
+  
   if (value) {
     geo.remove(map);
 
@@ -526,9 +538,10 @@ function state_map(value, text) {
 
             layer.on("click", function (event) {
               console.log("change");
-              document.querySelector("#Constituency-res").style.display =
-                "none";
+              document.querySelector("#Constituency-res").style.display = "none";
               document.querySelector("#Candidate-res").style.display = "block";
+              breadcrumbConstituency.style.display = "block";
+              breadcrumbConstituency.textContent = feature.properties.pc_name;
               render_table(feature.properties.pc_id);
             });
             layer._leaflet_id = feature.properties.pc_id;
@@ -572,6 +585,24 @@ function resetMap() {
 
   // Update map bounds when the map size changes
   map.on("resize", delayedBoundsUpdate);
+  document.querySelector("#Candidate-res").style.display = "none";
+  document.querySelector("#Constituency-res").style.display = "block";
+}
+function resetstatebread()
+{
+  breadcrumbConstituency.style.display = "none";
+  document.querySelector("#Candidate-res").style.display = "none";
+  document.querySelector("#Constituency-res").style.display = "block";
+}
+function resetstatebread_option()
+{
+  breadcrumbConstituency.style.display = "none";
+  document.querySelector("#Candidate-res").style.display = "none";
+  document.querySelector("#Constituency-res").style.display = "block";
+}
+function resetstatebread2()
+{
+  breadcrumbConstituency.style.display = "none";
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";
 }
