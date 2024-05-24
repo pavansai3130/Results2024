@@ -35,8 +35,19 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("Constituency-res").style.display="none";
     document.getElementById("st").style.display="block";
     resetBreadcrumb();
-    stateSelect.selectedIndex = 0; 
-    resetMap();
+    stateSelect.selectedIndex = 0;  
+    render_whole_table();
+    map.setView(initialView, initialZoom); 
+    if (geo2) {
+        geo2.remove(); 
+    }
+    geo.addTo(map); 
+      // Initial update
+      updateMapBounds();
+        
+      // Update map bounds when the map size changes
+      map.on('resize', delayedBoundsUpdate);
+
   })
 
 });
@@ -565,6 +576,5 @@ function render() {
     // Update map bounds when the map size changes
     map.on('resize', delayedBoundsUpdate);
   document.querySelector("#Candidate-res").style.display = "none";
-  document.querySelector("#Constituency-res").style.display = "block";
-  
+  document.querySelector("#Constituency-res").style.display = "block";  
   }
