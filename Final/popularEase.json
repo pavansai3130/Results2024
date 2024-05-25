@@ -107,24 +107,7 @@
       "lead":true,
       "margin":216009
     },
-    {
-      "cand_name": "Piyush Goyal",
-      "constituency": "Mumbai North",
-      "state": "Maharashtra",
-      "party_name": "BJP",
-      "cand_id": "cand2423",
-      "spl_attribute_id": "p10",
-      "party_color": "#FF9933"
-    },
-    {
-      "cand_name": "Shivraj Singh Chouhan",
-      "constituency": "Vidisha",
-      "state": "Madhya Pradesh",
-      "party_name": "BJP",
-      "cand_id": "cand4630",
-      "spl_attribute_id": "p11",
-      "party_color": "#FF9933"
-    },
+
     {
       "cand_name": "Anurag Singh Thakur",
       "constituency": "Hamirpur",
@@ -132,53 +115,36 @@
       "party_name": "BJP",
       "cand_id": "cand361",
       "spl_attribute_id": "p12",
-      "party_color": "#FF9933"
+      "party_color": "#FF9933",
+      "votes":682692,
+      "lead":true,
+      "margin":216009
     },
     {
       "cand_name": "Rahul Gandhi",
       "constituency": "Wayanad",
       "state": "Kerala",
-      "party_name": "Congress",
+      "party_name": "INC",
       "cand_id": "cand7055",
       "spl_attribute_id": "p13",
-      "party_color": "#19AAED"
+      "party_color": "#19AAED",
+      "votes":706367,
+      "lead":true,
+      "margin":431770
     },
     {
       "cand_name": "Omar Abdullah",
       "constituency": "BARAMULLA",
       "state": "Jammu and Kashmir",
-      "party_name": "National Conference",
+      "party_name": "JKNC",
       "cand_id": "cand2051",
       "spl_attribute_id": "p14",
-      "party_color": "#800000"
+      "party_color": "#800000",
+      "votes":660221,
+      "lead":true,
+      "margin":216009
     },
-    {
-      "cand_name": "Chirag Paswan",
-      "constituency": "Hajipur",
-      "state": "Bihar",
-      "party_name": "Lok Janshakti Party",
-      "cand_id": "cand2028",
-      "spl_attribute_id": "p15",
-      "party_color": "#FFEA19"
-    },
-    {
-      "cand_name": "Madhavi Latha",
-      "constituency": "Hyderabad",
-      "state": "Telangana",
-      "party_name": "BJP",
-      "cand_id": "cand3321",
-      "spl_attribute_id": "p16",
-      "party_color": "#FF9933"
-    },
-    {
-      "cand_name": "Asaduddin Owaisi",
-      "constituency": "Hyderabad",
-      "state": "Telangana",
-      "party_name": "AIMIM",
-      "cand_id": "cand4116",
-      "spl_attribute_id": "p17",
-      "party_color": "#0c6b4b"
-    },
+    
     {
       "cand_name": "Jyotiraditya Scindia",
       "constituency": "Guna",
@@ -186,16 +152,22 @@
       "party_name": "BJP",
       "cand_id": "cand5915",
       "spl_attribute_id": "p17",
-      "party_color": "#FF9933"
+      "party_color": "#FF9933",
+      "votes":488500,
+      "lead":false,
+      "margin":125543
     },
     {
       "cand_name": "Akhilesh Yadav",
       "constituency": "Kannauj",
       "state": "Uttar Pradesh",
-      "party_name": "Samajwadi Party",
+      "party_name": "SP",
       "cand_id": "cand3140",
       "spl_attribute_id": "p18",
-      "party_color": "#FF2222"
+      "party_color": "#FF2222",
+      "votes":550734,
+      "lead":false,
+      "margin":12353
     },
     {
       "cand_name": "Mahua Moitra",
@@ -204,7 +176,10 @@
       "party_name": "TMC",
       "cand_id": "cand4782",
       "spl_attribute_id": "p19",
-      "party_color": "#ff8d33"
+      "party_color": "#ff8d33",
+      "votes":614872,
+      "lead":true,
+      "margin":63218
     },
     {
       "cand_name": "Giriraj Singh",
@@ -213,34 +188,10 @@
       "party_name": "BJP",
       "cand_id": "cand4615",
       "spl_attribute_id": "p20",
-      "party_color": "#FF9933"
-    },
-    {
-      "cand_name": "Y S Sharmila",
-      "constituency": "Kadapa",
-      "state": "Andhra Pradesh",
-      "party_name": "YSRTP",
-      "cand_id": "cand4344",
-      "spl_attribute_id": "p21",
-      "party_color": "#1569C7"
-    },
-    {
-      "cand_name": "Basavaraj Bommai",
-      "constituency": "Haveri",
-      "state": "Karnataka",
-      "party_name": "BJP",
-      "cand_id": "cand4785",
-      "spl_attribute_id": "p22",
-      "party_color": "#FF9933"
-    },
-    {
-      "cand_name": "Dimple Yadav",
-      "constituency": "Mainpuri",
-      "state": "Uttar Pradesh",
-      "party_name": "Samajwadi Party",
-      "cand_id": "cand4581",
-      "spl_attribute_id": "p23",
-      "party_color": "#FF2222"
+      "party_color": "#FF9933",
+      "votes":692193,
+      "lead":true,
+      "margin":422217
     },
     {
       "cand_name": "Supriya Sule",
@@ -249,25 +200,10 @@
       "party_name": "NCP",
       "cand_id": "cand5604",
       "spl_attribute_id": "p24",
-      "party_color": "#FFEA19"
-    },
-    {
-      "cand_name": "Digvijaya Singh",
-      "constituency": "Rajgarh",
-      "state": "Madhya Pradesh",
-      "party_name": "Congress",
-      "cand_id": "cand5893",
-      "spl_attribute_id": "p25",
-      "party_color": "#19AAED"
-    },
-    {
-      "cand_name": "N Kiran Kumar Reddy",
-      "constituency": "Rajampet",
-      "state": "Andhra Pradesh",
-      "party_name": "BJP",
-      "cand_id": "cand2730",
-      "spl_attribute_id": "p26",
-      "party_color": "#FF9933"
+      "party_color": "#FFEA19",
+      "votes":686714,
+      "lead":true,
+      "margin":155774
     },
     {
       "cand_name": "HD Kumaraswamy",
@@ -276,25 +212,22 @@
       "party_name": "JD(S)",
       "cand_id": "cand6465",
       "spl_attribute_id": "p27",
-      "party_color": "#058532"
+      "party_color": "#058532",
+      "votes":577784,
+      "lead":false,
+      "margin":125876
     },
     {
       "cand_name": "Shashi Tharoor",
       "constituency": "Thiruvananthapuram",
       "state": "Kerala",
-      "party_name": "Congress",
+      "party_name": "INC",
       "cand_id": "cand6978",
       "spl_attribute_id": "p28",
-      "party_color": "#19AAED"
-    },
-    {
-      "cand_name": "Bhupesh Baghel",
-      "constituency": "Rajnandgaon",
-      "state": "Chhattisgarh",
-      "party_name": "Congress",
-      "cand_id": "cand7178",
-      "spl_attribute_id": "p29",
-      "party_color": "#19AAED"
+      "party_color": "#19AAED",
+      "votes":416131,
+      "lead":true,
+      "margin":99989
     },
     {
       "cand_name": "Gajendra Singh Shekhawat",
@@ -303,7 +236,10 @@
       "party_name": "BJP",
       "cand_id": "cand7319",
       "spl_attribute_id": "p30",
-      "party_color": "#FF9933"
+      "party_color": "#FF9933",
+      "votes":788888,
+      "lead":true,
+      "margin":274440
     },
     {
       "cand_name": "Dayanidhi Maran",
@@ -312,16 +248,10 @@
       "party_name": "DMK",
       "cand_id": "cand8026",
       "spl_attribute_id": "p31",
-      "party_color": "#FF0D0D"
-    },
-    {
-      "cand_name": "K Annamalai",
-      "constituency": "Coimbatore",
-      "state": "Tamil Nadu",
-      "party_name": "BJP",
-      "cand_id": "cand7542",
-      "spl_attribute_id": "p32",
-      "party_color": "#FF9933"
+      "party_color": "#FF0D0D",
+      "votes":448911,
+      "lead":true,
+      "margin":301520
     },
     {
       "cand_name": "A Raja",
@@ -330,7 +260,10 @@
       "party_name": "DMK",
       "cand_id": "cand7663",
       "spl_attribute_id": "p33",
-      "party_color": "#FF0D0D"
+      "party_color": "#FF0D0D",
+      "votes":547832,
+      "lead":true,
+      "margin":205823
     },
     {
       "cand_name": "Maneka Gandhi",
@@ -339,7 +272,10 @@
       "party_name": "BJP",
       "cand_id": "cand2376",
       "spl_attribute_id": "p34",
-      "party_color": "#FF9933"
+      "party_color": "#FF9933",
+      "votes":459196,
+      "lead":true,
+      "margin":14526
     },
     {
       "cand_name": "Mehbooba Mufti",
@@ -348,25 +284,10 @@
       "party_name": "PDP",
       "cand_id": "cand5417",
       "spl_attribute_id": "p35",
-      "party_color": "#058532"
-    },
-    {
-      "cand_name": "Manohar Lal Khattar",
-      "constituency": "Karnal",
-      "state": "Haryana",
-      "party_name": "BJP",
-      "cand_id": "cand1160",
-      "spl_attribute_id": "p36",
-      "party_color": "#FF9933"
-    },
-    {
-      "cand_name": "Naveen Jindal",
-      "constituency": "Kurukshetra",
-      "state": "Haryana",
-      "party_name": "BJP",
-      "cand_id": "cand2082",
-      "spl_attribute_id": "p37",
-      "party_color": "#FF9933"
+      "party_color": "#058532",
+      "votes":30524,
+      "lead":false,
+      "margin":9656
     }
   ]
   

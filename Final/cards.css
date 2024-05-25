@@ -153,8 +153,17 @@
         width: 100%;
     }
   }
-  @media (min-width:525px)and(max-width:720px) {
+  @media (min-width:100px)and(max-width:720px) {
     .custom-container{
         width: 60%;
     }
   }
+  
+
+  /* Cards displayed on the "See More" page */
+  #see-more-page .custom-container {
+    width: calc(30% - 16px); /* Adjust as needed based on margins and gutters */
+  }
+  
+  /* Adjust the margins and paddings to ensure proper spacing */
+  

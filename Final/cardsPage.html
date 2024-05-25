@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>More Candidates</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cards.css">
+    <style>
+        .custom-container {
+            width: 22%;
+        }
+        #more-cards-root {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        @media (max-width: 570px) {
+            .custom-container {
+                width: 100%;
+            }
+        }
+        @media (min-width: 570px) and (max-width: 770px) {
+            .custom-container {
+                width: 40%;
+            }
+        }
+        @media (min-width: 770px) and (max-width: 1024px) {
+            .custom-container {
+                width: 30%;
+            }
+        }
+        .search-bar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .search-bar {
+            width: 40%;
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            font-size: 1rem;
+        }
+        .dropdown-box {
+            width: 30%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h2 class="text-center my-4">More Popular Candidates</h2>
+        <div class="search-bar-container">
+            <input onkeyup="performSearch()" type="search" id="search-input" class="search-bar" placeholder="Search by name...">
+            <!-- <input type="search" name="" id=""> -->
+        </div>
+        
+        <div id="more-cards-root" class="row g-2">
+            <!-- More cards will be appended here -->
+        </div>
+        <div class="d-flex justify-content-center">
+            <button id="back-btn" class="btn btn-secondary mt-3">Back</button>
+        </div>
+    </div>
+    <script src="cardsPage.js"></script>
+    <script>
+        // Function to perform search
+        function performSearch() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    const cards = document.querySelectorAll('.custom-container');
+
+    cards.forEach(card => {
+        const title = card.querySelector('.card-title').textContent.toLowerCase();
+        if (title.includes(searchInput)) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+
+        // Initial display of all cards
+        
+     </script>
+</body>
+</html>
