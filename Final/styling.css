@@ -145,12 +145,20 @@ thead{
   text-align: center;
 }
 /* Add border-radius to the top theading */
-#theading {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+#theading{
+  border-top-left-radius: 0.4rem;
+  border-top-right-radius: 0.4rem;
   background-color: #EAECF0;
-  padding: 10px;
-  gap: 5px;
+}
+#theading div{
+  border-radius: 10rem;
+  background:#F2F4F7 ;
+  padding:2px;
+  margin-right: 14rem;
+}
+#theading span{
+  text-transform: capitalize;
+  font-size: 1rem;
 }
 
 #tbody tr:last-child {
@@ -162,34 +170,41 @@ thead{
 .table-bordered tbody {
   padding: 10px;
 }
-#theading div{
-  border-radius: 20px;
-  background:#F2F4F7 ;
-  padding:2px;
 
-}
-#theading span{
-  text-transform: capitalize;
-  font-size: large;
-}
 #theading2{
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: 0.4rem;
+  border-top-right-radius: 0.4rem;
   background-color: #EAECF0;
-  padding: 10px;
-  gap: 5px;
-
 }
 #theading2 div{
-  border-radius: 20px;
+  border-radius: 10rem;
   background:#F2F4F7 ;
   padding:2px;
+  margin-right: 14rem;
 }
 #theading2 span{
   text-transform: capitalize;
-  font-size: large;
+  font-size: 1rem;
 }
-
+#stateinput
+{
+  width: 200px;
+  border: none; /* Remove default border */
+  border-bottom: 1px solid #ccc; /* Add underline */
+  background-image: url('search-icon.png'); /* Add search icon */
+  background-repeat: no-repeat;
+  background-position: calc(100% - 10px) center; /* Position search icon */
+  padding-right: 30px; /* Add space for search icon */
+}
+#candidateinput {
+  width: 200px;
+  border: none; /* Remove default border */
+  border-bottom: 1px solid #ccc; /* Add underline */
+  background-image: url('search-icon.png'); /* Add search icon */
+  background-repeat: no-repeat;
+  background-position: calc(100% - 10px) center; /* Position search icon */
+  padding-right: 30px; /* Add space for search icon */
+}
 
 /* .table-responsive-sm
 {
@@ -215,31 +230,44 @@ thead{
   flex-direction: column;
   align-items: right;
 }
+.td
+{
+  width:10rem;
+height:3.75rem;
+
+}
+.td1{
+background: #F6FEF9;
+width:11.25rem;
+height:3.75rem;
+}
+.td2{
+  width:11.25rem;
+height:3.75rem;
+  background: #fffafa;
+}
+.td3{
+  width:7.625;
+height:3.75rem;
+  background: #f9fafb;
+  text-align: center;
+}
 
 
-/* .td1, .td2, .td3 {
-  text-transform: capitalize;
+.td1, .td2, .td3 {
+  /* text-transform: capitalize; */
   color: #344054;
-  background: #F6FEF9;
-  text-align: left;
-} */
+}
 .td1 img{
-  height: 16px;
-  width: 16px;
+  height: 1rem;
+  width: 1rem;
   margin-right: 3px;
 }
 .td2 img{
-  height: 16px;
-  width: 16px;
-  margin-right: 3px;
+  height: 1rem;
+  width: 1rem;
+  margin-right: 0.25rem;
 }
-.td2{
-  background-color: #fffafa;
-}
-.td3{
-  background-color: f9fafb;
-}
-
 
 tr{
   background-color: white;
@@ -265,4 +293,39 @@ tr{
 {
   width: 122px;
   height: 60px;
+}
+/* pagenation */
+#pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 68px;
+  background-color: white;
+  padding: 12px 24px 16px 24px;
+  gap: 0px;
+  opacity: 1; /* Change to 1 to make it initially visible */
+
+    border-bottom-left-radius: 0.4rem;
+    border-bottom-right-radius: 0.4rem;
+}
+
+#pagination-controls.hidden {
+  opacity: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#pagination-controls .page-buttons {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+#pagination-controls button:first-child {
+  margin-right: auto; /* Pushes the "Previous" button to the left */
+}
+
+#pagination-controls button:last-child {
+  margin-left: auto; /* Pushes the "Next" button to the right */
 }

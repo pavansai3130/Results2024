@@ -220,7 +220,6 @@ async function fetchGeoJSON(file) {
       .sort((a, b) =>
         a.pc_name > b.pc_name ? 1 : a.pc_name < b.pc_name ? -1 : 0
       );
-
     // Initialize the map and add the GeoJSON layer
     console.log(L);
     map = L.map("map", { attributionControl: false, zoomSnap: 0.2 });
@@ -228,13 +227,14 @@ async function fetchGeoJSON(file) {
       onEachFeature: (feature, layer) => {
         layer.on("click", function (event) {
           console.log("first");
+          document.getElementById("stateTabeleContainer").style.display = "none";
           document.querySelector("#Constituency-res").style.display = "none";
           document.querySelector("#Candidate-res").style.display = "block";
           breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread()">${feature.properties.st_name}`;
           breadcrumbState.style.display = "inline";
           breadcrumbConstituency.textContent = feature.properties.pc_name;
           breadcrumbConstituency.style.display = "inline";
-          render_table(feature.properties.pc_id);
+          render_table(feature.properties.pc_id,1);
         });
         layer._leaflet_id = feature.properties.pc_id;
       },
@@ -252,7 +252,8 @@ async function fetchGeoJSON(file) {
     // console.log("rendered");
     updateMapBounds();
     map.on("resize", delayedBoundsUpdate);
-    render_whole_table();
+    // render_whole_table();
+    // document.querySelector("#Constituency-res").style.display = "none";
     var filteredFeatures = geoJson.features.filter(
       (feature) => feature.properties.st_code == 36
     );
@@ -503,27 +504,4 @@ $(document).ready(async function () {
       $(this).toggle(match);
     });
   });
-  $("#candidateinput").on("keyup", function () {
-    var value = $(this).val().toLowerCase();
-    $("#table-body tr").filter(function () {
-      var text = $(this).text().toLowerCase();
-      var words = text.split(/\s+/); // Split text into words
-      var match = words.some(function (word) {
-        return word.startsWith(value);
-      });
-      $(this).toggle(match);
-    });
-  });
-  $("#stateinput").on("keyup", function () {
-    var value = $(this).val().toLowerCase();
-    $("#table-body tr").filter(function () {
-      var text = $(this).text().toLowerCase();
-      var words = text.split(/\s+/); // Split text into words
-      var match = words.some(function (word) {
-        return word.startsWith(value);
-      });
-      $(this).toggle(match);
-    });
-  });
-
 });

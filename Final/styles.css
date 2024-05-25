@@ -12,13 +12,6 @@ body{
 .btn-group button:not(:last-child) {
   border-left: none;
 }
-#theading {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  background-color: #EAECF0;
-  padding: 10px;
-  gap: 5px;
-}
 
 #tbody tr:last-child {
   border-bottom-left-radius: 10px;
@@ -28,33 +21,6 @@ body{
 /* Optional: Add padding to the table body for better aesthetics */
 .table-bordered tbody {
   padding: 10px;
-}
-#theading div{
-  border-radius: 20px;
-  background:#F2F4F7 ;
-  padding:2px;
-
-}
-#theading span{
-  text-transform: capitalize;
-  font-size: large;
-}
-#theading2{
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  background-color: #EAECF0;
-  padding: 10px;
-  gap: 5px;
-
-}
-#theading2 div{
-  border-radius: 20px;
-  background:#F2F4F7 ;
-  padding:2px;
-}
-#theading2 span{
-  text-transform: capitalize;
-  font-size: large;
 }
 
 

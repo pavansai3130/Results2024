@@ -57,7 +57,13 @@
          <div id="landing-page" >
             <div class="row" >
                <div class="col-12 col-lg-6 order-2 order-lg-1"  >
-                  <!-- India Map -->
+                  <!-- India Map --> <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                           <li class="breadcrumb-item" id="breadcrumb-india" style="display: none;"><a href="#" onclick="resetBreadcrumb()">India</a></li>
+                           <li class="breadcrumb-item" id="breadcrumb-state" style="display: none;"></a></li>
+                           <li class="breadcrumb-item active" id="breadcrumb-constituency" style="display: none;" aria-current="page"></li>
+                       </ol>
+                   </nav> 
                   <div class="row justify-content-between g-0 ">
                      <div class="col-sm-6 col-md-6 d-flex align-items-center">  
                         <select class="form-control" id="state-select" onchange="handleSelection()">
@@ -111,13 +117,7 @@
                   </div>
                   <div class="row g-0 mt-3">
                      <div class="col-sm-6 col-md-8">   
-                        <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item" id="breadcrumb-india" style="display: none;"><a href="#" onclick="resetBreadcrumb()">India</a></li>
-                            <li class="breadcrumb-item" id="breadcrumb-state" style="display: none;"></a></li>
-                            <li class="breadcrumb-item active" id="breadcrumb-constituency" style="display: none;" aria-current="page"></li>
-                        </ol>
-                    </nav> </div>
+                       </div>
                      <div class="col-6 col-md-4 d-flex justify-content-end align-items-center">
                         <div class="btn-group" role="group">
                            <button type="button" id="state-bt" class="btn btn-primary" style="background-color: #F9FAFB; color: black;border:solid #D0D5DD">States</button>
@@ -182,17 +182,17 @@
                       </table>
                   </div>
                   <!-- Constitunecy Table -->
-                     <div id="Constituency-res" class="table-responsive-sm" style="display: none;">
-                       <table class="table  table-bordered">
-                         <div id="theading">
-                       
-                     </div>
-                     <input class="form-control" id="stateinput" type="text" placeholder="Search State/Union Territory">
+                     <div id="Constituency-res"  style="margin-top: 0.9375rem;" class="table-responsive-sm" style="display: none;">
+                       <table class="table  table-bordered" style="margin-top: 0.1rem;margin-bottom: 0.1rem;">
+                        <div id="theading" style="display: flex; justify-content: space-between; align-items: center; ">
+                           <span id="constituency-name"></span>
+                           <input class="form-control" id="stateinput" type="text" placeholder="Search">
+                        </div>
                          <thead class="thead">
                            <tr>
                              <th class="col-3 col-lg-1 align-middle" style="background:#EAECF0; color: #101828;">Constituency</th>
-                             <th class="col-3 col-lg-5 align-middle"style="background: green; text-align: center; color: white; border: none;">Leading/Won</th>
-                             <th class="col-3 col-lg-5 align-middle"style="background: red; text-align: center;color: white;border: none; "> Trailing/Lost</th>
+                             <th class="col-3 col-lg-5 align-middle"style="background: #12B76A; text-align: center; color: white; border: none;">Leading/Won</th>
+                             <th class="col-3 col-lg-5 align-middle"style="background: #F96343; text-align: center;color: white;border: none; "> Trailing/Lost</th>
                              <th class="col-3 col-lg-1 align-middle"style="background:#EAECF0; color: #101828;" color: #101828;>Margin</th>
                            </tr>
                          </thead>
@@ -200,15 +200,23 @@
                            <!-- Dynamic rows will be inserted here -->
                          </tbody>
                        </table>
+                       <div id="pagination-controls" style="display: flex; justify-content: center; margin-top: 0.1rem;">
+                        <!-- Pagination buttons will be inserted here -->
+                        <button id="prev-page">Previous</button>
+                        <!-- Page numbers will be inserted here -->
+                        <button id="next-page">Next</button>
+                    </div>
                      </div>
                    <!-- table2 pavan -->
-                     <div class="table-responsive-sm" id="Candidate-res" style="display: none;">
+                     <div class="table-responsive-sm" id="Candidate-res" style="margin-top: 0.9375rem;   display: none;">
                        
-                       <table class="table table-bordered">
-                        <div id="theading2">
+                       <table class="table table-bordered" style="margin-top: 0.1rem;">
+                        <div id="theading2" style="display: flex; justify-content: space-between; align-items: center; ">
+                           <span id="constituency-name"></span>
+                           <input class="form-control" id="candidateinput" type="text" placeholder="Search">
                         </div>
-                        <input class="form-control" id="candidateinput" type="text" placeholder="Search State/Union Territory">
 
+                       
                          <thead class="thead">
                            <tr>
                              <th style="background:#F9FAFB; color: #101828;">Candidate</th>
