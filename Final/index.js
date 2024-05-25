@@ -139,40 +139,40 @@ function render_whole_table() {
   for (let i of ftrs) {
       if (i.pc_id == null) continue;
 
-      const tr = document.createElement("tr");
-      tr.className = "tr";
+    const tr = document.createElement("tr");
+    tr.className = "tr";
 
-      tr.dataset.pc = i.pc_id;
-      tr.dataset.pcname = i.pc_name;
-      tr.dataset.state = i.st_name;
-      tr.dataset.s_code = i.st_code;
-      tr.dataset.pcvalue = "";
+    tr.dataset.pc = i.pc_id;
+    tr.dataset.pcname = i.pc_name;
+    tr.dataset.state = i.st_name;
+    tr.dataset.s_code = i.st_code;
+    tr.dataset.pcvalue = "";
 
-      let id = 0;
-      let name = "";
-      let candid = "";
-      let candid2 = "";
-      let votes = 0;
-      let party_name = "";
-      let party_2 = "";
-      let votes2 = 0;
+    let id = 0;
+    let name = "";
+    let candid = "";
+    let candid2 = "";
+    let votes = 0;
+    let party_name = "";
+    let party_2 = "";
+    let votes2 = 0;
 
       let win;
       const firstCandidateKey = data[i.pc_id][0];
       if (!firstCandidateKey) {
-          votes = 0;
-          party_name = "INDEPENDENT";
-          win = "NOTA";
+        votes = 0;
+        party_name = "INDEPENDENT";
+        win = "NOTA";
       } else {
-          win = firstCandidateKey.party;
-          id = i.pc_id;
-          name = data[i.pc_id][0].constituencyName;
-          candid = data[i.pc_id][0].candidateName;
-          candid2 = data[i.pc_id][1].candidateName;
-          votes = data[i.pc_id][0].votes;
-          party_name = data[i.pc_id][0].party;
-          votes2 = data[i.pc_id][1].votes;
-          party_2 = data[i.pc_id][1].party;
+        win = firstCandidateKey.party;
+        id = i.pc_id;
+        name = data[i.pc_id][0].constituencyName;
+        candid = data[i.pc_id][0].candidateName;
+        candid2 = data[i.pc_id][1].candidateName;
+        votes = data[i.pc_id][0].votes;
+        party_name = data[i.pc_id][0].party;
+        votes2 = data[i.pc_id][1].votes;
+        party_2 = data[i.pc_id][1].party;
       }
 
       if (!partyColors[win]) tr.dataset.pccolor = "#D3D3D3";
@@ -203,7 +203,7 @@ function render_whole_table() {
   }
 
   // Update the heading with the count of candidates
-  const th = document.getElementById("theading");
+      const th = document.getElementById("theading");
   th.innerHTML = `<span id="constituency-name">ALL</span><div>${count} Constituencies</div>`;
   let input = document.getElementById("stateinput");
   if (!input) {
@@ -214,8 +214,8 @@ function render_whole_table() {
       input.placeholder = "Search";
   }
   th.appendChild(input);
-  th.style.display = "flex";
-  th.style.background = "white";
+      th.style.display = "flex";
+      th.style.background = "white";
   updateMapStyles();
   // Search functionality
   document.getElementById("stateinput").addEventListener("keyup", function() {
@@ -229,7 +229,7 @@ function render_whole_table() {
           });
           if (match || value === "") {
               row.style.display = ""; // Show the row if it matches the search or if the search input is empty
-          } else {
+    } else {
               row.style.display = "none"; // Hide the row if it doesn't match the search
           }
       });
@@ -243,12 +243,12 @@ function render_whole_table() {
 }
 
 function updateMapStyles() {
-    geo.setStyle((feature) => ({
-        weight: 0.2,
-        color: "#000",
+  geo.setStyle((feature) => ({
+    weight: 0.2,
+    color: "#000",
         fillColor: document.querySelector(`tr[data-pc="${feature.properties.pc_id}"]`)?.dataset.pccolor,
-        fillOpacity: 0.9,
-    }));
+    fillOpacity: 0.9,
+  }));
 }
 
 
@@ -546,65 +546,65 @@ function render_state_table(feature, state) {
   
   // Create all rows first
   for (let i of feature) {
-      const tr = document.createElement("tr");
-      tr.className = "tr";
-      tb.appendChild(tr);
-      tr.dataset.pc = i.pc_id;
-      tr.dataset.pcname = i.pc_name;
-      tr.dataset.state = i.st_name;
-      tr.dataset.s_code = i.st_code;
-      tr.dataset.pcvalue = "";
+    const tr = document.createElement("tr");
+    tr.className = "tr";
+    tb.appendChild(tr);
+    tr.dataset.pc = i.pc_id;
+    tr.dataset.pcname = i.pc_name;
+    tr.dataset.state = i.st_name;
+    tr.dataset.s_code = i.st_code;
+    tr.dataset.pcvalue = "";
 
       if (i.pc_id != null) {
-          let id = 0;
-          let name = "";
-          let candid = "";
-          let candid2 = "";
-          let votes = 0;
-          let party_name = "";
-          let party_2 = "";
-          let votes2 = 0;
+    let id = 0;
+    let name = "";
+    let candid = "";
+    let candid2 = "";
+    let votes = 0;
+    let party_name = "";
+    let party_2 = "";
+    let votes2 = 0;
 
-          let win;
-          const firstCandidateKey = data[i.pc_id][0];
-          if (!firstCandidateKey) {
-              votes = 0;
-              party_name = "INDEPENDENT";
-              win = "NOTA";
-          } else {
-              win = firstCandidateKey.party;
-              id = i.pc_id;
-              name = data[i.pc_id][0].constituencyName;
-              candid = data[i.pc_id][0].candidateName;
-              candid2 = data[i.pc_id][1].candidateName;
-              votes = data[i.pc_id][0].votes;
-              party_name = data[i.pc_id][0].party;
-              votes2 = data[i.pc_id][1].votes;
-              party_2 = data[i.pc_id][1].party;
-          }
-          if (!partyColors[win]) tr.dataset.pccolor = "#D3D3D3";
-          else tr.dataset.pccolor = partyColors[win];
-          tr.className = tr;
+      let win;
+      const firstCandidateKey = data[i.pc_id][0];
+      if (!firstCandidateKey) {
+        votes = 0;
+        party_name = "INDEPENDENT";
+        win = "NOTA";
+      } else {
+        win = firstCandidateKey.party;
+        id = i.pc_id;
+        name = data[i.pc_id][0].constituencyName;
+        candid = data[i.pc_id][0].candidateName;
+        candid2 = data[i.pc_id][1].candidateName;
+        votes = data[i.pc_id][0].votes;
+        party_name = data[i.pc_id][0].party;
+        votes2 = data[i.pc_id][1].votes;
+        party_2 = data[i.pc_id][1].party;
+      }
+      if (!partyColors[win]) tr.dataset.pccolor = "#D3D3D3";
+      else tr.dataset.pccolor = partyColors[win];
+      tr.className = tr;
 
-          const td = document.createElement("td");
-          td.textContent = name;
-          td.classList.add("td");
-          tr.appendChild(td);
+      const td = document.createElement("td");
+      td.textContent = name;
+      td.classList.add("td");
+      tr.appendChild(td);
 
-          const td1 = document.createElement("td");
-          td1.innerHTML = `${candid}<br><img src="${sym[party_name]}"><span>${party_name}</span>`;
-          tr.appendChild(td1);
-          td1.classList.add("td1");
+      const td1 = document.createElement("td");
+      td1.innerHTML = `${candid}<br><img src="${sym[party_name]}"><span>${party_name}</span>`;
+      tr.appendChild(td1);
+      td1.classList.add("td1");
 
-          const td2 = document.createElement("td");
-          td2.innerHTML = `${candid2}<br><img src="${sym[party_2]}"><span>${party_2}</span>`;
-          td2.classList.add("td2");
-          tr.appendChild(td2);
+      const td2 = document.createElement("td");
+      td2.innerHTML = `${candid2}<br><img src="${sym[party_2]}"><span>${party_2}</span>`;
+      td2.classList.add("td2");
+      tr.appendChild(td2);
 
-          const td3 = document.createElement("td");
-          td3.innerHTML = `${votes - votes2}<br>`;
-          tr.appendChild(td3);
-          td3.classList.add("td3");
+      const td3 = document.createElement("td");
+      td3.innerHTML = `${votes - votes2}<br>`;
+      tr.appendChild(td3);
+      td3.classList.add("td3");
           count++;
       } else {
           tr.dataset.pccolor = "#fff";
@@ -612,7 +612,7 @@ function render_state_table(feature, state) {
   }
 
   // Update the heading with the count of candidates
-  const th = document.getElementById("theading");
+      const th = document.getElementById("theading");
   th.innerHTML = `<span id="constituency-name">${state}</span><div>${count} Constituencies</div>`;
   let input = document.getElementById("stateinput");
   if (!input) {
@@ -623,14 +623,14 @@ function render_state_table(feature, state) {
       input.placeholder = "Search";
   }
   th.appendChild(input);
-  th.style.display = "flex";
-  th.style.background = "white";
+      th.style.display = "flex";
+      th.style.background = "white";
 
   // Hide pagination controls if the number of candidates is less than or equal to 36
   const paginationControls = document.getElementById("pagination-controls");
   if (count <= rowsPerPage) {
       paginationControls.style.display = "none";
-  } else {
+    } else {
       paginationControls.style.display = "block";
   }
 
@@ -694,35 +694,35 @@ function render_table(code, page) {
   const endIndex = Math.min(startIndex + pageSize, candi.length);
 
   for (let i = startIndex; i < endIndex; i++) {
-      const row = document.createElement("tr");
-      row.className = "tr";
+    const row = document.createElement("tr");
+    row.className = "tr";
 
-      const candidate = document.createElement("td");
+    const candidate = document.createElement("td");
       candidate.textContent = candi[i].candidateName;
-      row.appendChild(candidate);
-      candidate.classList.add("tdata");
+    row.appendChild(candidate);
+    candidate.classList.add("tdata");
 
-      const party = document.createElement("td");
+    const party = document.createElement("td");
       const par = candi[i].party;
       party.innerHTML = `<img src="${sym[par]}"><span>${candi[i].party}</span>`;
-      party.className = "tdata1";
-      row.appendChild(party);
+    party.className = "tdata1";
+    row.appendChild(party);
 
-      const votes = document.createElement("td");
+    const votes = document.createElement("td");
       votes.textContent = candi[i].votes;
       votes.classList.add("tdata2");
-      row.appendChild(votes);
+    row.appendChild(votes);
 
-      const votes2 = document.createElement("td");
+    const votes2 = document.createElement("td");
       if (i == 0) {
           votes2.textContent = "-";
       } else if (i > 0) {
           votes2.textContent = candi[i - 1].votes - candi[i].votes;
       }
       votes2.classList.add("tdata3");
-      row.appendChild(votes2);
+    row.appendChild(votes2);
 
-      tbody.appendChild(row);
+    tbody.appendChild(row);
   }
 
   // Display pagination controls
