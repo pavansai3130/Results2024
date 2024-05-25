@@ -7,7 +7,7 @@ async function fetchMoreCards() {
         data.forEach(item => {
             const card = createCard(item);
             moreCardsRoot.appendChild(card);
-            
+
         });
     } catch (error) {
         console.error('Error fetching or processing data:', error);
@@ -49,7 +49,7 @@ function createCard(item) {
     return card;
 }
 
-document.getElementById('back-btn').addEventListener('click', function() {
+document.getElementById('back-btn').addEventListener('click', function () {
     window.location.href = 'index.html';
 });
 
