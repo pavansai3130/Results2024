@@ -31,16 +31,14 @@ function createCard(item) {
 
     // Adjust colors based on the alliance field
     if (item.alliance === "NDA") {
-        bgColor = "linear-gradient(to right, rgba(255,246,217,255), rgba(255,229,183,255))";
-        arrColor = "linear-gradient(to right, rgba(235,141,48,255), rgba(173,99,25,255))";
+        bgColor = " linear-gradient(56deg, #FFF8DC,#FFE4BF)";
+        arrColor = "linear-gradient(90deg, #EC8E30,#A65E17)";
         nameColor = "#FF9933";
     } else if (item.alliance === "INDA") {
-        bgColor = "linear-gradient(to right, rgba(217, 242, 252, 255), rgba(190, 234, 241, 255))";
-        arrColor = "linear-gradient(to right, rgba(134, 205, 234, 255), rgba(101, 163, 188, 255))";
         nameColor = "#19AAED";
     } else if (item.alliance === "OTH") {
-        bgColor = "linear-gradient(to right, rgba(243,243,243,255), rgba(226,226,226,255))";
-        arrColor = "linear-gradient(to right, rgba(101,132,124,255), rgba(75,109,101,255))";
+        bgColor = " linear-gradient(56deg, #F5F5F5,#E0E0E0)";
+        arrColor = "linear-gradient(90deg, #6F9088,#42615A)";
         nameColor = "#0c6b4b";
     }
 
@@ -83,3 +81,59 @@ document.getElementById('back-btn').addEventListener('click', function () {
 
 // Fetch and render the cards when the page loads
 fetchMoreCards();
+
+function performSearch() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    const selectedState = document.getElementById('dropdown').value.toLowerCase();
+    const cards = document.querySelectorAll('.custom-container');
+    let noRes = true;
+
+    cards.forEach(card => {
+        const title = card.querySelector('.card-title').textContent.toLowerCase();
+        const place = card.querySelector('.card-place').textContent.toLowerCase();
+
+        if ((title.includes(searchInput) || searchInput === '') && (selectedState === '' || place.includes(selectedState))) {
+            card.style.display = '';
+            noRes = false;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    const noResImg = document.getElementById('no-results-img');
+    if (noRes) {
+        noResImg.style.display = 'block';
+    } else {
+        noResImg.style.display = 'none';
+    }
+}
+
+function scrollToSection(sectionId) {
+    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+}
+
+document.getElementById('popular-btn').addEventListener('click', () => {
+    scrollToSection('popular-section');
+});
+
+document.getElementById('celebs-btn').addEventListener('click', () => {
+    scrollToSection('celebs-section');
+});
+
+// Function to filter cards by state
+document.getElementById('dropdown').addEventListener('change', () => {
+    performSearch();
+});
+
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.addEventListener('scroll', () => {
+    const backToTopBtn = document.getElementById('back-to-top-btn');
+    if (window.scrollY > 100) {
+        backToTopBtn.style.display = 'block';
+    } else {
+        backToTopBtn.style.display = 'none';
+    }
+});
