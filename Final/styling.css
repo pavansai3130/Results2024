@@ -31,7 +31,7 @@
 
 body{
 	margin-top: 10px;
-  background-color: #F5F5F5;
+  /* background-color: #F5F5F5; */
   /* */
   padding-top: 0;
   font-family: 'Roboto', sans-serif;
@@ -75,10 +75,6 @@ body{
   stroke: #000; /* Border color */
   stroke-width: 1; /* Border width */
   cursor: pointer; /* Change cursor on hover */
-}
-
-#india-svg path:hover {
-  fill: #f00; /* Highlight color on hover */
 }
 
 

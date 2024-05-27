@@ -2,7 +2,7 @@
 // Ensure you have included JQuery library before this script
 
 // JSON object containing party colors
-let state_value=36;
+let state_value = 36;
 let sym = {
   IND: "./imgs/independent.svg",
   BJP: "./imgs/BJP.webp",
@@ -187,23 +187,39 @@ const stateMaps = {
   Mizoram: "./imgs/Mizoram.png",
   Nagaland: "./imgs/Nagaland.png",
   "NCT Of Delhi": "./imgs/NCT_OF_Delhi.jpeg",
-  "Odisha": "./imgs/Odisha.png",
-  "Puducherry": "./imgs/Puducherry.png",
-  "Punjab": "./imgs/Punjab.jpg",
-  "Rajasthan": "./imgs/Rajasthan.png",
-  "Sikkim": "./imgs/Sikkim.png",
+  Odisha: "./imgs/Odisha.png",
+  Puducherry: "./imgs/Puducherry.png",
+  Punjab: "./imgs/Punjab.jpg",
+  Rajasthan: "./imgs/Rajasthan.png",
+  Sikkim: "./imgs/Sikkim.png",
   "Tamil Nadu": "./imgsTamil_Nadu.jpg",
-  "Telangana": "./imgs/Telangana.png",
-  "Tripura": "./imgs/Tripura.png",
+  Telangana: "./imgs/Telangana.png",
+  Tripura: "./imgs/Tripura.png",
   "Uttar Pradesh": "./imgs/Uttar_Pradesh.png",
-  "Uttarakhand": "./imgs/Uttarakhand.png",
+  Uttarakhand: "./imgs/Uttarakhand.png",
   "West Bengal": "./imgs/West_Bengal.png",
+};
+const unionTerritories = [
+  "Ladakh",
+  "Andaman and Nicobar Islands",
+  "Jammu and Kashmir",
+  "Puducherry",
+  "NCT Of Delhi",
+  "Chandigarh",
+  "Dadra and Nagar Havel",
+  "Lakshadweep",
+];
+
+let alliancePatries = {
+  nda: {},
+  india: {},
+  others: {},
 };
 
 let stateDataJson;
 let allianceJson;
 let data = {};
-let ftrs, geo ,geo2, map;
+let ftrs, geo, geo2, map;
 let names = {
   "#F47216": "NDA",
   "#7E7BFC": "I.N.D.I.A",
@@ -228,22 +244,36 @@ async function fetchGeoJSON(file) {
       onEachFeature: (feature, layer) => {
         layer.on("click", function (event) {
           console.log("first");
-          state_value=feature.properties.st_code;
+          state_value = feature.properties.st_code;
 
           breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread()">${feature.properties.st_name}`;
           breadcrumbState.style.display = "inline";
           breadcrumbConstituency.textContent = feature.properties.pc_name;
           breadcrumbConstituency.style.display = "inline";
-          const candidate_1=data[feature.properties.pc_id][0]['candidateName'];
-          const candidate_2=data[feature.properties.pc_id][1]['candidateName'];
-          const party_name_1=data[feature.properties.pc_id][0]['party'];
-          const party_name_2=data[feature.properties.pc_id][1]['party'];
-          const votes_1=data[feature.properties.pc_id][0]['votes'];
-          const votes_2=data[feature.properties.pc_id][1]['votes'];
-          const margin=votes_1-votes_2;
-          showdatatable(feature.properties.st_name,candidate_1,candidate_2,votes_1,votes_2,margin,feature.properties.pc_name,party_name_1,party_name_2,feature.properties.pc_id);
+          const candidate_1 =
+            data[feature.properties.pc_id][0]["candidateName"];
+          const candidate_2 =
+            data[feature.properties.pc_id][1]["candidateName"];
+          const party_name_1 = data[feature.properties.pc_id][0]["party"];
+          const party_name_2 = data[feature.properties.pc_id][1]["party"];
+          const votes_1 = data[feature.properties.pc_id][0]["votes"];
+          const votes_2 = data[feature.properties.pc_id][1]["votes"];
+          const margin = votes_1 - votes_2;
+          showdatatable(
+            feature.properties.st_name,
+            candidate_1,
+            candidate_2,
+            votes_1,
+            votes_2,
+            margin,
+            feature.properties.pc_name,
+            party_name_1,
+            party_name_2,
+            feature.properties.pc_id
+          );
           // render_table(feature.properties.pc_id,1);
-          document.getElementById("stateTabeleContainer").style.display = "none";
+          document.getElementById("stateTabeleContainer").style.display =
+            "none";
           document.querySelector("#Constituency-res").style.display = "none";
           document.querySelector("#Candidate-res").style.display = "block";
         });
@@ -263,7 +293,7 @@ async function fetchGeoJSON(file) {
     // console.log("rendered");
     updateMapBounds();
     map.on("resize", delayedBoundsUpdate);
- 
+
     var filteredFeatures = geoJson.features.filter(
       (feature) => feature.properties.st_code == state_value
     );
@@ -290,8 +320,6 @@ async function fetchGeoJSON(file) {
         layer._leaflet_id = feature.properties.pc_id;
       },
     });
-
-
   } catch (error) {
     console.error("Error loading GeoJSON:", error);
   }
@@ -366,38 +394,74 @@ $(document).ready(async function () {
   // Function to render alliance results in tabular format
   function renderAllianceResults() {
     // Implement the logic to fetch and display alliance results
-
+    alliancePatries = {
+      nda: {},
+      india: {},
+      others: {},
+    };
     const tbody = document.getElementById("allianceBody");
     const referenceRow = document.getElementById("referenceRow");
 
+    tbody.innerHTML = "";
+
     for (const state in stateDataJson) {
-      let nda = 0,
-        india = 0,
-        others = 0;
-      const stateMap = document.getElementById(state);
+      console.log(unionTerritories.includes(state));
+      if (!unionTerritories.includes(state)) {
+        let nda = 0,
+          india = 0,
+          others = 0;
 
-      const newRow = referenceRow.cloneNode(true);
-      const cells = newRow.getElementsByTagName("td");
-      cells[0].innerHTML = `<img id="stateLogo" src='${stateMaps[state]}'>${state}`;
-      for (const consti in stateDataJson[state]) {
-        const leadingCandidate = stateDataJson[state][consti][0];
-        if (leadingCandidate.alliance === "NDA") nda++;
-        else if (leadingCandidate.alliance === "OTH") others++;
-        else india++;
+        const stateMap = document.getElementById(state);
+        const newRow = referenceRow.cloneNode(true);
+        newRow.removeAttribute("id");
+
+        newRow.style.display = "";
+        const cells = newRow.getElementsByTagName("td");
+        cells[0].innerHTML = `<img id="stateLogo" src='${stateMaps[state]}'>${state}`;
+        for (const consti in stateDataJson[state]) {
+          const leadingCandidate = stateDataJson[state][consti][0];
+          if (leadingCandidate.alliance === "NDA") {
+            nda++;
+            if (alliancePatries["nda"][leadingCandidate.party] !== undefined)
+              alliancePatries["nda"][leadingCandidate.party]++;
+            else alliancePatries["nda"][leadingCandidate.party] = 1;
+          } else if (leadingCandidate.alliance === "OTH") {
+            others++;
+            if (alliancePatries["others"][leadingCandidate.party] !== undefined)
+              alliancePatries["others"][leadingCandidate.party]++;
+            else alliancePatries["others"][leadingCandidate.party] = 1;
+          } else {
+            india++;
+            if (alliancePatries["india"][leadingCandidate.party] !== undefined)
+              alliancePatries["india"][leadingCandidate.party]++;
+            else alliancePatries["india"][leadingCandidate.party] = 1;
+          }
+        }
+
+        cells[1].textContent = nda;
+        cells[2].textContent = india;
+        cells[3].textContent = others;
+        stateMap.style.fill =
+          nda >= india && nda >= others
+            ? names.ndaColor
+            : india > nda && india >= others
+            ? names.indiaColor
+            : names.othersColor;
+
+        tbody.appendChild(newRow);
       }
-
-      cells[1].textContent = nda;
-      cells[2].textContent = india;
-      cells[3].textContent = others;
-      stateMap.style.fill =
-        nda >= india && nda >= others
-          ? names.ndaColor
-          : india > nda && india >= others
-          ? names.indiaColor
-          : names.othersColor;
-
-      tbody.appendChild(newRow);
     }
+    console.log("afhkhbfz");
+    console.log(alliancePatries);
+    const sortObjectByValuesDesc = (obj) =>
+      Object.fromEntries(Object.entries(obj).sort(([, a], [, b]) => b - a));
+
+    // Sorting each sub-object
+    alliancePatries.nda = sortObjectByValuesDesc(alliancePatries.nda);
+    alliancePatries.india = sortObjectByValuesDesc(alliancePatries.india);
+    alliancePatries.others = sortObjectByValuesDesc(alliancePatries.others);
+
+    populateCarousel();
   }
 
   // Function to render party-wise results in tabular format
@@ -410,11 +474,10 @@ $(document).ready(async function () {
     let nda = 0,
       india = 0,
       others = 0;
-      document.getElementById("breadcrumb-india").style.display="block";
-      breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread2()">${state}`;
-      breadcrumbState.style.display = "inline";
-      breadcrumbConstituency.style.display = "none";
     state_map(state_codes[state], state);
+    breadcrumbState.textContent = state;
+    breadcrumbState.style.display = "inline";
+    breadcrumbConstituency.style.display = "none";
     // Implement the logic to fetch and display state-wise results
     const constituencyTable = document.getElementById("stateTable");
     const cells = constituencyTable.getElementsByTagName("th");
@@ -434,8 +497,104 @@ $(document).ready(async function () {
 
   // Initial rendering of landing page
   renderIndiaMap();
-  // renderAllianceResults();
   renderPartyResults();
+  renderAllianceResults();
+  updateBar(Object.values(allianceJson));
+  // Example click event handler for state in India map
+  $("#india-map").on("click", "path", function () {
+    const state = $(this).attr("id");
+    handleStateClick(state);
+  });
+
+  // ------------Search in state table-------------------------------
+  $("#stateSearch").on("keyup", function () {
+    var value = $(this).val().toLowerCase();
+    $("#allianceBody tr").filter(function () {
+      var text = $(this).text().toLowerCase();
+      var words = text.split(/\s+/); // Split text into words
+      var match = words.some(function (word) {
+        return word.startsWith(value);
+      });
+      $(this).toggle(match);
+    });
+  });
+
+  document.getElementById("stateButton").addEventListener("click", function () {
+    document.getElementById("unionButton").className =
+      "btn btn-light border border-5";
+    document.getElementById("stateButton").className += " active";
+    renderAllianceResults();
+  });
+
+  document.getElementById("unionButton").addEventListener("click", function () {
+    document.getElementById("stateButton").className =
+      "btn btn-light border border-5";
+    document.getElementById("unionButton").className += " active";
+    const tbody = document.getElementById("allianceBody");
+    tbody.innerHTML = "";
+    const referenceRow = document.getElementById("referenceRow");
+
+    for (const state in stateDataJson) {
+      if (unionTerritories.includes(state)) {
+        let nda = 0,
+          india = 0,
+          others = 0;
+
+        const stateMap = document.getElementById(state);
+        const newRow = referenceRow.cloneNode(true);
+        newRow.removeAttribute("id");
+        newRow.style.display = "";
+        const cells = newRow.getElementsByTagName("td");
+        cells[0].innerHTML = `<img id="stateLogo" src='${stateMaps[state]}'>${state}`;
+        for (const consti in stateDataJson[state]) {
+          const leadingCandidate = stateDataJson[state][consti][0];
+          if (leadingCandidate.alliance === "NDA") nda++;
+          else if (leadingCandidate.alliance === "OTH") others++;
+          else india++;
+        }
+
+        cells[1].textContent = nda;
+        cells[2].textContent = india;
+        cells[3].textContent = others;
+        stateMap.style.fill =
+          nda >= india && nda >= others
+            ? names.ndaColor
+            : india > nda && india >= others
+            ? names.indiaColor
+            : names.othersColor;
+
+        tbody.appendChild(newRow);
+      }
+    }
+  });
+
+  // -----------------Accordion population---------------------------------------------
+  // Function to handle click event on state in India map
+  function handleStateClick(state) {
+    let nda = 0,
+      india = 0,
+      others = 0;
+    document.getElementById("breadcrumb-india").style.display = "block";
+    breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread2()">${state}`;
+    breadcrumbState.style.display = "inline";
+    breadcrumbConstituency.style.display = "none";
+    state_map(state_codes[state], state);
+    // Implement the logic to fetch and display state-wise results
+    const constituencyTable = document.getElementById("stateTable");
+    const cells = constituencyTable.getElementsByTagName("th");
+    for (const consti in stateDataJson[state]) {
+      const leadingCandidate = stateDataJson[state][consti][0];
+      if (leadingCandidate.alliance === "NDA") nda++;
+      else if (leadingCandidate.alliance === "OTH") others++;
+      else india++;
+    }
+    updateBar([nda, india, others]);
+  }
+
+  // Function to render state results page
+  function renderStateResults(state) {
+    // Implement the logic to render state-wise results page
+  }
 
   // Example click event handler for state in India map
   $("#india-map").on("click", "path", function () {
@@ -443,65 +602,42 @@ $(document).ready(async function () {
     handleStateClick(state);
   });
 
-  function updateBar(values) {
-    const barContainer = document.getElementById("bar-container");
-    const bar1 = document.getElementById("bar1");
-    const bar2 = document.getElementById("bar2");
-    const bar3 = document.getElementById("bar3");
-    bar1.style.display = "block";
-    bar2.style.display = "block";
-    bar3.style.display = "block";
+  let percent = 0;
+  let progress_bar = document.querySelector(
+    ".transition-timer-carousel-progress-bar"
+  );
 
-    const word1 = document.getElementById("word1");
-    const word2 = document.getElementById("word2");
-    const word3 = document.getElementById("word3");
-    const barLabel = document.getElementById("bar-label");
-    const barText = document.getElementById("bar-text");
+  let progress_crsl = new bootstrap.Carousel(
+    document.getElementById("carouselExampleIndicators"),
+    {
+      pause: true,
+    }
+  );
 
-    const total = values.reduce((acc, val) => acc + val, 0);
-
-    // Create an array of objects to sort by value
-    const bars = [
-      { element: bar1, value: values[0], color: "#F47216" }, // Blue
-      { element: bar2, value: values[1], color: "#7E7BFC" }, // Green
-      { element: bar3, value: values[2], color: "#BFC8D0" }, // Red
-    ];
-
-    // Sort bars by value in descending order
-    bars.sort((a, b) => b.value - a.value);
-
-    // Clear existing bars from the container
-    barContainer.innerHTML = "";
-
-    // Append sorted bars to the container
-    bars.forEach((bar, index) => {
-      const width = (bar.value / total) * 100;
-      bar.element.style.width = width + "%";
-      bar.element.style.backgroundColor = bar.color;
-      bar.element.innerText = `${bar.value}`;
-      barContainer.appendChild(bar.element);
-      if (bar.value === 0) bar.element.style.display = "none";
-    });
-    word2.textContent = names[bars[1].color];
-    word2.style.cssText = `left:${(bars[0].value / total) * 100}%;
-    color:${bars[1].color}`;
-
-    word1.textContent = names[bars[0].color];
-    word1.style.color = bars[0].color;
-
-    word3.textContent = names[bars[2].color];
-    word3.style.color = bars[2].color;
-
-    // Update the label text
+  // Function to animate the progress bar and change slides
+  function progressBarCarousel() {
+    progress_bar.style.width = percent + "%";
+    percent = percent + 1;
+    if (percent > 100) {
+      percent = 0;
+      progress_crsl.next();
+      progress_bar.style.width = "0";
+    }
   }
 
-  renderAllianceResults(stateDataJson);
+  // Start the progress bar animation
+  var barInterval = setInterval(progressBarCarousel, 60);
 
-  // Example usage: updating the bar with specific values
-  //   const exampleValues = [335, 65, 81]; // Change these values to see different results
-  updateBar(Object.values(allianceJson));
+  // Pause the progress bar animation on hover
+  progress_crsl._element.addEventListener("mouseenter", function () {
+    clearInterval(barInterval);
+    // progress_crsl.pause();
+  });
 
-  // ------------Search in state table-------------------------------
+  progress_crsl._element.addEventListener("mouseleave", function () {
+    barInterval = setInterval(progressBarCarousel, 60);
+    // progress_crsl.cycle();
+  });
   $("#myInput").on("keyup", function () {
     var value = $(this).val().toLowerCase();
     $("#allianceBody tr").filter(function () {
@@ -513,4 +649,98 @@ $(document).ready(async function () {
       $(this).toggle(match);
     });
   });
+  //   const exampleValues = [335, 65, 81]; // Change these values to see different results
+  updateBar(Object.values(allianceJson));
 });
+
+function populateCarousel() {
+  populateTable("nda", "ndaCarousel");
+  populateTable("india", "indiaCarousel");
+  populateTable("others", "othersCarousel");
+}
+function populateTable(alliance, carouselId) {
+  let carousel = document.getElementById(carouselId);
+  let tbody1 = carousel.querySelector("#tbody1");
+  let tbody2 = carousel.querySelector("#tbody2");
+  tbody1.innerHTML = "";
+  tbody2.innerHTML = "";
+
+  let count = 1;
+  for (const party in alliancePatries[alliance]) {
+    const tr = document.createElement("tr");
+    const td1 = document.createElement("td");
+    td1.innerHTML = `<img id="stateLogo" src='${stateMaps[party]}'>${party}`;
+    const td2 = document.createElement("td");
+    td2.textContent = alliancePatries[alliance][party];
+
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+
+    if (count <= 5) {
+      tbody1.appendChild(tr);
+    } else {
+      tbody2.appendChild(tr);
+    }
+    count++;
+  }
+}
+function updateBar(values) {
+  const total = values.reduce((acc, val) => acc + val, 0);
+  const barContainer = document.getElementById("bar-container");
+  const bar1 = document.getElementById("bar1");
+  const bar2 = document.getElementById("bar2");
+  const bar3 = document.getElementById("bar3");
+  bar1.style.display = "block";
+  bar2.style.display = "block";
+  bar3.style.display = "block";
+
+  // const ndaBar = document.getElementById("ndaBar");
+  // const indiaBar = document.getElementById("indiaBar");
+  // const othersBar = document.getElementById("othersBar");
+  // ndaBar.style.width = (values[0] / total) * 100 + "%";
+  // indiaBar.style.width = (values[1] / total) * 100 + "%";
+  // othersBar.style.width = (values[2] / total) * 100 + "%";
+
+  const word1 = document.getElementById("word1");
+  const word2 = document.getElementById("word2");
+  const word3 = document.getElementById("word3");
+  const barLabel = document.getElementById("bar-label");
+  const barText = document.getElementById("bar-text");
+
+  // Create an array of objects to sort by value
+  const bars = [
+    { element: bar1, value: values[0], color: "#F47216" }, // Blue
+    { element: bar2, value: values[1], color: "#7E7BFC" }, // Green
+    { element: bar3, value: values[2], color: "#BFC8D0" }, // Red
+  ];
+
+  // Sort bars by value in descending order
+  bars.sort((a, b) => b.value - a.value);
+
+  // Clear existing bars from the container
+  barContainer.innerHTML = "";
+
+  // Append sorted bars to the container
+  bars.forEach((bar, index) => {
+    const width = (bar.value / total) * 100;
+    bar.element.style.width = width + "%";
+    bar.element.style.backgroundColor = bar.color;
+    bar.element.innerText = `${bar.value}`;
+    barContainer.appendChild(bar.element);
+    if (bar.value === 0) bar.element.style.display = "none";
+  });
+  word2.textContent = names[bars[1].color];
+  word2.style.cssText = `left:${(bars[0].value / total) * 100}%;
+  color:${bars[1].color}`;
+
+  word1.textContent = names[bars[0].color];
+  word1.style.color = bars[0].color;
+
+  word3.textContent = names[bars[2].color];
+  word3.style.color = bars[2].color;
+
+  // Update the label text
+}
+
+// Example usage: updating the bar with specific values
+// ------------Search in state table-------------------------------

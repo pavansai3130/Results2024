@@ -1,6 +1,8 @@
 body{
 	margin-top: 0.6249rem;
-  background-color: #FFFFFF;
+  /* background-color: #F5F5F5; */
+  background: rgba(255, 255, 255, 1);
+
   /* padding: 3.1251rem; */
   padding-top: 0;
   font-family: 'Roboto', sans-serif;
@@ -14,8 +16,8 @@ body{
 }
 
 #tbody tr:last-child {
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 0.625rem;
+  border-bottom-right-radius: 0.625rem;
 }
 
 /* Optional: Add padding to the table body for better aesthetics */
@@ -56,10 +58,6 @@ body{
   cursor: pointer; /* Change cursor on hover */
 }
 
-#india-svg path:hover {
-  fill: #f00; /* Highlight color on hover */
-}
-
 
 .navbar-brand {
   color: #ff4500; /* Adjusted color for 'results' */
@@ -72,7 +70,7 @@ body{
   font-size: 1.5rem;
 }
 .navbar{
-  border-bottom: 0.0624rem solid #344054;
+  border-bottom: 0.0624rem solid #667085;
   margin-bottom: 2.4999rem;
 }
 a{
@@ -84,10 +82,6 @@ a{
 }
 /* -----------------------Progress----------------*/
 
-.progress{
-  height: 2.4999rem;
-
-}
 #bar-container {
   /* width: 100%; */
   /* background-color: #f3f3f3; */
@@ -97,7 +91,7 @@ a{
   margin: 0 0 ;
   /* border: 0.0624rem solid red; */
   display: flex;
-  border-radius: 3px ;
+  border-radius: 0.1875rem ;
 }
 .bar {
   /* height: 2.4999rem; */
@@ -151,20 +145,144 @@ a{
 /* -------------------------------------------------------------- */
 
 /* -------------------------Accordian----------------------- */
+/* Custom CSS for the progress bar */
+#carouselContainer{
+  min-height: 220px;
+  /* border-radius: 8px; */
 
+}
+#carouselContainer table{
+  border: none;
+}
+#carouselExampleIndicators{
+  border-top:8px solid black
+}
+
+
+#carouselContainer th,td{
+ width: 50%;
+ background: rgba(255, 255, 255, 1);
+ ;
+ border-bottom: 1px solid rgba(208, 213, 221, 1)
+ ;
+ text-align: center;
+}
+.accordionTable th:first-child,
+.accordionTable td:first-child {
+  /* Your styles for the first child th and td */
+  text-align: left;
+}
+.progress {  
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-top: 6rem;
+} 
+#accordionContainer h2{
+  height: 2.5rem;
+  /* border: 8px; */
+
+
+}
+.accordion-button div {
+  /* background-color: red; */
+  height: 100%;
+  width:50%;
+  display: flex;
+  align-items: center;
+  padding: 0.625rem;
+  color:white;
+  
+}
+.color-animation {
+  animation: colorFill 5s linear infinite; /* Customize duration and timing */
+  background: linear-gradient(to right, #F47216 0%, #F47216 50%, transparent 50%, transparent 100%);
+  background-size: 200% 100%; /* Double the size of the background */
+}
+
+@keyframes colorFill {
+  0% {
+      background-position: 0 0;
+  }
+  100% {
+      background-position: -100% 0;
+  }
+}
+.accordion-button{
+  height: 2.5rem;
+  font-size: 1.25rem;
+  text-align: left;
+  padding: 0;
+  padding-right: 0.625rem;
+  border: none;
+
+}
+.accordion-button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.accordion-body{
+  height: 13.75rem;
+  padding: 0.3125rem 0;
+}
+/* .accordionTable{
+  max-width: 245px;
+} */
+.accordionTable td{
+  max-height: 1.25rem;
+
+  /* background-color: red; */
+}
 /* ---------------------------------------------------------------- */
 .card{
-  height:220px;
+  height:13.75rem;
 }
 
 table{
   padding: 0;
-  margin-top: 24px;
-  border: 1px solid #EAECF0;
+  margin-top: 1.5rem;
+  border: 0.0625rem solid #EAECF0;
   /* overflow: hidden; */
-  border-radius: 8px;
+  border-radius: 0.5rem;
 
 }
+.stateUnion{
+  height:2.1875rem ;
+  /* border: 2px solid black; */
+  /* border-radius: 8px; */
+  font-size: 0.625rem;
+  /* overflow: hidden; */
+}
+
+#referenceRow{
+  display: none;
+}
+#allianceBody td{
+  height: 2.5rem  ; 
+  color: #101828;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0;
+  align-items: center;
+  vertical-align: middle;
+  
+}
+/* #stateButton:not(:focus),
+#unionButton:not(:focus),#state-bt:not(:focus),#consti-bt:not(:focus) {
+  opacity: 0.5; 
+}
+#stateButton:focus,
+#unionButton:focus,#state-bt:focus,#consti-bt:focus {
+  outline: none;
+  box-shadow: none;
+}
+#stateButton:active,
+#unionButton:active,#state-bt:active,#consti-bt:active {
+  outline: none;
+  box-shadow: none;
+} */
 
 #stateRow{
   background-color: #EAECF0;
@@ -181,6 +299,9 @@ table{
   color: white;
   border-left: none;
 
+}
+#stateName{
+  text-align: left;
 }
 #Others{
   background-color: #BFC8D0;
@@ -206,9 +327,66 @@ table{
 #stateLogo{
   width: 0.75rem;
   height: 0.75rem;
+  margin-left: 0.5rem;
   margin-right: 0.5rem;
 }
 
 
 
-/* pavan css */
+/* -------------------------------state search---------- */
+body{
+  padding-top: 4.6875rem;
+}
+
+.search-container{
+  width: 12.5rem;
+  display: block;
+  margin: 0;
+  padding: 0;
+  height: 2.1875rem;
+  /* border-bottom: 1px solid red; */
+
+}
+
+input#stateSearch{
+  margin: 0 auto;
+  width: 100%;
+  height: 2.1875rem;
+  background-color:#F5F5F5;
+  /* padding: 0 20px; */
+  /* font-size: 1rem; */
+  /* outline: none; */
+  border-radius: 0;
+  border:none;
+  border-bottom:0.0625rem solid black ;
+  /* border:none; */
+  &:focus{
+    /* border: 1px solid #008ABF; */
+    transition: 0.35s ease;
+    /* color: #008ABF; */
+    &::-webkit-input-placeholder{
+      transition: opacity 0.45s ease; 
+  	  opacity: 0;
+     }
+    &::-moz-placeholder {
+      transition: opacity 0.45s ease; 
+  	  opacity: 0;
+     }
+    &:-ms-placeholder {
+     transition: opacity 0.45s ease; 
+  	 opacity: 0;
+     }    
+   }
+ }
+
+.search-icon{
+  position: relative;
+  float: right;
+  width: 3.125rem;
+  height: 3.125rem;
+  top: -2.5rem;
+  right: -0.625rem;
+}
+
+
+
