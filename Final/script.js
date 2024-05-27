@@ -2,6 +2,7 @@
 // Ensure you have included JQuery library before this script
 
 // JSON object containing party colors
+let state_value=36;
 let sym = {
   IND: "./imgs/independent.svg",
   BJP: "./imgs/BJP.webp",
@@ -227,14 +228,24 @@ async function fetchGeoJSON(file) {
       onEachFeature: (feature, layer) => {
         layer.on("click", function (event) {
           console.log("first");
-          document.getElementById("stateTabeleContainer").style.display = "none";
-          document.querySelector("#Constituency-res").style.display = "none";
-          document.querySelector("#Candidate-res").style.display = "block";
+          state_value=feature.properties.st_code;
+
           breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread()">${feature.properties.st_name}`;
           breadcrumbState.style.display = "inline";
           breadcrumbConstituency.textContent = feature.properties.pc_name;
           breadcrumbConstituency.style.display = "inline";
-          render_table(feature.properties.pc_id,1);
+          const candidate_1=data[feature.properties.pc_id][0]['candidateName'];
+          const candidate_2=data[feature.properties.pc_id][1]['candidateName'];
+          const party_name_1=data[feature.properties.pc_id][0]['party'];
+          const party_name_2=data[feature.properties.pc_id][1]['party'];
+          const votes_1=data[feature.properties.pc_id][0]['votes'];
+          const votes_2=data[feature.properties.pc_id][1]['votes'];
+          const margin=votes_1-votes_2;
+          showdatatable(feature.properties.st_name,candidate_1,candidate_2,votes_1,votes_2,margin,feature.properties.pc_name,party_name_1,party_name_2,feature.properties.pc_id);
+          // render_table(feature.properties.pc_id,1);
+          document.getElementById("stateTabeleContainer").style.display = "none";
+          document.querySelector("#Constituency-res").style.display = "none";
+          document.querySelector("#Candidate-res").style.display = "block";
         });
         layer._leaflet_id = feature.properties.pc_id;
       },
@@ -252,10 +263,9 @@ async function fetchGeoJSON(file) {
     // console.log("rendered");
     updateMapBounds();
     map.on("resize", delayedBoundsUpdate);
-    // render_whole_table();
-    // document.querySelector("#Constituency-res").style.display = "none";
+ 
     var filteredFeatures = geoJson.features.filter(
-      (feature) => feature.properties.st_code == 36
+      (feature) => feature.properties.st_code == state_value
     );
     var filteredGeoJson = { ...geoJson, features: filteredFeatures };
     geo2 = L.geoJSON(filteredGeoJson, {
@@ -280,7 +290,6 @@ async function fetchGeoJSON(file) {
         layer._leaflet_id = feature.properties.pc_id;
       },
     });
-
 
 
   } catch (error) {
