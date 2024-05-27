@@ -8,8 +8,12 @@
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
       <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+      <script src="leaflet/index.js"></script>
+      <script src="index.js"></script>
       <link rel="stylesheet" href="styles.css">
+      <link rel="stylesheet" href="cards.css">
       <link rel="stylesheet" href="styling.css">
+      <link rel="stylesheet" href="./cardStyle.css">
       <link rel="stylesheet" href="leaflet/index.css"/>
       <style>
          #datatable{
@@ -113,6 +117,30 @@
         .button:hover {
             background-color: blue;
         }
+		#see-more-btn{
+  padding: 0.5rem 1rem;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+}
+#see-more-btn:hover{
+  background-color: #1e90ff; /* DodgerBlue */
+  box-shadow: 0px 5px 20px rgba(30, 144, 255, 0.4); /* DodgerBlue with 40% opacity */
+  color: #fff;
+  transform: translateY(-2px);
+}
+#see-more-btn:active {
+  transform: translateY(-1px);
+}
         /* Media Queries */
         @media (max-width: 600px) {
             .maindiv {
@@ -325,6 +353,39 @@
                       <div id="map" style="width: 100%; height:100vh;display: none;">
                       </div>
                   </div>
+                  <!-- card start-->
+                  <div class="root">
+                     <h2 style="align-items: center;margin-top: 1rem;font-weight: bold;">Popular Candidates</h2>
+                     <div class="container-fluid h-500">
+                         <div id="root" class="row g-2 ">
+                             <!-- <div class="col-lg-6 d-flex position-relative custom-container">
+                                 <div class="ribbon">Trailing</div>
+                                 <div class="temp custom-temp">
+                                     <div class="card-body w-100">
+                                         <h4 class="card-title custom-card-title">Rahul Gandhi</h4>
+                                         <div class="subheaders d-flex align-items-center mb-3 custom-subheaders">
+                                             <div class="logo"><img class="custom-img"
+                                                     src="https://upload.wikimedia.org/wikipedia/commons/6/63/Indian_National_Congress_hand_logo.png"
+                                                     alt=""></div>
+                                             <h4 style="font-weight: bold;">INC</h4>
+                                         </div>
+                                         <p class="card-text custom-card-text">Rai Bareilly (Uttar Pradesh)</p>
+                                         <p class="card-text custom-card-text-votes">Votes : 1,23,009</p>
+                                     </div>
+                                     <div
+                                         class="iribbon trail d-flex flex-column bg-white rounded-2 p-3 position-relative custom-iribbon">
+                                         <p class="card-text mb-1 custom-iribbon-text">Trailing by</p>
+                                         <p class="card-text custom-iribbon-text-votes">23,000 votes</p>
+                                     </div>
+                                 </div>
+                                 <div class="person-image d-flex custom-person-image">
+                                     <img class="person-img w-50" src="img/rahul.png" alt="Person Image">
+                                 </div>
+                             </div> -->
+                         </div> <!-- End of the row -->
+                         <button id="see-more-btn" class="button">See More</button>
+                     </div>
+                 </div>
                </div>
                <div class="col-12 col-lg-6 order-1 order-lg-2" ">
                   <!-- Alliance Results -->
@@ -738,5 +799,6 @@
       <script src="./paths.js"></script>
       <script src="./leaflet/index.js"></script>
       <script src="./index.js"></script>
+	  <script src="./cards.js"></script>
    </body>
 </html>
