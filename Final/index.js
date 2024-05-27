@@ -1,5 +1,6 @@
 let currentPage = 1;
-const rowsPerPage = 28;
+let currentPageCandidates = 1;
+const rowsPerPage = 10;
 let breadcrumbConstituency;
 let breadcrumbState;
 let state_button_pressed=1;
@@ -66,11 +67,11 @@ function resetBreadcrumb() {
     geo.addTo(map);
     document.getElementById("map").style.display = "none";
     document.getElementById("india-map").style.display = "block";
+    document.getElementById("Constituency-res").style.display="none";
     document.getElementById("stateTabeleContainer").style.display="block";
     }
     else{
   resetMap();
-  document.getElementById("Constituency-res").style.display="none";
     document.getElementById("stateTabeleContainer").style.display="block";
     }
   
@@ -488,45 +489,74 @@ function handleSelection() {
 //   });
 //   render2();
 // }
-function updatePaginationControls(totalRows) {
+function updatePaginationControls(totalRows,class_name,second_class_name) {
   const numPages = Math.ceil(totalRows / rowsPerPage);
-  const paginationControls = document.getElementById("pagination-controls");
+  const paginationControls = document.getElementById(class_name);
   paginationControls.innerHTML = ""; // Clear previous pagination controls
 
+  const pageButtonsContainer = document.createElement("div");
+  pageButtonsContainer.className = "page-buttons";
+
   const prevButton = document.createElement("button");
-  prevButton.textContent = "Previous";
+  prevButton.innerHTML = `&lt; Previous`;
   prevButton.addEventListener("click", function () {
-      if (currentPage > 1) {
+    if(class_name == "pagination-controls"){
+    if (currentPage > 1) {
           currentPage--;
-          displayPage(currentPage);
+          displayPage(currentPage,second_class_name);
       }
+    }
+    else{
+      if (currentPageCandidates > 1) {
+        currentPageCandidates--;
+        displayPage(currentPageCandidates, second_class_name);
+      }
+    }
   });
-  paginationControls.appendChild(prevButton);
+  pageButtonsContainer.appendChild(prevButton);
 
   for (let i = 1; i <= numPages; i++) {
       const button = document.createElement("button");
       button.textContent = i;
       button.addEventListener("click", function () {
+        if(class_name == "pagination-controls"){
           currentPage = i;
-          displayPage(currentPage);
+          displayPage(currentPage,second_class_name);
+        }
+        else{
+          currentPageCandidates = i;
+        displayPage(currentPageCandidates, second_class_name);
+        }
       });
-      paginationControls.appendChild(button);
+      button.className = "newbuttons";
+      pageButtonsContainer.appendChild(button);
   }
 
   const nextButton = document.createElement("button");
-  nextButton.textContent = "Next";
+  nextButton.innerHTML = `Next &gt;`;
   nextButton.addEventListener("click", function () {
+    if(class_name == "pagination-controls"){
       if (currentPage < numPages) {
           currentPage++;
-          displayPage(currentPage);
+          displayPage(currentPage,second_class_name);
       }
+    }
+    else{
+      if (currentPageCandidates < numPages) {
+        currentPageCandidates++;
+        displayPage(currentPageCandidates, second_class_name);
+      }
+    }
   });
-  paginationControls.appendChild(nextButton);
+  pageButtonsContainer.appendChild(nextButton);
+
+  paginationControls.appendChild(pageButtonsContainer);
 }
 
 
-function displayPage(page) {
-  const rows = document.querySelectorAll("#table-body tr");
+
+function displayPage(page,class_name) {
+  const rows = document.querySelectorAll(class_name);
   const startIndex = (page - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
 
@@ -636,8 +666,8 @@ function render_state_table(feature, state) {
 
   // Initialize pagination only if needed
   if (count > rowsPerPage) {
-      updatePaginationControls(count);
-      displayPage(currentPage);
+      updatePaginationControls(count,"pagination-controls","#table-body tr");
+      displayPage(currentPage,"#table-body tr");
   }
 
   // Search functionality
@@ -654,8 +684,8 @@ function render_state_table(feature, state) {
 
       // Reset to the first page after filtering
       currentPage = 1;
-      updatePaginationControls(document.querySelectorAll("#table-body tr:visible").length);
-      displayPage(currentPage);
+      // updatePaginationControls(document.querySelectorAll("#table-body tr:visible").length);
+      // displayPage(currentPage);
   });
 }
 
@@ -683,9 +713,68 @@ function render2() {
     fillOpacity: 0.9,
   }));
 }
+function showdatatable(state,cand1,cand2,votes1,votes2,mvotes,con1,party1,party2,id) {
+            document.querySelector("#Candidate-res").style.display = "block";
+  var div = document.getElementById('datatable');
+  var htmlCode = `
+  <div class="header">
+      <span id="cons" class="votes" style="margin-left:18px";"text-transform: capitalize;">${con1}(${state})</span>
+       <button class="button" style="margin-left:1%" onclick="render_table('${id}',1);">Full Details</button>
+      <div class="close-btn" onclick="closedata()">&times;</div>
+  </div>
+  <div class="stncon">
+      <div class="cav">
+          <span id="cand" style="margin-left: 0%;"class="votes">Candidate</span>
+          <span id="vot" style="margin-left: 54%;"class="votes">Votes</span>
+      </div>
+  </div>
+  <div class="name1">
+      <div class="cav1" style="margin-top: -6px;">
+          <div class="name-section">
+              <span style="margin-left:4px;"class="votes">${cand1}</span>
+              <span class="small-text"><img src="${sym[party1]}" width="16" height="16" style="margin-bottom:6px;">${party1}</span>
+          </div>
+          <div class="votes-section">
+              <span class="votes">${votes1}</span>
+              <span class="small-text1">margin-${mvotes}</span>
+          </div>
+      </div>
+      <div class="cav2">
+          <div class="name-section2">
+              <span style="margin-left: 4px;" class="votes">${cand2}</span>
+              <span class="small-text"><img src="${sym[party2]}" width="16" height="16" style="margin-bottom:6px;">${party2}</span>
+          </div>
+          <div class="votes-section2">
+              <span style="margin-top:-10%" class="votes">${votes2}</span>
+          </div>
+      </div>
+      <div id="cav2">
+          <div class="name-section2">
+              <span class="small-text">2019 winner</span>
+              <span style="margin-left: 4px;" class="votes">${cand1}</span>
+          </div>
+          <div class="votes-section2">
+              <span class="small-text">Votes</span>
+              <span class="votes">${votes1}</span>
+          </div>
+      </div>
+  </div>`;
+  div.innerHTML = '';
+  div.innerHTML += htmlCode;
+  div.style.display = 'block';
+  div.style.position = 'absolute';
+  div.style.zIndex = '999';
+}
+function closedata() {
+  document.getElementById('datatable').style.display = "none";
+}
 function render_table(code, page) {
-  const pageSize = 10; // Number of rows per page
+  
+let ct=0;
+  closedata();
+  const pageSize = 10; // Number of rows per page 
   const candi = data[code];
+  const candi_len = candi.length;
   const tbody = document.querySelector(".candidateBody");
   tbody.innerHTML = "";
 
@@ -693,7 +782,7 @@ function render_table(code, page) {
   const startIndex = (page - 1) * pageSize;
   const endIndex = Math.min(startIndex + pageSize, candi.length);
 
-  for (let i = startIndex; i < endIndex; i++) {
+  for (let i = 0; i < candi_len; i++) {
     const row = document.createElement("tr");
     row.className = "tr";
 
@@ -723,14 +812,26 @@ function render_table(code, page) {
     row.appendChild(votes2);
 
     tbody.appendChild(row);
+    ct++;
+  }
+  const paginationControls = document.getElementById("pagination-controls-candidates");
+  if (candi_len > rowsPerPage) {
+    updatePaginationControls(candi_len, "pagination-controls-candidates", ".candidateBody tr");
+    currentPageCandidates = 1;
+    displayPage(currentPageCandidates, ".candidateBody tr");
+    paginationControls.style.display = "block";
+  } else {
+   
+    paginationControls.innerHTML = "";
+    paginationControls.style.display = "none";
   }
 
   // Display pagination controls
-  displayPaginationControls(code, page);
 
   // Update theading2 with input
+
   const th = document.getElementById("theading2");
-  th.innerHTML = `<span id="constituency-name">${candi[0].constituencyName}</span><div>${endIndex - startIndex} candidates</div>`;
+  th.innerHTML = `<span id="constituency-name">${candi[0].constituencyName}</span><div>${ct} candidates</div>`;
   let input = document.getElementById("candidateinput");
   if (!input) {
       input = document.createElement("input");
@@ -757,108 +858,7 @@ function render_table(code, page) {
   });
 }
 
-function displayPaginationControls(code, currentPage) {
-  const candi = data[code];
-  const totalPages = Math.ceil(candi.length / 10);
-  const paginationControls = document.getElementById("pagination-controls");
 
-  // Clear existing pagination controls
-  paginationControls.innerHTML = "";
-
-  // Generate pagination buttons
-  for (let i = 1; i <= totalPages; i++) {
-      const button = document.createElement("button");
-      button.textContent = i;
-      button.addEventListener("click", function() {
-          render_table_with_pagination(code, i);
-      });
-      paginationControls.appendChild(button);
-  }
-
-  // Highlight current page
-  const buttons = paginationControls.getElementsByTagName("button");
-  for (let i = 0; i < buttons.length; i++) {
-      buttons[i].classList.toggle("active", parseInt(buttons[i].textContent) === currentPage);
-  }
-}
-  // function render_table(code) {
-  //   let cou = 0;
-  //   const showRows = 10;
-  //   const candi = data[code];
-  //   const tbody = document.querySelector(".candidateBody");
-  //   tbody.innerHTML = "";
-    
-  //   let count = 0;
-    
-  //   for (let i = 0; i < candi.length; i++) {
-  //     const row = document.createElement("tr");
-  //     row.className = "tr";
-
-  //     const candidate = document.createElement("td");
-  //     candidate.textContent = candi[i].candidateName;
-  //     row.appendChild(candidate);
-  //     candidate.classList.add("tdata");
-
-  //     const party = document.createElement("td");
-  //     const par = candi[i].party;
-  //     party.innerHTML = `<img src="${sym[par]}"><span>${candi[i].party}</span>`;
-  //     party.className = "tdata1";
-  //     row.appendChild(party);
-
-  //     const votes = document.createElement("td");
-  //     votes.textContent = candi[i].votes;
-  //     votes.classList.add("tdata2");
-  //     row.appendChild(votes);
-
-  //     const votes2 = document.createElement("td");
-  //     if(i==0)
-  //       {
-  //         votes2.textContent = "-";
-  //       }
-  //     else if(i >0) {
-
-  //       votes2.textContent = candi[i-1].votes-candi[i].votes;
-  //     }
-  //     votes2.classList.add("tdata3");
-  //     row.appendChild(votes2);
-
-  //     tbody.appendChild(row);
-  //     count += 1;
-  //     cou += 1;
-
-  //     if (cou > showRows) {
-  //       row.style.display = "none";
-  //     }
-  //   }
-  //   const th = document.getElementById("theading2");
-  //   th.innerHTML = `<span id="constituency-name">${candi[0].constituencyName}</span><div>${count} candidates</div>`;
-  //   // Move input inside the theading2
-  //   let input = document.getElementById("candidateinput");
-  //   if (!input) {
-  //     input = document.createElement("input");
-  //     input.className = "form-control";
-  //     input.id = "candidateinput";
-  //     input.type = "text";
-  //     input.placeholder = "Search";
-  //   }
-  //   th.appendChild(input);
-  //   // const th = document.getElementById("theading2");
-  //   // th.innerHTML = `<span>${candi[0].constituencyName}</span><div>${count} candidates</div>`;
-  //   th.style.display = "flex";
-  //   th.style.background = "white";
-  //   $("#candidateinput").on("keyup", function () {
-  //     var value = $(this).val().toLowerCase();
-  //     $("#table-body tr").filter(function () {
-  //       var text = $(this).text().toLowerCase();
-  //       var words = text.split(/\s+/); // Split text into words
-  //       var match = words.some(function (word) {
-  //         return word.startsWith(value);
-  //       });
-  //       $(this).toggle(match);
-  //     });
-  //   });
-  
-  // }
 
 
 function state_map(value, text) {
@@ -888,7 +888,15 @@ function state_map(value, text) {
               breadcrumbState.style.display = "inline";
               breadcrumbConstituency.textContent = feature.properties.pc_name;
               breadcrumbConstituency.style.display = "inline";
-              render_table(feature.properties.pc_id,1);
+              const candidate_1=data[feature.properties.pc_id][0]['candidateName'];
+              const candidate_2=data[feature.properties.pc_id][1]['candidateName'];
+              const party_name_1=data[feature.properties.pc_id][0]['party'];
+              const party_name_2=data[feature.properties.pc_id][1]['party'];
+              const votes_1=data[feature.properties.pc_id][0]['votes'];
+              const votes_2=data[feature.properties.pc_id][1]['votes'];
+              const margin=votes_1-votes_2;
+              showdatatable(feature.properties.st_name,candidate_1,candidate_2,votes_1,votes_2,margin,feature.properties.pc_name,party_name_1,party_name_2,feature.properties.pc_id);
+              // render_table(feature.properties.pc_id,1);
             });
             layer._leaflet_id = feature.properties.pc_id;
           },
@@ -932,7 +940,15 @@ function state_map(value, text) {
               document.querySelector("#Candidate-res").style.display = "block";
               breadcrumbConstituency.style.display = "block";
               breadcrumbConstituency.textContent = feature.properties.pc_name;
-              render_table(feature.properties.pc_id,1);
+              const candidate_1=data[feature.properties.pc_id][0]['candidateName'];
+              const candidate_2=data[feature.properties.pc_id][1]['candidateName'];
+              const party_name_1=data[feature.properties.pc_id][0]['party'];
+              const party_name_2=data[feature.properties.pc_id][1]['party'];
+              const votes_1=data[feature.properties.pc_id][0]['votes'];
+              const votes_2=data[feature.properties.pc_id][1]['votes'];
+              const margin=votes_1-votes_2;
+              showdatatable(feature.properties.st_name,candidate_1,candidate_2,votes_1,votes_2,margin,feature.properties.pc_name,party_name_1,party_name_2,feature.properties.pc_id);
+              // render_table(feature.properties.pc_id,1);
             });
             layer._leaflet_id = feature.properties.pc_id;
           },
@@ -970,6 +986,7 @@ function resetMap() {
   if (geo2) {
     geo2.remove();
   }
+  console.log(geo);
   geo.addTo(map);
   // Initial update
   updateMapBounds();
@@ -983,6 +1000,7 @@ function resetMap() {
 function resetstatebread()
 {
   geo.remove(map);
+  document.getElementById("stateTabeleContainer").style.display = "none";
   breadcrumbConstituency.style.display = "none";
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";
@@ -998,14 +1016,22 @@ function resetstatebread()
       onEachFeature: (feature, layer) => {
         layer.on("click", function (event) {
           console.log("first");
-          document.getElementById("stateTabeleContainer").style.display = "block";
+          document.getElementById("stateTabeleContainer").style.display = "none";
           document.querySelector("#Constituency-res").style.display = "none";
           document.querySelector("#Candidate-res").style.display = "block";
           breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread()">${feature.properties.st_name}`;
           breadcrumbState.style.display = "inline";
           breadcrumbConstituency.textContent = feature.properties.pc_name;
           breadcrumbConstituency.style.display = "inline";
-          render_table(feature.properties.pc_id,1);
+          const candidate_1=data[feature.properties.pc_id][0]['candidateName'];
+          const candidate_2=data[feature.properties.pc_id][1]['candidateName'];
+          const party_name_1=data[feature.properties.pc_id][0]['party'];
+          const party_name_2=data[feature.properties.pc_id][1]['party'];
+          const votes_1=data[feature.properties.pc_id][0]['votes'];
+          const votes_2=data[feature.properties.pc_id][1]['votes'];
+          const margin=votes_1-votes_2;
+          showdatatable(feature.properties.st_name,candidate_1,candidate_2,votes_1,votes_2,margin,feature.properties.pc_name,party_name_1,party_name_2,feature.properties.pc_id);
+          // render_table(feature.properties.pc_id,1);
         });
         layer._leaflet_id = feature.properties.pc_id;
       },
@@ -1061,10 +1087,18 @@ function resetstatebread()
           console.log("change");
           document.querySelector("#Constituency-res").style.display =
             "none";
-          document.querySelector("#Candidate-res").style.display = "block";
+          // document.querySelector("#Candidate-res").style.display = "block";
           breadcrumbConstituency.textContent = feature.properties.pc_name;
           breadcrumbConstituency.style.display = "inline";
-          render_table(feature.properties.pc_id,1);
+          const candidate_1=data[feature.properties.pc_id][0]['candidateName'];
+          const candidate_2=data[feature.properties.pc_id][1]['candidateName'];
+          const party_name_1=data[feature.properties.pc_id][0]['party'];
+          const party_name_2=data[feature.properties.pc_id][1]['party'];
+          const votes_1=data[feature.properties.pc_id][0]['votes'];
+          const votes_2=data[feature.properties.pc_id][1]['votes'];
+          const margin=votes_1-votes_2;
+          showdatatable(feature.properties.st_name,candidate_1,candidate_2,votes_1,votes_2,margin,feature.properties.pc_name,party_name_1,party_name_2,feature.properties.pc_id);
+          // render_table(feature.properties.pc_id,1);
         });
         layer._leaflet_id = feature.properties.pc_id;
       },
