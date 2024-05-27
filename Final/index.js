@@ -78,42 +78,42 @@ function resetBreadcrumb() {
 }
 
 const zooming = {
-  35: [10, 93.3, 7],
-  37: [16, 80, 7],
-  12: [28, 95, 7],
-  18: [26, 93, 7],
-  10: [26, 86, 7],
-  4: [30.7, 76.8, 10],
-  22: [21, 83, 7],
-  26: [20.2, 73.3, 9],
-  25: [20.5, 72, 8],
-  7: [28.67, 77.2, 10],
-  30: [15.4, 74.3, 9],
-  24: [23, 72.2, 7],
-  6: [29.3, 76.6, 8],
-  2: [32, 77, 8],
-  1: [35, 77, 7],
-  20: [23.6, 85.8, 8],
-  29: [15, 77, 7],
-  32: [11, 76.8, 7],
-  31: [10.5, 73, 9],
-  23: [24, 79, 7],
-  27: [19.2, 77, 7],
-  14: [25, 94.5, 8],
-  17: [25.6, 91.4, 8],
-  15: [23.4, 93.2, 8],
-  13: [26, 94, 8],
-  21: [20, 85, 7],
-  34: [14, 80, 7],
-  3: [31, 75.7, 8],
-  8: [28, 75.7, 6], //[26.7,74,7],
-  11: [27.5, 88.5, 8],
-  33: [11, 79.5, 7],
-  36: [18, 79.5, 7],
-  16: [23.8, 92, 8],
-  9: [27, 81, 7],
-  5: [30, 79.4, 8],
-  19: [24.5, 88, 7],
+  35: [10, 93.3, 6],
+  37: [16, 80, 6],
+  12: [28, 95, 6],
+  18: [26, 93, 6],
+  10: [26, 86, 6],
+  4: [30.7, 76.8, 8],
+  22: [21, 83, 6],
+  26: [20.2, 73.3, 6],
+  25: [20.5, 72, 7],
+  7: [28.67, 77.2, 8],
+  30: [15.4, 74.3, 8],
+  24: [23, 72.2, 6],
+  6: [29.3, 76.6, 7],
+  2: [32, 77, 7],
+  1: [35, 77, 6],
+  20: [23.6, 85.8, 7],
+  29: [15, 77, 6],
+  32: [11, 76.8, 6],
+  31: [10.5, 73, 8],
+  23: [24, 79, 6],
+  27: [19.2, 77, 6],
+  14: [25, 94.5, 7],
+  17: [25.6, 91.4, 7],
+  15: [23.4, 93.2, 7],
+  13: [26, 94, 7],
+  21: [20, 85, 6],
+  34: [14, 80, 6],
+  3: [31, 75.7, 6],
+  8: [28, 75.7, 5], //[26.7,74,7],
+  11: [27.5, 88.5, 7],
+  33: [11, 79.5, 6],
+  36: [18, 79.5, 6],
+  16: [23.8, 92, ],
+  9: [27, 81, 6],
+  5: [30, 79.4, 7],
+  19: [24.5, 88, 6],
 };
 function updateMapBounds() {
   if (geo) {
@@ -299,38 +299,19 @@ function handleSelection() {
               breadcrumbState.style.display = "inline";
               breadcrumbConstituency.textContent = feature.properties.pc_name;
               breadcrumbConstituency.style.display = "inline";
-              render_table(feature.properties.pc_id,1);
+              const candidate_1=data[feature.properties.pc_id][0]['candidateName'];
+              const candidate_2=data[feature.properties.pc_id][1]['candidateName'];
+              const party_name_1=data[feature.properties.pc_id][0]['party'];
+              const party_name_2=data[feature.properties.pc_id][1]['party'];
+              const votes_1=data[feature.properties.pc_id][0]['votes'];
+              const votes_2=data[feature.properties.pc_id][1]['votes'];
+              const margin=votes_1-votes_2;
+              showdatatable(feature.properties.st_name,candidate_1,candidate_2,votes_1,votes_2,margin,feature.properties.pc_name,party_name_1,party_name_2,feature.properties.pc_id);
             });
             layer._leaflet_id = feature.properties.pc_id;
           },
         });
-        // geo = L.geoJSON(geoJson, {
-        //   onEachFeature: (feature, layer) => {
-        //     layer.on("click", (e) => {
-        //       // layer.on('mouseover', function(event) {
-        //       //     showBox(feature.properties, layer);
-        //       // });
 
-        //       // layer.on('mouseout', function(event) {
-        //       //     hideBox();
-        //       // });
-
-        //       layer.on("click", function (event) {
-        //         document.querySelector("#Constituency-res").style.display =
-        //           "none";
-        //         document.querySelector("#Candidate-res").style.display =
-        //           "block";
-        //         can = 1;
-
-        //         breadcrumbConstituency.textContent = feature.properties.pc_name;
-        //         breadcrumbConstituency.style.display = "inline";
-
-        //         render_table(feature.properties.pc_id);
-        //       });
-        //     });
-        //     layer._leaflet_id = feature.properties.pc_id;
-        //   },
-        // });
 
         if (pressed) {
           geo2.remove(map);
@@ -342,13 +323,6 @@ function handleSelection() {
         var filteredGeoJson = { ...geoJson, features: filteredFeatures };
         geo2 = L.geoJSON(filteredGeoJson, {
           onEachFeature: (feature, layer) => {
-            //   layer.on('mouseover', function(event) {
-            //     showBox(feature.properties, layer);
-            // });
-
-            // layer.on('mouseout', function(event) {
-            //     hideBox();
-            // });
 
             layer.on("click", function (event) {
               console.log("change");
@@ -357,7 +331,14 @@ function handleSelection() {
               document.querySelector("#Candidate-res").style.display = "block";
               breadcrumbConstituency.textContent = feature.properties.pc_name;
               breadcrumbConstituency.style.display = "inline";
-              render_table(feature.properties.pc_id,1);
+              const candidate_1=data[feature.properties.pc_id][0]['candidateName'];
+              const candidate_2=data[feature.properties.pc_id][1]['candidateName'];
+              const party_name_1=data[feature.properties.pc_id][0]['party'];
+              const party_name_2=data[feature.properties.pc_id][1]['party'];
+              const votes_1=data[feature.properties.pc_id][0]['votes'];
+              const votes_2=data[feature.properties.pc_id][1]['votes'];
+              const margin=votes_1-votes_2;
+              showdatatable(feature.properties.st_name,candidate_1,candidate_2,votes_1,votes_2,margin,feature.properties.pc_name,party_name_1,party_name_2,feature.properties.pc_id);
             });
             layer._leaflet_id = feature.properties.pc_id;
           },
@@ -391,104 +372,6 @@ function handleSelection() {
       .catch((e) => console.error(e));
   }
 }
-// function render_state_table(feature, state) {
-//   let count = 0;
-//   const tb = document.getElementById("table-body");
-//   tb.innerHTML = "";
-//   for (let i of feature) {
-//     const tr = document.createElement("tr");
-//     tr.className = "tr";
-//     tb.appendChild(tr);
-
-//     tr.dataset.pc = i.pc_id;
-//     tr.dataset.pcname = i.pc_name;
-//     tr.dataset.state = i.st_name;
-//     tr.dataset.s_code = i.st_code;
-//     tr.dataset.pcvalue = "";
-
-//     let id = 0;
-//     let name = "";
-//     let candid = "";
-//     let candid2 = "";
-//     let votes = 0;
-//     let party_name = "";
-//     let party_2 = "";
-//     let votes2 = 0;
-
-//     if (i.pc_id != null) {
-//       let win;
-//       i.pc_id;
-//       const firstCandidateKey = data[i.pc_id][0];
-//       if (!firstCandidateKey) {
-//         votes = 0;
-//         party_name = "INDEPENDENT";
-//         win = "NOTA";
-//       } else {
-//         win = firstCandidateKey.party;
-//         id = i.pc_id;
-//         name = data[i.pc_id][0].constituencyName;
-//         candid = data[i.pc_id][0].candidateName;
-//         candid2 = data[i.pc_id][1].candidateName;
-//         votes = data[i.pc_id][0].votes;
-//         party_name = data[i.pc_id][0].party;
-//         votes2 = data[i.pc_id][1].votes;
-//         party_2 = data[i.pc_id][1].party;
-//       }
-//       if (!partyColors[win]) tr.dataset.pccolor = "#D3D3D3";
-//       else tr.dataset.pccolor = partyColors[win];
-//       tr.className = tr;
-
-//       const td = document.createElement("td");
-//       td.textContent = name;
-//       td.classList.add("td");
-//       tr.appendChild(td);
-
-//       const td1 = document.createElement("td");
-//       td1.innerHTML = `${candid}<br><img src="${sym[party_name]}"><span>${party_name}</span>`;
-//       tr.appendChild(td1);
-//       td1.classList.add("td1");
-
-//       const td2 = document.createElement("td");
-//       td2.innerHTML = `${candid2}<br><img src="${sym[party_2]}"><span>${party_2}</span>`;
-//       td2.classList.add("td2");
-//       tr.appendChild(td2);
-
-//       const td3 = document.createElement("td");
-//       td3.innerHTML = `${votes - votes2}<br>`;
-//       tr.appendChild(td3);
-//       td3.classList.add("td3");
-//       count++;
-//       const th = document.getElementById("theading");
-//       th.innerHTML = `<span id="constituency-name">${state}</span><div>${count} candidates</div>`;
-//       // Move input inside the theading2
-//       let input = document.getElementById("stateinput");
-//       if (!input) {
-//         input = document.createElement("input");
-//         input.className = "form-control";
-//         input.id = "stateinput";
-//         input.type = "text";
-//         input.placeholder = "Search";
-//       }
-//       th.appendChild(input);
-//         th.style.display = "flex";
-//         th.style.background = "white";
-//     } else {
-//       tr.dataset.pccolor = "#fff";
-//     }
-//   }
-//   $("#stateinput").on("keyup", function () {
-//     var value = $(this).val().toLowerCase();
-//     $("#table-body tr").filter(function () {
-//       var text = $(this).text().toLowerCase();
-//       var words = text.split(/\s+/); // Split text into words
-//       var match = words.some(function (word) {
-//         return word.startsWith(value);
-//       });
-//       $(this).toggle(match);
-//     });
-//   });
-//   render2();
-// }
 function updatePaginationControls(totalRows,class_name,second_class_name) {
   const numPages = Math.ceil(totalRows / rowsPerPage);
   const paginationControls = document.getElementById(class_name);
@@ -1036,35 +919,6 @@ function resetstatebread()
         layer._leaflet_id = feature.properties.pc_id;
       },
     });
-
-    // geo = L.geoJSON(geoJson, {
-    //   onEachFeature: (feature, layer) => {
-    //     layer.on("click", (e) => {
-    //       // layer.on('mouseover', function(event) {
-    //       //     showBox(feature.properties, layer);
-    //       // });
-
-    //       // layer.on('mouseout', function(event) {
-    //       //     hideBox();
-    //       // });
-
-    //       layer.on("click", function (event) {
-    //         document.querySelector("#Constituency-res").style.display =
-    //           "none";
-    //         document.querySelector("#Candidate-res").style.display =
-    //           "block";
-    //         can = 1;
-
-    //         breadcrumbConstituency.textContent = feature.properties.pc_name;
-    //         breadcrumbConstituency.style.display = "inline";
-
-    //         render_table(feature.properties.pc_id);
-    //       });
-    //     });
-    //     layer._leaflet_id = feature.properties.pc_id;
-    //   },
-    // });
-
     if (pressed) {
       geo2.remove(map);
     }
@@ -1075,14 +929,6 @@ function resetstatebread()
     var filteredGeoJson = { ...geoJson, features: filteredFeatures };
     geo2 = L.geoJSON(filteredGeoJson, {
       onEachFeature: (feature, layer) => {
-        //   layer.on('mouseover', function(event) {
-        //     showBox(feature.properties, layer);
-        // });
-
-        // layer.on('mouseout', function(event) {
-        //     hideBox();
-        // });
-
         layer.on("click", function (event) {
           console.log("change");
           document.querySelector("#Constituency-res").style.display =

@@ -186,26 +186,6 @@ opacity: 0px;
   padding: 10px;
 }
 
-/* #theading2{
-  border-top-left-radius: 0.4rem;
-  border-top-right-radius: 0.4rem;
-  background-color: #EAECF0;
-  width: Fill (642px)px;
-height: Hug (52px)px;
-gap: 0px;
-opacity: 0px;
-  background-color: #EAECF0;
-}
-#theading2 div{
-  border-radius: 10rem;
-  background:#F2F4F7 ;
-  padding:2px;
-  margin-right: 14rem;
-}
-#theading2 span{
-  text-transform: capitalize;
-  font-size: 1rem;
-} */
 #stateinput
 {
   width: 200px;
@@ -225,21 +205,6 @@ opacity: 0px;
   background-position: calc(100% - 10px) center; /* Position search icon */
   padding-right: 30px; /* Add space for search icon */
 }
-
-/* .table-responsive-sm
-{
-  height: 200vh;
-  overflow-x: scroll;
-} */
-/* .tdm {
-  font-size: 28px;
-  text-align: center;
-  background: #EAECF0;
-} */
-/* thead{
-  position: sticky;
-  top:0;
-} */
 .constituency-res
 {
   display: flex;
@@ -386,33 +351,89 @@ tr{
 
 
 /* bt */
-#bt_1_yr
-{
-  height: 1.875rem;
-  background-color: white;
-  border: solid #D0D5DD;
-border-radius: 0.5rem;
-  margin:none;
+.bt_grp {
+  display: flex;
+  gap: 0; /* Remove space between buttons */
 }
-#bt_2_yr
-{
-  height: 1.875rem;
-  background-color: white;
-  border: solid #D0D5DD;
-border-radius: 0.5rem;
-  margin:none;
-}
-  
-  .button_years:focus{
-    outline: none;
-    background: #F9FAFB;
-  }
-  /* .bt_grp
-  {
-    display: flex;
-  background-color: white;
-  height: 2rem;
- 
-  border: solid 1px #D0D5DD
 
-  } */
+.button_years {
+  height: 1.875rem;
+  background-color: white;
+  border: 1px solid #D0D5DD;
+  border-radius: 0.5rem;
+  padding: 0 1rem; /* Add padding for a better look */
+  margin: 0; /* Remove margin */
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+#bt_1 {
+  border-top-right-radius: 0; /* Remove top-right border radius */
+  border-bottom-right-radius: 0; /* Remove bottom-right border radius */
+  border-right: none; /* Remove right border to merge with bt_2 */
+}
+
+#bt_2 {
+  border-top-left-radius: 0; /* Remove top-left border radius */
+  border-bottom-left-radius: 0; /* Remove bottom-left border radius */
+}
+
+.button_years:hover {
+  background-color: #f0f0f0; /* Light grey background on hover */
+  border-color: #c0c5cd; /* Slightly darker border on hover */
+  outline: none;
+}
+
+#bt_1:active,#bt_1:focus
+{ 
+  background-color: #f0f0f0; /* Light grey background on hover */
+  border-color: #c0c5cd; /* Slightly darker border on hover */
+  outline: none;
+}
+#bt_2:active,#bt_2:focus
+{
+  background-color: #f0f0f0; /* Light grey background on hover */
+  border-color: #c0c5cd; /* Slightly darker border on hover */
+  outline: none;
+}
+.btn-group {
+  display: flex;
+  gap: 0; /* Remove space between buttons */
+}
+
+#state-bt, #consti-bt {
+  height: 1.875rem;
+  background-color: white;
+  color: black;
+  border: 1px solid #D0D5DD;
+  border-radius: 0.5rem;
+   /* Add padding for a better look */
+  margin: 0; /* Remove margin */
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+ 
+}
+
+#state-bt {
+  border-top-right-radius: 0; /* Remove top-right border radius */
+  border-bottom-right-radius: 0; /* Remove bottom-right border radius */
+  border-right: none; /* Remove right border to merge with #consti-bt */
+  padding:  10px, 16px, 10px, 16px;
+}
+
+#consti-bt {
+  border-top-left-radius: 0; /* Remove top-left border radius */
+  border-bottom-left-radius: 0; /* Remove bottom-left border radius */
+}
+
+#state-bt:hover, #consti-bt:hover {
+  background-color: #f0f0f0; /* Light grey background on hover */
+  border-color: #c0c5cd; /* Slightly darker border on hover */
+}
+
+#state-bt:focus, #state-bt:active,
+#consti-bt:focus, #consti-bt:active {
+  background-color: #f0f0f0; /* Light grey background on focus/active */
+  border-color: #c0c5cd; /* Slightly darker border on focus/active */
+  outline: none; /* Remove default outline */
+}
