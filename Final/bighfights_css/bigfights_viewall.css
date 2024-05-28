@@ -1,0 +1,266 @@
+body {
+    margin-top: 10px;
+}
+
+#body-div {
+    background: linear-gradient(90deg, #FFFEF5 0%, #FFF4EB 45.4%, #FFFEF5 100%);
+}
+.navbarHead {
+    margin-bottom: 0px;
+}
+.card {
+    border: 1px solid rgb(206, 201, 201);
+    margin: 10px;
+    width: 23rem;
+    /* height: 10rem; */
+    max-width: 30rem;
+    box-sizing: border-box;
+    transition: all 0.5s ease;
+}
+
+#more-cards-root {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.cand_name1 .cand_name2 {
+    display: block;
+}
+
+
+.nav_links_div {
+    background: #FFFFFF;
+    padding: 0.8rem;
+    display: flex;
+    align-items: center;
+}
+
+#results2024 {
+    width: 15%;
+    margin-left: 2.5rem;
+    /* border: 1px solid black; */
+}
+
+.nav_links {
+    color: #333333;
+    margin: 0.5rem 0.7rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    line-height: 1.2;
+    text-align: left;
+    font-size: clamp(0.8rem, 1.3vw, 1.5rem);
+}
+
+#right_nav_links {
+    position: absolute;
+    right: 2rem;
+}
+
+#home_span {
+    color: #667085;
+    font-family: 'Roboto';
+    font-size: clamp(0.7rem, 0.8vw, 1.5rem);
+    font-weight: 400;
+    text-align: left;
+}
+
+#big_fights_span {
+    font-family: 'Roboto';
+    font-size: clamp(0.7rem, 0.8vw, 1.5rem);
+    font-weight: 400;
+    text-align: left;
+    color: #101828;
+
+}
+
+#path_div {
+    height:fit-content;
+    height: 4vh;
+    /* border: 1px solid black; */
+}
+
+#home_link {
+    color: #667085;
+
+}
+
+#path_span {
+    color: #667085;
+    font-size: clamp(0.7rem, 0.8vw, 1.5rem);
+}
+
+#heading_div {
+    height: 2rem;
+    display: flex;
+    justify-items: center;
+    margin-left: 3%;
+}
+
+#heading_addleft_div {
+    display: flex;
+    align-items: center;
+    /* border: 1px solid rgb(81, 24, 195); */
+    height: 5vw;
+    margin-top: 0.5rem;
+    align-items: center;
+    padding-bottom: 0.5rem;
+    font-family: 'Roboto';
+    font-weight: 900;
+    line-height: 37.5px;
+    letter-spacing: 0.04em;
+    text-align: left;
+    font-size: clamp(2rem, 1.3vw, 1.5rem);
+}
+
+.combine_div {
+    /* border: 1px solid rgb(214, 114, 114) ; */
+    margin-left: 3%;
+    width: 80%;
+}
+
+#hands_img {
+    /* border: 1px solid rgb(30, 176, 28);  */
+    width:9vw;
+    height: 9vw;
+    margin: 0rem auto;
+}
+.flexing_div {
+    display: flex;
+}
+
+#candname_search_bar {
+    border: none;
+    border-bottom: 1px solid rgb(125, 122, 122);
+    background-color: transparent;
+    border-radius: 2px;
+    padding-right: 20px;
+    width: 100%;
+}
+
+.search-container {
+    position: relative;
+    width:40%;
+}
+.enable_search {
+    position: relative;
+    width: 95%;
+    margin: auto;
+    display: none;
+    /* border: 1px solid black; */
+}
+
+.right_search {
+    position: relative;
+    /* border: 1px solid rebeccapurple; */
+}
+.search-container {
+    font-family: 'Roboto';
+    font-size: 1rem;
+    line-height: 1rem;
+    position: absolute;
+    right: 0px; 
+    /* border: 1px solid greenyellow; */
+}
+
+/* .heading_addright_div {
+    position: absolute;
+    right: 0px;
+    display: flex;
+    align-items: center;
+} */
+
+#search_icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}   
+
+.dropdown-box {
+    border: none;
+    border-bottom: 1px solid rgb(125, 122, 122);
+    margin-right: 0.8rem;
+    width: 15rem;
+    height: 100%;
+}
+#candname_search_bar:focus, .dropdown-box:focus {
+    outline: 2px solid rgb(140, 132, 147);
+}
+.search_button {
+    position: absolute;
+    right: 0px;   
+    display: none;
+    /* border: 1px solid black ; */
+}
+.search_button img {
+    /* border: 1px solid rebeccapurple; */
+    width: 2rem;
+    margin-right: 1rem;
+}
+.search_button img:hover {
+    cursor: pointer;
+}
+
+@media (max-width: 570px) {
+    .card {
+        width: calc(100% - 10px);
+        margin: 5px;
+        height: 190px;
+    }
+
+    .search-container {
+        display: none;
+    }
+
+    .search_button {
+        display: block;
+    }
+
+    .nav_links,
+    #home_span,
+    #big_fights_span,
+    #path_span {
+        font-size: clamp(0.6rem, 0.5vw, 0.5rem);
+    }
+
+    #heading_span {
+        font-size: clamp(1rem, 0.5vw, 0.5rem);
+    }
+
+    .nav_links {
+        margin: 0.2rem 0.3rem;
+    }
+
+    #right_nav_links,
+    #heading_right-span {
+        right: 1%;
+    }
+
+    #results2024 {
+        width: 20%;
+    }
+
+    #share2_icon {
+        width: 0.8rem;
+        height: 0.8rem;
+    }
+    #hands_img {
+        width: 10vh;
+        height: 10vh;
+    }
+    #heading_div {
+        margin-left: 5px;
+    }
+}
+@media ((min-width: 571px) and (max-width: 900px)) {
+    .search-container {
+        width: 60%;
+    }
+}
+@media ((min-width: 750px) and (max-width: 1000px)) {
+    .card {
+        width: 20rem;
+    }
+}
