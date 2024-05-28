@@ -29,7 +29,7 @@
         "place": "Gandhinagar (Gujarat)",
         "votes": "894,624",
         "lead2votes": "557,014",
-        "perimg": "imgs/modi.png",
+        "perimg": "imgs/amit-shah.png",
         "alliance": "NDA"
     },
     {
@@ -40,7 +40,7 @@
         "place": "Kannauj (Uttar Pradesh)",
         "votes": "550,734",
         "lead2votes": "12,353",
-        "perimg": "imgs/akhilesh.png",
+        "perimg": "imgs/akhilesh-yadav.png",
         "alliance": "INDA"
     },
     {
@@ -51,7 +51,7 @@
         "place": "Lucknow (Uttar Pradesh)",
         "votes": "633,026",
         "lead2votes": "347,302",
-        "perimg": "imgs/modi.png",
+        "perimg": "imgs/rajnath-singh.png",
         "alliance": "NDA"
     },
     {
@@ -62,7 +62,7 @@
         "place": "Wayanad (Kerala)",
         "votes": "706,367",
         "lead2votes": "431,770",
-        "perimg": "imgs/rahul.png",
+        "perimg": "imgs/rahul-gandhi.png",
         "alliance": "INDA"
     },
     {
@@ -84,7 +84,7 @@
         "place": "Vidisha (Madhya Pradesh)",
         "votes": "WIP",
         "lead2votes": "WIP",
-        "perimg": "imgs/modi.png",
+        "perimg": "imgs/shivraj-singh-chauhan.png",
         "alliance": "NDA"
     },
     {
@@ -95,7 +95,7 @@
         "place": "Amethi (Uttar Pradesh)",
         "votes": "468,514",
         "lead2votes": "55,120",
-        "perimg": "imgs/modi.png",
+        "perimg": "imgs/smriti-zubin-irani.png",
         "alliance": "NDA"
     },
     {
@@ -106,7 +106,7 @@
         "place": "Arunachal West (Arunachal Pradesh)",
         "votes": "225,796",
         "lead2votes": "174,843",
-        "perimg": "imgs/modi.png",
+        "perimg": "imgs/kiren-rijiju.png",
         "alliance": "NDA"
     },
     {
@@ -117,7 +117,7 @@
         "place": "Nagpur (Maharashtra)",
         "votes": "660,221",
         "lead2votes": "216,009",
-        "perimg": "imgs/modi.png",
+        "perimg": "imgs/nitin-jairam-gadkari.png",
         "alliance": "NDA"
     },
     {
@@ -128,7 +128,7 @@
         "place": "Hamirpur (Himachal Pradesh)",
         "votes": "682,692",
         "lead2votes": "216,009",
-        "perimg": "imgs/modi.png",
+        "perimg": "imgs/anurag-singh-thakur.png",
         "alliance": "NDA"
     },
     {
@@ -139,7 +139,7 @@
         "place": "Baramulla (Jammu and Kashmir)",
         "votes": "660,221",
         "lead2votes": "216,009",
-        "perimg": "imgs/abdullah.png",
+        "perimg": "imgs/omar-abdullah.png",
         "alliance": "OTH"
     },
     {
@@ -150,7 +150,7 @@
         "place": "Guna (Madhya Pradesh)",
         "votes": "488,500",
         "lead2votes": "435,155",
-        "perimg": "imgs/modi.png",
+        "perimg": "imgs/jyotiraditya-scindia.png",
         "alliance": "NDA"
     },
     {
@@ -161,7 +161,7 @@
         "place": "Krishnanagar (West Bengal)",
         "votes": "614,872",
         "lead2votes": "63,218",
-        "perimg": "imgs/mahua.png",
+        "perimg": "imgs/mahua-moitra.png",
         "alliance": "OTH"
     },
     {
@@ -172,7 +172,7 @@
         "place": "Begusarai (Bihar)",
         "votes": "692,193",
         "lead2votes": "422,217",
-        "perimg": "imgs/modi.png",
+        "perimg": "imgs/giriraj-singh.png",
         "alliance": "NDA"
     },
     {
@@ -183,7 +183,7 @@
         "place": "Baramati (Maharashtra)",
         "votes": "686,714",
         "lead2votes": "155,774",
-        "perimg": "imgs/supriya.png",
+        "perimg": "imgs/supriya-sule.png",
         "alliance": "INDA"
     },
     {
@@ -194,7 +194,7 @@
         "place": "Mandya (Karnataka)",
         "votes": "577,784",
         "lead2votes": "125,876",
-        "perimg": "imgs/kumaraswamy.png",
+        "perimg": "imgs/hd-kumaraswamy.png",
         "alliance": "NDA"
     },
     {
@@ -205,7 +205,7 @@
         "place": "Thiruvananthapuram (Kerala)",
         "votes": "416,131",
         "lead2votes": "99,989",
-        "perimg": "imgs/shashi.png",
+        "perimg": "imgs/shashi-tharoor.png",
         "alliance": "INDA"
     },
     {
@@ -227,7 +227,7 @@
         "place": "Chennai Central (Tamil Nadu)",
         "votes": "448,911",
         "lead2votes": "301,520",
-        "perimg": "imgs/dayanidhi.png",
+        "perimg": "imgs/dayanidhi-maran.png",
         "alliance": "INDA"
     },
     {
@@ -238,7 +238,7 @@
         "place": "Nilgiris (Tamil Nadu)",
         "votes": "547,832",
         "lead2votes": "205,823",
-        "perimg": "imgs/raja.png",
+        "perimg": "imgs/araja.png",
         "alliance": "INDA"
     },
     {
@@ -249,7 +249,7 @@
         "place": "Sultanpur (Uttar Pradesh)",
         "votes": "459,196",
         "lead2votes": "14,526",
-        "perimg": "imgs/modi.png",
+        "perimg": "imgs/maneka-gandhi.png",
         "alliance": "NDA"
     },
     {
@@ -260,7 +260,7 @@
         "place": "Anantnag (Jammu and Kashmir)",
         "votes": "30,524",
         "lead2votes": "9,656",
-        "perimg": "imgs/mehbooba.png",
+        "perimg": "imgs/mehbooba-mufti.png",
         "alliance": "INDA"
     },
     {
@@ -271,7 +271,7 @@
         "place": "Mumbai North (Maharashtra)",
         "votes": "WIP",
         "lead2votes": "WIP",
-        "perimg": "imgs/modi.png",
+        "perimg": "imgs/piyush-goyal.png",
         "alliance": "NDA"
     },
     {
@@ -282,7 +282,7 @@
         "place": "Hajipur (Bihar)",
         "votes": "WIP",
         "lead2votes": "WIP",
-        "perimg": "",
+        "perimg": "imgs/chirag-paswan.png",
         "alliance": "NDA"
     },
     {
@@ -293,14 +293,14 @@
         "place": "Hyderabad (Telangana)",
         "votes": "WIP",
         "lead2votes": "WIP",
-        "perimg": "imgs/modi.png",
+        "perimg": "imgs/madhavi-latha.png",
         "alliance": "NDA"
     },
     {
         "lead": false,
         "name": "Y S Sharmila",
-        "logoimg": "",
-        "pid": "YSRTP",
+        "logoimg": "imgs/INC.png",
+        "pid": "INC",
         "place": "Kadapa (Andhra Pradesh)",
         "votes": "WIP",
         "lead2votes": "WIP",
@@ -315,7 +315,7 @@
         "place": "Haveri (Karnataka)",
         "votes": "WIP",
         "lead2votes": "WIP",
-        "perimg": "imgs/modi.png",
+        "perimg": "imgs/basavaraj-Bommai.png",
         "alliance": "NDA"
     },
     {
@@ -326,7 +326,7 @@
         "place": "Mainpuri (Uttar Pradesh)",
         "votes": "WIP",
         "lead2votes": "WIP",
-        "perimg": "",
+        "perimg": "imgs/dimple-yadav.png",
         "alliance": "INDA"
     },
     {
@@ -337,7 +337,7 @@
         "place": "Rajgarh (Madhya Pradesh)",
         "votes": "WIP",
         "lead2votes": "WIP",
-        "perimg": "",
+        "perimg": "imgs/digvijay-singh.png",
         "alliance": "INDA"
     },
     {
@@ -348,7 +348,7 @@
         "place": "Rajampet (Andhra Pradesh)",
         "votes": "WIP",
         "lead2votes": "WIP",
-        "perimg": "imgs/modi.png",
+        "perimg": "imgs/n-kiran-kumar-reddy.png",
         "alliance": "NDA"
     },
     {
@@ -359,7 +359,7 @@
         "place": "Rajnandgaon (Chhattisgarh)",
         "votes": "WIP",
         "lead2votes": "WIP",
-        "perimg": "",
+        "perimg": "imgs/bhupesh-baghel.png",
         "alliance": "INDA"
     },
     {
@@ -370,7 +370,7 @@
         "place": "Coimbatore (Tamil Nadu)",
         "votes": "WIP",
         "lead2votes": "WIP",
-        "perimg": "imgs/modi.png",
+        "perimg": "imgs/k-annamalai.png",
         "alliance": "NDA"
     },
     {
@@ -381,7 +381,7 @@
         "place": "Karnal (Haryana)",
         "votes": "WIP",
         "lead2votes": "WIP",
-        "perimg": "imgs/modi.png",
+        "perimg": "imgs/manohar-lal-khattar.png",
         "alliance": "NDA"
     },
     {
@@ -392,7 +392,7 @@
         "place": "Kurukshetra (Haryana)",
         "votes": "WIP",
         "lead2votes": "WIP",
-        "perimg": "imgs/modi.png",
+        "perimg": "imgs/naveen-jindal.png",
         "alliance": "NDA"
     }
 ]

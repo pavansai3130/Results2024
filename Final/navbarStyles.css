@@ -94,6 +94,8 @@ body {
 
 .headerPhone img {
     width: 14rem;
+    cursor: pointer;
+
 }
 
 @media (max-width: 830px) {
@@ -169,6 +171,7 @@ body {
 
 .navbarHead .logo img {
     width: 14rem;
+    cursor: pointer;
 }
 
 .imgHover img {

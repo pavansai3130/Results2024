@@ -13,9 +13,54 @@
     <link rel="stylesheet" href="cards.css">
     <link rel="stylesheet" href="cardsPage.css">
     <link rel="stylesheet" href="./disclaimer.css">
+    <link rel="stylesheet" href="navbarStyles.css">
 </head>
 
 <body>
+    <nav class="navbarHead">
+        <div class="containerHead">
+           <div class="logo">
+             <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
+           </div>
+           <div class="navlinks" id="navlinks">
+              <div class="headerPhone">
+                <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
+                 <i class="fa-solid fa-xmark" onclick="hidemenu()"></i>
+              </div>
+              <div class="d-flex">
+                 <div class="imgHover">
+                    <div class="tooltip-container">
+                       <!-- <span class="text">Tooltip</span> -->
+                       <img  src="imgs/share.png" alt="" >
+                       <span class="tooltip">
+                          <i class="fa-brands fa-facebook"></i>
+                       
+                           <i class="fa-brands fa-whatsapp"></i>
+                      
+                           <i class="fa-brands fa-instagram"></i>
+                      
+                           <i class="fa-brands fa-telegram"></i>
+                          </a></span>
+                     </div>
+                     
+                    </div>
+                 <ul>
+                    <li><a href="cardsPage.html">Popular & Celebrities</a></li>
+                    <li><a href="">Big Fights</a></li>
+                    <li><a href="">'19 vs '24</a></li>
+                    <div class="phoneMedia" id="phoneMedia" ><i class="fa-brands fa-facebook" style="color: #158be5;"></i>
+                       
+                       <i class="fa-brands fa-whatsapp" style="color: #32ec6a;"></i>
+                  
+                       <i class="fa-brands fa-instagram" style="color: #d24196;"></i>
+                  
+                       <i class="fa-brands fa-telegram" style="color: #74deec;"></i></div>
+                 </ul>
+                 </div>
+              </div>
+              <i id="menu" class="fa-solid fa-bars" onclick="showmenu()"></i>
+        </div>
+     </nav>
     <div class="container-fluid">
         <div class="section-buttons">
             <div class="button-box">
@@ -130,6 +175,7 @@
         </div> -->
      </footer>
     <script src="cardsPage.js"></script>
+    <script src="navbar.js"></script>
 
 </body>
 
