@@ -1,0 +1,47 @@
+.upperAbout p {
+  margin: 1rem 3rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.lowerAbout {
+  margin: 2.5rem 10%;
+}
+
+.question{
+  margin: 2rem auto;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.que, .ans, .eciLink {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.ans, .eciLink {
+  color: #007bff;
+}
+
+.eciLink {
+  color: #007bff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.eciLink:hover {
+  background-color: #007bff;
+  transition: 0.3s;
+  color: white;
+  text-decoration: none;
+}
+
+@media (max-width:1000px){
+  .upperAbout p {
+    margin: 1rem 1.6rem;
+  }
+}

@@ -1,0 +1,136 @@
+.navbar{
+  margin-bottom: 1rem;
+}
+
+.aboutContainer{
+  text-align: center;
+  margin: 2rem auto;
+}
+
+.aboutP{
+  text-align: center;
+  font-size: 28px;
+  margin: 0.625rem 4.5rem;
+}
+
+.teamMembers{
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin: 8%;
+}
+
+.name{
+  /* margin: 1.2rem auto 0 auto; */
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+
+.memberDetails{
+  width: 13.75rem;
+  margin-left: 0.1rem;
+}
+
+.role{
+  font-size: 1.25rem;
+  /* margin: 0.125rem 0; */
+}
+
+.socials{
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 0.7rem;
+}
+
+.socials a{
+  cursor: pointer;
+  width: 11%;
+}
+
+.socials img{
+  width: 100%;
+}
+
+.member{
+  width: 30%;
+  height: 8.5rem;
+  display: flex;
+  background: #EDEEEF;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  margin: 0.1rem auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.memberImage > img {
+  border-radius: 0.75rem;
+  position: absolute;
+  top: 46%;
+  left: 40%;
+  max-height: 100%;
+  width: 60%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+}
+
+.memberImage{
+  width: 46%;
+  padding-top: 30%;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+@media (max-width: 1120px) {
+  .member {
+    width: 47%;
+  }
+}
+
+@media (max-width: 660px) {
+  .member {
+    width: 80%;
+  }
+  .teamMembers{
+    align-items: center;
+  }
+}
+
+.socials img {
+  transition: filter 0.3s ease-in-out;
+}
+
+.linkedin:hover {
+  filter: drop-shadow(0 0 10px #385ce9);
+}
+
+.insta:hover {
+  filter: drop-shadow(0 0 10px #E1306C);
+}
+
+.facebook:hover {
+  filter: drop-shadow(0 0 10px #385ce9);
+}
+
+.twitter:hover{
+  filter: drop-shadow(0 0 10px #1DA1F2);
+}
+
+.github:hover{
+  filter: drop-shadow(0 0 10px #2B3137)
+}
+
+.member:hover {
+  transform: scale(1.05);
+}
+
+.member:hover .memberImage {
+  transform: scale(1.1);
+}
