@@ -1,298 +1,370 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>India General Election 2024</title>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-      <script src="leaflet/index.js"></script>
-      <script src="index.js"></script>
-      <link rel="stylesheet" href="styles.css">
-      <link rel="stylesheet" href="cards.css">
-      <link rel="stylesheet" href="styling.css">
-      <link rel="stylesheet" href="./cardStyle.css">
-      <link rel="stylesheet" href="leaflet/index.css"/>
-      <style>
-         #datatable{
-            display: none;
-            width: 29%;
-            margin-left: 20%;
-            margin-top: -16%;
-            background-color:white;
-            border-radius: 4%;
-            background-color: white;
-            border: 1px black solid;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-         }
-         header {
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
-            /* border: 1px black solid; */
-        }
-        .stncon {
-            margin-bottom: 2%;
-            width: 100%;
-        }
-        #cad{
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>India General Election 2024</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <script src="leaflet/index.js"></script>
+   <script src="index.js"></script>
+   <link rel="stylesheet" href="styles.css">
+   <link rel="stylesheet" href="cards.css">
+   <link rel="stylesheet" href="styling.css">
+   <link rel="stylesheet" href="leaflet/index.css" />
+   <link rel="stylesheet" href="navbarStyles.css">
+   <style>
+      #datatable {
+         display: none;
+         width: 29%;
+         margin-left: 20%;
+         margin-top: -16%;
+         background-color: white;
+         border-radius: 4%;
+         background-color: white;
+         border: 1px black solid;
+         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+
+      header {
+         display: flex;
+         align-items: center;
+         padding: 0 10px;
+         /* border: 1px black solid; */
+      }
+
+      .stncon {
+         margin-bottom: 2%;
+         width: 100%;
+      }
+
+      #cad {
          font-family: Arial, Helvetica, sans-serif;
          font-size: small;
-         
-        }
-        #vot{
+
+      }
+
+      #vot {
          font-family: Arial, Helvetica, sans-serif;
          font-size: large;
-        }
-        .votes {
-            font-weight: bold;
-        }
-        #cons{
+      }
+
+      .votes {
+         font-weight: bold;
+      }
+
+      #cons {
          text-transform: capitalize;
          font-size: large;
-        }
-        .cav {
+      }
+
+      .cav {
          text-transform: capitalize;
-            font-size: large;
-            padding: 10px;
-            margin-top: 9px;
-        }
-        .cav1, .cav2 {
-            border-radius: 6px;
-            border: 1px solid black;
-            margin-top: 8%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 8px;
-            background-color: #fff;
-            margin-left: 6px;
-            margin-right: 6px;
-            text-transform: capitalize;
-        }
-        #cav2{
-            border-radius: 6px;
-            margin-top: 4px;
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            background-color: #fff;
-            margin-left: 6px;
-            margin-right: 6px;
-        }
-        .cav2 {
-            margin-top: 2%;
-        }
-        .name-section, .name-section2, .votes-section, .votes-section2 {
-            display: flex;
-            flex-direction: column;
-        }
-        .votes-section, .votes-section2 {
-            align-items: flex-end;
-        }
-        .small-text1 {
+         font-size: large;
+         padding: 10px;
+         margin-top: 9px;
+      }
+
+      .cav1,
+      .cav2 {
+         border-radius: 6px;
+         border: 1px solid black;
+         margin-top: 8%;
+         display: flex;
+         justify-content: space-between;
+         padding: 0 8px;
+         background-color: #fff;
+         margin-left: 6px;
+         margin-right: 6px;
          text-transform: capitalize;
-            font-size: x-small;
-            margin-left: 4px;
-            padding: 5px;
-            text-decoration: none;
-        }
-        .close-btn {
-            font-weight: bold;
-            font-size: large; 
-            margin-top: -6%; 
-            margin-left: 90%;
-            cursor: pointer;
-        }
-        .button {
+      }
+
+      #cav2 {
+         border-radius: 6px;
+         margin-top: 4px;
+         display: flex;
+         justify-content: space-between;
+         padding: 10px;
+         background-color: #fff;
+         margin-left: 6px;
+         margin-right: 6px;
+      }
+
+      .cav2 {
+         margin-top: 2%;
+      }
+
+      .name-section,
+      .name-section2,
+      .votes-section,
+      .votes-section2 {
+         display: flex;
+         flex-direction: column;
+      }
+
+      .votes-section,
+      .votes-section2 {
+         align-items: flex-end;
+      }
+
+      .small-text1 {
+         text-transform: capitalize;
+         font-size: x-small;
+         margin-left: 4px;
+         padding: 5px;
+         text-decoration: none;
+      }
+
+      .close-btn {
+         font-weight: bold;
+         font-size: large;
+         margin-top: -6%;
+         margin-left: 90%;
+         cursor: pointer;
+      }
+
+      .button {
          background-color: #4CAF50;
          color: white;
          border: none;
          border-radius: 4px;
-        cursor: pointer;
-        /* margin-left: 20%; */
-        margin-top: 20px;
-        }
-        .button:hover {
-            background-color: blue;
-        }
-		#see-more-btn{
-  padding: 0.5rem 1rem;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 2.5px;
-  font-weight: 500;
-  color: #000;
-  background-color: #fff;
-  border: none;
-  border-radius: 45px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease 0s;
-  cursor: pointer;
-  outline: none;
-}
-#see-more-btn:hover{
-  background-color: #1e90ff; /* DodgerBlue */
-  box-shadow: 0px 5px 20px rgba(30, 144, 255, 0.4); /* DodgerBlue with 40% opacity */
-  color: #fff;
-  transform: translateY(-2px);
-}
-#see-more-btn:active {
-  transform: translateY(-1px);
-}
-        /* Media Queries */
-        @media (max-width: 600px) {
-            .maindiv {
-                width: 40%;
-                margin: 10% auto;
-                /* height: auto; */
-            }
-            .cav {
-                font-size: large;
-            }
-            .cav1, .cav2 {
-                flex-direction: column;
-                align-items: flex-start;
-                /* height: auto; */
-                padding: 10px;
+         cursor: pointer;
+         /* margin-left: 20%; */
+         margin-top: 20px;
+      }
+
+      .button:hover {
+         background-color: blue;
+      }
+
+      #see-more-btn {
+         padding: 0.5rem 1rem;
+         font-size: 12px;
+         text-transform: uppercase;
+         letter-spacing: 2.5px;
+         font-weight: 500;
+         color: #000;
+         background-color: #fff;
+         border: none;
+         border-radius: 45px;
+         box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+         transition: all 0.3s ease 0s;
+         cursor: pointer;
+         outline: none;
+      }
+
+      #see-more-btn:hover {
+         background-color: #1e90ff;
+         /* DodgerBlue */
+         box-shadow: 0px 5px 20px rgba(30, 144, 255, 0.4);
+         /* DodgerBlue with 40% opacity */
+         color: #fff;
+         transform: translateY(-2px);
+      }
+
+      #see-more-btn:active {
+         transform: translateY(-1px);
+      }
+
+      /* Media Queries */
+      @media (max-width: 600px) {
+         .maindiv {
+            width: 40%;
+            margin: 10% auto;
+            /* height: auto; */
+         }
+
+         .cav {
+            font-size: large;
+         }
+
+         .cav1,
+         .cav2 {
+            flex-direction: column;
+            align-items: flex-start;
+            /* height: auto; */
+            padding: 10px;
+
+         }
+
+         .close-btn {
+            font-size: large;
+         }
+
+         .stncon .votes {
+            font-size: medium;
+            text-align: center;
+            display: block;
+         }
+
+         .button {
+            margin-top: 10px;
+         }
+      }
+
+      @media (min-width: 600px) and (max-width: 768px) {
+         .maindiv {
+            width: 20%;
+            /* margin: 10% auto; */
+            height: auto;
+         }
+
+         .cav {
+            font-size: large;
+         }
+
+         .cav1,
+         .cav2 {
+            height: auto;
+            padding: 10px;
+         }
+
+         .close-btn {
+            font-size: large;
+         }
+
+         .stncon .votes {
+            font-size: medium;
+         }
+      }
+
+      @media (min-width: 768px) and (max-width: 1024px) {
+         .maindiv {
+            width: 10%;
+            /* margin: 10% auto; */
+            height: auto;
+         }
+
+         .cav {
+            font-size: large;
+         }
+
+         .cav1,
+         .cav2 {
+            height: auto;
+            padding: 10px;
+         }
+
+         .close-btn {
+            font-size: large;
+         }
+
+         .stncon .votes {
+            font-size: large;
+         }
+      }
+
+      @media (min-width: 1024px) {
+         .maindiv {
+            width: 30%;
+            /* margin: 10% auto; */
+            height: auto;
+         }
+
+         .cav {
+            font-size: x-large;
+         }
+
+         .cav1,
+         .cav2 {
+            height: auto;
+            padding: 10px;
+         }
+
+         .close-btn {
+            font-size: xx-large;
+         }
+
+         .stncon span {
+            font-size: x-large;
+         }
+      }
+   </style>
+
+</head>
+
+<body>
+   <nav class="navbarHead">
+      <div class="containerHead">
+         <div class="logo">
+            <img src="imgs/RESULTS2024LOGO.png" alt="">
+         </div>
+         <div class="navlinks" id="navlinks">
+            <div class="headerPhone">
+               <img src="imgs/RESULTS2024LOGO.png" alt="">
+               <i class="fa-solid fa-xmark" onclick="hidemenu()"></i>
+            </div>
+            <div class="d-flex">
+               <div class="imgHover">
+                  <div class="tooltip-container">
+                     <!-- <span class="text">Tooltip</span> -->
+                     <img  src="imgs/share.png" alt="" >
+                     <span class="tooltip">
+                        <i class="fa-brands fa-facebook"></i>
+                     
+                         <i class="fa-brands fa-whatsapp"></i>
+                    
+                         <i class="fa-brands fa-instagram"></i>
+                    
+                         <i class="fa-brands fa-telegram"></i>
+                        </a></span>
+                   </div>
+                   
+                  </div>
+               <ul>
+                  <li><a href="cardsPage.html">Popular & Celebrities</a></li>
+                  <li><a href="">Big Fights</a></li>
+                  <li><a href="">'19 vs '24</a></li>
+                  <div class="phoneMedia" id="phoneMedia" ><i class="fa-brands fa-facebook" style="color: #158be5;"></i>
+                     
+                     <i class="fa-brands fa-whatsapp" style="color: #32ec6a;"></i>
                 
-            }
-            .close-btn {
-                font-size: large;
-            }
-            .stncon .votes {
-                font-size: medium;
-                text-align: center;
-                display: block;
-            }
-            .button {
-                margin-top: 10px;
-            }
-        }
-
-        @media (min-width: 600px) and (max-width: 768px) {
-            .maindiv {
-                width: 20%;
-                /* margin: 10% auto; */
-                height: auto;
-            }
-            .cav {
-                font-size: large;
-            }
-            .cav1, .cav2 {
-                height: auto;
-                padding: 10px;
-            }
-            .close-btn {
-                font-size: large;
-            }
-            .stncon .votes {
-                font-size: medium;
-            }
-        }
-
-        @media (min-width: 768px) and (max-width: 1024px) {
-            .maindiv {
-                width: 10%;
-                /* margin: 10% auto; */
-                height: auto;
-            }
-            .cav {
-                font-size: large;
-            }
-            .cav1, .cav2 {
-                height: auto;
-                padding: 10px;
-            }
-            .close-btn {
-                font-size: large;
-            }
-            .stncon .votes {
-                font-size: large;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .maindiv {
-                width: 30%;
-                /* margin: 10% auto; */
-                height: auto;
-            }
-            .cav {
-                font-size: x-large;
-            }
-            .cav1, .cav2 {
-                height: auto;
-                padding: 10px;
-            }
-            .close-btn {
-                font-size: xx-large;
-            }
-            .stncon span {
-                font-size: x-large;
-            }
-        }
-      </style>
-
-   </head>
-   <body>
-      <nav class="navbar navbar-expand-lg " >
-         <div class="container-fluid">
-            <a class="navbar-brand order-1" href="#">results<span>2024.in</span></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse order-2" id="navbarNav">
-               <ul class="navbar-nav ml-auto">
-                  <li class="nav-item">
-                     <a class="nav-link" href="#">Big fights</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" href="#">Celebrities</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" href="#"><i class="bi bi-share"></i></a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" href="#"><i class="bi bi-facebook"></i></a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" href="#"><i class="bi bi-whatsapp"></i></a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" href="#"><i class="bi bi-instagram"></i></a>
-                  </li>
+                     <i class="fa-brands fa-instagram" style="color: #d24196;"></i>
+                
+                     <i class="fa-brands fa-telegram" style="color: #74deec;"></i></div>
                </ul>
+               </div>
             </div>
+            <i id="menu" class="fa-solid fa-bars" onclick="showmenu()"></i>
+      </div>
+   </nav>
+   <!-- <div style="height: 1px;background-color: black;width: 100vw;margin: 1.5rem;"></div> -->
+   <!-- Common Header -->
+   <header class="header">
+      <div class="container">
+         <div class="row ">
          </div>
-      </nav>
-      <!-- Common Header -->
-      <header class="header">
-         <div class="container">
-            <div class="row "  >
-            </div>
-         </div>
-      </header>
-      <!-- Main Content -->
-      <div class="container-fluid main-content" >
-         <!-- Page 1: Landing Page -->
-         <div id="landing-page" >
-            <div class="row" >
-               <div class="col-12 col-lg-6 order-2 order-lg-1"  >
-                  <!-- India Map --> 
-                  <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                           <li class="breadcrumb-item" id="breadcrumb-india" style="display: none;"><a href="#" onclick="resetBreadcrumb()">India</a></li>
-                           <li class="breadcrumb-item" id="breadcrumb-state" style="display: none;"></a></li>
-                           <li class="breadcrumb-item active" id="breadcrumb-constituency" style="display: none;" aria-current="page"></li>
-                       </ol>
-                   </nav> 
-                  <div class="row justify-content-between g-0 ">
-                     <div class="col-sm-6 col-md-6 d-flex align-items-center">  
-                        <select class="form-control" id="state-select" onchange="handleSelection()" style="width: 12.5rem; border-radius:0.5rem;border: 0.063rem solid rgb(208,213,221,1); padding-left: 0.625rem;">
-                        <option value=" "seelcted>Select State</option>
-                        <option value="reset">Reset</option> 
+      </div>
+   </header>
+   <!-- Main Content -->
+   <div class="container-fluid main-content">
+      <!-- Page 1: Landing Page -->
+      <div id="landing-page">
+         <div class="row">
+            <div class="col-12 col-lg-6 order-2 order-lg-1">
+               <!-- India Map -->
+               <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                     <li class="breadcrumb-item" id="breadcrumb-india" style="display: none;"><a href="#"
+                           onclick="resetBreadcrumb()">India</a></li>
+                     <li class="breadcrumb-item" id="breadcrumb-state" style="display: none;"></a></li>
+                     <li class="breadcrumb-item active" id="breadcrumb-constituency" style="display: none;"
+                        aria-current="page"></li>
+                  </ol>
+               </nav>
+               <div class="row justify-content-between g-0 ">
+                  <div class="col-sm-6 col-md-6 d-flex align-items-center">
+                     <select class="form-control" id="state-select" onchange="handleSelection()"
+                        style="width: 12.5rem; border-radius:0.5rem;border: 0.063rem solid rgb(208,213,221,1); padding-left: 0.625rem;">
+                        <option value=" " seelcted>Select State</option>
+                        <option value="reset">Reset</option>
                         <option data-st_code="35" value="35">Andaman and Nicobar Islands</option>
                         <option data-st_code="37" value="37">Andhra Pradesh</option>
                         <option data-st_code="12" value="12">Arunachal Pradesh</option>
@@ -329,36 +401,36 @@
                         <option data-st_code="9" value="9">Uttar Pradesh</option>
                         <option data-st_code="5" value="5">Uttarakhand</option>
                         <option data-st_code="19" value="19">West Bengal</option>
-                    </select>
+                     </select>
+                  </div>
+                  <div class="col-6 col-md-4 d-flex justify-content-end align-items-center">
+                     <div class="bt_grp">
+                        <button class="button_years" id="bt_1" type="button">2024</button>
+                        <button class="button_years" id="bt_2" type="button">2019</button>
                      </div>
-                      <div class="col-6 col-md-4 d-flex justify-content-end align-items-center">
-                        <div class="bt_grp">
-                           <button class="button_years" id="bt_1" type="button">2024</button>
-                           <button class="button_years" id="bt_2" type="button" >2019</button>
-                         </div>
 
+                  </div>
+               </div>
+               <div class="row g-0 mt-3">
+                  <div class="col-sm-6 col-md-8"> </div>
+                  <div class="col-6 col-md-4 d-flex justify-content-end align-items-center">
+                     <div class="bt_grp">
+                        <button type="button" id="state-bt">States</button>
+                        <button type="button" id="consti-bt">Constituency</button>
                      </div>
                   </div>
-                  <div class="row g-0 mt-3">
-                     <div class="col-sm-6 col-md-8">   </div>
-                     <div class="col-6 col-md-4 d-flex justify-content-end align-items-center">
-                        <div class="bt_grp">
-                           <button type="button" id="state-bt" >States</button>
-                           <button type="button" id="consti-bt">Constituency</button>
-                        </div>
-                     </div>
+               </div>
+               <div class="row">
+                  <div class="col-12" id="india-map"></div>
+                  <div id="map" style="width: 100%; height:100vh;display: none;">
                   </div>
-                  <div class="row">
-                      <div class="col-12" id="india-map" ></div>
-                      <div id="map" style="width: 100%; height:100vh;display: none;">
-                      </div>
-                  </div>
-                  <!-- card start-->
-                  <div class="root">
-                     <h2 style="align-items: center;margin-top: 1rem;font-weight: bold;">Popular Candidates</h2>
-                     <div class="container-fluid h-500">
-                         <div id="root" class="row g-2 ">
-                             <!-- <div class="col-lg-6 d-flex position-relative custom-container">
+               </div>
+               <!-- card start-->
+               <div class="root">
+                  <h2 style="align-items: center;margin-top: 1rem;font-weight: bold;">Popular Candidates</h2>
+                  <div class="container-fluid h-500">
+                     <div id="root" class="row g-2 ">
+                        <!-- <div class="col-lg-6 d-flex position-relative custom-container">
                                  <div class="ribbon">Trailing</div>
                                  <div class="temp custom-temp">
                                      <div class="card-body w-100">
@@ -382,150 +454,150 @@
                                      <img class="person-img w-50" src="img/rahul.png" alt="Person Image">
                                  </div>
                              </div> -->
-                         </div> <!-- End of the row -->
-                         <button id="see-more-btn" class="button">See More</button>
-                     </div>
-                 </div>
+                     </div> <!-- End of the row -->
+                     <button id="see-more-btn" class="button">See More</button>
+                  </div>
                </div>
-               <div class="col-12 col-lg-6 order-1 order-lg-2" ">
+            </div>
+            <div class="col-12 col-lg-6 order-1 order-lg-2" ">
                   <!-- Alliance Results -->
-                  <!-- <div id="alliance-results"></div> -->
-                  <!-- Party-wise Results -->
-                  <!-- <div id="party-results"></div> -->
+                  <!-- <div id=" alliance-results"></div> -->
+            <!-- Party-wise Results -->
+            <!-- <div id="party-results"></div> -->
 
-                  <!-- -Alliance Names on Bar- -->
-               <div><div class="allianceName">
-                     <span id="word1">NDA</span>
-                     <span id="word2">I.N.D.I.A</span>
-                     <span id="word3">Others</span>
-                  </div>
-                 <!-- -Alliance Names on Bar- -->
+            <!-- -Alliance Names on Bar- -->
+            <div>
+               <div class="allianceName">
+                  <span id="word1">NDA</span>
+                  <span id="word2">I.N.D.I.A</span>
+                  <span id="word3">Others</span>
+               </div>
+               <!-- -Alliance Names on Bar- -->
 
-                  <div class="bar-container" id="bar-container">
-                     <div class="bar bar-1" id="bar1"></div>
-                     <div class="bar bar-2" id="bar2"></div>
-                     <div class="bar bar-3" id="bar3"></div>
-                     <div class="bar-label" id="bar-label"></div>
+               <div class="bar-container" id="bar-container">
+                  <div class="bar bar-1" id="bar1"></div>
+                  <div class="bar bar-2" id="bar2"></div>
+                  <div class="bar bar-3" id="bar3"></div>
+                  <div class="bar-label" id="bar-label"></div>
+               </div>
+            </div>
+            <!-- ----------------Accordion------------------------------------ -->
+            <!-- Progress bar -->
+            <div class="progress w-50 position-absolute  z-index-1000 mx-auto justify-content-center">
+               <div class="transition-timer-carousel-progress-bar bg-success"></div>
+            </div>
+            <!-- Carousel Container -->
+            <div id="carouselContainer" class="position-relative d-flex  mt-5">
+               <!-- Carousel Element -->
+               <div id="carouselExampleIndicators" class="carousel slide w-100 p-1  rounded-2 " data-bs-pause="true">
+                  <!-- Carousel Indicators -->
+                  <div class="carousel-indicators">
+                     <!-- Indicator buttons -->
+                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+
                   </div>
-               </div>
-               <!-- ----------------Accordion------------------------------------ -->
-               <!-- Progress bar -->
-               <div class="progress w-50 position-absolute  z-index-1000 mx-auto justify-content-center">
-                  <div class="transition-timer-carousel-progress-bar bg-success"></div>
-               </div>
-               <!-- Carousel Container -->
-               <div id="carouselContainer" class="position-relative d-flex  mt-5">
-                  <!-- Carousel Element -->
-                  <div id="carouselExampleIndicators" class="carousel slide w-100 p-1  rounded-2 " data-bs-pause="true"
-                     >
-                     <!-- Carousel Indicators -->
-                     <div class="carousel-indicators">
-                        <!-- Indicator buttons -->
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                           aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                           aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                           aria-label="Slide 3"></button>
-                        
-                     </div>
-                     <!-- Carousel Inner -->
-                     <div class="carousel-inner ">
-                        <!-- Individual carousel items -->
-                        <div class="carousel-item active" id="ndaCarousel">
-                           <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240215121528/javare15.png"
+                  <!-- Carousel Inner -->
+                  <div class="carousel-inner ">
+                     <!-- Individual carousel items -->
+                     <div class="carousel-item active" id="ndaCarousel">
+                        <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240215121528/javare15.png"
                               alt="Img 1" class="d-block w-100 h-50"> -->
-                              <div class="row ">
-                                 <div class="col-6 ">
-                                    <table class="table align-middle accordionTable table-sm m-0">
-                                       <thead>
-                                          <tr>
-                                             <th >Party</th>
-                                             <th >Win/Lead</th>
-                                          </tr>
-                                       </thead>
-                                       <tbody id="tbody1">
-                                       </tbody>
-                                    </table>
-                                 </div>
-                                 <!-- <div style="height: 100%" ></div> -->
-                                 <div class="col-6 ">
-                                    <table class="table align-middle accordionTable  table-sm m-0">
-                                       <thead>
-                                          <tr>
-                                             <th >Party</th>
-                                             <th >Win/Lead</th>
-                                          </tr>
-                                       </thead>
-                                       <tbody id="tbody2">
-                                       </tbody>
-                                    </table>
-                                 </div>
-                              </div>
-                        </div>
-                        <div class="carousel-item " id="indiaCarousel">
-                           <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240215121356/jsre15.jpg" alt="Img 2"
-                              class="d-block w-100 h-50"> -->
-                              <div class="row ">
-                                 <div class="col-6  ">
-                                    <table class="table align-middle accordionTable table-sm m-0">
-                                       <thead>
-                                          <tr>
-                                             <th >Party</th>
-                                             <th >Win/Lead</th>
-                                          </tr>
-                                       </thead>
-                                       <tbody id="tbody1">
-                                       </tbody>
-                                    </table>
-                                 </div>
-                                 <div class="col-6 ">
-                                    <table class="table align-middle accordionTable table-sm m-0">
-                                       <thead>
-                                          <tr>
-                                             <th >Party</th>
-                                             <th >Win/Lead</th>
-                                          </tr>
-                                       </thead>
-                                       <tbody id="tbody2">
-                                       </tbody>
-                                    </table>
-                                 </div>
-                              </div>
-                        </div>
-                        <div class="carousel-item" id="othersCarousel">
-                           <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240215121356/jsre15.jpg" alt="Img 2"
-                              class="d-block w-100 h-50"> -->
-                              <div class="row ">
-                                 <div class="col-6 ">
-                                    <table class="table align-middle accordionTable table-sm m-0">
-                                       <thead>
-                                          <tr>
-                                             <th >Party</th>
-                                             <th >Win/Lead</th>
-                                          </tr>
-                                       </thead>
-                                       <tbody id="tbody1">
-                                       </tbody>
-                                    </table>
-                                 </div>
-                                 <div class="col-6">
-                                    <table class="table align-middle accordionTable table-sm m-0 bg-primary">
-                                       <thead>
-                                          <tr>
-                                             <th >Party</th>
-                                             <th >Win/Lead</th>
-                                          </tr>
-                                       </thead>
-                                       <tbody id="tbody2">
-                                       </tbody>
-                                    </table>
-                                 </div>
-                              </div>
+                        <div class="row ">
+                           <div class="col-6 ">
+                              <table class="table align-middle accordionTable table-sm m-0">
+                                 <thead>
+                                    <tr>
+                                       <th>Party</th>
+                                       <th>Win/Lead</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody id="tbody1">
+                                 </tbody>
+                              </table>
+                           </div>
+                           <!-- <div style="height: 100%" ></div> -->
+                           <div class="col-6 ">
+                              <table class="table align-middle accordionTable  table-sm m-0">
+                                 <thead>
+                                    <tr>
+                                       <th>Party</th>
+                                       <th>Win/Lead</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody id="tbody2">
+                                 </tbody>
+                              </table>
+                           </div>
                         </div>
                      </div>
-                     <!-- Carousel Control buttons -->
-                     <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                     <div class="carousel-item " id="indiaCarousel">
+                        <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240215121356/jsre15.jpg" alt="Img 2"
+                              class="d-block w-100 h-50"> -->
+                        <div class="row ">
+                           <div class="col-6  ">
+                              <table class="table align-middle accordionTable table-sm m-0">
+                                 <thead>
+                                    <tr>
+                                       <th>Party</th>
+                                       <th>Win/Lead</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody id="tbody1">
+                                 </tbody>
+                              </table>
+                           </div>
+                           <div class="col-6 ">
+                              <table class="table align-middle accordionTable table-sm m-0">
+                                 <thead>
+                                    <tr>
+                                       <th>Party</th>
+                                       <th>Win/Lead</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody id="tbody2">
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="carousel-item" id="othersCarousel">
+                        <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240215121356/jsre15.jpg" alt="Img 2"
+                              class="d-block w-100 h-50"> -->
+                        <div class="row ">
+                           <div class="col-6 ">
+                              <table class="table align-middle accordionTable table-sm m-0">
+                                 <thead>
+                                    <tr>
+                                       <th>Party</th>
+                                       <th>Win/Lead</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody id="tbody1">
+                                 </tbody>
+                              </table>
+                           </div>
+                           <div class="col-6">
+                              <table class="table align-middle accordionTable table-sm m-0 bg-primary">
+                                 <thead>
+                                    <tr>
+                                       <th>Party</th>
+                                       <th>Win/Lead</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody id="tbody2">
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- Carousel Control buttons -->
+                  <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
                         data-bs-slide="prev">
                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                      <span class="visually-hidden">Previous</span>
@@ -535,10 +607,10 @@
                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
                      <span class="visually-hidden">Next</span>
                      </button> -->
-                  </div>
                </div>
-               <!-- ------------------------------------------------------------------ -->
-               <!-- <div class="accordion  mt-3 mb-4 w-100 " id="accordionContainer" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;">
+            </div>
+            <!-- ------------------------------------------------------------------ -->
+            <!-- <div class="accordion  mt-3 mb-4 w-100 " id="accordionContainer" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;">
                   <div class="accordion-item ">
                      <h5 class="accordion-header m-0">
                         <button class="accordion-button w-100 " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="background-color: #FFF9F5;">
@@ -693,112 +765,148 @@
                      </div>
                   </div>
                </div> -->
-               <!-- ----------------Accordion------------------------------------ -->
-               <!-- ----------------State Table------------------------------------ -->
-                  <div id="stateTabeleContainer" style="margin-top: 0.9375rem;" class="table-responsive-sm ">
-                  <div class="d-flex justify-content-between">
-                     <!-- <input class="form-control order-2" id="stateSearch" type="text" placeholder="Search"> -->
-                     <form class="search-container order-2">
-                        <input class="form-control " type="text" id="stateSearch" placeholder="Search">
-                        <a href="#"><img class="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"></a>
-                     </form>				 
-                     <div class="btn-group stateUnion rounded-2" role="group" aria-label="Basic example">
-                        <button id="stateButton" type="button" class="btn btn-light border border-5 active" >State</button>
-                        <button  id="unionButton" type="button" class="btn btn-light border border-5">Union Territory</button>
-                     </div>
+            <!-- ----------------Accordion------------------------------------ -->
+            <!-- ----------------State Table------------------------------------ -->
+            <div id="stateTabeleContainer" style="margin-top: 0.9375rem;" class="table-responsive-sm ">
+               <div class="d-flex justify-content-between">
+                  <!-- <input class="form-control order-2" id="stateSearch" type="text" placeholder="Search"> -->
+                  <form class="search-container order-2">
+                     <input class="form-control " type="text" id="stateSearch" placeholder="Search">
+                     <a href="#"><img class="search-icon"
+                           src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"></a>
+                  </form>
+                  <div class="btn-group stateUnion rounded-2" role="group" aria-label="Basic example">
+                     <button id="stateButton" type="button" class="btn btn-light border border-5 active">State</button>
+                     <button id="unionButton" type="button" class="btn btn-light border border-5">Union
+                        Territory</button>
                   </div>
-                  <table class="table table-bordered" style="margin-top: 0.3125rem;box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;" id="stateTable">
-                     <thead>
-                        <tr>
-                           <th class="col-3 col-lg-6 align-middle" id="stateRow"scope="col">State / Union Territory </th>
-                           <th class="col-3 col-lg-2 align-middle"id="NDA" scope="col">NDA</th>
-                           <th class="col-3 col-lg-2 align-middle" id="INDIA" scope="col">I.N.D.I.A</th>
-                           <th class="col-3 col-lg-2 align-middle" id="Others" scope="col">Others</th>
-                        </tr>
-                     </thead>
-                     <tr id="referenceRow" >
-                        <td id="stateName"></td>
-                        <td id="NDASeats"></td>
-                        <td id="INDIASeats"></td>
-                        <td id="OthersSeats"></td>
+               </div>
+               <table class="table table-bordered"
+                  style="margin-top: 0.3125rem;box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;"
+                  id="stateTable">
+                  <thead>
+                     <tr>
+                        <th class="col-3 col-lg-6 align-middle" id="stateRow" scope="col">State / Union Territory </th>
+                        <th class="col-3 col-lg-2 align-middle" id="NDA" scope="col">NDA</th>
+                        <th class="col-3 col-lg-2 align-middle" id="INDIA" scope="col">I.N.D.I.A</th>
+                        <th class="col-3 col-lg-2 align-middle" id="Others" scope="col">Others</th>
                      </tr>
-                     <tbody id="allianceBody">
-                     </tbody>
-                  </table>
+                  </thead>
+                  <tr id="referenceRow">
+                     <td id="stateName"></td>
+                     <td id="NDASeats"></td>
+                     <td id="INDIASeats"></td>
+                     <td id="OthersSeats"></td>
+                  </tr>
+                  <tbody id="allianceBody">
+                  </tbody>
+               </table>
+            </div>
+            <!-- ----------------State Table------------------------------------ -->
+            <!-- Constitunecy Table -->
+            <div id="Constituency-res" style="margin-top: 0.9375rem;" class="table-responsive-sm"
+               style="display: none;">
+               <table class="table  table-bordered" style="margin-top: 0.1rem;margin-bottom: 0.1rem;">
+                  <div id="theading" style="display: flex; align-items: center; ">
+                     <span id="constituency-name"></span>
+                     <input class="form-control" id="stateinput" type="text" placeholder="Search">
+                  </div>
+                  <thead class="thead">
+                     <tr>
+                        <th class="col-3 col-lg-1 align-middle" style="background:#EAECF0; color: #101828;">Constituency
+                        </th>
+                        <th class="col-3 col-lg-5 align-middle"
+                           style="background: #12B76A; text-align: center; color: white; border: none;">Leading/Won</th>
+                        <th class="col-3 col-lg-5 align-middle"
+                           style="background: #F96343; text-align: center;color: white;border: none; "> Trailing/Lost
+                        </th>
+                        <th class="col-3 col-lg-1 align-middle" style="background:#EAECF0; color: #101828;" color:
+                           #101828;>Margin</th>
+                     </tr>
+                  </thead>
+                  <tbody id="table-body">
+                     <!-- Dynamic rows will be inserted here -->
+                  </tbody>
+               </table>
+               <div id="pagination-controls" style="display: flex; justify-content: space-between; margin-top: 0.1rem;">
+                  <!-- Pagination buttons will be inserted here -->
                </div>
-               <!-- ----------------State Table------------------------------------ -->
-               <!-- Constitunecy Table -->
-                     <div id="Constituency-res"  style="margin-top: 0.9375rem;" class="table-responsive-sm" style="display: none;">
-                       <table class="table  table-bordered" style="margin-top: 0.1rem;margin-bottom: 0.1rem;">
-                        <div id="theading" style="display: flex; align-items: center; ">
-                           <span id="constituency-name"></span>
-                           <input class="form-control" id="stateinput" type="text" placeholder="Search">
-                        </div>
-                         <thead class="thead">
-                           <tr>
-                             <th class="col-3 col-lg-1 align-middle" style="background:#EAECF0; color: #101828;">Constituency</th>
-                             <th class="col-3 col-lg-5 align-middle"style="background: #12B76A; text-align: center; color: white; border: none;">Leading/Won</th>
-                             <th class="col-3 col-lg-5 align-middle"style="background: #F96343; text-align: center;color: white;border: none; "> Trailing/Lost</th>
-                             <th class="col-3 col-lg-1 align-middle"style="background:#EAECF0; color: #101828;" color: #101828;>Margin</th>
-                           </tr>
-                         </thead>
-                         <tbody id="table-body">
-                           <!-- Dynamic rows will be inserted here -->
-                         </tbody>
-                       </table>
-                       <div id="pagination-controls" style="display: flex; justify-content: space-between; margin-top: 0.1rem;">
-                        <!-- Pagination buttons will be inserted here -->
-                    </div>
-                     </div>
-                   <!-- table2 pavan -->
-                     <div class="table-responsive-sm" id="Candidate-res" style="margin-top: 0.9375rem; display: none;">
-                       
-                       <table class="table table-bordered" style="margin-top: 0.1rem; margin-bottom: 0.1rem;">
-                        <div id="theading2" style="display: flex;align-items: center; ">
-                           <span id="constituency-name"></span>
-                           <input class="form-control" id="candidateinput" type="text" placeholder="Search">
-                        </div>
+            </div>
+            <!-- table2 pavan -->
+            <div class="table-responsive-sm" id="Candidate-res" style="margin-top: 0.9375rem; display: none;">
 
-                       
-                         <thead class="thead">
-                           <tr>
-                             <th style="background:#F9FAFB; color: #101828;">Candidate</th>
-                             <th style="background: #F9FAFB; text-align: center; color: 101828; border: none;">Party</th>
-                             <th style="background: #F9FAFB; text-align: center;color: 101828;border: none; ">Votes</th>
-                             <th style="background:#F9FAFB; color: #101828;" color: #101828;>Margin</th>
-                           </tr>
-                         </thead>
-                         <tbody class="candidateBody">
-                           <!-- Dynamic rows will be inserted here -->
-                         </tbody>
-                       </table>
-                       <div id="pagination-controls-candidates" style="display: flex; justify-content: space-between; margin-top: 0.1rem;">
-                        <!-- Pagination buttons will be inserted here -->
-                    </div>
-                     </div>
-                  
+               <table class="table table-bordered" style="margin-top: 0.1rem; margin-bottom: 0.1rem;">
+                  <div id="theading2" style="display: flex;align-items: center; ">
+                     <span id="constituency-name"></span>
+                     <input class="form-control" id="candidateinput" type="text" placeholder="Search">
+                  </div>
+
+
+                  <thead class="thead">
+                     <tr>
+                        <th style="background:#F9FAFB; color: #101828;">Candidate</th>
+                        <th style="background: #F9FAFB; text-align: center; color: 101828; border: none;">Party</th>
+                        <th style="background: #F9FAFB; text-align: center;color: 101828;border: none; ">Votes</th>
+                        <th style="background:#F9FAFB; color: #101828;" color: #101828;>Margin</th>
+                     </tr>
+                  </thead>
+                  <tbody class="candidateBody">
+                     <!-- Dynamic rows will be inserted here -->
+                  </tbody>
+               </table>
+               <div id="pagination-controls-candidates"
+                  style="display: flex; justify-content: space-between; margin-top: 0.1rem;">
+                  <!-- Pagination buttons will be inserted here -->
                </div>
-         </div>
-         <div id="datatable"></div>
-         <!-- Page 2: State Results -->
-         <div id="state-results" style="display: none;">
-            <!-- Similar structure as landing page -->
+            </div>
+
          </div>
       </div>
-      <!-- Common Footer -->
-      <footer class="footer">
-         <div class="container">
-            <p class="text-center">© Gradious Technologies Private Limited 2024</p>
-         </div>
-      </footer>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-      <script src="./script.js"></script>
-      <script src="./paths.js"></script>
-      <script src="./leaflet/index.js"></script>
-      <script src="./index.js"></script>
-	  <script src="./cards.js"></script>
-   </body>
+      <div id="datatable"></div>
+      <!-- Page 2: State Results -->
+      <div id="state-results" style="display: none;">
+         <!-- Similar structure as landing page -->
+      </div>
+   </div>
+   <!-- Common Footer -->
+   <footer class="footer">
+      <div class="container">
+         <p class="text-center">© Gradious Technologies Private Limited 2024</p>
+      </div>
+   </footer>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"></script>
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   <script src="./script.js"></script>
+   <script src="./paths.js"></script>
+   <script src="./leaflet/index.js"></script>
+   <script src="./index.js"></script>
+   <script src="./cards.js"></script>
+   <script>
+      let nav = document.getElementById("navlinks");
+
+      function showmenu() {
+         nav.style.top = "0px";
+      }
+
+      function hidemenu() {
+         nav.style.top = "-2000px";
+      }
+      let flag=false;
+      function func(){
+         if(flag){
+            document.getElementById("tooltip").style.display="none";
+            flag=false;
+         }
+         else{
+            document.getElementById("tooltip").style.display="flex";
+            flag=true;
+         }
+      }
+   </script>
+</body>
+
 </html>
