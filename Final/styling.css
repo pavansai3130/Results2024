@@ -446,10 +446,8 @@ tr{
 }
 /* hover table */
 #containertool {
-  position: relative;
   display: none;
-  margin-left: 330px;
-  margin-top: -300px;
+ 
   background-color: white;
   padding: 20px;
   border-radius: 8px;
@@ -457,6 +455,8 @@ tr{
   width: 320px;
   position: absolute;
   z-index: 999;
+  top:28rem;
+  left: 26.25rem;
   justify-content: center;
 }
 

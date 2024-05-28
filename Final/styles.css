@@ -82,9 +82,20 @@ a{
 }
 /* -----------------------Progress----------------*/
 
+.ndaLegend{background-color: #FF9933;     height: 15px; border-radius: 50%; width:15px; display:inline-block;}
+.indiaLegend{background-color:#87CEEB;; height: 15px; border-radius: 50%; width:15px; display:inline-block;}
+.others{background-color:#EAECF0; ; height: 15px; border-radius: 50%; width:15px; display:inline-block;}
+.label{margin-left: 2px; color: #666666;  font-size: 15px; font-weight: 500;}
+.legend .legendLabel{
+  width:max-content;
+  margin-right: 5px;
+}
+
+
 #bar-container {
   /* width: 100%; */
   /* background-color: #f3f3f3; */
+  height: 40px;
   overflow: hidden;
   position: relative;
   padding: 0;
@@ -100,7 +111,7 @@ a{
   align-items: center;
   color: white;
   /* float: left; */
-  font-size: 1.25rem;
+  font-size: 18px;
   padding:0.625rem 0.5rem;
   font-weight: 500;
   margin: 0;
@@ -119,6 +130,7 @@ a{
   position: relative;
   padding: 0 0.2499rem;
   display: flex;
+  /* justify-content: center; */
   align-items: center;
   margin-bottom: 0.2499rem;
 }
@@ -127,6 +139,9 @@ a{
   left: 0;
   /* font-size: 1.25rem; */
   font-weight:500;
+  color: black;
+  /* background-color: red; */
+  /* width: 100px; */
 }
 
 #word2 {
@@ -151,15 +166,48 @@ a{
   /* border-radius: 8px; */
 
 }
+#carouselProgress{
+  background-color: #FF9933;
+}
+#toggleButton{
+  font-size: 14px;
+  font-weight: 600;
+  color: #344054;
+  border: none;
+  background-color: transparent;
+}
 #carouselContainer table{
   border: none;
 }
-#carouselExampleIndicators{
+.carousel-item {
+  border-radius: 8px;
+  padding:11px 24px;
+}
+.carousel-item> div:first-of-type {
+  /* Your styles here */
+  font-size: 14px;
+  color: #101828;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* #carouselExampleIndicators{
   border-top:8px solid black
+} */
+#ndaCarousel{
+  border-top:8px solid #FF9933;
+}
+#indiaCarousel{
+  border-top:8px solid #87CEEB;
+}
+#othersCarousel{
+  border-top:8px solid #EAECF0;
 }
 
 
-#carouselContainer th,td{
+#carouselContainer th,
+#carouselContainer td{
  width: 50%;
  background: rgba(255, 255, 255, 1);
  ;
@@ -167,21 +215,24 @@ a{
  ;
  text-align: center;
 }
-.accordionTable th:first-child,
-.accordionTable td:first-child {
-  /* Your styles for the first child th and td */
+.accordionTable th:first-child {
   text-align: left;
+}
+
+.accordionTable tbody tr td:first-child {
+  text-align: left;
+}
+.hiding {
+  display:none;
 }
 .progress {  
   top: 0;
   left: 0;
   right: 0;
-  margin-top: 6rem;
-} 
-#accordionContainer h2{
-  height: 2.5rem;
-  /* border: 8px; */
-
+  /* margin-top: 6rem; */
+  height: 8px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 
 }
 .accordion-button div {
@@ -284,28 +335,46 @@ table{
   box-shadow: none;
 } */
 
+#stateButton{
+  width: 55px;
+  font-size: 12px;
+  font-weight: 500;
+  /* background-color: rgba(255, 255, 255, 1); */
+}
+#unionButton{
+  width: 110px;
+  font-size:12px;
+  font-weight: 500;
+  /* background-color: rgba(255, 255, 255, 1); */
+
+}
+
 #stateRow{
   background-color: #EAECF0;
+  /* width: 252px; */
 }
 #NDA{
-  background-color: #F47216;
+  background-color:  #FF9933;
   text-align: center;
   color: white;
   border-right: none;
+  /* width: 130px; */
 }
 #INDIA{
-  background-color: #7E7BFC;
+  background-color: #87CEEB;
   text-align: center;
   color: white;
   border-left: none;
+  /* width: 130px; */
 
 }
 #stateName{
   text-align: left;
 }
 #Others{
-  background-color: #BFC8D0;
+  background-color: #EAECF0;
   text-align: center;
+  /* width: 130px; */
 
 }
 #NDASeats{
@@ -352,7 +421,7 @@ input#stateSearch{
   margin: 0 auto;
   width: 100%;
   height: 2.1875rem;
-  background-color:#F5F5F5;
+  background-color:transparent;
   /* padding: 0 20px; */
   /* font-size: 1rem; */
   /* outline: none; */
