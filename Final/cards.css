@@ -150,7 +150,7 @@
 
   @media (max-width:500px) {
     .custom-container{
-        width: 100%;
+        width: 90%;
     }
   }
   @media (min-width:100px)and(max-width:720px) {
