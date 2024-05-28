@@ -1,0 +1,109 @@
+.ribbon {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+#root{
+  display: flex;
+  gap: 10px;
+}
+
+.ribbon {
+  --f: .5em;
+  position: absolute;
+  top: 0;
+  right: 0;
+  line-height: 1.8;
+  padding-inline: 1lh;
+  padding-bottom: var(--f);
+  border-image: conic-gradient(#0008 0 0) 51%/var(--f);
+  clip-path: polygon(100% calc(100% - var(--f)), 100% 100%, calc(100% - var(--f)) calc(100% - var(--f)), var(--f) calc(100% - var(--f)), 0 100%, 0 calc(100% - var(--f)), 999px calc(100% - var(--f) - 999px), calc(100% - 999px) calc(100% - var(--f) - 999px));
+  transform: translate(calc((1 - cos(45deg)) * 100%), -100%) rotate(45deg);
+  transform-origin: 0% 100%;
+  background-color: rgba(240, 68, 56, 255);
+}
+
+.d-flex {
+  align-items: center;
+}
+
+.custom-img {
+  width: 1.875rem;
+}
+
+.iribbon {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.iribbon {
+  --r: 1.5em;
+  padding-right: calc(var(--r) + .25em);
+  line-height: 1;
+  clip-path: polygon(-100vw 0, calc(100% - var(--r)) 0, 100% 50%, calc(100% - var(--r)) 100%, -100vw 100%);
+  border-image: conic-gradient(#45ada8 0 0) fill 0 /100vw;
+  width: inherit;
+}
+
+.custom-container {
+  background: linear-gradient(to right, rgba(217, 242, 252, 255), rgba(190, 234, 241, 255));
+  border-radius: 1.25rem;
+  padding: 0;
+  margin: 1rem;
+  height: 18.75rem;
+}
+
+.custom-temp {
+  width: 70%;
+  padding-bottom: 1.5rem;
+}
+
+.custom-person-image {
+  width: 50%;
+}
+
+.custom-card-title {
+  font-size: 1.25rem;
+  font-weight: bolder;
+  color: rgba(0, 132, 198, 255);
+}
+
+.custom-subheaders {
+  gap: 0.9375rem;
+  align-items: center;
+}
+
+.custom-card-text {
+  color: rgb(48, 48, 48);
+}
+
+.custom-card-text-votes {
+  font-weight: 700;
+}
+
+.custom-iribbon {
+  background: linear-gradient(to right, rgba(134, 205, 234, 255), rgba(101, 163, 188, 255));
+  align-items: start;
+}
+
+.custom-iribbon-text {
+  font-weight: 400;
+}
+
+.custom-iribbon-text-votes {
+  font-weight: 700;
+}
+
+.row-padding {
+  padding: 4rem;
+}
+
+.custom-person-image img {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  object-fit: cover;
+  border-radius: 0 1.25rem 1.25rem 0;
+}
