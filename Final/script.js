@@ -224,10 +224,10 @@ let data = {};
 let ftrs, geo, geo2, map;
 let names = {
   "#F47216": "NDA",
-  "#7E7BFC": "I.N.D.I.A",
+  "#87CEEB": "I.N.D.I.A",
   "#BFC8D0": "Others",
   ndaColor: "#F47216",
-  indiaColor: "#7E7BFC",
+  indiaColor: "#87CEEB",
   othersColor: "#BFC8D0",
 };
 async function fetchGeoJSON(file) {
@@ -505,8 +505,7 @@ $(document).ready(async function () {
   renderIndiaMap();
   renderPartyResults();
   renderAllianceResults();
-  updateBar(Object.values(allianceJson));
-  // Example click event handler for state in India map
+  // updateBar(Object.values(allianceJson));
 
   // ------------Search in state table-------------------------------
   $("#stateSearch").on("keyup", function () {
@@ -600,17 +599,30 @@ $(document).ready(async function () {
 
   // Function to animate the progress bar and change slides
   function progressBarCarousel() {
+    let activeElement = document.querySelector(".carousel-item.active");
+    // console.log(activeElement.id);
+    // console.log(activeElement.id);
+    if (activeElement.id.startsWith("nda")) {
+      document.getElementById("carouselProgress").style.backgroundColor =
+        "#FF9933";
+    } else if (activeElement.id.startsWith("india")) {
+      document.getElementById("carouselProgress").style.backgroundColor =
+        "#87CEEB";
+    } else if (activeElement.id.startsWith("others")) {
+      document.getElementById("carouselProgress").style.backgroundColor =
+        "#EAECF0";
+    }
     progress_bar.style.width = percent + "%";
     percent = percent + 1;
     if (percent > 100) {
       percent = 0;
       progress_crsl.next();
-      progress_bar.style.width = "0";
+      
     }
   }
 
   // Start the progress bar animation
-  var barInterval = setInterval(progressBarCarousel, 60);
+  var barInterval = setInterval(progressBarCarousel, 70);
 
   // Pause the progress bar animation on hover
   progress_crsl._element.addEventListener("mouseenter", function () {
@@ -619,7 +631,7 @@ $(document).ready(async function () {
   });
 
   progress_crsl._element.addEventListener("mouseleave", function () {
-    barInterval = setInterval(progressBarCarousel, 60);
+    barInterval = setInterval(progressBarCarousel, 70);
     // progress_crsl.cycle();
   });
   $("#myInput").on("keyup", function () {
@@ -636,7 +648,44 @@ $(document).ready(async function () {
   //   const exampleValues = [335, 65, 81]; // Change these values to see different results
   updateBar(Object.values(allianceJson));
 });
+function toggleEntries() {
+    if (toggleButton.textContent === "Show All") {
+      console.log("enter");
+      const hiddenRows = document.querySelectorAll("tbody tr.hiding");
+      hiddenRows.forEach((row) => {
+        // console.log(row.className);
+        row.className = "shown";
+        // row.style.opacity = 1;
+      });
+      toggleButton.textContent = "Show Less";
+    } else if (toggleButton.textContent === "Show Less") {
+      // console.log("exit");
 
+      const hiddenRows = document.querySelectorAll("tbody tr.shown");
+      hiddenRows.forEach((row) => {
+        // console.log(row.className);
+        row.className = "hiding";
+        // row.style.opacity = 1;
+      });
+      toggleButton.textContent = "Show All";
+    }
+  }
+  toggleButton.addEventListener("click", toggleEntries);
+  
+function colorProgress() {
+  let activeElement = document.querySelector(".carousel-item.active");
+  // console.log(activeElement.id);
+  // console.log(activeElement.id);
+  if (activeElement.id.startsWith("nda")) {
+    document.getElementById("carouselProgress").style.backgroundColor =
+      "#FF9933";
+  } else if (activeElement.id.startsWith("india")) {
+    document.getElementById("carouselProgress").style.backgroundColor =
+      "#87CEEB";
+  } else if (activeElement.id.startsWith("others")) {
+    document.getElementById("carouselProgress").style.backgroundColor = "grey";
+  }
+}
 function populateCarousel() {
   populateTable("nda", "ndaCarousel");
   populateTable("india", "indiaCarousel");
@@ -649,9 +698,11 @@ function populateTable(alliance, carouselId) {
   tbody1.innerHTML = "";
   tbody2.innerHTML = "";
 
-  let count = 1;
+  // let count = 1;
+  let totalCount = 1; // Total count of rows added
   for (const party in alliancePatries[alliance]) {
     const tr = document.createElement("tr");
+    tr.className = " ";
     const td1 = document.createElement("td");
     td1.innerHTML = `<img id="stateLogo" src='${stateMaps[party]}'>${party}`;
     const td2 = document.createElement("td");
@@ -659,13 +710,33 @@ function populateTable(alliance, carouselId) {
 
     tr.appendChild(td1);
     tr.appendChild(td2);
-
-    if (count <= 5) {
-      tbody1.appendChild(tr);
+    if (totalCount <= 10) {
+      if (totalCount <= 5) {
+        tbody1.appendChild(tr);
+        totalCount += 1;
+      } else {
+        // console.log("enter"); {
+        tbody2.appendChild(tr);
+        totalCount += 1;
+      }
     } else {
-      tbody2.appendChild(tr);
+      // Hide one row in tbody1 and one row in tbody2 alternatively
+      if (totalCount % 2 === 0) {
+        // console.log("enter");
+        tr.className = "hiding";
+        tbody1.appendChild(tr);
+        totalCount += 1;
+      } else {
+        tr.className = "hiding";
+        tbody2.appendChild(tr);
+        totalCount += 1;
+      }
     }
-    count++;
+    if (totalCount > 10) {
+      toggleButton.classList.remove("hidden");
+    } else {
+      toggleButton.classList.add("hidden");
+    }
   }
 }
 function updateBar(values) {
@@ -685,17 +756,32 @@ function updateBar(values) {
   // indiaBar.style.width = (values[1] / total) * 100 + "%";
   // othersBar.style.width = (values[2] / total) * 100 + "%";
 
-  const word1 = document.getElementById("word1");
-  const word2 = document.getElementById("word2");
-  const word3 = document.getElementById("word3");
+  // const word1 = document.getElementById("word1");
+  // const word2 = document.getElementById("word2");
+  // const word3 = document.getElementById("word3");
   const barLabel = document.getElementById("bar-label");
   const barText = document.getElementById("bar-text");
 
   // Create an array of objects to sort by value
   const bars = [
-    { element: bar1, value: values[0], color: "#F47216" }, // Blue
-    { element: bar2, value: values[1], color: "#7E7BFC" }, // Green
-    { element: bar3, value: values[2], color: "#BFC8D0" }, // Red
+    {
+      element: bar1,
+      value: values[0],
+      colors: `linear-gradient(90deg, #FF9933 0%, #F57A00 100%)`,
+      color: "#F47216",
+    }, // Blue
+    {
+      element: bar2,
+      value: values[1],
+      colors: ` linear-gradient(90deg, #87CEEB 0%, #3AAFDE 100%)`,
+      color: "#87CEEB",
+    },
+    {
+      element: bar3,
+      value: values[2],
+      colors: `linear-gradient(90deg, #D3D3D3 0%, #B8B8B8 100%)`,
+      color: "#BFC8D0",
+    }, // Red
   ];
 
   // Sort bars by value in descending order
@@ -708,20 +794,21 @@ function updateBar(values) {
   bars.forEach((bar, index) => {
     const width = (bar.value / total) * 100;
     bar.element.style.width = width + "%";
-    bar.element.style.backgroundColor = bar.color;
+    bar.element.style.background = bar.colors;
     bar.element.innerText = `${bar.value}`;
     barContainer.appendChild(bar.element);
     if (bar.value === 0) bar.element.style.display = "none";
   });
-  word2.textContent = names[bars[1].color];
-  word2.style.cssText = `left:${(bars[0].value / total) * 100}%;
-  color:${bars[1].color}`;
+  // word2.textContent = names[bars[1].color];
+  // word2.style.cssText = `left:${(bars[0].value / total) * 100}%;
+  // color:${bars[1].color}`;
 
-  word1.textContent = names[bars[0].color];
-  word1.style.color = bars[0].color;
+  // word1.textContent = names[bars[0].color];
+  // // console.log(names[bars[0].color]);
+  // word1.style.color = bars[0].color;
 
-  word3.textContent = names[bars[2].color];
-  word3.style.color = bars[2].color;
+  // word3.textContent = names[bars[2].color];
+  // word3.style.color = bars[2].color;
 
   // Update the label text
 }
