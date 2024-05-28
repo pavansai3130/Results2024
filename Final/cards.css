@@ -153,9 +153,14 @@
         width: 90%;
     }
   }
-  @media (min-width:100px)and(max-width:720px) {
+  @media screen and (min-width:500px) and (max-width:720px) {
     .custom-container{
         width: 60%;
+    }
+  }
+  @media screen and (min-width: 1010px) and (max-width: 1203px) {
+    .custom-container {
+      width: 70%;
     }
   }
   
