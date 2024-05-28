@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>More Candidates</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="./navbarStyles.css">
+    <link rel="stylesheet" href="./bighfights_css/bighfights_carousel.css">
+    <link rel="stylesheet" href="./bighfights_css/bigfights_viewall.css">
+</head>
+
+<body>
+    <nav class="navbarHead">
+        <div class="containerHead">
+            <div class="logo">
+                <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
+            </div>
+            <div class="navlinks" id="navlinks">
+                <div class="headerPhone">
+                    <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
+                    <i class="fa-solid fa-xmark" onclick="hidemenu()"></i>
+                </div>
+                <div class="d-flex">
+                    <div class="imgHover">
+                        <div class="tooltip-container">
+                            <!-- <span class="text">Tooltip</span> -->
+                            <img src="imgs/share.png" alt="">
+                            <span class="tooltip">
+                                <i class="fa-brands fa-facebook"></i>
+
+                                <i class="fa-brands fa-whatsapp"></i>
+
+                                <i class="fa-brands fa-instagram"></i>
+
+                                <i class="fa-brands fa-telegram"></i>
+                                </a></span>
+                        </div>
+
+                    </div>
+                    <ul>
+                        <li><a href="cardsPage.html">Popular & Celebrities</a></li>
+                        <li><a href="bigfights_viewall.html">Big Fights</a></li>
+                        <li><a href="">'19 vs '24</a></li>
+                        <div class="phoneMedia" id="phoneMedia"><i class="fa-brands fa-facebook"
+                                style="color: #158be5;"></i>
+
+                            <i class="fa-brands fa-whatsapp" style="color: #32ec6a;"></i>
+
+                            <i class="fa-brands fa-instagram" style="color: #d24196;"></i>
+
+                            <i class="fa-brands fa-telegram" style="color: #74deec;"></i>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <i id="menu" class="fa-solid fa-bars" onclick="showmenu()"></i>
+        </div>
+    </nav>
+    <!-- <div class="nav_links_div">
+        <span><img id="results2024" src="./imgs2/results2024.png" alt="results2024"></span>
+        <span id="right_nav_links">
+            <a class="nav_links" href="#">Popular Candidates</a>
+            <a class="nav_links" href="#">Big Fights</a>
+            <a class="nav_links" href="#">'24 vs '19</a>
+            <img id="share2_icon" class="nav_link" src="./imgs2/share-2.svg" alt="icon">
+        </span>
+    </div> -->
+    <div id="body-div">
+        <div class="container-fluid">
+            <div class="flexing_div">
+                <div class="combine_div">
+                    <div id="path_div">
+                        <span id="home_span"><a id="home_link" href="index.html">Home</a></span> <span
+                            id="path_span">&gt;</span>
+                        <span id="big_fights_span">Big Fights</span>
+                    </div>
+                    <div class="right_search">
+                        <div id="heading_addleft_div">
+                            Big Fights
+                            <span class="search-container" id="search_conatiner">
+                                <input id="candname_search_bar" type="text" class="search-input"
+                                    placeholder="Search for state,constituency or candidate...">
+                                <img id="search_icon" src="./imgs2/search.svg" alt="">
+                            </span>
+                            <div class="search_button" id="search_button">
+                                <img title="Search" src="./imgs2/search.svg" alt="search">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <img id="hands_img" src="./imgs2/hands.png" alt="">
+            </div>
+            <div class="enable_search" id="enable_search">
+                <input id="candname_search_bar" type="text" class="search-input"
+                    placeholder="Search for state,constituency or candidate...">
+                <img id="search_icon" src="./imgs2/search.svg" alt="">
+            </div>
+        </div>
+        <div>
+            <div id="more-cards-root">
+                <!-- dynamic cards adding  -->
+            </div>
+        </div>
+    </div>
+    <script src="./bigfights_script/bigfights_viewall.js"></script>
+</body>
+
+</html>
