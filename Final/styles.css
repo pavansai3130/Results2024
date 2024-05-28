@@ -646,3 +646,14 @@ input#stateSearch{
   background-color: #808080;
   width: 35px;
 }
+
+@media (max-width:600px) {
+
+  #containertool2
+  {
+
+    left: -22.5rem;
+    top:38rem;
+  }
+  
+}
