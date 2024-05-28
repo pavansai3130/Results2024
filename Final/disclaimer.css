@@ -208,7 +208,7 @@ body{
   background-color: #003333;
   display: flex;
   gap: 4rem;
-  height: 12rem;
+  height: 14rem;
   padding-bottom: 1rem;
 }
 
@@ -222,8 +222,9 @@ body{
 }
 
 .footerText{
-  margin: 1.4rem 0 1.4rem 2rem ;
+  margin: 1.2rem 0 1.4rem 2rem ;
   word-spacing: 0.0875rem;
+  line-height: 2.4rem;
   width: 40%;
 }
 
@@ -231,11 +232,30 @@ body{
   display: flex;
   line-height: 2.6rem;
   flex-direction: column;
-  margin:1.6rem 1rem auto 3.6rem;
+  margin:1.4rem 1rem auto 3.6rem;
 }
 
 .footerSocials{
-  margin: 1.6rem auto auto 20rem;
+  margin: 1rem auto auto auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footerSocials img{
+  width: 1.75rem;
+}
+
+.social-item span{
+  color: white;
+}
+
+.social-item:hover{
+  text-decoration: none;
+}
+
+.social-item{
+  cursor: pointer;
 }
 
 .alertTriangle{
@@ -260,7 +280,11 @@ body{
 
 @media (max-width:520px) {
   .footer{
-    height: 32rem;
+    height: 22rem;
+  }
+
+  .footerSocials{
+    gap: 2rem;
   }
 }
 
@@ -323,5 +347,20 @@ body{
     font-size: 0.875rem;
     margin-right: 1rem;
     border-radius: 0.3125rem;
+  }
+}
+
+@media (max-width:900px){
+  .footerSocials span, .footerSocials p{
+    display: none;
+  }
+
+  .footerSocials{
+    margin-top: 3rem;
+    margin-right: 2rem;
+  }
+
+  .footerText{
+    width: 70%;
   }
 }
