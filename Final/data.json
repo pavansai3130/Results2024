@@ -1,6 +1,28 @@
 [
     {
         "lead": true,
+        "name": "Narendra Modi",
+        "logoimg": "imgs/BJP.jpg",
+        "pid": "BJP",
+        "place": "Varanasi (Uttar Pradesh)",
+        "votes": "672,664",
+        "lead2votes": "479,505",
+        "perimg": "imgs/modi.png",
+        "alliance": "NDA"
+    },
+    {
+        "lead": true,
+        "name": "Rahul Gandhi",
+        "logoimg": "imgs/INC.png",
+        "pid": "INC",
+        "place": "Rae Bareli (Uttar Pradesh)",
+        "votes": "534,918",
+        "lead2votes": "167,178",
+        "perimg": "imgs/rahul.png",
+        "alliance": "INDA"
+    },
+    {
+        "lead": true,
         "name": "Amit Shah",
         "logoimg": "imgs/BJP.jpg",
         "pid": "BJP",
@@ -9,6 +31,17 @@
         "lead2votes": "557,014",
         "perimg": "imgs/modi.png",
         "alliance": "NDA"
+    },
+    {
+        "lead": false,
+        "name": "Akhilesh Yadav",
+        "logoimg": "imgs/SP.png",
+        "pid": "SP",
+        "place": "Kannauj (Uttar Pradesh)",
+        "votes": "550,734",
+        "lead2votes": "12,353",
+        "perimg": "imgs/akhilesh.png",
+        "alliance": "INDA"
     },
     {
         "lead": true,
@@ -23,14 +56,14 @@
     },
     {
         "lead": true,
-        "name": "Smriti Zubin Irani",
-        "logoimg": "imgs/BJP.jpg",
-        "pid": "BJP",
-        "place": "Amethi (Uttar Pradesh)",
-        "votes": "468,514",
-        "lead2votes": "55,120",
-        "perimg": "imgs/modi.png",
-        "alliance": "NDA"
+        "name": "Rahul Gandhi",
+        "logoimg": "imgs/INC.png",
+        "pid": "INC",
+        "place": "Wayanad (Kerala)",
+        "votes": "706,367",
+        "lead2votes": "431,770",
+        "perimg": "imgs/rahul.png",
+        "alliance": "INDA"
     },
     {
         "lead": true,
@@ -45,23 +78,23 @@
     },
     {
         "lead": true,
-        "name": "Sonia Gandhi",
-        "logoimg": "imgs/INC.png",
-        "pid": "INC",
-        "place": "Rae Bareli (Uttar Pradesh)",
-        "votes": "534,918",
-        "lead2votes": "167,178",
-        "perimg": "imgs/rahul.png",
-        "alliance": "INDA"
+        "name": "Shivraj Singh Chouhan",
+        "logoimg": "imgs/BJP.jpg",
+        "pid": "BJP",
+        "place": "Vidisha (Madhya Pradesh)",
+        "votes": "WIP",
+        "lead2votes": "WIP",
+        "perimg": "imgs/modi.png",
+        "alliance": "NDA"
     },
     {
         "lead": true,
-        "name": "Narendra Modi",
+        "name": "Smriti Zubin Irani",
         "logoimg": "imgs/BJP.jpg",
         "pid": "BJP",
-        "place": "Varanasi (Uttar Pradesh)",
-        "votes": "672,664",
-        "lead2votes": "479,505",
+        "place": "Amethi (Uttar Pradesh)",
+        "votes": "468,514",
+        "lead2votes": "55,120",
         "perimg": "imgs/modi.png",
         "alliance": "NDA"
     },
@@ -100,17 +133,6 @@
     },
     {
         "lead": true,
-        "name": "Rahul Gandhi",
-        "logoimg": "imgs/INC.png",
-        "pid": "INC",
-        "place": "Wayanad (Kerala)",
-        "votes": "706,367",
-        "lead2votes": "431,770",
-        "perimg": "imgs/rahul.png",
-        "alliance": "INDA"
-    },
-    {
-        "lead": true,
         "name": "Omar Abdullah",
         "logoimg": "imgs/JKN.webp",
         "pid": "JKNC",
@@ -130,17 +152,6 @@
         "lead2votes": "435,155",
         "perimg": "imgs/modi.png",
         "alliance": "NDA"
-    },
-    {
-        "lead": false,
-        "name": "Akhilesh Yadav",
-        "logoimg": "imgs/SP.png",
-        "pid": "SP",
-        "place": "Kannauj (Uttar Pradesh)",
-        "votes": "550,734",
-        "lead2votes": "12,353",
-        "perimg": "imgs/akhilesh.png",
-        "alliance": "INDA"
     },
     {
         "lead": true,
@@ -251,17 +262,6 @@
         "lead2votes": "9,656",
         "perimg": "imgs/mehbooba.png",
         "alliance": "INDA"
-    },
-    {
-        "lead": true,
-        "name": "Shivraj Singh Chouhan",
-        "logoimg": "imgs/BJP.jpg",
-        "pid": "BJP",
-        "place": "Vidisha (Madhya Pradesh)",
-        "votes": "WIP",
-        "lead2votes": "WIP",
-        "perimg": "imgs/modi.png",
-        "alliance": "NDA"
     },
     {
         "lead": false,
