@@ -2,6 +2,8 @@
 // Ensure you have included JQuery library before this script
 
 // JSON object containing party colors
+const initialView = [23, 82.5];
+const initialZoom = 5;
 let state_value = 36;
 let sym = {
   IND: "./imgs/independent.svg",
@@ -281,7 +283,12 @@ async function fetchGeoJSON(file) {
       },
     });
 
+    map.setView(initialView, initialZoom);
+
     geo.addTo(map);
+    
+    updateMapBounds();
+    map.on("resize", delayedBoundsUpdate);
     geo.setStyle((feature) => ({
       weight: 0.2,
       color: "#000",
@@ -291,8 +298,7 @@ async function fetchGeoJSON(file) {
       fillOpacity: 0.9,
     }));
     // console.log("rendered");
-    updateMapBounds();
-    map.on("resize", delayedBoundsUpdate);
+    
 
     var filteredFeatures = geoJson.features.filter(
       (feature) => feature.properties.st_code == state_value
@@ -362,8 +368,7 @@ async function fetchJSON(file) {
 //   console.log("exited");
 // }
 
-const initialView = [22, 82.5];
-const initialZoom = 5;
+
 $(document).ready(async function () {
   await fetchJSON("./election2019.json");
   await fetchGeoJSON("geo.json");
@@ -389,6 +394,7 @@ $(document).ready(async function () {
       '<svg id="india-svg" viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
       pathsStr +
       "</svg>";
+   document.getElementById("map").style.display = "none";
   }
 
   // Function to render alliance results in tabular format
@@ -470,25 +476,25 @@ $(document).ready(async function () {
   }
 
   // Function to handle click event on state in India map
-  function handleStateClick(state) {
-    let nda = 0,
-      india = 0,
-      others = 0;
-    state_map(state_codes[state], state);
-    breadcrumbState.textContent = state;
-    breadcrumbState.style.display = "inline";
-    breadcrumbConstituency.style.display = "none";
-    // Implement the logic to fetch and display state-wise results
-    const constituencyTable = document.getElementById("stateTable");
-    const cells = constituencyTable.getElementsByTagName("th");
-    for (const consti in stateDataJson[state]) {
-      const leadingCandidate = stateDataJson[state][consti][0];
-      if (leadingCandidate.alliance === "NDA") nda++;
-      else if (leadingCandidate.alliance === "OTH") others++;
-      else india++;
-    }
-    updateBar([nda, india, others]);
-  }
+  // function handleStateClick(state) {
+  //   let nda = 0,
+  //     india = 0,
+  //     others = 0;
+  //   state_map(state_codes[state], state);
+  //   breadcrumbState.textContent = state;
+  //   breadcrumbState.style.display = "inline";
+  //   breadcrumbConstituency.style.display = "none";
+  //   // Implement the logic to fetch and display state-wise results
+  //   const constituencyTable = document.getElementById("stateTable");
+  //   const cells = constituencyTable.getElementsByTagName("th");
+  //   for (const consti in stateDataJson[state]) {
+  //     const leadingCandidate = stateDataJson[state][consti][0];
+  //     if (leadingCandidate.alliance === "NDA") nda++;
+  //     else if (leadingCandidate.alliance === "OTH") others++;
+  //     else india++;
+  //   }
+  //   updateBar([nda, india, others]);
+  // }
 
   // Function to render state results page
   function renderStateResults(state) {
@@ -501,10 +507,6 @@ $(document).ready(async function () {
   renderAllianceResults();
   updateBar(Object.values(allianceJson));
   // Example click event handler for state in India map
-  $("#india-map").on("click", "path", function () {
-    const state = $(this).attr("id");
-    handleStateClick(state);
-  });
 
   // ------------Search in state table-------------------------------
   $("#stateSearch").on("keyup", function () {
@@ -570,26 +572,7 @@ $(document).ready(async function () {
 
   // -----------------Accordion population---------------------------------------------
   // Function to handle click event on state in India map
-  function handleStateClick(state) {
-    let nda = 0,
-      india = 0,
-      others = 0;
-    document.getElementById("breadcrumb-india").style.display = "block";
-    breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread2()">${state}`;
-    breadcrumbState.style.display = "inline";
-    breadcrumbConstituency.style.display = "none";
-    state_map(state_codes[state], state);
-    // Implement the logic to fetch and display state-wise results
-    const constituencyTable = document.getElementById("stateTable");
-    const cells = constituencyTable.getElementsByTagName("th");
-    for (const consti in stateDataJson[state]) {
-      const leadingCandidate = stateDataJson[state][consti][0];
-      if (leadingCandidate.alliance === "NDA") nda++;
-      else if (leadingCandidate.alliance === "OTH") others++;
-      else india++;
-    }
-    updateBar([nda, india, others]);
-  }
+ 
 
   // Function to render state results page
   function renderStateResults(state) {
@@ -600,6 +583,7 @@ $(document).ready(async function () {
   $("#india-map").on("click", "path", function () {
     const state = $(this).attr("id");
     handleStateClick(state);
+    creatediv(state);
   });
 
   let percent = 0;
@@ -744,3 +728,92 @@ function updateBar(values) {
 
 // Example usage: updating the bar with specific values
 // ------------Search in state table-------------------------------
+ function handleStateClick(state) {
+  console.log("india"); 
+  document.getElementById("breadcrumb-india").style.display = "block";
+    let nda = 0,
+      india = 0,
+      others = 0;
+    breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread2()">${state}`;
+    breadcrumbState.style.display = "inline";
+    breadcrumbConstituency.style.display = "none";
+    // state_map(state_codes[state], state);
+    // Implement the logic to fetch and display state-wise results
+    const constituencyTable = document.getElementById("stateTable");
+    const cells = constituencyTable.getElementsByTagName("th");
+    for (const consti in stateDataJson[state]) {
+      const leadingCandidate = stateDataJson[state][consti][0];4
+      console.log(leadingCandidate);
+      if (leadingCandidate.alliance === "NDA") nda++;
+      else if (leadingCandidate.alliance === "OTH") others++;
+      else india++;
+    }
+    updateBar([nda, india, others]);
+  }
+  function creatediv(state) {
+    var obj = {};
+    var partynames = [];
+    var partyseats = [];
+    var constituencyData = stateDataJson[state];
+    for (let constituencyname in constituencyData) {
+      let party_name = stateDataJson[state][constituencyname][0]["party"]
+      if (party_name in obj) {
+        obj[party_name] += 1;
+      }
+      else
+        obj[party_name] = 1;
+    }
+    var sortedPartyWins = Object.entries(obj).sort((a, b) => b[1] - a[1]);
+    for(let i=0;i<sortedPartyWins.length;i++){
+      partynames[i]=sortedPartyWins[i][0];
+      partyseats[i]=sortedPartyWins[i][1];
+    }
+    var maindiv = document.getElementById('containertool2');
+    var htmlcode = `<span class="close" onclick="close_btn()">&times;</span>
+                    <h2 class="sthead">${state}</h2>
+                    
+                    <table class="detailstable">
+                       <thead>
+                          <tr>
+                             <th class="tbhead">Party</th>
+                             <th id="wlright" class="tbhead">Won / Lead</th>
+                          </tr>
+                       </thead>`
+                       if(partynames)
+                       for (let i = 0; i < partynames.length && i<5; i++) {
+                        htmlcode += `<tr>
+                                       <td class="tdData"><img class="party-icon" src="${sym[partynames[i]]}"> ${partynames[i]}</td>
+                                       <td class="tdData" id="wlright">${obj[partynames[i]]}</td>
+                                     </tr>`;
+                      }
+                     htmlcode += `</tbody>
+                    </table>
+                    <div class="results12">
+                       <h3 class="hdiv3">2019 results</h3>
+                       <div class="bars">
+                           <div class="barbox">
+                               <span class="barlabel" style="margin-left:-60px;">${partynames[0]}</span>
+                               <div class="bar1 inbar">${partyseats[0]}</div>
+                           </div>
+                           <div class="barbox">
+                               <span class="barlabel" style="margin-left:-50px;">${partynames[1]}</span>
+                               <div class="bar2 inbar">${partyseats[1]}</div>
+                           </div>
+                           <div class="barbox">
+                               <span class="barlabel" style="margin-left:-5px;">Others</span>
+                               <div class="bar3 inbar">81</div>
+                           </div>
+                       </div>
+                   </div>
+                   <div id="viewdetails" onclick="showmap('${state}')">Check Full Results<span id=gt>&gt</span></div>`;
+    maindiv.innerHTML = '';
+    maindiv.innerHTML += htmlcode;
+    maindiv.style.display = 'block';
+  }
+  function showmap(state) {
+    state_map(state_codes[state], state);
+    close_btn();
+  }
+  function close_btn() {
+    document.getElementById('containertool2').style.display = "none";
+  }

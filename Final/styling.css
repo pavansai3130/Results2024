@@ -138,17 +138,20 @@ a{
   color: black;
 } */
 thead{
-  text-align: center;
+  text-align: left;
 }
 /* Add border-radius to the top theading */
 #theading,#theading2{
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
-  background-color: #EAECF0;
+  background-color: white;
+  border:1px solid #EAECF0;
   width: Fill (642px)px;
 height: Hug (52px)px;
 gap: 0px;
 opacity: 0px;
+box-shadow: (16, 24, 40, 0.06);
+padding-bottom: 0.375rem;
 
 }
 #theading div,#theading2 div{
@@ -219,17 +222,19 @@ opacity: 0px;
 {
   width:10rem;
 height:3.75rem;
-
+text-align: left;
 }
 .td1{
 background: #F6FEF9;
 width:11.25rem;
 height:3.75rem;
+text-align: left;
 }
 .td2{
   width:11.25rem;
 height:3.75rem;
   background: #fffafa;
+  text-align: left;
 }
 .td3{
   width:7.625;
@@ -261,6 +266,7 @@ tr{
 .tdata{
   width: 200px;
   height: 60px;
+  text-align: left;
 }
 .tdata1{
   width: 140px;
@@ -288,6 +294,7 @@ tr{
   background-color: white;
   padding: 12px 24px 16px 24px;
   gap: 0px;
+  border: solid #EAECF0;
   opacity: 1; /* Change to 1 to make it initially visible */
   border-bottom-left-radius: 0.4rem;
   border-bottom-right-radius: 0.4rem;
@@ -436,4 +443,258 @@ tr{
   background-color: #f0f0f0; /* Light grey background on focus/active */
   border-color: #c0c5cd; /* Slightly darker border on focus/active */
   outline: none; /* Remove default outline */
+}
+/* hover table */
+#containertool {
+  position: relative;
+  display: none;
+  margin-left: 330px;
+  margin-top: -300px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  position: absolute;
+  z-index: 999;
+  justify-content: center;
+}
+
+.city {
+  /* text-transform: lowercase; */
+  font-family: 'Roboto';
+  font-size: 13px;
+  font-weight: 550;
+  /* line-height: 18px;
+  text-align: center; */
+
+}
+
+.state {
+  font-family: 'Roboto';
+  font-size: 12px;
+  font-weight: 400;
+  /* line-height: 18px; */
+  text-align: center;
+
+}
+
+#h2 {
+  /* margin-top: -10px; */
+  font-size: 0.5rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 550;
+  /* border-bottom: 1px solid #ddd; */
+  /* padding-bottom: 10px; */
+}
+
+.header-item1 {
+  padding: 0 0.5rem;
+  text-align: left;
+  color: #667085;
+}
+
+.header-item2 {
+  padding: 0 0.5rem;
+  text-align: right;
+  color: #667085;
+}
+
+#candidatediv {
+  /* text-transform: lowercase; */
+  width: 280px;
+  /* height: 152px; */
+  padding: 8px 0px 8px 0px;
+  gap: 8px;
+  border-radius: 8px;
+  opacity: 0px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.candidate {
+  margin-top: -1rem;
+  font-family: sans-serif;
+  /* font-weight: bold; */
+  /* text-transform: lowercase; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  /* border-bottom: 1px solid #ddd; */
+  border-radius: 0.813;
+  justify-content: space-between;
+}
+
+.candidate-info {
+  display: flex;
+  align-items: center;
+}
+
+.party-logo {
+  width: 1rem;
+  /* height: 16px; */
+  /* margin-right: 4px;
+  margin-top: 20px;
+  margin-left: 7px; */
+}
+
+.candidate-name {
+  padding: 0 0.5rem;
+  font-family: 'Roboto';
+  font-size: 12px;
+  font-weight: 550;
+  /* text-transform: lowercase; */
+   line-height: 16.41px;
+ /* text-align: left;
+  margin-left: -19px; */
+}
+
+.party {
+  font-family: sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  /* line-height: 16.41px; */
+  text-align: left;
+  /* display: flex; */
+  /* justify-content: start; */
+  gap: 1px;
+  padding: 0 0.5rem;
+  align-items: center;
+}
+
+.votes {
+  text-align: right;
+  font-weight: bold;
+  padding: 9px;
+}
+
+.margin {
+  font-family: sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 11.72px;
+  text-align: left;
+  background: Gray/700;
+  padding: 2px 4px;
+  border-radius: 4px;
+  margin-top: 4px;
+  margin-left: -1.6rem;
+}
+
+.previous-winner {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.previous-winner .winner-title {
+  font-family: 'Roboto';
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 11.72px;
+  text-align: left;
+}
+
+.previous-winner .winner-info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.previous-winner .winner-name {
+  font-family:'Roboto';
+  font-size: 12px;
+  font-weight: 550;
+  line-height: 16.41px;
+  text-align: right;
+  padding-right: 2px;
+/* 
+  text-transform:capitalize; */
+}
+
+.previous-winner .winner-votes {
+  font-family: 'Roboto';
+  font-size: 500;
+  font-weight: 500;
+  line-height: 14.06px;
+  text-align: left;
+  font-weight: bold;
+  color: #12B76A;
+}
+
+#v2 {
+  color: #F04438;
+  margin-top: -17px;
+}
+
+.previous-winner .vote-title {
+  margin-top: -15px;
+  font-family: 'Roboto';
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14.06px;
+  text-align: right;
+  /* font-weight: bold; */
+}
+
+/* #small{
+  margin-top: -0.375rem;
+  font-size: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+} */
+#close {
+  text-align: right;
+  /* margin-top: -35px;
+  margin-left: 261px; */
+  position: absolute;
+  font-size: 2rem;
+  top: -0.5rem;
+  right: 0.2rem;
+  cursor: pointer;
+}
+
+#vs {
+  color: #12B76A;
+}
+
+#checkdetails {
+  width: 152px;
+  /* height: 36px; */
+  gap: 0px;
+  border-radius: 8px;
+  opacity: 0px;
+  /* font-family: Text sm/Semibold; */
+  /* font-family: Inter; */
+  font-size: 14px;
+  font-weight: 550;
+  line-height: 20px;
+  text-align: right;
+  color: #007BFF;
+  /* justify-content: right; */
+  /* display: flex; */
+  margin-left: 8.2rem;
+  /* padding: 6px; */
+  cursor: pointer;
+  font-family: 'Roboto';
+}
+#gt{
+  display: inline;
+  /* padding: 1px; */
+}
+/* media query */
+/* container 2 */
+.form-control
+{
+  width: 12.5rem; border-radius:0.5rem;border: 0.063rem solid rgb(208,213,221,1); padding-left: 0.625rem;
+}
+@media (max-width:600px) {
+  .form-control
+  {
+    width:10rem;
+  }
+  
 }

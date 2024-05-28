@@ -13,110 +13,9 @@
       <link rel="stylesheet" href="styles.css">
       <link rel="stylesheet" href="cards.css">
       <link rel="stylesheet" href="styling.css">
-      <link rel="stylesheet" href="./cardStyle.css">
       <link rel="stylesheet" href="leaflet/index.css"/>
       <style>
-         #datatable{
-            display: none;
-            width: 29%;
-            margin-left: 20%;
-            margin-top: -16%;
-            background-color:white;
-            border-radius: 4%;
-            background-color: white;
-            border: 1px black solid;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-         }
-         header {
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
-            /* border: 1px black solid; */
-        }
-        .stncon {
-            margin-bottom: 2%;
-            width: 100%;
-        }
-        #cad{
-         font-family: Arial, Helvetica, sans-serif;
-         font-size: small;
-         
-        }
-        #vot{
-         font-family: Arial, Helvetica, sans-serif;
-         font-size: large;
-        }
-        .votes {
-            font-weight: bold;
-        }
-        #cons{
-         text-transform: capitalize;
-         font-size: large;
-        }
-        .cav {
-         text-transform: capitalize;
-            font-size: large;
-            padding: 10px;
-            margin-top: 9px;
-        }
-        .cav1, .cav2 {
-            border-radius: 6px;
-            border: 1px solid black;
-            margin-top: 8%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 8px;
-            background-color: #fff;
-            margin-left: 6px;
-            margin-right: 6px;
-            text-transform: capitalize;
-        }
-        #cav2{
-            border-radius: 6px;
-            margin-top: 4px;
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            background-color: #fff;
-            margin-left: 6px;
-            margin-right: 6px;
-        }
-        .cav2 {
-            margin-top: 2%;
-        }
-        .name-section, .name-section2, .votes-section, .votes-section2 {
-            display: flex;
-            flex-direction: column;
-        }
-        .votes-section, .votes-section2 {
-            align-items: flex-end;
-        }
-        .small-text1 {
-         text-transform: capitalize;
-            font-size: x-small;
-            margin-left: 4px;
-            padding: 5px;
-            text-decoration: none;
-        }
-        .close-btn {
-            font-weight: bold;
-            font-size: large; 
-            margin-top: -6%; 
-            margin-left: 90%;
-            cursor: pointer;
-        }
-        .button {
-         background-color: #4CAF50;
-         color: white;
-         border: none;
-         border-radius: 4px;
-        cursor: pointer;
-        /* margin-left: 20%; */
-        margin-top: 20px;
-        }
-        .button:hover {
-            background-color: blue;
-        }
+       
 		#see-more-btn{
   padding: 0.5rem 1rem;
   font-size: 12px;
@@ -142,97 +41,7 @@
   transform: translateY(-1px);
 }
         /* Media Queries */
-        @media (max-width: 600px) {
-            .maindiv {
-                width: 40%;
-                margin: 10% auto;
-                /* height: auto; */
-            }
-            .cav {
-                font-size: large;
-            }
-            .cav1, .cav2 {
-                flex-direction: column;
-                align-items: flex-start;
-                /* height: auto; */
-                padding: 10px;
-                
-            }
-            .close-btn {
-                font-size: large;
-            }
-            .stncon .votes {
-                font-size: medium;
-                text-align: center;
-                display: block;
-            }
-            .button {
-                margin-top: 10px;
-            }
-        }
-
-        @media (min-width: 600px) and (max-width: 768px) {
-            .maindiv {
-                width: 20%;
-                /* margin: 10% auto; */
-                height: auto;
-            }
-            .cav {
-                font-size: large;
-            }
-            .cav1, .cav2 {
-                height: auto;
-                padding: 10px;
-            }
-            .close-btn {
-                font-size: large;
-            }
-            .stncon .votes {
-                font-size: medium;
-            }
-        }
-
-        @media (min-width: 768px) and (max-width: 1024px) {
-            .maindiv {
-                width: 10%;
-                /* margin: 10% auto; */
-                height: auto;
-            }
-            .cav {
-                font-size: large;
-            }
-            .cav1, .cav2 {
-                height: auto;
-                padding: 10px;
-            }
-            .close-btn {
-                font-size: large;
-            }
-            .stncon .votes {
-                font-size: large;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .maindiv {
-                width: 30%;
-                /* margin: 10% auto; */
-                height: auto;
-            }
-            .cav {
-                font-size: x-large;
-            }
-            .cav1, .cav2 {
-                height: auto;
-                padding: 10px;
-            }
-            .close-btn {
-                font-size: xx-large;
-            }
-            .stncon span {
-                font-size: x-large;
-            }
-        }
+      
       </style>
 
    </head>
@@ -288,10 +97,11 @@
                            <li class="breadcrumb-item active" id="breadcrumb-constituency" style="display: none;" aria-current="page"></li>
                        </ol>
                    </nav> 
-                  <div class="row justify-content-between g-0 ">
-                     <div class="col-sm-6 col-md-6 d-flex align-items-center">  
-                        <select class="form-control" id="state-select" onchange="handleSelection()" style="width: 12.5rem; border-radius:0.5rem;border: 0.063rem solid rgb(208,213,221,1); padding-left: 0.625rem;">
-                        <option value=" "seelcted>Select State</option>
+                   <div class="row g-0">
+                  <div class="col-12 d-flex justify-content-between align-items-center ">
+                     <div class="flex-grow-1">  
+                        <select class="form-control" id="state-select" onchange="handleSelection()">
+                        <option value=" "selcted>Select State</option>
                         <option value="reset">Reset</option> 
                         <option data-st_code="35" value="35">Andaman and Nicobar Islands</option>
                         <option data-st_code="37" value="37">Andhra Pradesh</option>
@@ -331,16 +141,17 @@
                         <option data-st_code="19" value="19">West Bengal</option>
                     </select>
                      </div>
-                      <div class="col-6 col-md-4 d-flex justify-content-end align-items-center">
-                        <div class="bt_grp">
+                      <div class="d-flex">
+                        
                            <button class="button_years" id="bt_1" type="button">2024</button>
                            <button class="button_years" id="bt_2" type="button" >2019</button>
-                         </div>
+                         
 
                      </div>
                   </div>
+               </div>
                   <div class="row g-0 mt-3">
-                     <div class="col-sm-6 col-md-8">   </div>
+                     <div class="col-6 col-md-8">   </div>
                      <div class="col-6 col-md-4 d-flex justify-content-end align-items-center">
                         <div class="bt_grp">
                            <button type="button" id="state-bt" >States</button>
@@ -350,10 +161,12 @@
                   </div>
                   <div class="row">
                       <div class="col-12" id="india-map" ></div>
-                      <div id="map" style="width: 100%; height:100vh;display: none;">
+                      <div id="map" style="width: 100%; height:100vh;display: block;">
                       </div>
                   </div>
+                  <div id="containertool2"></div>
                   <!-- card start-->
+
                   <div class="root">
                      <h2 style="align-items: center;margin-top: 1rem;font-weight: bold;">Popular Candidates</h2>
                      <div class="container-fluid h-500">
@@ -779,7 +592,7 @@
                   
                </div>
          </div>
-         <div id="datatable"></div>
+         <div id="containertool"></div>
          <!-- Page 2: State Results -->
          <div id="state-results" style="display: none;">
             <!-- Similar structure as landing page -->

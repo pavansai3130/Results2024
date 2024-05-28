@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function resetBreadcrumb() {
+    updateBar(Object.values(allianceJson));
   const breadcrumbState = document.getElementById("breadcrumb-state");
   const breadcrumbConstituency = document.getElementById(
     "breadcrumb-constituency");
@@ -355,6 +356,7 @@ function handleSelection() {
           [zooming[selectedValue][0], zooming[selectedValue][1]],
           zooming[selectedValue][2]
         );
+        handleStateClick(text);
         geo2.addTo(map);
         updateMapBounds2();
         map.on("resize", delayedBoundsUpdate2);
@@ -597,69 +599,71 @@ function render2() {
   }));
 }
 function showdatatable(state,cand1,cand2,votes1,votes2,mvotes,con1,party1,party2,id) {
-            document.querySelector("#Candidate-res").style.display = "block";
-  var div = document.getElementById('datatable');
-  var htmlCode = `
-  <div class="header">
-      <span id="cons" class="votes" style="margin-left:18px";"text-transform: capitalize;">${con1}(${state})</span>
-       <button class="button" style="margin-left:1%" onclick="render_table('${id}',1);">Full Details</button>
-      <div class="close-btn" onclick="closedata()">&times;</div>
-  </div>
-  <div class="stncon">
-      <div class="cav">
-          <span id="cand" style="margin-left: 0%;"class="votes">Candidate</span>
-          <span id="vot" style="margin-left: 54%;"class="votes">Votes</span>
-      </div>
-  </div>
-  <div class="name1">
-      <div class="cav1" style="margin-top: -6px;">
-          <div class="name-section">
-              <span style="margin-left:4px;"class="votes">${cand1}</span>
-              <span class="small-text"><img src="${sym[party1]}" width="16" height="16" style="margin-bottom:6px;">${party1}</span>
+  document.getElementById('containertool').style.display = "block";
+            var div = document.getElementById('containertool');
+    var htmlCode = `
+    <h2 id="h2"><span class="city">${con1}</span><br><span class="state">${state}</span></h2><div id="close" onclick="closedata()">&times;</div>
+        <div id="candidatediv">
+          <div class="header">
+            <div class="header-item1">Candidate</div>
+            <div class="header-item2">Votes</div>
           </div>
-          <div class="votes-section">
-              <span class="votes">${votes1}</span>
-              <span class="small-text1">margin-${mvotes}</span>
+          <div class="candidate">
+              <div class="candidate-info">
+                  <div>
+                      <div class="candidate-name">${cand1}</div>
+                      <div class="party"><img src="${sym[party1]}" class="party-logo">${party1}</div>
+                  </div>
+              </div>
+              <div class="votes">
+                  <div id="vs">${votes1}</div>
+                  <div class="margin">Margin - ${mvotes}</div>
+              </div>
           </div>
-      </div>
-      <div class="cav2">
-          <div class="name-section2">
-              <span style="margin-left: 4px;" class="votes">${cand2}</span>
-              <span class="small-text"><img src="${sym[party2]}" width="16" height="16" style="margin-bottom:6px;">${party2}</span>
+          <div class="candidate">
+              <div class="candidate-info">
+                  
+                  <div>
+                      <div class="candidate-name">${cand2}</div>
+                      <div class="party"><img src="${sym[party2]}"class="party-logo">${party2}</div>
+                  </div>
+              </div>
+              <div class="votes" id="v2">${votes2}</div>
           </div>
-          <div class="votes-section2">
-              <span style="margin-top:-10%" class="votes">${votes2}</span>
-          </div>
-      </div>
-      <div id="cav2">
-          <div class="name-section2">
-              <span class="small-text">2019 winner</span>
-              <span style="margin-left: 4px;" class="votes">${cand1}</span>
-          </div>
-          <div class="votes-section2">
-              <span class="small-text">Votes</span>
-              <span class="votes">${votes1}</span>
-          </div>
-      </div>
-  </div>`;
-  div.innerHTML = '';
-  div.innerHTML += htmlCode;
-  div.style.display = 'block';
-  div.style.position = 'absolute';
-  div.style.zIndex = '999';
-}
+        </div>
+        <div class="previous-winner">
+            <span>
+                <div class="winner-title">2019 Winner</div>
+                <div class="vote-title">Votes</div>
+            </span>
+            <div class="winner-info">
+                <div class="winner-name">${cand1}</div>
+                <div class="winner-votes">${votes1}</div>
+            </div>
+        </div>
+        <div id="checkdetails" onclick="render_table('${id}',1)">Check Full Results <span id="gt">&gt</span></div>`;
+    div.innerHTML = '';
+    div.innerHTML += htmlCode;
+    div.style.display = 'block';
+          }
 function closedata() {
-  document.getElementById('datatable').style.display = "none";
+  document.getElementById('containertool').style.display = "none";
+  document.getElementById("stateTabeleContainer").style.display = "block";
+  document.getElementById("Candidate-res").style.display = "none";
+
 }
 function render_table(code, page) {
-  
-let ct=0;
-  closedata();
-  const pageSize = 10; // Number of rows per page 
-  const candi = data[code];
-  const candi_len = candi.length;
   const tbody = document.querySelector(".candidateBody");
   tbody.innerHTML = "";
+  let ct = 0;
+  closedata();
+  document.getElementById("stateTabeleContainer").style.display = "none";
+  document.getElementById("Candidate-res").style.display = "block";
+
+  const pageSize = 10; // Number of rows per page
+  const candi = data[code];
+  const candi_len = candi.length;
+
 
   // Calculate start and end indices for the current page
   const startIndex = (page - 1) * pageSize;
@@ -698,11 +702,11 @@ let ct=0;
     ct++;
   }
   const paginationControls = document.getElementById("pagination-controls-candidates");
-  if (candi_len > rowsPerPage) {
-    updatePaginationControls(candi_len, "pagination-controls-candidates", ".candidateBody tr");
-    currentPageCandidates = 1;
-    displayPage(currentPageCandidates, ".candidateBody tr");
-    paginationControls.style.display = "block";
+  if (candi_len > pageSize) {
+      updatePaginationControls(candi_len, "pagination-controls-candidates", ".candidateBody tr");
+      currentPageCandidates = 1;
+      displayPage(currentPageCandidates, ".candidateBody tr");
+      paginationControls.style.display = "block";
   } else {
    
     paginationControls.innerHTML = "";
@@ -722,15 +726,15 @@ let ct=0;
       input.id = "candidateinput";
       input.type = "text";
       input.placeholder = "Search";
+      th.appendChild(input);
   }
-  th.appendChild(input);
   th.style.display = "flex";
   th.style.background = "white";
 
   // Search functionality
-  $("#candidateinput").on("keyup", function() {
+  $("#candidateinput").off("keyup").on("keyup", function() {
       var value = $(this).val().toLowerCase();
-      $("#table-body tr").filter(function() {
+      $(".candidateBody tr").filter(function() {
           var text = $(this).text().toLowerCase();
           var words = text.split(/\s+/); // Split text into words
           var match = words.some(function(word) {
@@ -961,7 +965,9 @@ function resetstatebread()
       [zooming[state_codes[breadcrumbState.textContent]][0], zooming[state_codes[breadcrumbState.textContent]][1]],
       zooming[state_codes[breadcrumbState.textContent]][2]
     );
+    geo.remove(map);
     console.log(pressed);
+    handleStateClick(breadcrumbState.textContent);
     geo2.addTo(map);
    
     updateMapBounds2();
