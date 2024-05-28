@@ -5,6 +5,7 @@ let breadcrumbConstituency;
 let breadcrumbState;
 let state_button_pressed=1;
 document.addEventListener("DOMContentLoaded", function () {
+  localStorage['consent']="accepted";
   document.getElementById("Constituency-res").style.display = "none";
   const stateSelect = document.getElementById("state-select");
   breadcrumbState = document.getElementById("breadcrumb-state");
