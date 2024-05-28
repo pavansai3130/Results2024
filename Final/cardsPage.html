@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>More Candidates</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cards.css">
+    <link rel="stylesheet" href="cardsPage.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="section-buttons">
+            <div class="button-box">
+                <button id="popular-btn" class="btn ">Popular</button>
+                <button id="celebs-btn" class="btn ">Celebrities</button>
+            </div>
+        </div>
+        <div class="search-bar-container">
+            <div class="input-group mb-3">
+                <input onkeyup="performSearch()" required="" id="search-input" type="search" name="text"
+                    autocomplete="off" class="input">
+                <label class="user-label">Enter name</label>
+            </div>
+
+            <select id="dropdown" class="dropdown-box form-control">
+                <option value="">Select State</option>
+                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                <option value="Assam">Assam</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Chandigarh">Chandigarh</option>
+                <option value="Chhattisgarh">Chhattisgarh</option>
+                <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+                <option value="Daman and Diu">Daman and Diu</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Goa">Goa</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Lakshadweep">Lakshadweep</option>
+                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Manipur">Manipur</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Mizoram">Mizoram</option>
+                <option value="Nagaland">Nagaland</option>
+                <option value="Odisha">Odisha</option>
+                <option value="Puducherry">Puducherry</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Sikkim">Sikkim</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Tripura">Tripura</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Uttarakhand">Uttarakhand</option>
+                <option value="West Bengal">West Bengal</option>
+            </select>
+
+        </div>
+        <h2 id="popular-section" class="text-center my-4">Popular Candidates</h2>
+
+        <div id="more-cards-root" class="row g-2">
+            <!-- More popular cards will be appended here -->
+            <img id="no-results-img"
+                src="https://static.tildacdn.net/tild3432-3335-4337-b130-363866343062/No_results_1.svg" alt="No results"
+                style="display: none; margin-top: 20px; max-width: 100%;">
+        </div>
+        <h2 id="celebs-section" class="text-center my-4">Celebrities</h2>
+        <div id="more-celeb-cards-root" class="row g-2">
+            <!-- More celeb cards will be appended here -->
+            <img id="no-results-img"
+                src="https://static.tildacdn.net/tild3432-3335-4337-b130-363866343062/No_results_1.svg" alt="No results"
+                style="display: none; margin-top: 20px; max-width: 100%;">
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <button id="back-btn" class="button mb-3">Back</button>
+        </div>
+
+        <!-- Back to Top Button -->
+        <button id="back-to-top-btn" onclick="scrollToTop()"><i class="fa-solid fa-angle-up"></i></button>
+    </div>
+    <script src="cardsPage.js"></script>
+
+</body>
+
+</html>
