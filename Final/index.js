@@ -169,11 +169,15 @@ function render_whole_table() {
       id = i.pc_id;
       name = data[i.pc_id][0].constituencyName;
       candid = data[i.pc_id][0].candidateName;
-      candid2 = data[i.pc_id][1].candidateName;
+      console.log(data[i.pc_id][0]);
+      console.log(data[i.pc_id][1]);
       votes = data[i.pc_id][0].votes;
       party_name = data[i.pc_id][0].party;
-      votes2 = data[i.pc_id][1].votes;
-      party_2 = data[i.pc_id][1].party;
+      if (data[i.pc_id][1] !== undefined) {
+        candid2 = data[i.pc_id][1].candidateName;
+        votes2 = data[i.pc_id][1].votes;
+        party_2 = data[i.pc_id][1].party;
+      }
     }
 
     if (!partyColors[win]) tr.dataset.pccolor = "#D3D3D3";
