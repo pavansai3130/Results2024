@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>India General Election 2024</title>
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-      crossorigin="anonymous" referrerpolicy="no-referrer" />
-   <script src="leaflet/index.js"></script>
-   <script src="index.js"></script>
-   <link rel="stylesheet" href="styles.css">
-   <link rel="stylesheet" href="cards.css">
-   <link rel="stylesheet" href="styling.css">
-
-   <link rel="stylesheet" href="./disclaimer.css">
-   <link rel="stylesheet" href="leaflet/index.css" />
-   <link rel="stylesheet" href="navbarStyles.css">
-   <style>
-      #see-more-btn {
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>India General Election 2024</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+         crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <script src="leaflet/index.js"></script>
+      <script src="index.js"></script>
+      <link rel="stylesheet" href="styles.css">
+      <link rel="stylesheet" href="cards.css">
+      <link rel="stylesheet" href="styling.css">
+      <link rel="stylesheet" href="./disclaimer.css">
+      <link rel="stylesheet" href="leaflet/index.css" />
+      <link rel="stylesheet" href="navbarStyles.css">
+      <style>
+         #see-more-btn {
          padding: 0.5rem 1rem;
          font-size: 12px;
          text-transform: uppercase;
@@ -37,88 +35,75 @@
          transition: all 0.3s ease 0s;
          cursor: pointer;
          outline: none;
-      }
-
-      #see-more-btn:hover {
+         }
+         #see-more-btn:hover {
          background-color: #1e90ff;
          /* DodgerBlue */
          box-shadow: 0px 5px 20px rgba(30, 144, 255, 0.4);
          /* DodgerBlue with 40% opacity */
          color: #fff;
          transform: translateY(-2px);
-      }
-
-      #see-more-btn:active {
+         }
+         #see-more-btn:active {
          transform: translateY(-1px);
-      }
-
-      .form-control {
+         }
+         .form-control {
          width: 12.5rem;
          border-radius: 0.5rem;
          border: 0.063rem solid rgb(208, 213, 221, 1);
          padding-left: 0.625rem;
-      }
-
-      /* Media Queries */
-   </style>
-
-</head>
-
-<body>
-   <nav class="navbarHead">
-      <div class="containerHead">
-         <div class="logo">
-            <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
-         </div>
-         <div class="navlinks" id="navlinks">
-            <div class="headerPhone">
+         }
+         /* Media Queries */
+      </style>
+   </head>
+   <body>
+      <nav class="navbarHead">
+         <div class="containerHead">
+            <div class="logo">
                <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
-               <i class="fa-solid fa-xmark" onclick="hidemenu()"></i>
             </div>
-            <div class="d-flex">
-               <div class="imgHover">
-                  <div class="tooltip-container">
-                     <!-- <span class="text">Tooltip</span> -->
-                     <img src="imgs/share.png" alt="">
-                     <span class="tooltip">
+            <div class="navlinks" id="navlinks">
+               <div class="headerPhone">
+                  <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
+                  <i class="fa-solid fa-xmark" onclick="hidemenu()"></i>
+               </div>
+               <div class="d-flex">
+                  <div class="imgHover">
+                     <div class="tooltip-container">
+                        <!-- <span class="text">Tooltip</span> -->
+                        <img src="imgs/share.png" alt="">
+                        <span class="tooltip">
                         <i class="fa-brands fa-facebook"></i>
-
                         <i class="fa-brands fa-whatsapp"></i>
-
                         <i class="fa-brands fa-instagram"></i>
-
                         <i class="fa-brands fa-telegram"></i>
                         </a></span>
+                     </div>
                   </div>
-
+                  <ul>
+                     <li><a href="cardsPage.html">Popular & Celebrities</a></li>
+                     <li><a href="bigfights_viewall.html">Big Fights</a></li>
+                     <li><a href="">'19 vs '24</a></li>
+                     <div class="phoneMedia" id="phoneMedia"><i class="fa-brands fa-facebook" style="color: #158be5;"></i>
+                        <i class="fa-brands fa-whatsapp" style="color: #32ec6a;"></i>
+                        <i class="fa-brands fa-instagram" style="color: #d24196;"></i>
+                        <i class="fa-brands fa-telegram" style="color: #74deec;"></i>
+                     </div>
+                  </ul>
                </div>
-               <ul>
-                  <li><a href="cardsPage.html">Popular & Celebrities</a></li>
-                  <li><a href="bigfights_viewall.html">Big Fights</a></li>
-                  <li><a href="">'19 vs '24</a></li>
-                  <div class="phoneMedia" id="phoneMedia"><i class="fa-brands fa-facebook" style="color: #158be5;"></i>
-
-                     <i class="fa-brands fa-whatsapp" style="color: #32ec6a;"></i>
-
-                     <i class="fa-brands fa-instagram" style="color: #d24196;"></i>
-
-                     <i class="fa-brands fa-telegram" style="color: #74deec;"></i>
-                  </div>
-               </ul>
+            </div>
+            <i id="menu" class="fa-solid fa-bars" onclick="showmenu()"></i>
+         </div>
+      </nav>
+      <!-- Common Header -->
+      <header class="header">
+         <div class="container">
+            <div class="row ">
             </div>
          </div>
-         <i id="menu" class="fa-solid fa-bars" onclick="showmenu()"></i>
-      </div>
-   </nav>
-   <!-- Common Header -->
-   <header class="header">
-      <div class="container">
-         <div class="row ">
-         </div>
-      </div>
-   </header>
-   <!-- Main Content -->
-   <div class="container-fluid main-content blur">
+      </header>
+      <!-- Main Content -->
+      <div class="container-fluid main-content blur">
       <!-- Page 1: Landing Page -->
       <div id="landing-page">
          <div class="row">
@@ -127,7 +112,7 @@
                <nav aria-label="breadcrumb">
                   <ol class="breadcrumb">
                      <li class="breadcrumb-item" id="breadcrumb-india" style="display: none;"><a href="#"
-                           onclick="resetBreadcrumb()">India</a></li>
+                        onclick="resetBreadcrumb()">India</a></li>
                      <li class="breadcrumb-item" id="breadcrumb-state" style="display: none;"></a></li>
                      <li class="breadcrumb-item active" id="breadcrumb-constituency" style="display: none;"
                         aria-current="page"></li>
@@ -178,11 +163,8 @@
                         </select>
                      </div>
                      <div class="d-flex">
-
                         <button class="button_years" id="bt_1" type="button">2024</button>
                         <button class="button_years" id="bt_2" type="button">2019</button>
-
-
                      </div>
                   </div>
                </div>
@@ -195,7 +177,6 @@
                      </div>
                   </div>
                </div>
-
                <div class="row">
                   <div class="col-12" id="india-map"></div>
                   <div id="map" style="width: 100%; height:100vh;display: block;">
@@ -204,534 +185,540 @@
                </div>
                <div id="containertool2"></div>
                <!-- card start-->
-
                <div class="root">
                   <h2 style="align-items: center;margin-top: 1rem;font-weight: bold;">Popular Candidates</h2>
                   <div class="container-fluid h-500">
                      <div id="root" class="row g-2 ">
                         <!-- <div class="col-lg-6 d-flex position-relative custom-container">
-                                 <div class="ribbon">Trailing</div>
-                                 <div class="temp custom-temp">
-                                     <div class="card-body w-100">
-                                         <h4 class="card-title custom-card-title">Rahul Gandhi</h4>
-                                         <div class="subheaders d-flex align-items-center mb-3 custom-subheaders">
-                                             <div class="logo"><img class="custom-img"
-                                                     src="https://upload.wikimedia.org/wikipedia/commons/6/63/Indian_National_Congress_hand_logo.png"
-                                                     alt=""></div>
-                                             <h4 style="font-weight: bold;">INC</h4>
-                                         </div>
-                                         <p class="card-text custom-card-text">Rai Bareilly (Uttar Pradesh)</p>
-                                         <p class="card-text custom-card-text-votes">Votes : 1,23,009</p>
-                                     </div>
-                                     <div
-                                         class="iribbon trail d-flex flex-column bg-white rounded-2 p-3 position-relative custom-iribbon">
-                                         <p class="card-text mb-1 custom-iribbon-text">Trailing by</p>
-                                         <p class="card-text custom-iribbon-text-votes">23,000 votes</p>
-                                     </div>
-                                 </div>
-                                 <div class="person-image d-flex custom-person-image">
-                                     <img class="person-img w-50" src="img/rahul.png" alt="Person Image">
-                                 </div>
-                             </div> -->
-                     </div> <!-- End of the row -->
+                           <div class="ribbon">Trailing</div>
+                           <div class="temp custom-temp">
+                               <div class="card-body w-100">
+                                   <h4 class="card-title custom-card-title">Rahul Gandhi</h4>
+                                   <div class="subheaders d-flex align-items-center mb-3 custom-subheaders">
+                                       <div class="logo"><img class="custom-img"
+                                               src="https://upload.wikimedia.org/wikipedia/commons/6/63/Indian_National_Congress_hand_logo.png"
+                                               alt=""></div>
+                                       <h4 style="font-weight: bold;">INC</h4>
+                                   </div>
+                                   <p class="card-text custom-card-text">Rai Bareilly (Uttar Pradesh)</p>
+                                   <p class="card-text custom-card-text-votes">Votes : 1,23,009</p>
+                               </div>
+                               <div
+                                   class="iribbon trail d-flex flex-column bg-white rounded-2 p-3 position-relative custom-iribbon">
+                                   <p class="card-text mb-1 custom-iribbon-text">Trailing by</p>
+                                   <p class="card-text custom-iribbon-text-votes">23,000 votes</p>
+                               </div>
+                           </div>
+                           <div class="person-image d-flex custom-person-image">
+                               <img class="person-img w-50" src="img/rahul.png" alt="Person Image">
+                           </div>
+                           </div> -->
+                     </div>
+                     <!-- End of the row -->
                      <button id="see-more-btn" style="margin-bottom: 1rem;margin-top: 1rem;" class="button">See More</button>
                   </div>
                </div>
             </div>
             <div class="col-12 col-lg-6 order-1 order-lg-2" ">
-                  <!-- Alliance Results -->
-                  <!-- <div id=" alliance-results"></div> -->
-            <!-- Party-wise Results -->
-            <!-- <div id="party-results"></div> -->
-
-            <!-- -Alliance Names on Bar- -->
-            <div>
-               <!-- <div class="allianceName">
-                  <span id="word1">NDA</span>
-                  <span id="word2">I.N.D.I.A</span>
-                  <span id="word3">Others</span>
-                  </div> -->
+               <!-- Alliance Results -->
+               <!-- <div id=" alliance-results"></div> -->
+               <!-- Party-wise Results -->
+               <!-- <div id="party-results"></div> -->
                <!-- -Alliance Names on Bar- -->
-
-               <div class="bar-container" id="bar-container">
-                  <div class="bar bar-1" id="bar1"></div>
-                  <div class="bar bar-2" id="bar2"></div>
-                  <div class="bar bar-3" id="bar3"></div>
-                  <div class="bar-label" id="bar-label"></div>
-               </div>
+               <div>
+                  <!-- <div class="allianceName">
+                     <span id="word1">NDA</span>
+                     <span id="word2">I.N.D.I.A</span>
+                     <span id="word3">Others</span>
+                     </div> -->
+                  <!-- -Alliance Names on Bar- -->
+                  <div class="bar-container" id="bar-container">
+                     <div class="bar bar-1" id="bar1"></div>
+                     <div class="bar bar-2" id="bar2"></div>
+                     <div class="bar bar-3" id="bar3"></div>
+                     <div class="bar-label" id="bar-label"></div>
+                  </div>
                   <div class="container p-0 mt-2">
                      <div class="legend d-flex flex-row">
-                       <div class="legendLabel p-0" >
-                         <span class="ndaLegend"></span> <span class="label">NDA</span>
-                       </div>
-                       <div class="legendLabel p-0">
-                         <span class="indiaLegend"></span> <span class="label">I.N.D.I.A</span>
-                       </div>
-                       <div class="legendLabel p-0">
-                        <span class="others"></span> <span class="label">Others</span>
-                       </div>
-                     </div>
-                   </div>
-            <!-- ----------------Accordion------------------------------------ -->
-            <!-- Progress bar -->
-               <div id="carouselContainer" class="position-relative  ">
-                  <div class="progress w-50  mx-auto justify-content-center mt-4">
-                     <div class="transition-timer-carousel-progress-bar " id="carouselProgress"></div>
-                  </div>
-                  <!-- Carousel Element -->
-                  <div id="carouselExampleIndicators" class="carousel slide w-100 p-1  rounded-2 " data-bs-pause="true"
-                     >
-                     <!-- Carousel Indicators -->
-                     <div class="carousel-indicators">
-                        <!-- Indicator buttons -->
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                           aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                           aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                           aria-label="Slide 3"></button>
-                     </div>
-                     <!-- Carousel Inner -->
-                     <div class="carousel-inner ">
-                        <!-- Individual carousel items -->
-                        <div class="carousel-item active" id="ndaCarousel">
-                           <div >NDA
-                              <button id="toggleButton" class="hidden ">Show All</button>
-                           </div>
-                        <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240215121528/javare15.png"
-                              alt="Img 1" class="d-block w-100 h-50"> -->
-                        <div class="row ">
-                           <div class="col-6 ">
-                              <table class="table align-middle accordionTable table-sm m-0">
-                                 <thead>
-                                    <tr>
-                                       <th>Party</th>
-                                       <th>Win/Lead</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody id="tbody1">
-                                 </tbody>
-                              </table>
-                           </div>
-                           <!-- <div style="height: 100%" ></div> -->
-                           <div class="col-6 ">
-                              <table class="table align-middle accordionTable  table-sm m-0">
-                                 <thead>
-                                    <tr>
-                                       <th>Party</th>
-                                       <th>Win/Lead</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody id="tbody2">
-                                 </tbody>
-                              </table>
-                           </div>
+                        <div class="legendLabel p-0" >
+                           <span class="ndaLegend"></span> <span class="label">NDA</span>
                         </div>
-                     </div>
-                     <div class="carousel-item " id="indiaCarousel">
-                           <div >I.N.D.I.A
-                              
-                           </div>
-                        <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240215121356/jsre15.jpg" alt="Img 2"
-                              class="d-block w-100 h-50"> -->
-                        <div class="row ">
-                           <div class="col-6  ">
-                              <table class="table align-middle accordionTable table-sm m-0">
-                                 <thead>
-                                    <tr>
-                                       <th>Party</th>
-                                       <th>Win/Lead</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody id="tbody1">
-                                 </tbody>
-                              </table>
-                           </div>
-                           <div class="col-6 ">
-                              <table class="table align-middle accordionTable table-sm m-0">
-                                 <thead>
-                                    <tr>
-                                       <th>Party</th>
-                                       <th>Win/Lead</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody id="tbody2">
-                                 </tbody>
-                              </table>
-                           </div>
+                        <div class="legendLabel p-0">
+                           <span class="indiaLegend"></span> <span class="label">I.N.D.I.A</span>
                         </div>
-                     </div>
-                     <div class="carousel-item" id="othersCarousel">
-                           <div >Others</div>
-                        <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240215121356/jsre15.jpg" alt="Img 2"
-                              class="d-block w-100 h-50"> -->
-                        <div class="row ">
-                           <div class="col-6 ">
-                              <table class="table align-middle accordionTable table-sm m-0">
-                                 <thead>
-                                    <tr>
-                                       <th>Party</th>
-                                       <th>Win/Lead</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody id="tbody1">
-                                 </tbody>
-                              </table>
-                           </div>
-                           <div class="col-6">
-                              <table class="table align-middle accordionTable table-sm m-0 bg-primary">
-                                 <thead>
-                                    <tr>
-                                       <th>Party</th>
-                                       <th>Win/Lead</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody id="tbody2">
-                                 </tbody>
-                              </table>
-                           </div>
+                        <div class="legendLabel p-0">
+                           <span class="others"></span> <span class="label">Others</span>
                         </div>
                      </div>
                   </div>
-                  <!-- Carousel Control buttons -->
-                  <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="prev">
-                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                     <span class="visually-hidden">Previous</span>
-                     </button>
-                     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="next">
-                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                     <span class="visually-hidden">Next</span>
-                     </button> -->
-               </div>
-            </div>
-            <!-- ------------------------------------------------------------------ -->
-            <!-- <div class="accordion  mt-3 mb-4 w-100 " id="accordionContainer" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;">
-                  <div class="accordion-item ">
-                     <h5 class="accordion-header m-0">
-                        <button class="accordion-button w-100 " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="background-color: #FFF9F5;">
-                           <div id="ndaBar" class="color-animation" style="background-color: #F47216">
-                              NDA
+                  <!-- ----------------Accordion------------------------------------ -->
+                  <!-- Progress bar -->
+                  <div id="carouselContainer" class="position-relative mt-3  ">
+                     <!-- <div class="progress w-50  mx-auto justify-content-center mt-4">
+                        <div class="transition-timer-carousel-progress-bar " id="carouselProgress"></div>
+                     </div> -->
+                     <!-- Carousel Element -->
+                     <div id="carouselExampleIndicators" class="carousel slide w-100 p-1  rounded-2 " data-bs-pause="true"
+                        >
+                        <!-- Carousel Indicators -->
+                        
+                        <!-- Carousel Inner -->
+                        <div class="carousel-inner ">
+                           <!-- Individual carousel items -->
+                           <div class="carousel-item active" id="ndaCarousel">
+                              <div >NDA
+                                 <button class="toggleButton" class="hidden ">Show All</button>
+                              </div>
+                              <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240215121528/javare15.png"
+                                 alt="Img 1" class="d-block w-100 h-50"> -->
+                              <div class="row ">
+                                 <div class="col-sm-6 col-12 ">
+                                    <table class="table align-middle accordionTable table-sm m-0">
+                                       <thead>
+                                          <tr>
+                                             <th class="col-6">Party</th>
+                                             <th  class="col-6">Win/Lead</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody id="tbody1">
+                                       </tbody>
+                                    </table>
+                                 </div>
+                                 <!-- <div style="height: 100%" ></div> -->
+                                 <div class="col-sm-6 col-12 d-none d-sm-block hiddenRow">
+                                    <table class="table align-middle accordionTable  table-sm m-0">
+                                       <thead class="hide-on-small">
+                                          <tr>
+                                             <th class="col-6">Party</th>
+                                             <th class="col-6">Win/Lead</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody id="tbody2">
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
                            </div>
+                           <div class="carousel-item " id="indiaCarousel">
+                              <div >I.N.D.I.A
+                                 <button class="toggleButton" class="hidden ">Show All</button>
+
+                              </div>
+                              <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240215121356/jsre15.jpg" alt="Img 2"
+                                 class="d-block w-100 h-50"> -->
+                                 <div class="row ">
+                                    <div class="col-sm-6 col-12 ">
+                                       <table class="table align-middle accordionTable table-sm m-0">
+                                          <thead>
+                                             <tr>
+                                                <th class="col-6">Party</th>
+                                                <th  class="col-6">Win/Lead</th>
+                                             </tr>
+                                          </thead>
+                                          <tbody id="tbody1">
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                    <!-- <div style="height: 100%" ></div> -->
+                                    <div class="col-sm-6 col-12 d-none d-sm-block hiddenRow">
+                                       <table class="table align-middle accordionTable  table-sm m-0">
+                                          <thead class="hide-on-small">
+                                             <tr>
+                                                <th class="col-6">Party</th>
+                                                <th class="col-6">Win/Lead</th>
+                                             </tr>
+                                          </thead>
+                                          <tbody id="tbody2">
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 </div>
+                           </div>
+                           <div class="carousel-item" id="othersCarousel">
+                              <div >Others
+
+
+                                 <button class="toggleButton" class="hidden ">Show All</button>
+                              </div>
+
+                              <!-- <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240215121356/jsre15.jpg" alt="Img 2"
+                                 class="d-block w-100 h-50"> -->
+                                 <div class="row ">
+                                    <div class="col-sm-6 col-12 ">
+                                       <table class="table align-middle accordionTable table-sm m-0">
+                                          <thead>
+                                             <tr>
+                                                <th class="col-6">Party</th>
+                                                <th  class="col-6">Win/Lead</th>
+                                             </tr>
+                                          </thead>
+                                          <tbody id="tbody1">
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                    <!-- <div style="height: 100%" ></div> -->
+                                    <div class="col-sm-6 col-12 d-none d-sm-block hiddenRow">
+                                       <table class="table align-middle accordionTable  table-sm m-0">
+                                          <thead class="hide-on-small">
+                                             <tr>
+                                                <th class="col-6">Party</th>
+                                                <th class="col-6">Win/Lead</th>
+                                             </tr>
+                                          </thead>
+                                          <tbody id="tbody2">
+                                          </tbody>
+                                       </table>
+                                    </div>
+                                 </div>
+                           </div>
+                        </div>
+                        <div class="carousel-indicators m-0 position-relative">
+                           <!-- Indicator buttons -->
+                           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                              aria-current="true" aria-label="Slide 1"></button>
+                           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                              aria-label="Slide 2"></button>
+                           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                              aria-label="Slide 3"></button>
+                        </div>
+                        <!-- Carousel Control buttons -->
+                        <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                           data-bs-slide="prev">
+                           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                           <span class="visually-hidden">Previous</span>
                         </button>
-                     </h5>
-                     <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionContainer">
-                        <div class="accordion-body">
-                           <div class="row row-cols-2">
-                              <div class="col g-0">
-                                 <table class="table accordionTable table-sm m-0">
-                                    <thead>
-                                       <tr>
-                                          <th >Party</th>
-                                          <th >Win/Lead</th>
-                                       </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                 </table>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                           data-bs-slide="next">
+                           <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                           <span class="visually-hidden">Next</span>
+                        </button> -->
+                     </div>
+                  </div>
+                  <!-- ------------------------------------------------------------------ -->
+                  <!-- <div class="accordion  mt-3 mb-4 w-100 " id="accordionContainer" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;">
+                     <div class="accordion-item ">
+                        <h5 class="accordion-header m-0">
+                           <button class="accordion-button w-100 " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="background-color: #FFF9F5;">
+                              <div id="ndaBar" class="color-animation" style="background-color: #F47216">
+                                 NDA
                               </div>
-                              <div class="col g-0">
-                                 <table class="table accordionTable table-sm m-0">
-                                    <thead>
-                                       <tr>
-                                          <th >Party</th>
-                                          <th >Win/Lead</th>
-                                       </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                 </table>
-                              </div>
-                              <div class="col g-0">
-                                 <table class="table accordionTable table-sm m-0">
-                                    <thead>
-                                       <tr>
-                                          <th >Party</th>
-                                          <th >Win/Lead</th>
-                                       </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                 </table>
+                           </button>
+                        </h5>
+                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionContainer">
+                           <div class="accordion-body">
+                              <div class="row row-cols-2">
+                                 <div class="col g-0">
+                                    <table class="table accordionTable table-sm m-0">
+                                       <thead>
+                                          <tr>
+                                             <th >Party</th>
+                                             <th >Win/Lead</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                                 <div class="col g-0">
+                                    <table class="table accordionTable table-sm m-0">
+                                       <thead>
+                                          <tr>
+                                             <th >Party</th>
+                                             <th >Win/Lead</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                                 <div class="col g-0">
+                                    <table class="table accordionTable table-sm m-0">
+                                       <thead>
+                                          <tr>
+                                             <th >Party</th>
+                                             <th >Win/Lead</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                       </tbody>
+                                    </table>
+                                 </div>
                               </div>
                            </div>
                         </div>
                      </div>
-                  </div>
-                  <div class="accordion-item">
-                     <h5 class="accordion-header  m-0">
-                        <button class="accordion-button w-100 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="background-color: #F5F5FF ;">
-                           <div id="indiaBar" style="background-color: #7E7BFC">
-                              I.N.D.I.A
-                           </div>
-                        </button>
-                     </h5>
-                     <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionContainer">
-                        <div class="accordion-body">
-                           <div class="row row-cols-3">
-                              <div class="col g-0">
-                                 <table class="table accordionTable table-sm m-0">
-                                    <thead>
-                                       <tr>
-                                          <th >Party</th>
-                                          <th >Win/Lead</th>
-                                       </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                 </table>
+                     <div class="accordion-item">
+                        <h5 class="accordion-header  m-0">
+                           <button class="accordion-button w-100 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="background-color: #F5F5FF ;">
+                              <div id="indiaBar" style="background-color: #7E7BFC">
+                                 I.N.D.I.A
                               </div>
-                              <div class="col g-0">
-                                 <table class="table accordionTable table-sm m-0">
-                                    <thead>
-                                       <tr>
-                                          <th >Party</th>
-                                          <th >Win/Lead</th>
-                                       </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                 </table>
-                              </div>
-                              <div class="col g-0">
-                                 <table class="table accordionTable table-sm m-0">
-                                    <thead>
-                                       <tr>
-                                          <th >Party</th>
-                                          <th >Win/Lead</th>
-                                       </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                 </table>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="accordion-item">
-                     <h5 class="accordion-header  m-0">
-                        <button class="accordion-button w-100 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="background-color: #F9FAFB;">
-                           <div  id ="othersBar" style="background-color: #BFC8D0" >
-                              Others
-                           </div>
-                        </button>
-                     </h5>
-                     <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionContainer">
-                        <div class="accordion-body">
-                           <div class="row row-cols-3">
-                              <div class="col g-0">
-                                 <table class="table accordionTable table-sm m-0">
-                                    <thead>
-                                       <tr>
-                                          <th >Party</th>
-                                          <th >Win/Lead</th>
-                                       </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                 </table>
-                              </div>
-                              <div class="col g-0">
-                                 <table class="table accordionTable table-sm m-0">
-                                    <thead>
-                                       <tr>
-                                          <th >Party</th>
-                                          <th >Win/Lead</th>
-                                       </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                 </table>
-                              </div>
-                              <div class="col g-0">
-                                 <table class="table accordionTable table-sm m-0">
-                                    <thead>
-                                       <tr>
-                                          <th >Party</th>
-                                          <th >Win/Lead</th>
-                                       </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                 </table>
+                           </button>
+                        </h5>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionContainer">
+                           <div class="accordion-body">
+                              <div class="row row-cols-3">
+                                 <div class="col g-0">
+                                    <table class="table accordionTable table-sm m-0">
+                                       <thead>
+                                          <tr>
+                                             <th >Party</th>
+                                             <th >Win/Lead</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                                 <div class="col g-0">
+                                    <table class="table accordionTable table-sm m-0">
+                                       <thead>
+                                          <tr>
+                                             <th >Party</th>
+                                             <th >Win/Lead</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                                 <div class="col g-0">
+                                    <table class="table accordionTable table-sm m-0">
+                                       <thead>
+                                          <tr>
+                                             <th >Party</th>
+                                             <th >Win/Lead</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                       </tbody>
+                                    </table>
+                                 </div>
                               </div>
                            </div>
                         </div>
                      </div>
+                     <div class="accordion-item">
+                        <h5 class="accordion-header  m-0">
+                           <button class="accordion-button w-100 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="background-color: #F9FAFB;">
+                              <div  id ="othersBar" style="background-color: #BFC8D0" >
+                                 Others
+                              </div>
+                           </button>
+                        </h5>
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionContainer">
+                           <div class="accordion-body">
+                              <div class="row row-cols-3">
+                                 <div class="col g-0">
+                                    <table class="table accordionTable table-sm m-0">
+                                       <thead>
+                                          <tr>
+                                             <th >Party</th>
+                                             <th >Win/Lead</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                                 <div class="col g-0">
+                                    <table class="table accordionTable table-sm m-0">
+                                       <thead>
+                                          <tr>
+                                             <th >Party</th>
+                                             <th >Win/Lead</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                                 <div class="col g-0">
+                                    <table class="table accordionTable table-sm m-0">
+                                       <thead>
+                                          <tr>
+                                             <th >Party</th>
+                                             <th >Win/Lead</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     </div> -->
+                  <!-- ----------------Accordion------------------------------------ -->
+                  <!-- ----------------State Table------------------------------------ -->
+                  <div id="stateTabeleContainer" style="margin-top: 0.9375rem;" class=" ">
+                     <div class="d-flex justify-content-between">
+                        <!-- <input class="form-control order-2" id="stateSearch" type="text" placeholder="Search"> -->
+                        <form class="search-container order-2">
+                           <input class="form-control " type="text" id="stateSearch" placeholder="Search">
+                           <a href="#"><img class="search-icon"
+                              src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"></a>
+                        </form>
+                        <div class="btn-group stateUnion rounded-3" role="group" aria-label="Basic example">
+                           <button id="stateButton" type="button" class="btn btn-light border border-5 active">State</button>
+                           <button id="unionButton" type="button" class="btn btn-light border border-5">Union
+                           Territory</button>
+                        </div>
+                     </div>
+                     <table class="table table-bordered rounded-2"
+                        style="margin-top: 0.3125rem; box-shadow: 0px 1px 3px 0px rgba(16, 24, 40, 0.1);"
+                        id="stateTable">
+                        <thead>
+                           <tr>
+                              <th class="col-3 col-lg-4 align-middle" id="stateRow" scope="col">State</th>
+                              <th class="col-3 col-lg-2 align-middle" id="NDA" scope="col">NDA</th>
+                              <th class="col-3 col-lg-2 align-middle" id="INDIA" scope="col">I.N.D.I.A</th>
+                              <th class="col-3 col-lg-2 align-middle" id="Others" scope="col">Others</th>
+                           </tr>
+                        </thead>
+                        <tr id="referenceRow">
+                           <td id="stateName"></td>
+                           <td id="NDASeats"></td>
+                           <td id="INDIASeats"></td>
+                           <td id="OthersSeats"></td>
+                        </tr>
+                        <tbody id="allianceBody">
+                        </tbody>
+                     </table>
                   </div>
-               </div> -->
-            <!-- ----------------Accordion------------------------------------ -->
-            <!-- ----------------State Table------------------------------------ -->
-            <div id="stateTabeleContainer" style="margin-top: 0.9375rem;" class="table-responsive-sm ">
-               <div class="d-flex justify-content-between">
-                  <!-- <input class="form-control order-2" id="stateSearch" type="text" placeholder="Search"> -->
-                  <form class="search-container order-2">
-                     <input class="form-control " type="text" id="stateSearch" placeholder="Search">
-                     <a href="#"><img class="search-icon"
-                           src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"></a>
-                  </form>
-                  <div class="btn-group stateUnion rounded-2" role="group" aria-label="Basic example">
-                     <button id="stateButton" type="button" class="btn btn-light border border-5 active">State</button>
-                     <button id="unionButton" type="button" class="btn btn-light border border-5">Union
-                        Territory</button>
+                  <!-- ----------------State Table------------------------------------ -->
+                  <!-- Constitunecy Table -->
+                  <div id="Constituency-res" style="margin-top: 0.9375rem;" class="table-responsive-sm"
+                     style="display: none;">
+                     <table class="table  table-bordered" style="margin-top: 0.1rem;margin-bottom: 0.1rem;">
+                        <div id="theading" style="display: flex; align-items: center; ">
+                           <span id="constituency-name"></span>
+                           <input class="form-control" id="stateinput" type="text" placeholder="Search">
+                        </div>
+                        <thead class="thead">
+                           <tr>
+                              <th class="col-3 col-lg-1 align-middle" style="background:#EAECF0; color: #101828;">Constituency
+                              </th>
+                              <th class="col-3 col-lg-5 align-middle"
+                                 style="background: #12B76A; text-align: center; color: white; border: none;">Leading/Won</th>
+                              <th class="col-3 col-lg-5 align-middle"
+                                 style="background: #F96343; text-align: center;color: white;border: none; "> Trailing/Lost
+                              </th>
+                              <th class="col-3 col-lg-1 align-middle" style="background:#EAECF0; color: #101828;" color:
+                                 #101828;>Margin</th>
+                           </tr>
+                        </thead>
+                        <tbody id="table-body">
+                           <!-- Dynamic rows will be inserted here -->
+                        </tbody>
+                     </table>
+                     <div id="pagination-controls" style="display: flex; justify-content: space-between; margin-top: 0.1rem;">
+                        <!-- Pagination buttons will be inserted here -->
+                     </div>
+                  </div>
+                  <!-- table2 pavan -->
+                  <div class="table-responsive-sm" id="Candidate-res" style="margin-top: 0.9375rem; display: none;">
+                     <table class="table table-bordered" style="margin-top: 0.1rem; margin-bottom: 0.1rem;">
+                        <div id="theading2" style="display: flex;align-items: center; ">
+                           <span id="constituency-name"></span>
+                           <input class="form-control" id="candidateinput" type="text" placeholder="Search">
+                        </div>
+                        <thead class="thead">
+                           <tr>
+                              <th style="background:#F9FAFB; color: #101828;">Candidate</th>
+                              <th style="background: #F9FAFB; text-align: center; color: 101828; border: none;">Party</th>
+                              <th style="background: #F9FAFB; text-align: center;color: 101828;border: none; ">Votes</th>
+                              <th style="background:#F9FAFB; color: #101828;" color: #101828;>Margin</th>
+                           </tr>
+                        </thead>
+                        <tbody class="candidateBody">
+                           <!-- Dynamic rows will be inserted here -->
+                        </tbody>
+                     </table>
+                     <div id="pagination-controls-candidates"
+                        style="display: flex; justify-content: space-between; margin-top: 0.1rem;">
+                        <!-- Pagination buttons will be inserted here -->
+                     </div>
                   </div>
                </div>
-               <table class="table table-bordered"
-                  style="margin-top: 0.3125rem;box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;"
-                  id="stateTable">
-                  <thead>
-                     <tr>
-                        <th class="col-3 col-lg-6 align-middle" id="stateRow" scope="col">State / Union Territory </th>
-                        <th class="col-3 col-lg-2 align-middle" id="NDA" scope="col">NDA</th>
-                        <th class="col-3 col-lg-2 align-middle" id="INDIA" scope="col">I.N.D.I.A</th>
-                        <th class="col-3 col-lg-2 align-middle" id="Others" scope="col">Others</th>
-                     </tr>
-                  </thead>
-                  <tr id="referenceRow">
-                     <td id="stateName"></td>
-                     <td id="NDASeats"></td>
-                     <td id="INDIASeats"></td>
-                     <td id="OthersSeats"></td>
-                  </tr>
-                  <tbody id="allianceBody">
-                  </tbody>
-               </table>
             </div>
-            <!-- ----------------State Table------------------------------------ -->
-            <!-- Constitunecy Table -->
-            <div id="Constituency-res" style="margin-top: 0.9375rem;" class="table-responsive-sm"
-               style="display: none;">
-               <table class="table  table-bordered" style="margin-top: 0.1rem;margin-bottom: 0.1rem;">
-                  <div id="theading" style="display: flex; align-items: center; ">
-                     <span id="constituency-name"></span>
-                     <input class="form-control" id="stateinput" type="text" placeholder="Search">
-                  </div>
-                  <thead class="thead">
-                     <tr>
-                        <th class="col-3 col-lg-1 align-middle" style="background:#EAECF0; color: #101828;">Constituency
-                        </th>
-                        <th class="col-3 col-lg-5 align-middle"
-                           style="background: #12B76A; text-align: center; color: white; border: none;">Leading/Won</th>
-                        <th class="col-3 col-lg-5 align-middle"
-                           style="background: #F96343; text-align: center;color: white;border: none; "> Trailing/Lost
-                        </th>
-                        <th class="col-3 col-lg-1 align-middle" style="background:#EAECF0; color: #101828;" color:
-                           #101828;>Margin</th>
-                     </tr>
-                  </thead>
-                  <tbody id="table-body">
-                     <!-- Dynamic rows will be inserted here -->
-                  </tbody>
-               </table>
-               <div id="pagination-controls" style="display: flex; justify-content: space-between; margin-top: 0.1rem;">
-                  <!-- Pagination buttons will be inserted here -->
-               </div>
+            <!-- Page 2: State Results -->
+            <div id="state-results" style="display: none;">
+               <!-- Similar structure as landing page -->
             </div>
-            <!-- table2 pavan -->
-            <div class="table-responsive-sm" id="Candidate-res" style="margin-top: 0.9375rem; display: none;">
-
-               <table class="table table-bordered" style="margin-top: 0.1rem; margin-bottom: 0.1rem;">
-                  <div id="theading2" style="display: flex;align-items: center; ">
-                     <span id="constituency-name"></span>
-                     <input class="form-control" id="candidateinput" type="text" placeholder="Search">
-                  </div>
-
-
-                  <thead class="thead">
-                     <tr>
-                        <th style="background:#F9FAFB; color: #101828;">Candidate</th>
-                        <th style="background: #F9FAFB; text-align: center; color: 101828; border: none;">Party</th>
-                        <th style="background: #F9FAFB; text-align: center;color: 101828;border: none; ">Votes</th>
-                        <th style="background:#F9FAFB; color: #101828;" color: #101828;>Margin</th>
-                     </tr>
-                  </thead>
-                  <tbody class="candidateBody">
-                     <!-- Dynamic rows will be inserted here -->
-                  </tbody>
-               </table>
-               <div id="pagination-controls-candidates"
-                  style="display: flex; justify-content: space-between; margin-top: 0.1rem;">
-                  <!-- Pagination buttons will be inserted here -->
-               </div>
-            </div>
-
+         </div>
+         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+         <script src="./script.js"></script>
+         <script src="./paths.js"></script>
+         <script src="./leaflet/index.js"></script>
+         <script src="./index.js"></script>
+         <script src="./cards.js"></script>
+         <script src="./disclaimer.js"></script>
+         <script src="./navbar.js"></script>
+      </div>
+      <!-- Common Footer -->
+      <footer class="footer">
+         <div class="footerText">
+            <p>Crafted with <img src="./imgs/heart.svg" style="width: 1.2rem;" alt="heart"> by Gradious</p>
+            <p>results2024.in is a crowdsourced initiative for visualizing the 2024 Indian Parliamentary election results.
+               It is not a source of data.
+            </p>
+            <p style="margin: 0;" class="builtBy">Built by <img src="./imgs/gradious.svg" alt="gradious logo"><span
+               style="font-weight: 800;margin-left:0.4rem;">Gradious</span></p>
+         </div>
+         <div class="footerLinks">
+            <a href="./about.html">About Us</a>
+            <a href="./volunteers.html">Our Team</a>
+            <a href="./disclaimer.html">Disclaimer</a>
+         </div>
+         <div class="footerSocials">
+            <p style="font-size: 1.2rem;">Share</p>
+            <a class="social-item instagram">
+            <img src="./imgs/ig.svg" alt="Instagram">
+            <span>Instagram</span>
+            </a>
+            <a class="social-item facebook">
+            <img src="./imgs/fb.svg" alt="Facebook">
+            <span>Facebook</span>
+            </a>
+            <a class="social-item twitter">
+            <img src="./imgs/tweet.svg" alt="Twitter">
+            <span>Twitter</span>
+            </a>
+            <a class="social-item linkedin">
+            <img src="./imgs/linked.svg" alt="LinkedIn">
+            <span>LinkedIn</span>
+            </a>
+         </div>
+      </footer>
+      <div class="consent" id="consent">
+         <p class="consentText">Data on this website is being manually added from ECI website and may be delayed and is
+            error prone. <br> Information provided is for educational purposes only and should not be considered as
+            official election results. Please exercise caution. <br><a class="disclaimerLink" href="./disclaimer.html">Read
+            Complete Disclaimer.</a>
+         </p>
+         <div class="decisionButtons">
+            <button id="rejectConsent">Reject</button>
+            <button id="acceptConsent">Agree</button>
          </div>
       </div>
-      
-      <!-- Page 2: State Results -->
-      <div id="state-results" style="display: none;">
-         <!-- Similar structure as landing page -->
-      </div>
-   </div>
-
-
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"></script>
-   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-   <script src="./script.js"></script>
-   <script src="./paths.js"></script>
-   <script src="./leaflet/index.js"></script>
-   <script src="./index.js"></script>
-   <script src="./cards.js"></script>
-   <script src="./disclaimer.js"></script>
-   <script src="./navbar.js"></script>
-   </div>
-   <!-- Common Footer -->
-   
-
-   <div class="consent" id="consent">
-      <p class="consentText">Data on this website is being manually added from ECI website and may be delayed and is error prone. <br> Information provided is for educational purposes only and should not be considered as official election results. Please exercise caution. <br><a class="disclaimerLink" href="./disclaimer.html">Read Complete Disclaimer.</a></p>
-      <div class="decisionButtons">
-         <button id="rejectConsent">Reject</button>
-         <button id="acceptConsent">Agree</button>
-      </div>
-
-   </div>
-
-   <div id="rejectConfirmation">
-      <div class="confirmationCard">
-         <img class="alertTriangle" src="./imgs/alert-triangle.svg" alt="">
-         <p class="consentHeading">Are you sure you want to reject consent?</p>
-         <p class="consentDescription">You can't access the webpage unless you accept the consent.</p>
-         <a href="./disclaimer.html" class="consentDisclaimer">Read Complete Disclaimer</a>
-         <div class="buttonContainer">
-            <button class="declineButton" id="cancelRejectModal">Cancel</button>
-            <button class="acceptButton" id="confirmRejectModal">Confirm</button>
+      <div id="rejectConfirmation">
+         <div class="confirmationCard">
+            <img class="alertTriangle" src="./imgs/alert-triangle.svg" alt="">
+            <p class="consentHeading">Are you sure you want to reject consent?</p>
+            <p class="consentDescription">You can't access the webpage unless you accept the consent.</p>
+            <a href="./disclaimer.html" class="consentDisclaimer">Read Complete Disclaimer</a>
+            <div class="buttonContainer">
+               <button class="declineButton" id="cancelRejectModal">Cancel</button>
+               <button class="acceptButton" id="confirmRejectModal">Confirm</button>
+            </div>
          </div>
       </div>
-   </div>
-   </div>
-   <footer class="footer">
-      <div class="footerText">
-         <p>Crafted with <img src="./imgs/heart.svg" style="width: 1.2rem;" alt="heart"> by Gradious</p>
-<p>results2024.in is a crowdsourced initiative for visualizing the 2024 Indian Parliamentary election results. It is not a source of data.</p>
-            <p style="margin: 2rem 0 0 0;" class="builtBy">Built by <img src="./imgs/gradious.svg" alt="gradious logo"><span style="font-weight: 800;margin-left:0.4rem;">Gradious</span></p>
-
-      </div>
-      <div class="footerLinks">
-         <a href="./about.html">About Us</a>
-         <a href="./volunteers.html">Our Team</a>
-         <a href="./disclaimer.html">Disclaimer</a>
-      </div>
-      <div class="footerSocials">
-         <div class="a2a_kit a2a_kit_size_26 a2a_default_style footerSocials">
-               <p>Sharing is Caring</p>
-               <a class="a2a_button_facebook">FaceBook</a>
-               <a class="a2a_button_linkedin">LinkedIn</a>
-               <a class="a2a_button_whatsapp">Whatsapp</a>
-               <a class="a2a_button_pinterest">Pinterest</a>
-               <a class="a2a_button_twitter">Twitter</a>
-               </div>
-   <script async src="https://static.addtoany.com/menu/page.js"></script>
-   <!-- AddToAny END -->
-      </div>
-
-   </footer>
-</body>
-
+   </body>
 </html>
