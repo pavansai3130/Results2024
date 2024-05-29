@@ -17,67 +17,67 @@
 </head>
 
 <body>
-    <nav class="navbarHead">
-        <div class="containerHead">
-            <div class="logo">
-                <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
+   <nav class="navbarHead">
+      <div class="containerHead">
+         <div class="logo">
+            <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
+         </div>
+         <div class="navlinks" id="navlinks">
+            <div class="headerPhone">
+               <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
+               <i class="fa-solid fa-xmark" onclick="hidemenu()"></i>
             </div>
-            <div class="navlinks" id="navlinks">
-                <div class="headerPhone">
-                    <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
-                    <i class="fa-solid fa-xmark" onclick="hidemenu()"></i>
-                </div>
-                <div class="d-flex">
-                    <div class="imgHover">
-                        <div class="tooltip-container">
-                            <!-- <span class="text">Tooltip</span> -->
-                            <img src="imgs/share.png" alt="">
-                            <span class="tooltip">
-                                <i class="fa-brands fa-facebook"></i>
+            <div class="d-flex">
+               <div class="imgHover">
+                  <div class="tooltip-container" style="top: -5px;" >
+                     <!-- <span class="text">Tooltip</span> -->
+                        <a style="font-size: 1.5rem;">Candidates</a>
+                     <span class="tooltip">
+                        <li><a href="cardsPage.html">Popular</a></li>
+                        <li><a href="celebCards.html">Celebrities</a></li>
+                        </a></span>
+                  </div>
 
-                                <i class="fa-brands fa-whatsapp"></i>
+               </div>
+               <div class="listBoxes">
 
-                                <i class="fa-brands fa-instagram"></i>
+               
+               <ul>
+                  <li><a href="bigfights_viewall.html">Big Fights</a></li>
+                  <li><a href="">'19 vs '24</a></li>
+                  <div class="phoneMedia" id="phoneMedia"><i class="fa-brands fa-facebook" style="color: #158be5;"></i>
 
-                                <i class="fa-brands fa-telegram"></i>
-                                </a></span>
-                        </div>
+                     <i class="fa-brands fa-whatsapp" style="color: #32ec6a;"></i>
 
-                    </div>
-                    <ul>
-                        <li><a href="cardsPage.html">Popular & Celebrities</a></li>
-                        <li><a href="bigfights_viewall.html">Big Fights</a></li>
-                        <li><a href="">'19 vs '24</a></li>
-                        <div class="phoneMedia" id="phoneMedia"><i class="fa-brands fa-facebook"
-                                style="color: #158be5;"></i>
+                     <i class="fa-brands fa-instagram" style="color: #d24196;"></i>
 
-                            <i class="fa-brands fa-whatsapp" style="color: #32ec6a;"></i>
-
-                            <i class="fa-brands fa-instagram" style="color: #d24196;"></i>
-
-                            <i class="fa-brands fa-telegram" style="color: #74deec;"></i>
-                        </div>
-                    </ul>
-                </div>
+                     <i class="fa-brands fa-telegram" style="color: #74deec;"></i>
+                  </div>
+               </ul>
+               <div class="footerContact">
+                  <ul id="footy" >
+                     <li><a href="./about.html">About Us</a></li>
+                     <li><a href="./volunteers.html">Our Team</a></li>
+                     <li><a href="./disclaimer.html">Disclaimer</a></li>
+                  </ul>
+               </div>
+               
             </div>
-            <i id="menu" class="fa-solid fa-bars" onclick="showmenu()"></i>
-        </div>
-    </nav>
+            </div>
+         </div>
+         <i id="menu" class="fa-solid fa-bars" onclick="showmenu()"></i>
+      </div>
+   </nav>
     <div class="container-fluid">
-        <div class="section-buttons">
-            <div class="button-box">
-                <button id="popular-btn" class="btn ">Popular</button>
-                <button id="celebs-btn" class="btn ">Celebrities</button>
-            </div>
-        </div>
         <div class="search-bar-container">
-            <div class="input-group mb-3">
-                <input onkeyup="performSearch()" required="" id="search-input" type="search" name="text"
+            <h2 id="popular-section" class="mx-4 my-4">Popular Candidates</h2>
+            <div class="inputBoxes">
+                <div class="input-group mb-3">
+                    <input onkeyup="performSearch()" required="" id="search-input" type="search" name="text"
                     autocomplete="off" class="input">
-                <label class="user-label">Enter name</label>
-            </div>
-
-            <select id="dropdown" class="dropdown-box form-control">
+                    <label class="user-label">Enter name</label>
+                </div>
+                <select id="dropdown" class="dropdown-box form-control">
                 <option value="">Select State</option>
                 <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
                 <option value="Andhra Pradesh">Andhra Pradesh</option>
@@ -115,56 +115,45 @@
                 <option value="Uttar Pradesh">Uttar Pradesh</option>
                 <option value="Uttarakhand">Uttarakhand</option>
                 <option value="West Bengal">West Bengal</option>
-            </select>
-
+                </select>
+            </div>
         </div>
-        <h2 id="popular-section" class="text-center my-4">Popular Candidates</h2>
 
         <div id="more-cards-root" class="row g-2">
             <!-- More popular cards will be appended here -->
             <img id="no-results-img"
-                src="https://static.tildacdn.net/tild3432-3335-4337-b130-363866343062/No_results_1.svg" alt="No results"
+                src="https://static.tldacdn.net/tild3432-3335-4337-b130-363866343062/No_results_1.svg" alt="No results"
                 style="display: none; margin-top: 20px; max-width: 100%;">
         </div>
-        <h2 id="celebs-section" class="text-center my-4">Celebrities</h2>
-        <div id="more-celeb-cards-root" class="row g-2">
-            <!-- More celeb cards will be appended here -->
-            <img id="no-results-img"
-                src="https://static.tildacdn.net/tild3432-3335-4337-b130-363866343062/No_results_1.svg" alt="No results"
-                style="display: none; margin-top: 20px; max-width: 100%;">
-        </div>
-
         <div class="d-flex justify-content-center">
             <button id="back-btn" class="button mb-3">Back</button>
         </div>
-
-        <!-- Back to Top Button -->
-        <button id="back-to-top-btn" onclick="scrollToTop()"><i class="fa-solid fa-angle-up"></i></button>
+        
     </div>
     <footer class="footer">
-        <div class="footerText">
-           <p>Crafted with <img src="./imgs/heart.svg" style="width: 1.2rem;" alt="heart"> by Gradious</p>
-           <p>results2024.in is a crowdsourced initiative for visualizing the 2024 Indian Parliamentary election results. It is not a source of data.</p>
-           <p style="margin: 2rem 0 0 0;" class="builtBy">Built by <img src="./imgs/gradious.svg" alt="gradious logo"><span style="font-weight: 800;margin-left:0.4rem;">Gradious</span></p>
-        </div>
-        <div class="footerLinks">
-            <a href="./about.html">About Us</a>
-            <a href="./volunteers.html">Our Team</a>
-            <a href="./disclaimer.html">Disclaimer</a>
-        </div>
-        <div class="footerSocials">
-           <div class="a2a_kit a2a_kit_size_26 a2a_default_style footerSocials">
-              <p>Sharing is Caring</p>
-              <a class="a2a_button_facebook">FaceBook</a>
-              <a class="a2a_button_linkedin">LinkedIn</a>
-              <a class="a2a_button_whatsapp">Whatsapp</a>
-              <a class="a2a_button_pinterest">Pinterest</a>
-              <a class="a2a_button_twitter">Twitter</a>
-              </div>
-            <script async src="https://static.addtoany.com/menu/page.js"></script>
-         </div>
-         
-     </footer>  
+      <div class="footerText">
+         <p>Crafted with <img src="./imgs/heart.svg" style="width: 1.2rem;" alt="heart"> by Gradious</p>
+         <p>results2024.in is a crowdsourced initiative for visualizing the 2024 Indian Parliamentary election results. It is not a source of data.</p>
+         <p style="margin: 2rem 0 0 0;" class="builtBy">Built by <img src="./imgs/gradious.svg" alt="gradious logo"><span style="font-weight: 800;margin-left:0.4rem;">Gradious</span></p>
+      </div>
+      <div class="footerLinks">
+          <a href="./about.html">About Us</a>
+          <a href="./volunteers.html">Our Team</a>
+          <a href="./disclaimer.html">Disclaimer</a>
+      </div>
+      <div class="footerSocials">
+         <div class="a2a_kit a2a_kit_size_26 a2a_default_style footerSocials">
+            <p>Sharing is Caring</p>
+            <a class="a2a_button_facebook">FaceBook</a>
+            <a class="a2a_button_linkedin">LinkedIn</a>
+            <a class="a2a_button_whatsapp">Whatsapp</a>
+            <a class="a2a_button_pinterest">Pinterest</a>
+            <a class="a2a_button_twitter">Twitter</a>
+            </div>
+          <script async src="https://static.addtoany.com/menu/page.js"></script>
+       </div>
+       
+   </footer>
     <script src="cardsPage.js"></script>
     <script src="navbar.js"></script>
 
