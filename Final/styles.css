@@ -21,8 +21,9 @@ body{
 }
 
 /* Optional: Add padding to the table body for better aesthetics */
-.table-bordered tbody {
-  padding: 10px;
+.table-bordered  {
+  /* padding: 10px; */
+  border-radius: 8px;
 }
 
 
@@ -164,12 +165,11 @@ a{
 #carouselContainer{
   min-height: 220px;
   /* border-radius: 8px; */
-
 }
 #carouselProgress{
   background-color: #FF9933;
 }
-#toggleButton{
+.toggleButton{
   font-size: 14px;
   font-weight: 600;
   color: #344054;
@@ -179,6 +179,13 @@ a{
 #carouselContainer table{
   border: none;
 }
+.carousel-indicators [data-bs-target] {
+  background-color:gray;
+}
+.carousel-indicators .active {
+  background-color: gray; /* Change this to your desired color */
+}
+
 .carousel-item {
   border-radius: 8px;
   padding:11px 24px;
@@ -204,24 +211,43 @@ a{
 #othersCarousel{
   border-top:8px solid #EAECF0;
 }
-
-
 #carouselContainer th,
 #carouselContainer td{
- width: 50%;
+ /* width: 50%; */
  background: rgba(255, 255, 255, 1);
  ;
  border-bottom: 1px solid rgba(208, 213, 221, 1)
  ;
- text-align: center;
+ width: 50%;
+ /* text-align: center; */
+}
+@media (max-width: 576px) {
+  .hide-on-small {
+      visibility: hidden;
+      position: absolute;
+      border-bottom: none;
+  }
+  .hide-on-small th {
+    border-bottom: none;
+}
 }
 .accordionTable th:first-child {
   text-align: left;
 }
-
-.accordionTable tbody tr td:first-child {
-  text-align: left;
+.accordionTable th:nth-child(2) {
+  text-align: center;
 }
+.accordionTable tbody tr td:nth-child(2)
+{
+  text-align: center;
+}
+.accordionTable{
+  width: 100%;
+  /* width: 245px; */
+}
+/* .accordionTable td:first-child 
+  text-align: left;
+} */
 .hiding {
   display:none;
 }
@@ -233,10 +259,36 @@ a{
   height: 8px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+}
+/* .carousel-control-next,.carousel-control-prev{
+  top: 25%;
+  height: 50%;
+}
+.carousel-control-next
+{
+  justify-content: flex-end;
+   padding-right: 8px;
+   
 
 }
-.accordion-button div {
-  /* background-color: red; */
+.carousel-control-prev
+{
+  justify-content: flex-start;
+  padding-left: 8px;
+}
+  
+.carousel-control-prev-icon, .carousel-control-next-icon
+{
+  background-color:red;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  padding: 5px;
+
+} */
+
+/* .accordion-button div {
+  background-color: red;
   height: 100%;
   width:50%;
   display: flex;
@@ -246,20 +298,20 @@ a{
   
 }
 .color-animation {
-  animation: colorFill 5s linear infinite; /* Customize duration and timing */
+  animation: colorFill 5s linear infinite; Customize duration and timing
   background: linear-gradient(to right, #F47216 0%, #F47216 50%, transparent 50%, transparent 100%);
-  background-size: 200% 100%; /* Double the size of the background */
-}
+  background-size: 200% 100%; Double the size of the background
+} */
 
-@keyframes colorFill {
+/* @keyframes colorFill {
   0% {
       background-position: 0 0;
   }
   100% {
       background-position: -100% 0;
   }
-}
-.accordion-button{
+} */
+/* .accordion-button{
   height: 2.5rem;
   font-size: 1.25rem;
   text-align: left;
@@ -282,22 +334,13 @@ a{
 } */
 .accordionTable td{
   max-height: 1.25rem;
-
   /* background-color: red; */
-}
+} */
 /* ---------------------------------------------------------------- */
 .card{
   height:13.75rem;
 }
 
-table{
-  padding: 0;
-  margin-top: 1.5rem;
-  border: 0.0625rem solid #EAECF0;
-  /* overflow: hidden; */
-  border-radius: 0.5rem;
-
-}
 .stateUnion{
   height:2.1875rem ;
   /* border: 2px solid black; */
@@ -315,7 +358,7 @@ table{
   font-family: 'Inter', sans-serif;
   font-weight: 500;
   font-size: 0.875rem;
-  padding: 0;
+  /* padding: 0; */
   align-items: center;
   vertical-align: middle;
   
@@ -336,46 +379,61 @@ table{
 } */
 
 #stateButton{
-  width: 55px;
-  font-size: 12px;
+  width: 3.4375rem;
+  font-size: 0.75rem;
   font-weight: 500;
   /* background-color: rgba(255, 255, 255, 1); */
 }
 #unionButton{
-  width: 110px;
-  font-size:12px;
+  width: 6.875rem;
+  font-size:0.75rem;
   font-weight: 500;
   /* background-color: rgba(255, 255, 255, 1); */
 
 }
 
 #stateRow{
-  background-color: #EAECF0;
-  /* width: 252px; */
+  background-color: #F9FAFB;
+  font-size: 14px;
+  font-weight: 500;
+  padding-left: 16px;
+  /* padding:12px 50px ; */
+
+  /* width: 15.75rem; */
 }
 #NDA{
   background-color:  #FF9933;
   text-align: center;
   color: white;
   border-right: none;
-  /* width: 130px; */
+  font-size: 14px;
+  font-weight: 500;
+  /* padding:12px 50px ; */
+  /* width: 8.125rem; */
 }
 #INDIA{
   background-color: #87CEEB;
   text-align: center;
   color: white;
   border-left: none;
-  /* width: 130px; */
+  font-size: 14px;
+  font-weight: 500;
+  /* padding:12px 38px ; */
+  /* width: 8.125rem; */
 
-}
-#stateName{
-  text-align: left;
 }
 #Others{
   background-color: #EAECF0;
   text-align: center;
-  /* width: 130px; */
+  font-size: 14px;
+  font-weight: 500;
+  /* padding:12px 50px ; */
+  /* width: 8.125rem; */
 
+}
+#stateName{
+  text-align: left;
+  padding-left: 1rem;
 }
 #NDASeats{
   background-color: #FFF9F5;
@@ -396,7 +454,7 @@ table{
 #stateLogo{
   width: 0.75rem;
   height: 0.75rem;
-  margin-left: 0.5rem;
+  /* margin-left: 0.5rem; */
   margin-right: 0.5rem;
 }
 
