@@ -460,18 +460,18 @@ tr{
   outline: none; /* Remove default outline */
 }
 /* hover table */
-#containertool {
-  position: absolute;
+#containertool {  
   display: none;
+  top: 26rem;
+  left: 26.25rem;
   background-color: white;
   padding: 1.25rem;
   border-radius: 0.5rem;
-  box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
-  width: 20rem;
-  top:28rem;
-  left: 26.25rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* width: 20rem; */
+  position: absolute;
+  z-index: 999;
   justify-content: center;
-  z-index: 9909999999;
 }
 
 .city {
@@ -486,7 +486,7 @@ tr{
 
 .state {
   font-family: 'Roboto';
-  font-size: 0.75rem;
+  font-size: 12px;
   font-weight: 400;
   /* line-height: 1.125rem; */
   text-align: center;
@@ -641,7 +641,7 @@ tr{
 
 #v2 {
   color: #F04438;
-  margin-top: -17px;
+  margin-top: -1.0625rem;
 }
 
 .previous-winner .vote-title {
@@ -706,15 +706,32 @@ tr{
   width: 12.5rem; border-radius:0.5rem;border: 0.063rem solid rgb(208,213,221,1); padding-left: 0.625rem;
 }
 @media (max-width:600px) {
-  .form-control
-  {
-    width:10rem;
+  .form-control{
+    width: 10rem;
   }
-  #containertool
-  {
-
-    left: 1.5rem;
+  #containertool{
+    left: 0.9rem;
     top:12rem;
   }
+}
 
+
+@media (max-width:1000px) {
+  .form-control{
+    width: 10rem;
+  }
+  #containertool{
+    left: 0.9rem;
+    top:12rem;
+  }
+}
+
+@media (max-width:2000px) {
+  .form-control{
+    width: 10rem;
+  }
+  #containertool{
+    left: 0.9rem;
+    top:19rem;
+  }
 }
