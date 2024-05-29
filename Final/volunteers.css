@@ -18,6 +18,7 @@
   gap: 1.5rem;
   flex-wrap: wrap;
   margin: 8%;
+  align-items: center;
 }
 
 .name{
@@ -27,7 +28,7 @@
 }
 
 .memberDetails{
-  width: 13.75rem;
+  width: 100%;
   margin-left: 0.1rem;
 }
 
@@ -61,7 +62,7 @@
   overflow: hidden;
   align-items: center;
   justify-content: center;
-  margin: 0.1rem auto;
+  margin: 0.1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
 }
@@ -91,15 +92,31 @@
 @media (max-width: 1120px) {
   .member {
     width: 47%;
+    margin: auto;
+  }
+
+  .teamMembers{
+    margin: 4rem;
   }
 }
 
-@media (max-width: 660px) {
+@media (max-width: 600px) {
   .member {
-    width: 80%;
+    width: 60%;
+    margin: auto;
   }
   .teamMembers{
-    align-items: center;
+    margin: 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .member {
+    width: 90%;
+    margin: auto;
+  }
+  .teamMembers{
+    margin: 0;
   }
 }
 
