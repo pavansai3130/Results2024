@@ -383,7 +383,7 @@ $(document).ready(async function () {
     // Add paths to the SVG map
     //alert("aa");
     document.getElementById("india-map").innerHTML =
-      '<svg id="india-svg" viewBox="0 100 1000 1150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>';
+      '<div id="containertool2"></div><svg id="india-svg" viewBox="0 100 1000 1150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>';
     var pathsStr = "";
     for (let state in paths) {
       pathsStr += `<path id="${states[state]}" d="${paths[state]}"></path>`;
@@ -449,8 +449,8 @@ $(document).ready(async function () {
           nda >= india && nda >= others
             ? names.ndaColor
             : india > nda && india >= others
-            ? names.indiaColor
-            : names.othersColor;
+              ? names.indiaColor
+              : names.othersColor;
 
         tbody.appendChild(newRow);
       }
@@ -561,8 +561,8 @@ $(document).ready(async function () {
           nda >= india && nda >= others
             ? names.ndaColor
             : india > nda && india >= others
-            ? names.indiaColor
-            : names.othersColor;
+              ? names.indiaColor
+              : names.othersColor;
 
         tbody.appendChild(newRow);
       }
@@ -578,12 +578,12 @@ $(document).ready(async function () {
   }
 
   // Example click event handler for state in India map
-  $("#india-map").on("click", "path", function () {
+  $("#india-map").on("click", "path", function (event) {
     const state = $(this).attr("id");
     handleStateClick(state);
-    creatediv(state);
+    creatediv(state, 'containertool2');
+    half(event);
   });
-
   let percent = 0;
   let progress_bar = document.querySelector(
     ".transition-timer-carousel-progress-bar"
@@ -914,7 +914,6 @@ function handleStateClick(state) {
   const cells = constituencyTable.getElementsByTagName("th");
   for (const consti in stateDataJson[state]) {
     const leadingCandidate = stateDataJson[state][consti][0];
-    4;
     console.log(leadingCandidate);
     if (leadingCandidate.alliance === "NDA") nda++;
     else if (leadingCandidate.alliance === "OTH") others++;
@@ -922,23 +921,43 @@ function handleStateClick(state) {
   }
   updateBar([nda, india, others]);
 }
+function half(event) {
+  var map = document.getElementById('india-map').getBoundingClientRect();
+  var clickY = event.clientY - map.top;
+  var mapHeight = map.height;
+  var isAboveHalf = clickY < (mapHeight / 2);
+  var div = document.getElementById('containertool2');
+
+  if (isAboveHalf) {
+    div.classList.add("above-half");
+    div.classList.remove("below-half");
+  } else {
+    div.classList.add("below-half");
+    div.classList.remove("above-half");
+  }
+
+}
 function creatediv(state) {
   var obj = {};
   var partynames = [];
   var partyseats = [];
   var constituencyData = stateDataJson[state];
   for (let constituencyname in constituencyData) {
-    let party_name = stateDataJson[state][constituencyname][0]["party"];
+    let party_name = stateDataJson[state][constituencyname][0]["party"]
     if (party_name in obj) {
       obj[party_name] += 1;
-    } else obj[party_name] = 1;
+    }
+    else
+      obj[party_name] = 1;
   }
   var sortedPartyWins = Object.entries(obj).sort((a, b) => b[1] - a[1]);
   for (let i = 0; i < sortedPartyWins.length; i++) {
     partynames[i] = sortedPartyWins[i][0];
     partyseats[i] = sortedPartyWins[i][1];
   }
-  var maindiv = document.getElementById("containertool2");
+  var maindiv = document.getElementById('containertool2');
+  var mainindiamap = document.getElementById('india-map');
+  mainindiamap.append(maindiv);
   var htmlcode = `<span class="close" onclick="close_btn()">&times;</span>
                     <h2 class="sthead">${state}</h2>
                     
@@ -949,40 +968,56 @@ function creatediv(state) {
                              <th id="wlright" class="tbhead">Won / Lead</th>
                           </tr>
                        </thead>`;
-  if (partynames)
-    for (let i = 0; i < partynames.length && i < 5; i++) {
-      htmlcode += `<tr>
-                                       <td class="tdData"><img class="party-icon" src="${
-                                         sym[partynames[i]]
-                                       }"> ${partynames[i]}</td>
-                                       <td class="tdData" id="wlright">${
-                                         obj[partynames[i]]
-                                       }</td>
-                                     </tr>`;
-    }
-  htmlcode += `</tbody>
-                    </table>
-                    <div class="results12">
-                       <h3 class="hdiv3">2019 results</h3>
-                       <div class="bars">
-                           <div class="barbox">
-                               <span class="barlabel" style="margin-left:-60px;">${partynames[0]}</span>
-                               <div class="bar1 inbar">${partyseats[0]}</div>
-                           </div>
-                           <div class="barbox">
-                               <span class="barlabel" style="margin-left:-50px;">${partynames[1]}</span>
-                               <div class="bar2 inbar">${partyseats[1]}</div>
-                           </div>
-                           <div class="barbox">
-                               <span class="barlabel" style="margin-left:-5px;">Others</span>
-                               <div class="bar3 inbar">81</div>
-                           </div>
-                       </div>
-                   </div>
-                   <div id="viewdetails" onclick="showmap('${state}')">Check Full Results<span id=gt>&gt</span></div>`;
-  maindiv.innerHTML = "";
-  maindiv.innerHTML += htmlcode;
-  maindiv.style.display = "block";
+                       htmlcode += `</thead>`;
+                       if (partynames) {
+                         for (let i = 0; i < partynames.length && i < 5; i++) {
+                           if (partynames[i] !== undefined) {
+                             htmlcode += `<tr>
+                              <td class="tdData"><img class="party-icon" src="${sym[partynames[i]]}"> ${partynames[i]}</td>
+                              <td class="tdData" id="wlright">${obj[partynames[i]]}</td></tr>`;
+                           }
+                         }
+                       }
+                       htmlcode += `</tbody>
+                       </table><div class="results12">
+                        <h3 class="hdiv3">2019 results</h3>
+                       <div class="bars">`;
+                       
+                       for (let i = 0; i < partynames.length && i < 3; i++) {
+                         if (partynames[i] !== undefined && partyseats[i] !== undefined) {
+                           htmlcode += `<div class="barbox">
+                            <span class="barlabel">${partynames[i]}</span>
+                          <div class="bar${i + 1} inbar" id="id${i}">${partyseats[i]}</div> </div>`;
+                         }
+                       }
+                       
+                       htmlcode += `    </div>
+                        </div> <div id="viewdetails" onclick="showmap('${state}')">Check Full Results<span id=gt>&gt</span></div>`;
+                       
+                       maindiv.innerHTML = "";
+                       maindiv.innerHTML += htmlcode;
+                       maindiv.style.display = "block";
+                       
+                       // Set the width after the HTML has been added to the DOM
+                       if (partynames.length == 1) {
+                         setTimeout(() => {
+                           document.getElementById('id0').style.width = "13.215rem";
+                         }, 0);
+                       }
+                       
+
+// Set the width after the HTML has been added to the DOM
+if (partynames.length == 1) {
+  setTimeout(() => {
+    document.getElementById('id0').style.width = "13.215rem";
+  }, 0);
+}
+if (partynames.length == 2) {
+  setTimeout(() => {
+    document.getElementById('id0').style.width = "7.215rem";
+  }, 0);
+}
+
 }
 function showmap(state) {
   state_map(state_codes[state], state);
