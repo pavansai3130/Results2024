@@ -50,6 +50,23 @@ document.addEventListener("DOMContentLoaded", function () {
     updateMapBounds();
     map.on("resize", delayedBoundsUpdate);
   });
+
+  // --------------------
+  // const constiMap = document.getElementById("map");
+  // constiMap.on("wheel", function (event) {
+  //   event.preventDefault();
+  // });
+
+  // // Prevent pinch-zoom on touch devices
+  // constiMap.on(
+  //   "touchmove",
+  //   function (event) {
+  //     if (event.touches.length > 1) {
+  //       event.preventDefault();
+  //     }
+  //   },
+  //   { passive: false }
+  // );
 });
 
 function resetBreadcrumb() {
@@ -514,11 +531,13 @@ function render_state_table(feature, state) {
         id = i.pc_id;
         name = data[i.pc_id][0].constituencyName;
         candid = data[i.pc_id][0].candidateName;
-        candid2 = data[i.pc_id][1].candidateName;
         votes = data[i.pc_id][0].votes;
         party_name = data[i.pc_id][0].party;
-        votes2 = data[i.pc_id][1].votes;
-        party_2 = data[i.pc_id][1].party;
+        if (data[i.pc_id][1] !== undefined) {
+          candid2 = data[i.pc_id][1].candidateName;
+          votes2 = data[i.pc_id][1].votes;
+          party_2 = data[i.pc_id][1].party;
+        }
       }
       if (!partyColors[win]) tr.dataset.pccolor = "#D3D3D3";
       else tr.dataset.pccolor = partyColors[win];

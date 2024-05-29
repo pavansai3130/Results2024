@@ -62,21 +62,6 @@ body{
 
 
 /* Add your custom styles here */
-#india-svg {
-  /* position: relative; */
-  /* top: -250px; */
-
-  /* border:2px solid red; */
-  width: 100%; /* Ensure SVG fills the container */
-  height: 100%; /* Maintain aspect ratio */
-}
-
-#india-svg path {
-  fill: #ccc; /* Default color for states */
-  stroke: #000; /* Border color */
-  stroke-width: 1; /* Border width */
-  cursor: pointer; /* Change cursor on hover */
-}
 
 
 .navbar-brand {

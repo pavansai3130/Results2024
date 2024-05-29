@@ -3,7 +3,7 @@ body{
   /* background-color: #F5F5F5; */
   background: rgba(255, 255, 255, 1);
 
-  /* padding: 3.1251rem; */
+  padding: 10px;
   padding-top: 0;
   font-family: 'Roboto', sans-serif;
 }
@@ -48,12 +48,24 @@ body{
   /* top: -15.6248rem; */
 
   /* border:0.1251rem solid red; */
-  width: 100%; /* Ensure SVG fills the container */
-  height: 100%; /* Maintain aspect ratio */
+  max-width: 630px; /* Ensure SVG fills the container */
+  height: 630px; /* Maintain aspect ratio */
+  /* border: 2px solid black; */
 }
 
+#map{
+  pointer-events: none;
+  /* max-width: 630px; Ensure SVG fills the container
+  height: 630px;
+  display: flex;
+  justify-content: center; */
+}
+#india-map{
+  display: flex;
+  justify-content: center;
+}
 #india-svg path {
-  fill: #ccc; /* Default color for states */
+  fill:#faf9f9; /* Default color for states */
   stroke: #000; /* Border color */
   stroke-width: 1; /* Border width */
   cursor: pointer; /* Change cursor on hover */
@@ -353,12 +365,12 @@ a{
   display: none;
 }
 #allianceBody td{
-  height: 2.5rem  ; 
+  max-height: 2.5rem  ; 
   color: #101828;
   font-family: 'Inter', sans-serif;
   font-weight: 500;
   font-size: 0.875rem;
-  /* padding: 0; */
+  padding: 10px 14px ;
   align-items: center;
   vertical-align: middle;
   

@@ -6,7 +6,8 @@
   
   #root{
     display: flex;
-    /* gap: 10px; */
+    row-gap: 24px;
+    column-gap: 28px;
   }
   
   .ribbon {
@@ -53,8 +54,8 @@
     background: linear-gradient(to right, rgba(217, 242, 252, 255), rgba(190, 234, 241, 255));
     border-radius: 10px;
     padding: 0;
-    margin: 0.725rem;
-    width: 46%;
+    /* margin: 0.725rem; */
+    max-width: 300px;
     /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     /* margin: 1rem; */
@@ -64,13 +65,13 @@
     animation: loader 3s   infinite linear;
     transition: all 0.5s ease;
   }
-  .custom-container:hover{
+  /* .custom-container:hover{
     scale: 1.05;
     .wid{
         scale: 1.05;
         padding-bottom: 0.3rem;
     }
-  }
+  } */
 
 
   .custom-temp {
@@ -147,7 +148,7 @@
     transition: all 0.5s ease;
   }
 
-
+/* 
   @media (max-width:500px) {
     .custom-container{
         width: 90%;
@@ -163,7 +164,7 @@
       width: 70%;
     }
   }
-  
+   */
 
   /* Cards displayed on the "See More" page */
   #see-more-page .custom-container {

@@ -823,7 +823,7 @@ const unionTerritories = [
   "Andaman and Nicobar Islands",
   "Jammu and Kashmir",
   "Puducherry",
-  "NCT Of Delhi",
+  "NCT OF Delhi",
   "Chandigarh",
   "Dadra and Nagar Haveli",
   "Lakshadweep",
@@ -1028,7 +1028,7 @@ $(document).ready(async function () {
       pathsStr += `<path id="${states[state]}" d="${paths[state]}"></path>`;
     }
     document.getElementById("india-svg").innerHTML =
-      '<svg id="india-svg" viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
+      '<svg id="india-svg" viewBox="50 0 900 800" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
       pathsStr +
       "</svg>";
     document.getElementById("map").style.display = "none";
@@ -1099,10 +1099,10 @@ $(document).ready(async function () {
         tbody.appendChild(newRow);
         stateCount++;
       }
-      // console.log(stateCount);
     }
+    console.log(stateCount);
     // console.log("afhkhbfz");
-    console.log(alliancePatries);
+    // console.log(alliancePatries);
     const sortObjectByValuesDesc = (obj) =>
       Object.fromEntries(Object.entries(obj).sort(([, a], [, b]) => b - a));
 
@@ -1196,8 +1196,8 @@ $(document).ready(async function () {
         for (const consti in stateDataJson[state]) {
           const leadingCandidate =
             stateDataJson[state][consti]["candidates"][0];
-          if (leadingCandidate.alliance === "NDA") nda++;
-          else if (leadingCandidate.alliance === "OTH") others++;
+          if (leadingCandidate.alnce === "NDA") nda++;
+          else if (leadingCandidate.alnce === "OTH") others++;
           else india++;
         }
 
