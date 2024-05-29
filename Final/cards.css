@@ -7,6 +7,7 @@
   #root{
     display: flex;
     /* gap: 10px; */
+    justify-content: center;
   }
   
   .ribbon {
@@ -54,7 +55,7 @@
     border-radius: 10px;
     padding: 0;
     margin: 0.725rem;
-    width: 46%;
+    max-width: 300px;
     /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     /* margin: 1rem; */
@@ -158,9 +159,9 @@
         width: 60%;
     }
   }
-  @media screen and (min-width: 1010px) and (max-width: 1203px) {
+  @media screen and (min-width: 1185px) and (max-width: 1352px) {
     .custom-container {
-      width: 70%;
+      width: 250px;
     }
   }
   

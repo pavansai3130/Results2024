@@ -1,16 +1,16 @@
 async function fetchMoreCards() {
     try {
-        const response = await fetch('data.json');
+        // const response = await fetch('data.json');
         const response2 = await fetch('celebdata.json');
-        const data = await response.json();
+        // const data = await response.json();
         const data2 = await response2.json();
-        const moreCardsRoot = document.getElementById('more-cards-root');
+        // const moreCardsRoot = document.getElementById('more-cards-root');
         const moreCardsRoot1 = document.getElementById('more-celeb-cards-root');
 
-        data.forEach(item => {
-            const card = createCard(item);
-            moreCardsRoot.appendChild(card);
-        });
+        // data.forEach(item => {
+        //     const card = createCard(item);
+        //     moreCardsRoot.appendChild(card);
+        // });
         data2.forEach(item => {
             const card = createCard(item);
             moreCardsRoot1.appendChild(card);
@@ -52,7 +52,7 @@ function createCard(item) {
         <div class="temp custom-temp">
             <div class="card-body w-100">
                 <h3 class="card-title custom-card-title" style="color:${nameColor}">${item.name}</h3>
-                <div class="subheaders d-flex1 align-items-center custom-subheaders">
+                <div class="subheaders d-flex align-items-center custom-subheaders">
                     <div class="logo"><img class="custom-img" src="${item.logoimg}" alt=""></div>
                     <h6 style="font-weight: bold;">${item.pid}</h6>
                 </div>
@@ -112,9 +112,9 @@ function scrollToSection(sectionId) {
     document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
 }
 
-document.getElementById('popular-btn').addEventListener('click', () => {
-    scrollToSection('popular-section');
-});
+// document.getElementById('popular-btn').addEventListener('click', () => {
+//     scrollToSection('popular-section');
+// });
 
 document.getElementById('celebs-btn').addEventListener('click', () => {
     scrollToSection('celebs-section');
