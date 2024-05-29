@@ -36,7 +36,6 @@ body {
     display: inline-block;
     margin: 10px;
     position: relative;
-    /* For tooltip positioning */
 }
 
 .containerHead ul li a {
@@ -44,7 +43,7 @@ body {
     text-decoration: none;
     color: rgb(0, 0, 0);
     font-weight: 400;
-    transition: all 0.2s ease-in ;
+    transition: all 0.2s ease-in;
 }
 
 .containerHead ul li a::after {
@@ -72,21 +71,12 @@ body {
     display: block;
 }
 
-/* .containerHead  i {
-    display: none;
-} */
-
-/* .navlinks i {
-    display: none;
-} */
-
-#menu{
+#menu {
     display: none;
 }
 
 .headerPhone {
     display: none;
-    /* Initially hidden */
     margin: 10px;
     justify-content: space-between;
     align-items: center;
@@ -99,6 +89,19 @@ body {
 }
 
 @media (max-width: 830px) {
+
+    .d-flex .imgHover .tooltip-container .tooltip {
+        top: 50%;
+        left: 100%;
+        transform: translateY(-50%);
+    }
+
+    .d-flex .imgHover .tooltip-container:hover .tooltip {
+        left: calc(100% + 10px);
+        /* add some space between the tooltip and the element */
+        transform: translateY(-50%);
+    }
+
     .navlinks {
         padding: 20px;
         height: 100vh;
@@ -110,11 +113,12 @@ body {
         background-color: white;
         text-align: left;
         align-items: end;
-        z-index: 2;
+        z-index: 999;
         transition: 0.5s;
         font-size: 1.5rem;
     }
-    .navlinks ul{
+
+    .navlinks ul {
         min-width: 40%;
     }
 
@@ -128,9 +132,7 @@ body {
     }
 
     .navlinks ul li a:hover {
-        /* color: rgb(73, 73, 73);
-         */
-         padding-left: 5px;
+        padding-left: 5px;
     }
 
     .navlinks ul li a::after {
@@ -151,7 +153,8 @@ body {
         color: rgb(0, 0, 0);
         font-size: 20px;
     }
-    #menu{
+
+    #menu {
         display: block;
     }
 
@@ -160,13 +163,36 @@ body {
         /* Display as flex when screen width is 570px or less */
         margin-bottom: 2rem;
     }
-    .imgHover{
-        display: none;
-    }
-    #phoneMedia{
+
+    #phoneMedia {
         display: flex;
     }
 
+    .listBoxes {
+        height: 100%;
+        padding-bottom: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .d-flex {
+        height: 90%;
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .d-flex .imgHover .tooltip-container {
+        margin: 10px;
+    }
+
+    .headerPhone {
+        height: 10%;
+    }
+
+    #footy {
+        display: block;
+    }
 }
 
 .navbarHead .logo img {
@@ -183,72 +209,91 @@ body {
     position: relative;
     display: inline-block;
     margin: 20px;
-  }
-  
-  .text {
+    top: -10px;
+    a {
+        text-decoration: none;
+    }
+}
+
+.text {
     color: #333;
     font-size: 18px;
     cursor: pointer;
-  }
-  
-  .tooltip {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
+}
+
+.tooltip {
+    /* display: flex; */
+    /* gap: 1rem; */
+    /* justify-content: center;
+    align-items: center; */
+    /* visibility: hidden; */
+    /* background-image: linear-gradient(120deg, #4c82da 0%, #4cc871 100%); */
+    /* padding: 0.5rem 1rem; */
+    /* border: 1px solid black; */
     position: absolute;
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
     opacity: 0;
     visibility: hidden;
-    background-image: linear-gradient(120deg, #4c82da 0%, #4cc871 100%);
-    color: #fff;
-    padding: 1rem 1.5rem;
-    border-radius: 4px;
+    background-color: white;
+    /* color: #fff; */
+    border-radius: 2px;
     transition: opacity 0.3s, visibility 0.3s, top 0.3s, background 0.3s;
     z-index: 1;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    i{
+
+    i {
         font-size: 1.5rem;
         cursor: pointer;
     }
-  }
-  
-  .tooltip::before {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    border-width: 8px;
-    border-style: solid;
-    border-color: transparent transparent green transparent;
-    transform: translateX(-50%);
-  }
-  
-  .tooltip-container:hover .tooltip {
+
+    li {
+        padding: 0.5rem 0.75rem;
+        font-size: 1.5rem;
+        list-style: none;
+        border-bottom: 1px solid rgb(185, 185, 185);
+        /* opacity: 0.5; */
+    }
+
+    a {
+        text-decoration: none;
+        color: rgb(58, 135, 222);
+    }
+
+    a:hover {
+        color: rgb(224, 125, 18);
+    }
+}
+
+
+
+.tooltip-container:hover .tooltip {
     top: 120%;
     opacity: 1;
     visibility: visible;
-    background-image: linear-gradient(120deg, #4c82da 0%, #4cc871 100%);
+    /* background-image: linear-gradient(120deg, #4c82da 0%, #4cc871 100%); */
+    background-color: white;
     transform: translate(-50%, -5px);
-  }
-  
-  .imgHover .tooltip-container.tooltip i{
-    display: block;
-  }
+}
 
-  .phoneMedia{
+.imgHover .tooltip-container.tooltip i {
+    display: block;
+}
+
+.phoneMedia {
     background-color: white;
     border-radius: 2rem;
-    /* visibility: hidden; */
     display: none;
-    /* justify-content: center; */
     align-items: center;
-    gap:1rem ;
+    gap: 1rem;
     margin: 10px;
-    i{
-        /* filter: invert(1); */
+
+    i {
         font-size: 1.5rem;
     }
-  }
+}
+
+.footerContact ul {
+    display: none;
+}

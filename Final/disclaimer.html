@@ -6,58 +6,68 @@
       <title>India General Election 2024</title>
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
       <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
       <script src="leaflet/index.js"></script>
       <script src="index.js"></script>
       <link rel="stylesheet" href="styles.css">
       <link rel="stylesheet" href="styling.css">
       <link rel="stylesheet" href="leaflet/index.css"/>
       <link rel="stylesheet" href="./disclaimer.css">
-      <link rel="stylesheet" href="navbarStyles.css">
+      <link rel="stylesheet" href="./navbarStyles.css">
 
    </head>
    <body>
       <nav class="navbarHead">
          <div class="containerHead">
             <div class="logo">
-               <img src="imgs/RESULTS2024LOGO.png" alt="">
+               <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
             </div>
             <div class="navlinks" id="navlinks">
                <div class="headerPhone">
-                  <img src="imgs/RESULTS2024LOGO.png" alt="">
+                  <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
                   <i class="fa-solid fa-xmark" onclick="hidemenu()"></i>
                </div>
                <div class="d-flex">
                   <div class="imgHover">
                      <div class="tooltip-container">
                         <!-- <span class="text">Tooltip</span> -->
-                        <img  src="imgs/share.png" alt="" >
+                           <a style="font-size: 1.5rem;">Candidates</a>
                         <span class="tooltip">
-                           <i class="fa-brands fa-facebook"></i>
-                        
-                            <i class="fa-brands fa-whatsapp"></i>
-                       
-                            <i class="fa-brands fa-instagram"></i>
-                       
-                            <i class="fa-brands fa-telegram"></i>
+                           <li><a href="cardsPage.html">Popular</a></li>
+                           <li><a href="celebCards.html">Celebrities</a></li>
                            </a></span>
-                      </div>
-                      
                      </div>
-                  <ul>
-                     <li><a href="cardsPage.html">Popular & Celebrities</a></li>
-                     <li><a href="">Big Fights</a></li>
-                     <li><a href="">'19 vs '24</a></li>
-                     <div class="phoneMedia" id="phoneMedia" ><i class="fa-brands fa-facebook" style="color: #158be5;"></i>
-                        
-                        <i class="fa-brands fa-whatsapp" style="color: #32ec6a;"></i>
-                   
-                        <i class="fa-brands fa-instagram" style="color: #d24196;"></i>
-                   
-                        <i class="fa-brands fa-telegram" style="color: #74deec;"></i></div>
-                  </ul>
+   
                   </div>
+                  <div class="listBoxes">
+   
+                  
+                  <ul>
+                     <li><a href="bigfights_viewall.html">Big Fights</a></li>
+                     <li><a href="">'19 vs '24</a></li>
+                     <div class="phoneMedia" id="phoneMedia"><i class="fa-brands fa-facebook" style="color: #158be5;"></i>
+   
+                        <i class="fa-brands fa-whatsapp" style="color: #32ec6a;"></i>
+   
+                        <i class="fa-brands fa-instagram" style="color: #d24196;"></i>
+   
+                        <i class="fa-brands fa-telegram" style="color: #74deec;"></i>
+                     </div>
+                  </ul>
+                  <div class="footerContact">
+                     <ul id="footy" >
+                        <li><a href="./about.html">About Us</a></li>
+                        <li><a href="./volunteers.html">Our Team</a></li>
+                        <li><a href="./disclaimer.html">Disclaimer</a></li>
+                     </ul>
+                  </div>
+                  
                </div>
-               <i id="menu" class="fa-solid fa-bars" onclick="showmenu()"></i>
+               </div>
+            </div>
+            <i id="menu" class="fa-solid fa-bars" onclick="showmenu()"></i>
          </div>
       </nav>
       <!-- Common Header -->
@@ -97,6 +107,7 @@
       <script src="./paths.js"></script>
       <script src="./script.js"></script>
       <script src="./disclaimer.js"></script>
+      <script src="./navbar.js"></script>
 
       <footer class="footer">
          <div class="footerText">
