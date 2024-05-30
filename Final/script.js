@@ -233,7 +233,6 @@ let names = {
 async function fetchGeoJSON(file) {
   try {
     const response = await fetch(file);
-
     const geoJson = await response.json();
     ftrs = geoJson.features
       .map((i) => i.properties)
@@ -262,6 +261,7 @@ async function fetchGeoJSON(file) {
           const votes_1 = data[feature.properties.pc_id][0]["votes"];
           const votes_2 = data[feature.properties.pc_id][1]["votes"];
           const margin = votes_1 - votes_2;
+    
           showdatatable(
             feature.properties.st_name,
             candidate_1,
@@ -294,17 +294,20 @@ async function fetchGeoJSON(file) {
             "none";
           document.querySelector("#Constituency-res").style.display = "none";
           document.querySelector("#Candidate-res").style.display = "block";
+    
+          // Reset the styles of all layers
         });
+    
         layer._leaflet_id = feature.properties.pc_id;
-      },
+      }
     });
-
+    
     map.setView(initialView, initialZoom);
-
     geo.addTo(map);
 
     updateMapBounds();
     map.on("resize", delayedBoundsUpdate);
+    
     geo.setStyle((feature) => ({
       weight: 0.2,
       color: "#000",
@@ -313,6 +316,7 @@ async function fetchGeoJSON(file) {
           ?.dataset.pccolor || "#fff",
       fillOpacity: 0.9,
     }));
+    
     // console.log("rendered");
 
     var filteredFeatures = geoJson.features.filter(
@@ -988,7 +992,7 @@ function handleStateClick(state) {
     india = 0,
     others = 0;
   breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread2()">${state}`;
-  breadcrumbState.style.display = "inline";
+  
   breadcrumbConstituency.style.display = "none";
   // state_map(state_codes[state], state);
   // Implement the logic to fetch and display state-wise results
@@ -1003,7 +1007,7 @@ function handleStateClick(state) {
     else india++;
   }
   updateBar([nda, india, others]);
-  render_state_carousel(state);
+
 }
 function half(event) {
   var map = document.getElementById('india-map').getBoundingClientRect();
@@ -1105,6 +1109,8 @@ function creatediv(state) {
 
 }
 function showmap(state) {
+  render_state_carousel(state);
+  breadcrumbState.style.display = "inline";
   state_map(state_codes[state], state);
   close_btn();
 }
