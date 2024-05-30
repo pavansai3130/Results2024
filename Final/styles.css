@@ -64,6 +64,10 @@ html{
   display: flex;
   justify-content: center; */
 }
+#map #containertool
+{
+  pointer-events: auto;
+}
 #india-map{
   display: flex;
   justify-content: center;
@@ -554,7 +558,6 @@ input#stateSearch{
 
 
 
-
 /* rajendar */
 #containertool2 {
   position: absolute;
@@ -692,44 +695,60 @@ input#stateSearch{
   color: #000;
 }
 
-.bar1 {
+.br1 {
   background: linear-gradient(90deg, #FF9933 0%, #F57A30 100%);
   width: 5.3125rem;
 }
 
-.bar2 {
+.br2 {
   background-color: #87CEEB;
   width: 5.9375rem;
 }
 
-.bar3 {
+.br3 {
   background-color: #808080;
   width: 2.1875rem;
 }
 
 .above-half {
   left: 22rem;
-  top: 1.6rem;
+  top: 6.6rem;
 }
 
 .below-half {
-  left: 24rem;
-  top: 31rem;
+  left: 23rem;
+  top: 28rem;
 }
 
-@media (max-width:375px) {
-  #containertool2{
-   top:5rem;
-    left: 8rem;
-  }
-}
  @media (max-width:600px) {
   #containertool2{
-   top:5rem;
+   top:19rem;
     left: 2rem;
   }
 }
- @media (max-width:1250px) {
+
+@media (min-width: 750px) and (max-width: 1000px) {
+  .above-half {
+    top: 7rem;
+    left: 10rem;
+  }
+  .below-half {
+    top: 25rem;
+    left: 11rem;
+  }
+}
+
+ @media (min-width: 1001px) and (max-width:1250px) {
+  .above-half{
+   top:6.6rem;
+    left: 16rem;
+  }
+  .below-half{
+    top: 25rem;
+    left:18rem ;
+  }
+}
+@media (min-width:2300px) {
   .above-half{
    top:1.6rem;
     left: 14rem;
