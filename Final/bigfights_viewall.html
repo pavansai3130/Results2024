@@ -10,10 +10,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
       integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
       crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <link rel="stylesheet" href="./disclaimer.css">
     <link rel="stylesheet" href="./navbarStyles.css">
     <link rel="stylesheet" href="./bighfights_css/bighfights_carousel.css">
     <link rel="stylesheet" href="./bighfights_css/bigfights_viewall.css">
-    <link rel="stylesheet" href="./disclaimer.css">
+    
 </head>
 
 <body>
@@ -78,39 +79,52 @@
         </span>
     </div> -->
     <div id="body-div">
-        <div class="container-fluid">
-            <div class="flexing_div">
-                <div class="combine_div">
-                    <div id="path_div">
-                        <span id="home_span"><a id="home_link" href="index.html">Home</a></span> <span
-                            id="path_span">&gt;</span>
-                        <span id="big_fights_span">Big Fights</span>
-                    </div>
-                    <div class="right_search">
-                        <div id="heading_addleft_div">
-                            Big Fights
-                            <span class="search-container" id="search_conatiner">
-                                <input id="candname_search_bar" type="text" class="search-input"
-                                    placeholder="Search for state,constituency or candidate...">
-                                <img id="search_icon" src="./imgs2/search.svg" alt="">
-                            </span>
-                            <div class="search_button" id="search_button">
-                                <img title="Search" src="./imgs2/search.svg" alt="search">
+        <div id="back_top">
+            <div class="container-fluid">
+                <div class="flexing_div">
+                    <div class="combine_div">
+                        <div id="path_div">
+                            <span id="home_span"><a id="home_link" href="index.html">Home</a></span> <span
+                                id="path_span">&gt;</span>
+                            <span id="big_fights_span">Big Fights</span>
+                        </div>
+                        <div class="right_search">
+                            <div id="heading_addleft_div">
+                                Big Fights
+                                <div class="search-container" id="search_conatiner">
+                                    <input id="candname_search_bar1" type="text" class="search-input"
+                                        placeholder="Search for state, constituency or candidate...">
+                                  <label for="candname_search_bar1"><i class="fa-solid fa-magnifying-glass search_icon"></i></label>    
+                                  <ul id="search_unorderlist1">
+
+                                  </ul>
+                                </div>
+                                
+                                <div class="search_button" id="search_button">
+                                    <!-- <img title="Search" src="./imgs2/search.svg" alt="search"> -->
+                                    <label for="candname_search_bar2"><i class="fa-solid fa-magnifying-glass"></i></label>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <img id="hands_img" src="./imgs2/hands.png" alt="">
                 </div>
-                <img id="hands_img" src="./imgs2/hands.png" alt="">
-            </div>
-            <div class="enable_search" id="enable_search">
-                <input id="candname_search_bar" type="text" class="search-input"
-                    placeholder="Search for state,constituency or candidate...">
-                <img id="search_icon" src="./imgs2/search.svg" alt="">
+                <div class="enable_search" id="enable_search">
+                    <input id="candname_search_bar2" type="text" class="search-input"
+                        placeholder="Search for state, constituency or candidate...">
+                    <div>
+                        <ul id="search_unorderlist2">
+
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-        <div>
-            <div id="more-cards-root">
-                <!-- dynamic cards adding  -->
+        <div id="back_bottom">
+            <div class="body_filled_with_cards">
+                <div id="more-cards-root">
+                    <!-- dynamic cards adding  -->
+                </div>
             </div>
         </div>
     </div>

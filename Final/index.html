@@ -13,6 +13,7 @@
          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
          crossorigin="anonymous" referrerpolicy="no-referrer" />
       <script src="leaflet/index.js"></script>
+      <script src="./disclaimer.js"></script>
 
       <script src="index.js"></script>
       <link rel="stylesheet" href="styles.css">
@@ -21,6 +22,9 @@
       <link rel="stylesheet" href="./disclaimer.css">
       <link rel="stylesheet" href="leaflet/index.css" />
       <link rel="stylesheet" href="navbarStyles.css">
+   <link rel="stylesheet" href="./bighfights_css/swiper-bundle.min.css">
+   <link rel="stylesheet" href="./bighfights_css/bighfights_carousel.css">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
       <style>
          #see-more-btn {
          padding: 0.5rem 1rem;
@@ -58,7 +62,7 @@
       </style>
    </head>
    <body>
-      <nav class="navbarHead">
+      <nav class="navbarHead blur">
          <div class="containerHead">
             <div class="logo">
                <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
@@ -452,6 +456,26 @@
                <!-- Similar structure as landing page -->
             </div>
          </div>
+         <div class="slide-container swiper">
+            <div class="topContainer">
+               <div class="big_fights_div">
+                  <h1 class="big_fights">BIG FIGHTS</h1>
+               </div>
+               <div class="hands_div">
+                  <img class="hands" src="./imgs2/hands.png" alt="">
+               </div>
+            </div>
+            <div class="slide-content">
+               <div class="card-wrapper swiper-wrapper" id="slider_div">
+               </div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+            <div class="viewall_relative_div">
+               <div class="view_all" ><a id="view_all" href="./bigfights_viewall.html">View All</a></div>
+            </div>
+         </div>
       </div>
       <!-- Common Footer -->
       <div class="consent" id="consent">
@@ -517,5 +541,6 @@
       <script src="./cards.js"></script>
       <script src="./disclaimer.js"></script>
       <script src="./navbar.js"></script>
+      <script src="./bigfights_script/swiper-bundle.min.js"></script>
    </body>
 </html>

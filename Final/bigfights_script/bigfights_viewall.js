@@ -1,242 +1,363 @@
-// var searchBar = document.getElementById("candname_search_bar");
-// var states_dropdown = document.getElementById("states-dropdown-list");
-var party_img_json = {
-  "BJP": "./imgs2/BJP.jpg",
-  "INC": "./imgs2/INC.png",
-  "DMK": "./imgs2/DMK.webp",
-  "YSRCP": "./imgs2/YSRCP.jpeg",
-  "AITC": "./imgs2/AITC.png",
-  "SHS": "./imgs2/SHS.png",
-  "JD(U)": "./imgs2/JD(U).png",
-  "BJD": "./imgs2/BJD.png",
-  "BSP": "./imgs2/BSP.jpg",
-  "TRS": "./imgs2/TRS.jpg",
-  "BRS": "./imgs2/BRS.jpg",
-  "LJP": "./imgs2/LJP.jpg",
-  "NCP": "./imgs2/NCP.webp",
-  "SP": "./imgs2/SP.jpg",
-  "TDP": "./imgs2/TDP.webp",
-  "JKN": "./imgs2/JKN.webp",
-  "IUML": "./imgs2/IUML.jpg",
-  "CPIM": "./imgs2/CPIM.png",
-  "AIMIM": "./imgs2/AIMIM.png",
-  "SAD": "./imgs2/SAD.webp",
-  "CPI": "./imgs2/CPI.webp",
-  "ADAL": "./imgs2/ADAL.webp",
-  "AIUDF": "./imgs2/AIUDF.png",
-  "JMM": "./imgs2/JMM.png",
-  "AJSUP": "./imgs2/AJSUP.jpg",
-  "JD(S)": "./imgs2/JD(S).jpg",
-  "KEC(M)": "./imgs2/KEC(M).webp",
-  "Andaman & Nicobar Islands": "./imgs2/Andaman_and_Nicobar_Islands.png",
-  "Andhra Pradesh": "./imgs2/andhra_pradesh.png",
-  "Arunachal Pradesh": "./imgs2/arunachal_pradesh.png",
-  "Assam": "./imgs2/assam.png",
-  "Bihar": "./imgs2/bihar.png",
-  "Chandigarh": "./imgs2/chandigarh.png",
-  "Chhattisgarh": "./imgs2/chhattisgarh.png",
-  "Dadra & Nagar Haveli": "./imgs2/Dadra_and_Nagar_Haveli.png",
-  "Daman & Diu": "./imgs2/Daman_and_Diu.jpg",
-  "Goa": "./imgs2/goa.png",
-  "Gujarat": "./imgs2/gujarat.png",
-  "Haryana": "./imgs2/haryana.png",
-  "Himachal Pradesh": "./imgs2/himachal_pradesh.png",
-  "Jammu & Kashmir": "./imgs2/jammu_and_kashmir.png",
-  "Jharkhand": "./imgs2/jharkhand.png",
-  "Karnataka": "./imgs2/karnataka.png",
-  "Kerala": "./imgs2/kerala.png",
-  "Lakshadweep": "./imgs2/lakshadweep.png",
-  "Madhya Pradesh": "./imgs2/madhya_pradesh.png",
-  "Maharashtra": "./imgs2/maharashtra.png",
-  "Manipur": "./imgs2/manipur.png",
-  "Meghalaya": "./imgs2/meghalaya.png",
-  "Mizoram": "./imgs2/mizoram.png",
-  "Nagaland": "./imgs2/nagaland.png",
-  "NCT of Delhi": "./imgs2/nct_of_delhi.png",
-  "Odisha": "./imgs2/odisha.png",
-  "Puducherry": "./imgs2/puducherry.png",
-  "Punjab": "./imgs2/punjab.png",
-  "Rajasthan": "./imgs2/rajasthan.png",
-  "Sikkim": "./imgs2/sikkim.png",
-  "Tamil Nadu": "./imgs2/tamil_nadu.png",
-  "Telangana": "./imgs2/telangana.png",
-  "Tripura": "./imgs2/tripura.png",
-  "Uttar Pradesh": "./imgs2/uttar_pradesh.png",
-  "Uttarakhand": "./imgs2/uttarakhand.png",
-  "West Bengal": "./imgs2/west_bengal.png",
-  "default": "./imgs2/default.jpg"
-}
-var data = [
-  {
-    "state": "Uttar Pradesh",
-    "const_name": "Amethi",
-    "cand_party1": "INC",
-    "cand_party2": "BJP",
-    "cand_name1": "Rahul Gandhi",
-    "cand_name2": "Smriti Irani",
-    "votes1": "40238",
-    "votes2": "4028",
-    "partySymbol1": "./imgs2/INC.png",
-    "partySymbol2": "./imgs2/BJP.jpg",
-    "candidateImg1": "./imgs2/rahul.png",
-    "candidateImg2": "./imgs2/smriti_irani.png",
-    "mapImg": "./imgs2/Uttar_Pradesh.png"
-  },
-  {
-    "cand_name1": "SUNETRA AJITDADA PAWAR",
-    "cand_party1": "NCP",
-    "votes1": "242209",
-    "cand_name2": "SUPRIYA SULE",
-    "cand_party2": "NCP(SP)",
-    "votes2": "240110",
-    "const_name": "Baramati",
-    "state": "Maharashtra",
-    "partySymbol1": "./imgs2/INC.png",
-    "partySymbol2": "./imgs2/BJP.jpg",
-    "candidateImg1": "./imgs2/rahul.png",
-    "candidateImg2": "./imgs2/smriti_irani.png",
-    "mapImg": "./imgs2/Uttar_Pradesh.png"
-  },
-  {
-    "cand_name1": "Manoj Tiwari",
-    "cand_party1": "BJP",
-    "votes1": "645665",
-    "cand_name2": "Kanhaiya Kumar",
-    "cand_party2": "INC",
-    "votes2": "145987",
-    "const_name": "North East Delhi",
-    "state": "NCT of Delhi",
-    "partySymbol1": "./imgs2/INC.png",
-    "partySymbol2": "./imgs2/BJP.jpg",
-    "candidateImg1": "./imgs2/rahul.png",
-    "candidateImg2": "./imgs2/smriti_irani.png",
-    "mapImg": "./imgs2/Uttar_Pradesh.png"
-  },
-  {
-    "cand_name1": "Sambit Patra",
-    "cand_party1": "BJP",
-    "votes1": "459877",
-    "cand_name2": "Arup Patnaik",
-    "cand_party2": "BJD",
-    "votes2": "456650",
-    "const_name": "Puri",
-    "state": "Odisha",
-    "partySymbol1": "./imgs2/INC.png",
-    "partySymbol2": "./imgs2/BJP.jpg",
-    "candidateImg1": "./imgs2/rahul.png",
-    "candidateImg2": "./imgs2/smriti_irani.png",
-    "mapImg": "./imgs2/Uttar_Pradesh.png"
-  },
-  {
-    "cand_name1": "Smriti Irani",
-    "cand_party1": "BJP",
-    "votes1": "404119",
-    "cand_name2": "Kishori Lal Sharma",
-    "cand_party2": "INC",
-    "votes2": "401525",
-    "const_name": "Amethi",
-    "state": "Uttar Pradesh",
-    "partySymbol1": "./imgs2/INC.png",
-    "partySymbol2": "./imgs2/BJP.jpg",
-    "candidateImg1": "./imgs2/rahul.png",
-    "candidateImg2": "./imgs2/smriti_irani.png",
-    "mapImg": "./imgs2/Uttar_Pradesh.png"
-  },
-  {
-    "cand_name1": "Bansuri Swaraj",
-    "cand_party1": "BJP",
-    "votes1": "522879",
-    "cand_name2": "Somnath Bharti",
-    "cand_party2": "AAP",
-    "votes2": "329309",
-    "const_name": "New Delhi",
-    "state": "NCT of Delhi",
-    "partySymbol1": "./imgs2/INC.png",
-    "partySymbol2": "./imgs2/BJP.jpg",
-    "candidateImg1": "./imgs2/rahul.png",
-    "candidateImg2": "./imgs2/smriti_irani.png",
-    "mapImg": "./imgs2/Uttar_Pradesh.png"
-  },
-  {
-    "cand_name1": "Rohini Acharya",
-    "cand_party1": "RJD",
-    "votes1": "480198",
-    "cand_name2": "Rajiv Pratap Rudy",
-    "cand_party2": "BJP",
-    "votes2": "35678",
-    "const_name": "Saran",
-    "state": "Bihar",
-    "partySymbol1": "./imgs2/INC.png",
-    "partySymbol2": "./imgs2/BJP.jpg",
-    "candidateImg1": "./imgs2/rahul.png",
-    "candidateImg2": "./imgs2/smriti_irani.png",
-    "mapImg": "./imgs2/Uttar_Pradesh.png"
-  }
-  // Add more slide data objects as needed
+var searchBar1 = document.getElementById("candname_search_bar1");
+var searchBar2 = document.getElementById("candname_search_bar2");
+
+var temp_data = [
+
 ];
+
+var temp_const = [
+
+];
+
+var temp_states = [
+
+]
 var enable_search = document.getElementById("enable_search");
 var search_but = document.getElementById("search_button");
+var selectedIndex = -1;
+var back_bottom = document.getElementById("back_bottom");
+
+
+
 search_but.addEventListener("click", () => {
-  (enable_search.style.display == "block") ? 
-  enable_search.style.display = "none" : enable_search.style.display = "block";
+  (enable_search.style.display == "block") ?
+    enable_search.style.display = "none" : enable_search.style.display = "block";
 });
 var main_div = document.getElementById("more-cards-root");
 function represent_All() {
-  data.forEach((obj) => {
-    let card_div = document.createElement("div");
-    card_div.setAttribute("class", "card");
-    let party_path1 = (obj["cand_party1"] in party_img_json) ? party_img_json[obj["cand_party1"]] : party_img_json["default"];
-    let party_path2 = (obj["cand_party2"] in party_img_json) ? party_img_json[obj["cand_party2"]] : party_img_json["default"];
-    let state_img = (obj["state"] in party_img_json) ? party_img_json[obj["state"]] : "./imgs2/Madhya_Pradesh.jpg";
-    let bar_length = (parseInt(obj["votes2"]) / (parseInt(obj["votes1"]) + parseInt(obj["votes2"]))) * 100;
-    let html_data = `<span class="state_name" data-state="${obj["state"]}" data-const="${obj["const_name"]}">${obj["const_name"]} <span class="state_party_slot">(${obj["state"]})</span></span>
-        <div class="cand_desc1">
-            <span class="img_container">
-                <img class="party_symbol" src="${party_path1}" alt="">
-                <img class="cand_img1" src="./imgs2/rahul.png" alt="">
-            </span>
-            <div class="desc_container">
-                <div class="cand_name1 render_name1" data-candname="${obj["cand_name1"]}">${obj["cand_name1"]} <span class="state_party_slot">(${obj["cand_party1"]})</span></div>
-                <span class="bar1">${obj["votes1"]}</span>
-            </div>
-        </div>
-        <div class="cand_desc2">
-            <span class="img_container">
-                <img class="party_symbol" src=${party_path2} alt="">
-                <img class="cand_img1" src="./imgs2/smriti_irani.png" alt="">
-            </span>
-            <div class="desc_container">
-                <div class="cand_name1 render_name2" data-candname="${obj["cand_name2"]}">${obj["cand_name2"]} <span class="state_party_slot">(${obj["cand_party2"]})</span></div>
-                <span class="bar2" style="width:${bar_length + 10}%;">${obj["votes2"]}</span>
-            </div>
-        </div>
-        <div class="map_container">
-            <img class="img_map" src=${state_img} alt="">
-        </div>
-        <span class="last_update">Last Updated : 12:10 pm</span>`;
-    card_div.innerHTML = html_data;
-    main_div.appendChild(card_div);
+  fetch('./bigfights.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+      return response.json();
+    })
+    .then(data => {
+      temp_const = [];
+      temp_data = [];
+      temp_states = [];
+      bigfights_data = data["candidate_details"];
+      party_img_json = data["images_key"];
+      for (let state in bigfights_data) {
+        temp_states.push(state);
+        for (let const_name in bigfights_data[state]) {
+          temp_const.push(const_name);
+          for (let bigf = 0; bigf < bigfights_data[state][const_name].length; bigf++) {
+            obj = bigfights_data[state][const_name][bigf];
+            let card_div = document.createElement("div");
+            card_div.setAttribute("class", "card");
+            let party_path1 = (obj["party1"] in party_img_json) ? party_img_json[obj["party1"]] : party_img_json["default"];
+            let party_path2 = (obj["party2"] in party_img_json) ? party_img_json[obj["party2"]] : party_img_json["default"];
+            let state_img = (state in party_img_json) ? party_img_json[state] : "./imgs2/madhya_pradesh.png";
+            console.log(state);
+            let bar_length = (parseInt(50000) / (parseInt(100000) + parseInt(50000))) * 100;
+            temp_data.push(obj["name1"]);
+            temp_data.push(obj["name2"]);
+            let html_data = `<span class="state_name" data-state="${state}" data-const="${const_name}">${const_name} <span class="state_party_slot">(${state})</span></span>
+      <div class="cand_desc1">
+          <span class="img_container">
+              <img class="party_symbol" src="${party_path1}" alt="">
+              <img class="cand_img1" src="./imgs2/rahul.png" alt="">
+          </span>
+          <div class="desc_container">
+              <div class="cand_name1 render_name1" data-candname="${obj["name1"]}">${obj["name1"]} <span class="state_party_slot">(${obj["party1"]})</span></div>
+              <span class="lead_bar">${100000}</span>
+          </div>
+      </div>
+      <div class="cand_desc2">
+          <span class="img_container">
+              <img class="party_symbol" src=${party_path2} alt="">
+              <img class="cand_img1" src="./imgs2/smriti_irani.png" alt="">
+          </span>
+          <div class="desc_container">
+              <div class="cand_name1 render_name2" data-candname="${obj["name2"]}">${obj["name2"]} <span class="state_party_slot">(${obj["party2"]})</span></div>
+              <span class="trail_bar" style="width:${bar_length + 10}%;">${50000}</span>
+          </div>
+      </div>
+      <div class="map_container">
+          <img class="img_map" src=${state_img} alt="">
+      </div>
+      <span class="last_update">Last Updated : 12:10 pm</span>`;
+            card_div.innerHTML = html_data;
+            main_div.appendChild(card_div);
+          }
+        }
+      }
+    });
+}
+function getParameterByName(name, url = window.location.href) {
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+function represent_state(state) {
+  fetch('./bigfights.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+      return response.json();
+    })
+    .then(data => {
+      temp_const = [];
+      temp_data = [];
+      temp_states = [];
+      party_img_json = data["images_key"];
+      candidates_data = data["candidate_details"][state.toLowerCase()];
+      temp_states.push(state);
+      for (let const_name in candidates_data) {
+        let arr_obj = candidates_data[const_name];
+        temp_const.push(const_name);
+        for (let bigf = 0; bigf < arr_obj.length; bigf++) {
+          obj = candidates_data[const_name][bigf];
+          let card_div = document.createElement("div");
+          card_div.setAttribute("class", "card");
+          let party_path1 = (obj["party1"] in party_img_json) ? party_img_json[obj["party1"]] : party_img_json["default"];
+          let party_path2 = (obj["party2"] in party_img_json) ? party_img_json[obj["party2"]] : party_img_json["default"];
+          let state_img = (state.toLowerCase() in party_img_json) ? party_img_json[state.toLowerCase()] : "./imgs2/madhya_pradesh.png";
+          let bar_length = (parseInt(50000) / (parseInt(obj[100000]) + parseInt(obj[50000]))) * 100;
+          temp_data.push(obj["name1"]);
+          temp_data.push(obj["name2"]);
+          let html_data = `<span class="state_name" data-state="${state}" data-const="${const_name}">${const_name} <span class="state_party_slot">(${state})</span></span>
+          <div class="cand_desc1">
+              <span class="img_container">
+                  <img class="party_symbol" src="${party_path1}" alt="">
+                  <img class="cand_img1" src="./imgs2/rahul.png" alt="">
+              </span>
+              <div class="desc_container">
+                  <div class="cand_name1 render_name1" data-candname="${obj["name1"]}">${obj["name1"]} <span class="state_party_slot">(${obj["party1"]})</span></div>
+                  <span class="lead_bar">${100000}</span>
+              </div>
+          </div>
+          <div class="cand_desc2">
+              <span class="img_container">
+                  <img class="party_symbol" src=${party_path2} alt="">
+                  <img class="cand_img1" src="./imgs2/smriti_irani.png" alt="">
+              </span>
+              <div class="desc_container">
+                  <div class="cand_name1 render_name2" data-candname="${obj["name2"]}">${obj["name2"]} <span class="state_party_slot">(${obj["party2"]})</span></div>
+                  <span class="trail_bar" style="width:${bar_length + 10}%;">${50000}</span>
+              </div>
+          </div>
+          <div class="map_container">
+              <img class="img_map" src=${state_img} alt="">
+          </div>
+          <span class="last_update">Last Updated : 12:10 pm</span>`;
+          card_div.innerHTML = html_data;
+          main_div.appendChild(card_div);
+        }
+      }
+
+    });
+}
+if (getParameterByName("state") === "all")
+  represent_All();
+else
+  represent_state(getParameterByName("state"));
+searchBar1.addEventListener("keyup", function () { recommendations(searchBar1, "search_unorderlist1") });
+searchBar2.addEventListener("keyup", function () { recommendations(searchBar2, "search_unorderlist2") });
+function recommendations(searchBar, id_name) {
+  var unorderList = document.getElementById(id_name);
+  clearList(id_name);
+  let input = searchBar.value.toLowerCase();
+  if (input == "")
+    return;
+  var ct = 0;
+  var list = document.createElement("li");
+  list.classList.add("search_list_heading");
+  list.classList.add("start_list");
+  list.innerHTML = "States";
+  unorderList.appendChild(list);
+  for (let full_name of temp_states) {
+    if (ct > 1)
+      break;
+    if (full_name.toLowerCase().startsWith(input)) {
+      list = document.createElement("li");
+      list.classList.add("search_list");
+      list.classList.add("index_class");
+      list.innerHTML = full_name;
+      list.addEventListener("click", function () {
+        searchBar.value = this.innerText;
+        search_fun(searchBar, id_name);
+      });
+      unorderList.appendChild(list);
+      ct++;
+      continue;
+    }
+    // console.log(input +' '+ name+ name.startsWith(input));
+    // console.log(input);
+    for (let name of full_name.toLowerCase().split(" ")) {
+      if (ct > 1)
+        break;
+      if (name.startsWith(input) && input != "") {
+        list = document.createElement("li");
+        list.classList.add("search_list");
+        list.classList.add("index_class");
+        list.innerHTML = full_name;
+        list.addEventListener("click", function () {
+          searchBar.value = this.innerText;
+          search_fun(searchBar, id_name);
+        });
+        unorderList.appendChild(list);
+        ct++;
+        break;
+      }
+    }
+  }
+  if (ct == 0) {
+    list = document.createElement("li");
+    list.classList.add("search_list");
+    list.innerHTML = "No results found..";
+    unorderList.appendChild(list);
+  }
+  list.classList.add("search_list_last");
+  var ct = 0;
+  var list = document.createElement("li");
+  list.classList.add("search_list_heading");
+  list.innerHTML = "Constituencies";
+  unorderList.appendChild(list);
+  for (let full_name of temp_const) {
+    // console.log(input +' '+ name+ name.startsWith(input));
+    // console.log(input);
+    if (ct > 1)
+      break;
+    if (full_name.toLowerCase().startsWith(input)) {
+      list = document.createElement("li");
+      list.classList.add("search_list");
+      list.classList.add("index_class");
+      list.innerHTML = full_name;
+      list.addEventListener("click", function () {
+        searchBar.value = this.innerText;
+        search_fun(searchBar, id_name);
+      });
+      unorderList.appendChild(list);
+      ct++;
+      continue;
+    }
+    for (let name of full_name.toLowerCase().split(" ")) {
+      if (ct > 1)
+        break;
+      if (name.startsWith(input) && input != "") {
+        list = document.createElement("li");
+        list.classList.add("search_list");
+        list.classList.add("index_class");
+        list.innerHTML = full_name;
+        list.addEventListener("click", function () {
+          searchBar.value = this.innerText;
+          search_fun(searchBar, id_name);
+        });
+        unorderList.appendChild(list);
+        ct++;
+        break;
+      }
+    }
+  }
+
+  if (ct == 0) {
+    list = document.createElement("li");
+    list.classList.add("search_list");
+    list.innerHTML = "No results found..";
+    unorderList.appendChild(list);
+  }
+  list.classList.add("search_list_last");
+  var ct = 0;
+  list = document.createElement("li");
+  list.classList.add("search_list_heading");
+  list.innerHTML = "Candidates";
+  unorderList.appendChild(list);
+  for (let full_name of temp_data) {
+    // console.log(input +' '+ name+ name.startsWith(input));
+    // console.log(input);
+    if (ct > 1)
+      break;
+    if (full_name.toLowerCase().startsWith(input)) {
+      list = document.createElement("li");
+      list.classList.add("search_list");
+      list.classList.add("index_class");
+      list.innerHTML = full_name;
+      list.addEventListener("click", function () {
+        searchBar.value = this.innerText;
+        search_fun(searchBar, id_name);
+      });
+      unorderList.appendChild(list);
+      ct++;
+      continue;
+    }
+    for (let name of full_name.toLowerCase().split(" ")) {
+      if (ct > 1)
+        break;
+      if (name.startsWith(input) && input != "") {
+        list = document.createElement("li");
+        list.classList.add("search_list");
+        list.classList.add("index_class");
+        list.innerHTML = full_name;
+        list.addEventListener("click", function () {
+          searchBar.value = this.innerText;
+          search_fun(searchBar, id_name);
+        });
+        unorderList.appendChild(list);
+        ct++;
+        break;
+      }
+    }
+  }
+  if (ct == 0) {
+    list = document.createElement("li");
+    list.classList.add("search_list");
+    list.innerHTML = "No results found..";
+    unorderList.appendChild(list);
+  }
+  list.classList.add("search_list_last");
+  list.classList.add("end_list");
+  unorderList.style.display = '';
+  back_bottom.classList.add("blur_class");
+}
+function clearList(id_name) {
+  let lists = document.getElementById(id_name);
+  lists.innerHTML = "";
+}
+
+function search_fun(searchBar, id_name) {
+  back_bottom.classList.remove("blur_class");
+  const unorderList = document.getElementById(id_name);
+  unorderList.style.display = 'none';
+  const searchInput = searchBar.value.toLowerCase();
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(card => {
+    const name1 = card.querySelector('.render_name1').dataset.candname.toLowerCase();
+    const name2 = card.querySelector('.render_name2').dataset.candname.toLowerCase();
+    const const_name = card.querySelector('.state_name').dataset.const.toLowerCase();
+    const state_name = card.querySelector('.state_name').dataset.state.toLowerCase();
+    let flag = true;
+    if (searchInput != "" && (name1.toLowerCase().startsWith(searchInput) || const_name.toLowerCase().startsWith(searchInput) || state_name.toLowerCase().startsWith(searchInput))) {
+      card.style.display = '';
+      flag = false;
+    }
+    else if (name2.toLowerCase().startsWith(searchInput) && searchInput != "") {
+      card.style.display = '';
+      flag = false;
+    }
+    if (flag) {
+      card.style.display = 'none';
+    }
   });
 }
-represent_All();
-// searchBar.addEventListener("input",performSearch);
-// function performSearch() {
-//   const searchInput = searchBar.value.toLowerCase();
-//   const cards = document.querySelectorAll('.card');
-//   const dropdown_input = states_dropdown.value.toLowerCase();
-//   console.log(dropdown_input);
-//   cards.forEach(card => {
-//     const name1 = card.querySelector('.render_name1').dataset.candname.toLowerCase();
-//     const name2 = card.querySelector('.render_name2').dataset.candname.toLowerCase();
-//     // const const_name = card.querySelector('.state_name').dataset.const.toLowerCase();
-//     const state_name = card.querySelector('.state_name').dataset.state.toLowerCase();
-//     if ((searchInput == "" || name1.includes(searchInput) || name2.includes(searchInput)) && (dropdown_input == "" || state_name.includes(dropdown_input)) ) {
-//       card.style.display = '';
-//     } else {
-//       card.style.display = 'none';
-//     }
-//     // console.log(state_name + " " + dropdown_input + " " + state_name.includes(dropdown_input))
-//   });
-// }
-// searchBar.addEventListener("keyup", performSearch);
-// states_dropdown.addEventListener("change", performSearch);
+searchBar1.addEventListener("input", function () {
+  if (searchBar1.value === "") {
+    main_div.innerHTML = ""
+    back_bottom.classList.remove("blur_class");
+    represent_All();
+    return;
+  }
+});
+searchBar2.addEventListener("input", function () {
+  if (searchBar2.value === "") {
+    main_div.innerHTML = ""
+    back_bottom.classList.remove("blur_class");
+    represent_All();
+    return;
+  }
+});
