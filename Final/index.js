@@ -1037,8 +1037,13 @@ function handleSelection() {
       .catch((e) => console.error(e));
   }
 }
-function updatePaginationControls(totalRows, class_name, second_class_name) {
-  const numPages = Math.ceil(totalRows / rowsPerPage);
+function updatePaginationControls(
+  totalRows,
+  class_name,
+  second_class_name,
+  numberOfRows
+) {
+  const numPages = Math.ceil(totalRows / numberOfRows);
   const paginationControls = document.getElementById(class_name);
   paginationControls.innerHTML = ""; // Clear previous pagination controls
 
@@ -1051,12 +1056,12 @@ function updatePaginationControls(totalRows, class_name, second_class_name) {
     if (class_name == "pagination-controls") {
       if (currentPage > 1) {
         currentPage--;
-        displayPage(currentPage, second_class_name);
+        displayPage(currentPage, second_class_name, 10);
       }
     } else {
       if (currentPageCandidates > 1) {
         currentPageCandidates--;
-        displayPage(currentPageCandidates, second_class_name);
+        displayPage(currentPageCandidates, second_class_name, 10);
       }
     }
   });
@@ -1068,10 +1073,10 @@ function updatePaginationControls(totalRows, class_name, second_class_name) {
     button.addEventListener("click", function () {
       if (class_name == "pagination-controls") {
         currentPage = i;
-        displayPage(currentPage, second_class_name);
+        displayPage(currentPage, second_class_name, 10);
       } else {
         currentPageCandidates = i;
-        displayPage(currentPageCandidates, second_class_name);
+        displayPage(currentPageCandidates, second_class_name, 10);
       }
     });
     button.className = "newbuttons";
@@ -1084,12 +1089,12 @@ function updatePaginationControls(totalRows, class_name, second_class_name) {
     if (class_name == "pagination-controls") {
       if (currentPage < numPages) {
         currentPage++;
-        displayPage(currentPage, second_class_name);
+        displayPage(currentPage, second_class_name, 10);
       }
     } else {
       if (currentPageCandidates < numPages) {
         currentPageCandidates++;
-        displayPage(currentPageCandidates, second_class_name);
+        displayPage(currentPageCandidates, second_class_name, 10);
       }
     }
   });
@@ -1098,10 +1103,10 @@ function updatePaginationControls(totalRows, class_name, second_class_name) {
   paginationControls.appendChild(pageButtonsContainer);
 }
 
-function displayPage(page, class_name) {
+function displayPage(page, class_name, numberOfRows) {
   const rows = document.querySelectorAll(class_name);
-  const startIndex = (page - 1) * rowsPerPage;
-  const endIndex = startIndex + rowsPerPage;
+  const startIndex = (page - 1) * numberOfRows;
+  const endIndex = startIndex + numberOfRows;
 
   rows.forEach((row, index) => {
     if (index >= startIndex && index < endIndex) {
@@ -1211,8 +1216,13 @@ function render_state_table(feature, state) {
 
   // Initialize pagination only if needed
   if (count > rowsPerPage) {
-    updatePaginationControls(count, "pagination-controls", "#table-body tr");
-    displayPage(currentPage, "#table-body tr");
+    updatePaginationControls(
+      count,
+      "pagination-controls",
+      "#table-body tr",
+      10
+    );
+    displayPage(currentPage, "#table-body tr", 10);
   }
 
   // Search functionality
