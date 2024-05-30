@@ -106,7 +106,7 @@ let state_codes = {
   Haryana: 6,
   "Jammu and Kashmir": 1,
   "Jammu & Kashmir": 1,
-  "NCT Of Delhi": 7,
+  "NCT OF Delhi": 7,
   "Dadra and Nagar Haveli": 26,
   "West Bengal": 19,
 };
@@ -188,7 +188,7 @@ const stateMaps = {
   Meghalaya: "./imgs/Meghalaya.jpg",
   Mizoram: "./imgs/Mizoram.png",
   Nagaland: "./imgs/Nagaland.png",
-  "NCT Of Delhi": "./imgs/NCT_OF_Delhi.jpeg",
+  "NCT OF Delhi": "./imgs/NCT_OF_Delhi.jpeg",
   Odisha: "./imgs/Odisha.png",
   Puducherry: "./imgs/Puducherry.png",
   Punjab: "./imgs/Punjab.jpg",
@@ -206,9 +206,9 @@ const unionTerritories = [
   "Andaman and Nicobar Islands",
   "Jammu and Kashmir",
   "Puducherry",
-  "NCT Of Delhi",
+  "NCT OF Delhi",
   "Chandigarh",
-  "Dadra and Nagar Havel",
+  "Dadra and Nagar Haveli",
   "Lakshadweep",
 ];
 
@@ -217,7 +217,7 @@ let alliancePatries = {
   india: {},
   others: {},
 };
-
+let data2024 = {};
 let stateDataJson;
 let allianceJson;
 let data = {};
@@ -331,18 +331,40 @@ async function fetchGeoJSON(file) {
 }
 async function fetchJSON(file) {
   try {
-    const url = "http://192.168.1.206:4200/constituency-data";
+    const url = "https://results2024.s3.ap-south-1.amazonaws.com/results.json";
     const response = await fetch(file);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    stateDataJson = await response.json();
-    allianceJson = stateDataJson[2];
-    let k = Object.keys(stateDataJson[0]);
-    for (let i of k) {
-      Object.assign(data, stateDataJson[0][i]);
+    data2024 = await response.json();
+    allianceJson = data2024[1];
+    stateDataJson = data2024[0];
+    // let k = Object.keys(data2024[0]);
+    // for (let i of k) {
+    //   Object.assign(data, data2024[0][i]);
+    // }
+    // --------------------
+    function format(data2024) {
+      for (let state in data2024) {
+        for (let const_name in data2024[state]) {
+          const candidates = [];
+          for (let item of data2024[state][const_name]["candidates"]) {
+            const candidate = {
+              candidateId: item.cId,
+              candidateName: item.cName,
+              constituencyName: const_name,
+              party: item.prty,
+              alliance: item.alnce,
+              votes: item.vts,
+            };
+            candidates.push(candidate);
+          }
+          data[constCodes[state][const_name]] = candidates;
+        }
+      }
     }
-    stateDataJson = stateDataJson[1];
+    format(stateDataJson);
+    // ----------------------
     // You can process the JSON data here
   } catch (error) {
     console.error("Error fetching the JSON file:", error);
@@ -368,28 +390,29 @@ async function fetchJSON(file) {
 // }
 
 $(document).ready(async function () {
-  await fetchJSON("./election2019.json");
+  await fetchJSON("./election2024.json");
   await fetchGeoJSON("geo.json");
   //   let intervalId = setInterval(async () => {
   //     await fetchData();
   //     // handleStateClick(lastClickedState);
   //   }, 10000);
   console.log(data);
-  console.log(stateDataJson);
-  console.log(allianceJson);
+  // console.log(stateDataJson);
+  // console.log(allianceJson);
   // Function to render India map with statewise colors
   function renderIndiaMap() {
     // Implement the logic to render India map using SVG or any other method
     // Add paths to the SVG map
     //alert("aa");
-    document.getElementById("india-map").innerHTML =
-      '<div id="containertool2"></div><svg id="india-svg" viewBox="0 100 1000 1150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>';
+    document.getElementById(
+      "india-map"
+    ).innerHTML = `<svg id="india-svg" viewBox="0 100 1000 1150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>`;
     var pathsStr = "";
     for (let state in paths) {
       pathsStr += `<path id="${states[state]}" d="${paths[state]}"></path>`;
     }
     document.getElementById("india-svg").innerHTML =
-      '<svg id="india-svg" viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
+      '<svg id="india-svg" viewBox="50 0 900 800" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
       pathsStr +
       "</svg>";
     document.getElementById("map").style.display = "none";
@@ -408,14 +431,18 @@ $(document).ready(async function () {
 
     tbody.innerHTML = "";
 
+    let stateCount = 0;
     for (const state in stateDataJson) {
-      console.log(unionTerritories.includes(state));
+      // console.log(unionTerritories.includes(state));
       if (!unionTerritories.includes(state)) {
         let nda = 0,
           india = 0,
           others = 0;
 
+        // console.log(state);
         const stateMap = document.getElementById(state);
+        // console.log(stateMap);
+
         const newRow = referenceRow.cloneNode(true);
         newRow.removeAttribute("id");
 
@@ -423,22 +450,23 @@ $(document).ready(async function () {
         const cells = newRow.getElementsByTagName("td");
         cells[0].innerHTML = `<img id="stateLogo" src='${stateMaps[state]}'>${state}`;
         for (const consti in stateDataJson[state]) {
-          const leadingCandidate = stateDataJson[state][consti][0];
-          if (leadingCandidate.alliance === "NDA") {
+          const leadingCandidate =
+            stateDataJson[state][consti]["candidates"][0];
+          if (leadingCandidate.alnce === "NDA") {
             nda++;
-            if (alliancePatries["nda"][leadingCandidate.party] !== undefined)
-              alliancePatries["nda"][leadingCandidate.party]++;
-            else alliancePatries["nda"][leadingCandidate.party] = 1;
-          } else if (leadingCandidate.alliance === "OTH") {
+            if (alliancePatries["nda"][leadingCandidate.prty] !== undefined)
+              alliancePatries["nda"][leadingCandidate.prty]++;
+            else alliancePatries["nda"][leadingCandidate.prty] = 1;
+          } else if (leadingCandidate.alnce === "OTH") {
             others++;
-            if (alliancePatries["others"][leadingCandidate.party] !== undefined)
-              alliancePatries["others"][leadingCandidate.party]++;
-            else alliancePatries["others"][leadingCandidate.party] = 1;
+            if (alliancePatries["others"][leadingCandidate.prty] !== undefined)
+              alliancePatries["others"][leadingCandidate.prty]++;
+            else alliancePatries["others"][leadingCandidate.prty] = 1;
           } else {
             india++;
-            if (alliancePatries["india"][leadingCandidate.party] !== undefined)
-              alliancePatries["india"][leadingCandidate.party]++;
-            else alliancePatries["india"][leadingCandidate.party] = 1;
+            if (alliancePatries["india"][leadingCandidate.prty] !== undefined)
+              alliancePatries["india"][leadingCandidate.prty]++;
+            else alliancePatries["india"][leadingCandidate.prty] = 1;
           }
         }
 
@@ -449,14 +477,16 @@ $(document).ready(async function () {
           nda >= india && nda >= others
             ? names.ndaColor
             : india > nda && india >= others
-              ? names.indiaColor
-              : names.othersColor;
+            ? names.indiaColor
+            : names.othersColor;
 
         tbody.appendChild(newRow);
+        stateCount++;
       }
     }
+    console.log(stateCount);
     // console.log("afhkhbfz");
-    console.log(alliancePatries);
+    // console.log(alliancePatries);
     const sortObjectByValuesDesc = (obj) =>
       Object.fromEntries(Object.entries(obj).sort(([, a], [, b]) => b - a));
 
@@ -548,9 +578,10 @@ $(document).ready(async function () {
         const cells = newRow.getElementsByTagName("td");
         cells[0].innerHTML = `<img id="stateLogo" src='${stateMaps[state]}'>${state}`;
         for (const consti in stateDataJson[state]) {
-          const leadingCandidate = stateDataJson[state][consti][0];
-          if (leadingCandidate.alliance === "NDA") nda++;
-          else if (leadingCandidate.alliance === "OTH") others++;
+          const leadingCandidate =
+            stateDataJson[state][consti]["candidates"][0];
+          if (leadingCandidate.alnce === "NDA") nda++;
+          else if (leadingCandidate.alnce === "OTH") others++;
           else india++;
         }
 
@@ -561,8 +592,8 @@ $(document).ready(async function () {
           nda >= india && nda >= others
             ? names.ndaColor
             : india > nda && india >= others
-              ? names.indiaColor
-              : names.othersColor;
+            ? names.indiaColor
+            : names.othersColor;
 
         tbody.appendChild(newRow);
       }
@@ -578,12 +609,12 @@ $(document).ready(async function () {
   }
 
   // Example click event handler for state in India map
-  $("#india-map").on("click", "path", function (event) {
+  $("#india-map").on("click", "path", function () {
     const state = $(this).attr("id");
     handleStateClick(state);
-    creatediv(state, 'containertool2');
-    half(event);
+    creatediv(state);
   });
+
   let percent = 0;
   let progress_bar = document.querySelector(
     ".transition-timer-carousel-progress-bar"
@@ -748,20 +779,20 @@ function toggleEntries() {
   // parentDiv.style.height = `${maxHeight}px`;
 }
 
-function colorProgress() {
-  let activeElement = document.querySelector(".carousel-item.active");
-  // console.log(activeElement.id);
-  // console.log(activeElement.id);
-  if (activeElement.id.startsWith("nda")) {
-    document.getElementById("carouselProgress").style.backgroundColor =
-      "#FF9933";
-  } else if (activeElement.id.startsWith("india")) {
-    document.getElementById("carouselProgress").style.backgroundColor =
-      "#87CEEB";
-  } else if (activeElement.id.startsWith("others")) {
-    document.getElementById("carouselProgress").style.backgroundColor = "grey";
-  }
-}
+// function colorProgress() {
+//   let activeElement = document.querySelector(".carousel-item.active");
+//   // console.log(activeElement.id);
+//   // console.log(activeElement.id);
+//   if (activeElement.id.startsWith("nda")) {
+//     document.getElementById("carouselProgress").style.backgroundColor =
+//       "#FF9933";
+//   } else if (activeElement.id.startsWith("india")) {
+//     document.getElementById("carouselProgress").style.backgroundColor =
+//       "#87CEEB";
+//   } else if (activeElement.id.startsWith("others")) {
+//     document.getElementById("carouselProgress").style.backgroundColor = "grey";
+//   }
+// }
 function populateCarousel() {
   populateTable("nda", "ndaCarousel");
   populateTable("india", "indiaCarousel");
@@ -913,29 +944,14 @@ function handleStateClick(state) {
   const constituencyTable = document.getElementById("stateTable");
   const cells = constituencyTable.getElementsByTagName("th");
   for (const consti in stateDataJson[state]) {
-    const leadingCandidate = stateDataJson[state][consti][0];
+    const leadingCandidate = stateDataJson[state][consti]["candidates"][0];
+    4;
     console.log(leadingCandidate);
-    if (leadingCandidate.alliance === "NDA") nda++;
-    else if (leadingCandidate.alliance === "OTH") others++;
+    if (leadingCandidate.alnce === "NDA") nda++;
+    else if (leadingCandidate.alnce === "OTH") others++;
     else india++;
   }
   updateBar([nda, india, others]);
-}
-function half(event) {
-  var map = document.getElementById('india-map').getBoundingClientRect();
-  var clickY = event.clientY - map.top;
-  var mapHeight = map.height;
-  var isAboveHalf = clickY < (mapHeight / 2);
-  var div = document.getElementById('containertool2');
-
-  if (isAboveHalf) {
-    div.classList.add("above-half");
-    div.classList.remove("below-half");
-  } else {
-    div.classList.add("below-half");
-    div.classList.remove("above-half");
-  }
-
 }
 function creatediv(state) {
   var obj = {};
@@ -943,21 +959,18 @@ function creatediv(state) {
   var partyseats = [];
   var constituencyData = stateDataJson[state];
   for (let constituencyname in constituencyData) {
-    let party_name = stateDataJson[state][constituencyname][0]["party"]
+    let party_name =
+      stateDataJson[state][constituencyname]["candidates"][0]["prty"];
     if (party_name in obj) {
       obj[party_name] += 1;
-    }
-    else
-      obj[party_name] = 1;
+    } else obj[party_name] = 1;
   }
   var sortedPartyWins = Object.entries(obj).sort((a, b) => b[1] - a[1]);
   for (let i = 0; i < sortedPartyWins.length; i++) {
     partynames[i] = sortedPartyWins[i][0];
     partyseats[i] = sortedPartyWins[i][1];
   }
-  var maindiv = document.getElementById('containertool2');
-  var mainindiamap = document.getElementById('india-map');
-  mainindiamap.append(maindiv);
+  var maindiv = document.getElementById("containertool2");
   var htmlcode = `<span class="close" onclick="close_btn()">&times;</span>
                     <h2 class="sthead">${state}</h2>
                     
@@ -968,56 +981,40 @@ function creatediv(state) {
                              <th id="wlright" class="tbhead">Won / Lead</th>
                           </tr>
                        </thead>`;
-                       htmlcode += `</thead>`;
-                       if (partynames) {
-                         for (let i = 0; i < partynames.length && i < 5; i++) {
-                           if (partynames[i] !== undefined) {
-                             htmlcode += `<tr>
-                              <td class="tdData"><img class="party-icon" src="${sym[partynames[i]]}"> ${partynames[i]}</td>
-                              <td class="tdData" id="wlright">${obj[partynames[i]]}</td></tr>`;
-                           }
-                         }
-                       }
-                       htmlcode += `</tbody>
-                       </table><div class="results12">
-                        <h3 class="hdiv3">2019 results</h3>
-                       <div class="bars">`;
-                       
-                       for (let i = 0; i < partynames.length && i < 3; i++) {
-                         if (partynames[i] !== undefined && partyseats[i] !== undefined) {
-                           htmlcode += `<div class="barbox">
-                            <span class="barlabel">${partynames[i]}</span>
-                          <div class="bar${i + 1} inbar" id="id${i}">${partyseats[i]}</div> </div>`;
-                         }
-                       }
-                       
-                       htmlcode += `    </div>
-                        </div> <div id="viewdetails" onclick="showmap('${state}')">Check Full Results<span id=gt>&gt</span></div>`;
-                       
-                       maindiv.innerHTML = "";
-                       maindiv.innerHTML += htmlcode;
-                       maindiv.style.display = "block";
-                       
-                       // Set the width after the HTML has been added to the DOM
-                       if (partynames.length == 1) {
-                         setTimeout(() => {
-                           document.getElementById('id0').style.width = "13.215rem";
-                         }, 0);
-                       }
-                       
-
-// Set the width after the HTML has been added to the DOM
-if (partynames.length == 1) {
-  setTimeout(() => {
-    document.getElementById('id0').style.width = "13.215rem";
-  }, 0);
-}
-if (partynames.length == 2) {
-  setTimeout(() => {
-    document.getElementById('id0').style.width = "7.215rem";
-  }, 0);
-}
-
+  if (partynames)
+    for (let i = 0; i < partynames.length && i < 5; i++) {
+      htmlcode += `<tr>
+                                       <td class="tdData"><img class="party-icon" src="${
+                                         sym[partynames[i]]
+                                       }"> ${partynames[i]}</td>
+                                       <td class="tdData" id="wlright">${
+                                         obj[partynames[i]]
+                                       }</td>
+                                     </tr>`;
+    }
+  htmlcode += `</tbody>
+                    </table>
+                    <div class="results12">
+                       <h3 class="hdiv3">2019 results</h3>
+                       <div class="bars">
+                           <div class="barbox">
+                               <span class="barlabel" style="margin-left:-60px;">${partynames[0]}</span>
+                               <div class="bar1 inbar">${partyseats[0]}</div>
+                           </div>
+                           <div class="barbox">
+                               <span class="barlabel" style="margin-left:-50px;">${partynames[1]}</span>
+                               <div class="bar2 inbar">${partyseats[1]}</div>
+                           </div>
+                           <div class="barbox">
+                               <span class="barlabel" style="margin-left:-5px;">Others</span>
+                               <div class="bar3 inbar">81</div>
+                           </div>
+                       </div>
+                   </div>
+                   <div id="viewdetails" onclick="showmap('${state}')">Check Full Results<span id=gt>&gt</span></div>`;
+  maindiv.innerHTML = "";
+  maindiv.innerHTML += htmlcode;
+  maindiv.style.display = "block";
 }
 function showmap(state) {
   state_map(state_codes[state], state);

@@ -32,7 +32,7 @@ const states = {
   INHP: "Himachal Pradesh",
   INHR: "Haryana",
   INJK: "Jammu and Kashmir",
-  INDL: "NCT Of Delhi",
+  INDL: "NCT OF Delhi",
   INDH: "Dadra and Nagar Haveli",
   INWB: "West Bengal",
 };
