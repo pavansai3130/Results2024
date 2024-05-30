@@ -233,6 +233,7 @@ let names = {
 async function fetchGeoJSON(file) {
   try {
     const response = await fetch(file);
+
     const geoJson = await response.json();
     ftrs = geoJson.features
       .map((i) => i.properties)
@@ -431,48 +432,42 @@ $(document).ready(async function () {
 
     tbody.innerHTML = "";
 
-    let stateCount = 0;
+    let stateCount = 1;
+
     for (const state in stateDataJson) {
       // console.log(unionTerritories.includes(state));
-      if (!unionTerritories.includes(state)) {
-        let nda = 0,
-          india = 0,
-          others = 0;
+      // if (!unionTerritories.includes(state)) {
+      let nda = 0,
+        india = 0,
+        others = 0;
 
-        // console.log(state);
-        const stateMap = document.getElementById(state);
-        // console.log(stateMap);
+      // console.log(state);
+      const stateMap = document.getElementById(state);
+      // console.log(stateMap);
 
-        const newRow = referenceRow.cloneNode(true);
-        newRow.removeAttribute("id");
+      const newRow = referenceRow.cloneNode(true);
+      newRow.removeAttribute("id");
 
-        newRow.style.display = "";
-        const cells = newRow.getElementsByTagName("td");
-        cells[0].innerHTML = `<img id="stateLogo" src='${stateMaps[state]}'>${state}`;
-        for (const consti in stateDataJson[state]) {
-          const leadingCandidate =
-            stateDataJson[state][consti]["candidates"][0];
-          if (leadingCandidate.alnce === "NDA") {
-            nda++;
-            if (alliancePatries["nda"][leadingCandidate.prty] !== undefined)
-              alliancePatries["nda"][leadingCandidate.prty]++;
-            else alliancePatries["nda"][leadingCandidate.prty] = 1;
-          } else if (leadingCandidate.alnce === "OTH") {
-            others++;
-            if (alliancePatries["others"][leadingCandidate.prty] !== undefined)
-              alliancePatries["others"][leadingCandidate.prty]++;
-            else alliancePatries["others"][leadingCandidate.prty] = 1;
-          } else {
-            india++;
-            if (alliancePatries["india"][leadingCandidate.prty] !== undefined)
-              alliancePatries["india"][leadingCandidate.prty]++;
-            else alliancePatries["india"][leadingCandidate.prty] = 1;
-          }
+      newRow.style.display = "";
+      for (const consti in stateDataJson[state]) {
+        const leadingCandidate = stateDataJson[state][consti]["candidates"][0];
+        if (leadingCandidate.alnce === "NDA") {
+          nda++;
+          if (alliancePatries["nda"][leadingCandidate.prty] !== undefined)
+            alliancePatries["nda"][leadingCandidate.prty]++;
+          else alliancePatries["nda"][leadingCandidate.prty] = 1;
+        } else if (leadingCandidate.alnce === "OTH") {
+          others++;
+          if (alliancePatries["others"][leadingCandidate.prty] !== undefined)
+            alliancePatries["others"][leadingCandidate.prty]++;
+          else alliancePatries["others"][leadingCandidate.prty] = 1;
+        } else {
+          india++;
+          if (alliancePatries["india"][leadingCandidate.prty] !== undefined)
+            alliancePatries["india"][leadingCandidate.prty]++;
+          else alliancePatries["india"][leadingCandidate.prty] = 1;
         }
-
-        cells[1].textContent = nda;
-        cells[2].textContent = india;
-        cells[3].textContent = others;
+        // }
         stateMap.style.fill =
           nda >= india && nda >= others
             ? names.ndaColor
@@ -480,9 +475,16 @@ $(document).ready(async function () {
             ? names.indiaColor
             : names.othersColor;
 
-        tbody.appendChild(newRow);
-        stateCount++;
+        if (stateCount <= 20) {
+          const cells = newRow.getElementsByTagName("td");
+          cells[0].innerHTML = `<img id="stateLogo" src='${stateMaps[state]}'>${state}`;
+          cells[1].textContent = nda;
+          cells[2].textContent = india;
+          cells[3].textContent = others;
+          tbody.appendChild(newRow);
+        }
       }
+      stateCount += 1;
     }
     console.log(stateCount);
     // console.log("afhkhbfz");
@@ -548,56 +550,89 @@ $(document).ready(async function () {
     });
   });
 
-  document.getElementById("stateButton").addEventListener("click", function () {
-    document.getElementById("unionButton").className =
-      "btn btn-light border border-5";
-    document.getElementById("stateRow").textContent = "State";
-    document.getElementById("stateButton").className += " active";
+  document.getElementById("prevButton").addEventListener("click", function () {
+    // document.getElementById("nextButton").className =
+    //   "btn btn-light border border-5";
+    // document.getElementById("stateRow").textContent = "State";
+    // document.getElementById("stateButton").className += " active";
     renderAllianceResults();
   });
 
-  document.getElementById("unionButton").addEventListener("click", function () {
-    document.getElementById("stateRow").textContent = "Union Territory";
-    document.getElementById("stateButton").className =
-      "btn btn-light border border-5";
-    document.getElementById("unionButton").className += " active";
+  document.getElementById("nextButton").addEventListener("click", function () {
+    // document.getElementById("stateRow").textContent = "Union Territory";
+    // document.getElementById("stateButton").className =
+    //   "btn btn-light border border-5";
+    // document.getElementById("unionButton").className += " active";
     const tbody = document.getElementById("allianceBody");
     tbody.innerHTML = "";
     const referenceRow = document.getElementById("referenceRow");
 
-    for (const state in stateDataJson) {
-      if (unionTerritories.includes(state)) {
-        let nda = 0,
-          india = 0,
-          others = 0;
+    let states = Object.keys(stateDataJson);
+    states = states.slice(20);
+    states.forEach((state) => {
+      let nda = 0,
+        india = 0,
+        others = 0;
 
-        const stateMap = document.getElementById(state);
-        const newRow = referenceRow.cloneNode(true);
-        newRow.removeAttribute("id");
-        newRow.style.display = "";
-        const cells = newRow.getElementsByTagName("td");
-        cells[0].innerHTML = `<img id="stateLogo" src='${stateMaps[state]}'>${state}`;
-        for (const consti in stateDataJson[state]) {
-          const leadingCandidate =
-            stateDataJson[state][consti]["candidates"][0];
-          if (leadingCandidate.alnce === "NDA") nda++;
-          else if (leadingCandidate.alnce === "OTH") others++;
-          else india++;
-        }
-
-        cells[1].textContent = nda;
-        cells[2].textContent = india;
-        cells[3].textContent = others;
-        stateMap.style.fill =
-          nda >= india && nda >= others
-            ? names.ndaColor
-            : india > nda && india >= others
-            ? names.indiaColor
-            : names.othersColor;
-
-        tbody.appendChild(newRow);
+      const stateMap = document.getElementById(state);
+      const newRow = referenceRow.cloneNode(true);
+      newRow.removeAttribute("id");
+      newRow.style.display = "";
+      const cells = newRow.getElementsByTagName("td");
+      cells[0].innerHTML = `<img id="stateLogo" src='${stateMaps[state]}'>${state}`;
+      for (const consti in stateDataJson[state]) {
+        const leadingCandidate = stateDataJson[state][consti]["candidates"][0];
+        if (leadingCandidate.alnce === "NDA") nda++;
+        else if (leadingCandidate.alnce === "OTH") others++;
+        else india++;
       }
-    }
+
+      cells[1].textContent = nda;
+      cells[2].textContent = india;
+      cells[3].textContent = others;
+      stateMap.style.fill =
+        nda >= india && nda >= others
+          ? names.ndaColor
+          : india > nda && india >= others
+          ? names.indiaColor
+          : names.othersColor;
+
+      tbody.appendChild(newRow);
+    });
+
+    // for (const state in stateDataJson) {
+    //   if (unionTerritories.includes(state)) {
+    //     let nda = 0,
+    //       india = 0,
+    //       others = 0;
+
+    //     const stateMap = document.getElementById(state);
+    //     const newRow = referenceRow.cloneNode(true);
+    //     newRow.removeAttribute("id");
+    //     newRow.style.display = "";
+    //     const cells = newRow.getElementsByTagName("td");
+    //     cells[0].innerHTML = `<img id="stateLogo" src='${stateMaps[state]}'>${state}`;
+    //     for (const consti in stateDataJson[state]) {
+    //       const leadingCandidate =
+    //         stateDataJson[state][consti]["candidates"][0];
+    //       if (leadingCandidate.alnce === "NDA") nda++;
+    //       else if (leadingCandidate.alnce === "OTH") others++;
+    //       else india++;
+    //     }
+
+    //     cells[1].textContent = nda;
+    //     cells[2].textContent = india;
+    //     cells[3].textContent = others;
+    //     stateMap.style.fill =
+    //       nda >= india && nda >= others
+    //         ? names.ndaColor
+    //         : india > nda && india >= others
+    //         ? names.indiaColor
+    //         : names.othersColor;
+
+    //     tbody.appendChild(newRow);
+    //   }
+    // }
   });
 
   // -----------------Accordion population---------------------------------------------
@@ -1025,3 +1060,5 @@ function close_btn() {
 }
 
 let renderAllianceResults;
+
+// -------------landing page Chart----------------------------------
