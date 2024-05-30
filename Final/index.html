@@ -26,32 +26,6 @@
    <link rel="stylesheet" href="./bighfights_css/bighfights_carousel.css">
    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
       <style>
-         #see-more-btn {
-         padding: 0.5rem 1rem;
-         font-size: 12px;
-         text-transform: uppercase;
-         letter-spacing: 2.5px;
-         font-weight: 500;
-         color: #000;
-         background-color: #fff;
-         border: none;
-         border-radius: 45px;
-         box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-         transition: all 0.3s ease 0s;
-         cursor: pointer;
-         outline: none;
-         }
-         #see-more-btn:hover {
-         background-color: #1e90ff;
-         /* DodgerBlue */
-         box-shadow: 0px 5px 20px rgba(30, 144, 255, 0.4);
-         /* DodgerBlue with 40% opacity */
-         color: #fff;
-         transform: translateY(-2px);
-         }
-         #see-more-btn:active {
-         transform: translateY(-1px);
-         }
          .form-control {
          width: 12.5rem;
          border-radius: 0.5rem;
@@ -433,13 +407,15 @@
                <!-- HARI CONTAINER----------------------------------------------------- -->
                <div class="col-12 col-md-6">
                   <div class="root">
-                     <h2 style="align-items: center;margin-top: 1rem;font-weight: bold;">Popular Candidates</h2>
+                     <div class="cardsHeader">
+                        <h2>Popular Candidates</h2>
+                        <button id="see-more-btn" class="button">(View All)</button>
+                     </div>
                      <div class="container-fluid">
                         <div id="root">
                           <!-- Rows with cards will be added here -->
                         </div>
                         <!-- End of the root -->
-                        <button id="see-more-btn" style="margin-bottom: 1rem;margin-top: 1rem;" class="button">See More</button>
                       </div>
                   </div>
                </div>

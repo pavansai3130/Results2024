@@ -150,3 +150,11 @@ input:valid~label {
     justify-content: center;
     align-items: center;
 }
+
+#back-btn{
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    /* padding: 10px; */
+    background-color: white;
+}
