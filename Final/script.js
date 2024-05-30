@@ -1201,16 +1201,16 @@ function helper(item, row) {
                     }" alt=""></div>
                     <h6 style="font-weight: bold;">${item.pid}</h6>
                 </div>
-                <p class="card-text custom-card-text" style="font-size:small">${
+                <p class="card-text custom-card-text">${
                   item.place
                 }</p>
-                <p class="card-text custom-card-text-votes" style="color:${nameColor}">
-                    <span style="color:gray;font-weight:500;font-size:bold">Votes : </span>${
+                <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
+                    <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
                       item.votes
                     }
                 </p>
             </div>
-            <div class="iribbon d-flex flex-column bg-white rounded-2 position-relative custom-iribbon" style="background:${arrColor}">
+            <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
                 <p class="card-text mb-1 custom-iribbon-text">${
                   item.lead ? "Leading by" : "Trailing by"
                 }</p>
@@ -1339,16 +1339,16 @@ function helper(item, row) {
                     }" alt=""></div>
                     <h6 style="font-weight: bold;">${item.pid}</h6>
                 </div>
-                <p class="card-text custom-card-text" style="font-size:small">${
+                <p class="card-text custom-card-text">${
                   item.place
                 }</p>
-                <p class="card-text custom-card-text-votes" style="color:${nameColor}">
-                    <span style="color:gray;font-weight:500;font-size:bold">Votes : </span>${
+                <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
+                    <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
                       item.votes
                     }
                 </p>
             </div>
-            <div class="iribbon d-flex flex-column bg-white rounded-2 position-relative custom-iribbon" style="background:${arrColor}">
+            <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
                 <p class="card-text mb-1 custom-iribbon-text">${
                   item.lead ? "Leading by" : "Trailing by"
                 }</p>
