@@ -1,3 +1,58 @@
+
+/*-------------creating fetching 2019------*/
+let data_201;
+let data_2019 = {}; // Initialize data_2019 as an empty object
+async function fetchJSON2(file) {
+  try {
+    const response = await fetch(file); // Fetch the JSON file
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    data_201 = await response.json(); 
+    console.log("JSON data fetched and stored globally:", data_201);
+    function format2(data2024) {
+      for (let state in data2024) {
+        for (let const_name in data2024[state]) {
+          const candidates = [];
+          for (let item of data2024[state][const_name]["candidates"]) {
+            const candidate = {
+              candidateId: item.cId,
+              candidateName: item.cName,
+              constituencyName: const_name,
+              party: item.prty,
+              alliance: item.alnce,
+              votes: item.vts,
+            };
+            candidates.push(candidate);
+          }
+          // Access constituency code from constCodes if properly defined
+          const constituencyCode = constCodes[state][const_name];
+          if (constituencyCode) {
+            // Assign candidates to the corresponding constituency code in data_2019
+            data_2019[constituencyCode] = candidates;
+          }
+        }
+      }
+    }
+    format2(data_201[0]);
+
+  } catch (error) {
+    console.error("Error fetching the JSON file:", error);
+    throw error; // Rethrow the error for the caller to handle
+  }
+}
+
+
+// Usage example
+(async () => {
+  try {
+    await fetchJSON2('./election2019.json');
+    console.log(data_2019);
+  } catch (error) {
+    console.error("Error occurred:", error);
+  }
+})();
+/*----------------------------*/
 let currentPage = 1;
 let currentPageCandidates = 1;
 const rowsPerPage = 10;
@@ -692,6 +747,7 @@ function resetBreadcrumb() {
   document.getElementById("containertool2").style.display = "none";
   document.getElementById("containertool").style.display = "none";
   updateBar(Object.values(allianceJson));
+    renderAllianceResults();
   const breadcrumbState = document.getElementById("breadcrumb-state");
   const breadcrumbConstituency = document.getElementById(
     "breadcrumb-constituency");
@@ -706,12 +762,16 @@ function resetBreadcrumb() {
     geo.addTo(map);
     document.getElementById("map").style.display = "none";
     document.getElementById("india-map").style.display = "block";
-    document.getElementById("Constituency-res").style.display = "none";
-    document.getElementById("stateTabeleContainer").style.display = "block";
-  } else {
-    resetMap();
-    document.getElementById("stateTabeleContainer").style.display = "block";
-  }
+    document.getElementById("Constituency-res").style.display="none";
+    document.getElementById("stateTabeleContainer").style.display="block";
+    document.getElementById("Candidate-res").style.display="none";
+    }
+    else{
+  resetMap();
+    document.getElementById("stateTabeleContainer").style.display="block";
+    document.getElementById("Candidate-res").style.display="none";
+    }
+  
 }
 
 const zooming = {
@@ -940,7 +1000,7 @@ function handleSelection() {
               breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread()">${feature.properties.st_name}`;
               breadcrumbState.style.display = "inline";
               breadcrumbConstituency.textContent = feature.properties.pc_name;
-              breadcrumbConstituency.style.display = "inline";
+              // breadcrumbConstituency.style.display = "inline";
               const candidate_1 =
                 data[feature.properties.pc_id][0]["candidateName"];
               const candidate_2 =
@@ -960,7 +1020,9 @@ function handleSelection() {
                 feature.properties.pc_name,
                 party_name_1,
                 party_name_2,
-                feature.properties.pc_id
+                feature.properties.pc_id,
+                feature,
+                layer
               );
               var map = document.getElementById('map').getBoundingClientRect();
               console.log("map the ", map);
@@ -998,7 +1060,7 @@ function handleSelection() {
                 "none";
               document.querySelector("#Candidate-res").style.display = "block";
               breadcrumbConstituency.textContent = feature.properties.pc_name;
-              breadcrumbConstituency.style.display = "inline";
+              //breadcrumbConstituency.style.display = "inline";
               const candidate_1 =
                 data[feature.properties.pc_id][0]["candidateName"];
               const candidate_2 =
@@ -1071,13 +1133,8 @@ function handleSelection() {
   }
   render_state_carousel(text);
 }
-function updatePaginationControls(
-  totalRows,
-  class_name,
-  second_class_name,
-  numberOfRows
-) {
-  const numPages = Math.ceil(totalRows / numberOfRows);
+function updatePaginationControls(totalRows, class_name, second_class_name) {
+  const numPages = Math.ceil(totalRows / rowsPerPage);
   const paginationControls = document.getElementById(class_name);
   paginationControls.innerHTML = ""; // Clear previous pagination controls
 
@@ -1090,12 +1147,12 @@ function updatePaginationControls(
     if (class_name == "pagination-controls") {
       if (currentPage > 1) {
         currentPage--;
-        displayPage(currentPage, second_class_name, 10);
+        displayPage(currentPage, second_class_name);
       }
     } else {
       if (currentPageCandidates > 1) {
         currentPageCandidates--;
-        displayPage(currentPageCandidates, second_class_name, 10);
+        displayPage(currentPageCandidates, second_class_name);
       }
     }
   });
@@ -1107,10 +1164,10 @@ function updatePaginationControls(
     button.addEventListener("click", function () {
       if (class_name == "pagination-controls") {
         currentPage = i;
-        displayPage(currentPage, second_class_name, 10);
+        displayPage(currentPage, second_class_name);
       } else {
         currentPageCandidates = i;
-        displayPage(currentPageCandidates, second_class_name, 10);
+        displayPage(currentPageCandidates, second_class_name);
       }
     });
     button.className = "newbuttons";
@@ -1123,12 +1180,12 @@ function updatePaginationControls(
     if (class_name == "pagination-controls") {
       if (currentPage < numPages) {
         currentPage++;
-        displayPage(currentPage, second_class_name, 10);
+        displayPage(currentPage, second_class_name);
       }
     } else {
       if (currentPageCandidates < numPages) {
         currentPageCandidates++;
-        displayPage(currentPageCandidates, second_class_name, 10);
+        displayPage(currentPageCandidates, second_class_name);
       }
     }
   });
@@ -1137,10 +1194,10 @@ function updatePaginationControls(
   paginationControls.appendChild(pageButtonsContainer);
 }
 
-function displayPage(page, class_name, numberOfRows) {
+function displayPage(page, class_name) {
   const rows = document.querySelectorAll(class_name);
-  const startIndex = (page - 1) * numberOfRows;
-  const endIndex = startIndex + numberOfRows;
+  const startIndex = (page - 1) * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
 
   rows.forEach((row, index) => {
     if (index >= startIndex && index < endIndex) {
@@ -1155,6 +1212,11 @@ function render_state_table(feature, state) {
   let count = 0;
   const tb = document.getElementById("table-body");
   tb.innerHTML = "";
+  alliancePatries = {
+    nda: {},
+    india: {},
+    others: {},
+  };
 
   // Create all rows first
   for (let i of feature) {
@@ -1207,6 +1269,7 @@ function render_state_table(feature, state) {
 
       const td1 = document.createElement("td");
       td1.innerHTML = `${candid}<br><img src="${sym[party_name]}"><span>${party_name}</span>`;
+      td1.style.background="#F6FEF9";
       tr.appendChild(td1);
       td1.classList.add("td1");
 
@@ -1216,14 +1279,41 @@ function render_state_table(feature, state) {
       tr.appendChild(td2);
 
       const td3 = document.createElement("td");
-      td3.innerHTML = `${votes - votes2}<br>`;
+      td3.innerHTML = `${(votes - votes2).toLocaleString()}<br>`;
       tr.appendChild(td3);
       td3.classList.add("td3");
-      count++;
-    } else {
-      tr.dataset.pccolor = "#fff";
-    }
+          count++;
+          if (firstCandidateKey.alliance === "NDA") {
+            if (alliancePatries["nda"][firstCandidateKey.party] !== undefined)
+              alliancePatries["nda"][firstCandidateKey.party]++;
+            else alliancePatries["nda"][firstCandidateKey.party] = 1;
+          } else if (firstCandidateKey.alliance === "OTH") {
+            if (alliancePatries["others"][firstCandidateKey.party] !== undefined)
+              alliancePatries["others"][firstCandidateKey.party]++;
+            else alliancePatries["others"][firstCandidateKey.party] = 1;
+          } else {
+            if (alliancePatries["india"][firstCandidateKey.party] !== undefined)
+              alliancePatries["india"][firstCandidateKey.party]++;
+            else alliancePatries["india"][firstCandidateKey.party] = 1;
+          }
+      } 
+      else {
+          tr.dataset.pccolor = "#fff";
+      }
+   
+
   }
+  console.log("afhkhbfz");
+  console.log(alliancePatries);
+  const sortObjectByValuesDesc = (obj) =>
+    Object.fromEntries(Object.entries(obj).sort(([, a], [, b]) => b - a));
+
+  // Sorting each sub-object
+  alliancePatries.nda = sortObjectByValuesDesc(alliancePatries.nda);
+  alliancePatries.india = sortObjectByValuesDesc(alliancePatries.india);
+  alliancePatries.others = sortObjectByValuesDesc(alliancePatries.others);
+
+  populateCarousel();
 
   // Update the heading with the count of candidates
   const th = document.getElementById("theading");
@@ -1250,32 +1340,33 @@ function render_state_table(feature, state) {
 
   // Initialize pagination only if needed
   if (count > rowsPerPage) {
-    updatePaginationControls(
-      count,
-      "pagination-controls",
-      "#table-body tr",
-      10
-    );
-    displayPage(currentPage, "#table-body tr", 10);
+    updatePaginationControls(count, "pagination-controls", "#table-body tr");
+    displayPage(currentPage, "#table-body tr");
   }
 
   // Search functionality
   $("#stateinput").on("keyup", function () {
-    var value = $(this).val().toLowerCase();
-    $("#table-body tr").filter(function () {
-      var text = $(this).text().toLowerCase();
-      var words = text.split(/\s+/); // Split text into words
-      var match = words.some(function (word) {
-        return word.startsWith(value);
+      var value = $(this).val().toLowerCase();
+      if(value==="")
+        {
+          displayPage(1,"#table-body tr");
+          return;
+        }
+      $("#table-body tr").filter(function () {
+          var text = $(this).text().toLowerCase();
+          var words = text.split(/\s+/); // Split text into words
+          var match = words.some(function (word) {
+              return word.startsWith(value);
+          });
+          $(this).toggle(match);
       });
-      $(this).toggle(match);
-    });
 
     // Reset to the first page after filtering
     currentPage = 1;
     // updatePaginationControls(document.querySelectorAll("#table-body tr:visible").length);
     // displayPage(currentPage);
   });
+
 }
 
 // rendering
@@ -1311,9 +1402,12 @@ function showdatatable(
   party2,
   id
 ) {
-  document.getElementById("containertool").style.display = "block";
-  var div = document.getElementById("containertool");
-  var htmlCode = `
+  // console.log(feature);
+  // console.log(layer);
+  breadcrumbConstituency.style.display = "none";
+  document.getElementById('containertool').style.display = "block";
+            var div = document.getElementById('containertool');
+    var htmlCode = `
     <h2 id="h2"><span class="city">${con1}</span><br><span class="state">${state}</span></h2><div id="close" onclick="closedata()">&times;</div>
         <div id="candidatediv">
           <div class="header">
@@ -1357,21 +1451,50 @@ function showdatatable(
   div.innerHTML = "";
   div.innerHTML += htmlCode;
   div.style.display = "block";
-
 }
 function closedata() {
   document.getElementById("containertool").style.display = "none";
-  document.getElementById("stateTabeleContainer").style.display = "block";
+  // document.getElementById("stateTabeleContainer").style.display = "block";
+  // document
+  render2();
+  document.getElementById("Constituency-res").style.display="block";
   document.getElementById("Candidate-res").style.display = "none";
 }
 function render_table(code, page) {
+  breadcrumbConstituency.style.display = "inline";
   const tbody = document.querySelector(".candidateBody");
   tbody.innerHTML = "";
   let ct = 0;
   closedata();
+  console.log(code);
+  var splCount = 0;
+  geo2.eachLayer((l) => {
+    console.log(l.feature.properties.pc_id);
+    // alert(l.feature.properties.pc_id === code);
+    splCount++;
+    console.log("#########splCount::", splCount);
+    if(l.feature.properties.pc_id == code) {
+      console.log("pressed");
+      l.setStyle({
+        fillColor: document.querySelector(`#table-body tr[data-pc="${code}"]`)?.dataset.pccolor,  // Specific color or default gray
+        fillOpacity: 2,        // Fully opaque for the clicked layer
+        color: "#000",      // Border color
+        weight: 0.5            // Border width
+      });
+    } else {
+      l.setStyle({
+        fillColor: document.querySelector(`#table-body tr[data-pc="${l.feature.properties.pc_id}"]`)?.dataset.pccolor,  // Default color
+        fillOpacity: 0.1,      // Semi-transparent for other layers
+        color: "#000",      // Border color
+        weight: 0.3           // Border width
+      });
+    }
+  });
+
+
   document.getElementById("stateTabeleContainer").style.display = "none";
   document.getElementById("Candidate-res").style.display = "block";
-
+  document.getElementById("Constituency-res").style.display="none";
   const pageSize = 10; // Number of rows per page
   const candi = data[code];
   const candi_len = candi.length;
@@ -1396,19 +1519,41 @@ function render_table(code, page) {
     row.appendChild(party);
 
     const votes = document.createElement("td");
-    votes.textContent = candi[i].votes;
+    votes.textContent = (candi[i].votes).toLocaleString();
     votes.classList.add("tdata2");
     row.appendChild(votes);
 
     const votes2 = document.createElement("td");
-    if (i == 0) {
-      votes2.textContent = "-";
+      if (i == 0) {
+          votes2.textContent = "-";
+      } else if (i > 0) {
+          votes2.textContent = (candi[i - 1].votes - candi[i].votes).toLocaleString();
+      }
+      votes2.classList.add("tdata3");
+      row.appendChild(votes2);
+      const margin2=document.createElement("td");
+      if (i == 0) {
+        margin2.textContent = "-";
     } else if (i > 0) {
-      votes2.textContent = candi[i - 1].votes - candi[i].votes;
+        // margin2.textContent = 
+        margin2.innerHTML=`${(((candi[i - 1].votes - candi[i].votes)/(candi[i - 1].votes + candi[i].votes))*100).toFixed(1)} %`
     }
-    votes2.classList.add("tdata3");
-    row.appendChild(votes2);
-
+    margin2.classList.add("tdata3");
+    row.appendChild(margin2);
+    // const votes_2019=document.createElement("td");
+    // votes_2019.innerHTML=candi[i].votes;
+    // row.appendChild(votes_2019);
+    console.log(data_2019);
+    data_2019.forEach
+   let votes2019;
+    
+  //   const isPresentIn2019 = data_2019[0].states.some(state => {
+  //     return state.constituencies.some(constituency => {
+  //         return constituency.candidates.some(candidate2019 => candidate2019.cName === candi[i].candidateName);
+  //     });
+  // });
+  // votes_2019.textContent = isPresentIn2019 ? "True" : "False";
+  // row.appendChild(votes_2019);
     tbody.appendChild(row);
     ct++;
   }
@@ -1452,13 +1597,18 @@ function render_table(code, page) {
     .off("keyup")
     .on("keyup", function () {
       var value = $(this).val().toLowerCase();
-      $(".candidateBody tr").filter(function () {
-        var text = $(this).text().toLowerCase();
-        var words = text.split(/\s+/); // Split text into words
-        var match = words.some(function (word) {
-          return word.startsWith(value);
-        });
-        $(this).toggle(match);
+      if(value==="")
+        {
+          displayPage(1,".candidateBody tr");
+          return;
+        }
+      $(".candidateBody tr").filter(function() {
+          var text = $(this).text().toLowerCase();
+          var words = text.split(/\s+/); // Split text into words
+          var match = words.some(function(word) {
+              return word.startsWith(value);
+          });
+          $(this).toggle(match);
       });
     });
 }
@@ -1490,7 +1640,7 @@ function state_map(value, text) {
               breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread()">${feature.properties.st_name}`;
               breadcrumbState.style.display = "inline";
               breadcrumbConstituency.textContent = feature.properties.pc_name;
-              breadcrumbConstituency.style.display = "inline";
+             //breadcrumbConstituency.style.display = "inline";
               const candidate_1 =
                 data[feature.properties.pc_id][0]["candidateName"];
               const candidate_2 =
@@ -1510,7 +1660,9 @@ function state_map(value, text) {
                 feature.properties.pc_name,
                 party_name_1,
                 party_name_2,
-                feature.properties.pc_id
+                feature.properties.pc_id,
+                feature,
+                layer
               );
               var map = document.getElementById('map').getBoundingClientRect();
               console.log("map the ", map);
@@ -1566,11 +1718,11 @@ function state_map(value, text) {
             // });
 
             layer.on("click", function (event) {
-              console.log("change 2", event);
+              console.log("change");
               document.querySelector("#Constituency-res").style.display =
                 "none";
               document.querySelector("#Candidate-res").style.display = "block";
-              breadcrumbConstituency.style.display = "block";
+              // breadcrumbConstituency.style.display = "block";
               breadcrumbConstituency.textContent = feature.properties.pc_name;
               const candidate_1 =
                 data[feature.properties.pc_id][0]["candidateName"];
@@ -1591,7 +1743,9 @@ function state_map(value, text) {
                 feature.properties.pc_name,
                 party_name_1,
                 party_name_2,
-                feature.properties.pc_id
+                feature.properties.pc_id,
+                feature,
+                layer
               );
               var map = document.getElementById('map').getBoundingClientRect();
               console.log("map the ", map);
@@ -1658,6 +1812,7 @@ function resetMap() {
 }
 function resetstatebread() {
   geo.remove(map);
+  console.log("mad");
   document.getElementById("stateTabeleContainer").style.display = "none";
   document.getElementById("containertool").style.display = "none";
   breadcrumbConstituency.style.display = "none";
@@ -1683,7 +1838,7 @@ function resetstatebread() {
             breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread()">${feature.properties.st_name}`;
             breadcrumbState.style.display = "inline";
             breadcrumbConstituency.textContent = feature.properties.pc_name;
-            breadcrumbConstituency.style.display = "inline";
+            //breadcrumbConstituency.style.display = "inline";
             const candidate_1 =
               data[feature.properties.pc_id][0]["candidateName"];
             const candidate_2 =
@@ -1703,7 +1858,9 @@ function resetstatebread() {
               feature.properties.pc_name,
               party_name_1,
               party_name_2,
-              feature.properties.pc_id
+              feature.properties.pc_id,
+              feature,
+                layer
             );
             var map = document.getElementById('map').getBoundingClientRect();
               console.log("map the ", map);
@@ -1737,11 +1894,11 @@ function resetstatebread() {
       geo2 = L.geoJSON(filteredGeoJson, {
         onEachFeature: (feature, layer) => {
           layer.on("click", function (event) {
-            console.log("change 3", event);
+            console.log("change");
             document.querySelector("#Constituency-res").style.display = "none";
             // document.querySelector("#Candidate-res").style.display = "block";
             breadcrumbConstituency.textContent = feature.properties.pc_name;
-            breadcrumbConstituency.style.display = "inline";
+            //breadcrumbConstituency.style.display = "inline";
             const candidate_1 =
               data[feature.properties.pc_id][0]["candidateName"];
             const candidate_2 =
@@ -1761,7 +1918,9 @@ function resetstatebread() {
               feature.properties.pc_name,
               party_name_1,
               party_name_2,
-              feature.properties.pc_id
+              feature.properties.pc_id,
+              feature,
+                layer
             );
             var map = document.getElementById('map').getBoundingClientRect();
               console.log("map the ", map);
@@ -1802,6 +1961,7 @@ function resetstatebread() {
       console.log(pressed);
       handleStateClick(breadcrumbState.textContent);
       geo2.addTo(map);
+      render2();
 
       updateMapBounds2();
       map.on("resize", delayedBoundsUpdate2);
@@ -1819,12 +1979,14 @@ function resetstatebread() {
     .catch((e) => console.error(e));
 }
 function resetstatebread_option() {
+render2();
   breadcrumbConstituency.style.display = "none";
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";
   document.getElementById("containertool").style.display = "none";
 }
 function resetstatebread2() {
+render2();
   document.getElementById("containertool").style.display = "none";
   breadcrumbConstituency.style.display = "none";
   document.querySelector("#Candidate-res").style.display = "none";
