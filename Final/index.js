@@ -623,7 +623,6 @@ const constCodes = {
 };
 
 document.addEventListener("DOMContentLoaded", function () {
-  localStorage["consent"] = "accepted";
   document.getElementById("Constituency-res").style.display = "none";
   const stateSelect = document.getElementById("state-select");
   breadcrumbState = document.getElementById("breadcrumb-state");
@@ -650,6 +649,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("stateTabeleContainer").style.display = "block";
     resetBreadcrumb();
     stateSelect.selectedIndex = 0;
+    render_whole_carousel();
   });
   document.getElementById("state-bt").addEventListener("click", function () {
     state_button_pressed = 1;
@@ -667,8 +667,9 @@ document.addEventListener("DOMContentLoaded", function () {
     geo.addTo(map);
     updateMapBounds();
     map.on("resize", delayedBoundsUpdate);
+    render_whole_carousel();
   });
-
+  render_whole_carousel();
   // --------------------
   // const constiMap = document.getElementById("map");
   // constiMap.on("wheel", function (event) {
@@ -693,9 +694,8 @@ function resetBreadcrumb() {
   updateBar(Object.values(allianceJson));
   const breadcrumbState = document.getElementById("breadcrumb-state");
   const breadcrumbConstituency = document.getElementById(
-    "breadcrumb-constituency"
-  );
-
+    "breadcrumb-constituency");
+    render_whole_carousel(breadcrumbState.innerText);
   breadcrumbState.style.display = "none";
   breadcrumbState.textContent = "";
   console.log(state_button_pressed);
@@ -1069,6 +1069,7 @@ function handleSelection() {
       })
       .catch((e) => console.error(e));
   }
+  render_state_carousel(text);
 }
 function updatePaginationControls(
   totalRows,
@@ -1663,6 +1664,7 @@ function resetstatebread() {
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";
   console.log(breadcrumbState.textContent);
+  render_state_carousel(breadcrumbState.textContent);
   fetch("geo.json")
     .then((res) => res.json())
     .then((geoJson) => {
@@ -1827,4 +1829,113 @@ function resetstatebread2() {
   breadcrumbConstituency.style.display = "none";
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";
+}
+let swiper;
+
+function render_whole_carousel() {
+  let swiperContainer = document.getElementById('slider_div');
+  let party_img_json, candidates_data;
+  document.getElementById("view_all").setAttribute("href","./bigfights_viewall.html" + "?state=" + "all");
+  function createSlide(const_name, state, partySymbol1, partySymbol2, candidateImg1, candidateImg2, cand_name1, cand_name2, votes1, votes2) {
+    let party_path1 = (partySymbol1 in party_img_json) ? party_img_json[partySymbol1] : party_img_json["default"];
+    let party_path2 = (partySymbol2 in party_img_json) ? party_img_json[partySymbol2] : party_img_json["default"];
+    let state_img = (state.toLowerCase() in party_img_json) ? party_img_json[state.toLowerCase()] : "./imgs2/madhya_pradesh.jpg";
+    return `
+    <div class="card swiper-slide">
+        <span class="state_name">${const_name} <span class="state_party_slot">(${state})</span></span>
+        <div class="cand_desc1">
+            <span class="img_container">
+                <img class="party_symbol" src=${party_path1} alt="">
+                <img class="cand_img1" src="${candidateImg1}" alt="">
+            </span>
+            <div class="desc_container">
+                <div class="cand_name1">${cand_name1} <span class="state_party_slot">(${partySymbol1})</span></div>
+                <span class="lead_bar">${votes1}</span>
+            </div>
+        </div>
+        <div class="cand_desc2">
+            <span class="img_container">
+                <img class="party_symbol" src="${party_path2}" alt="">
+                <img class="cand_img1" src="${candidateImg2}" alt="">
+            </span>
+            <div class="desc_container">
+                <div class="cand_name1">${cand_name2} <span class="state_party_slot">(${partySymbol2})</span></div>
+                <span class="trail_bar" >${votes2}</span>
+            </div>
+        </div>
+        <div class="map_container">
+            <img class="img_map" src="${state_img}" alt="">
+        </div>
+        <span class="last_update">Last Updated : 12:10 pm</span>
+    </div>
+    `;
+  }
+
+  fetch('./partyicon-candimg.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+      return response.json();
+    })
+    .then(data => {
+      party_img_json = data["images_key"];
+      candidates_data = data["candidate_details"];
+      
+      // Clear previous content and destroy previous Swiper instance if it exists
+      if (swiper) {
+        swiper.destroy(true, true);
+      }
+      swiperContainer.innerHTML = "";
+      
+      candidates_data.forEach(data => {
+        const slideMarkup = createSlide(data["const_name"], data["state"], data["cand_party1"], data["cand_party2"], data["candidateImg1"], data["candidateImg2"], data["cand_name1"], data["cand_name2"], data["votes1"], data["votes2"]);
+        swiperContainer.insertAdjacentHTML('beforeend', slideMarkup);
+      });
+      
+      swiper = new Swiper(".slide-content", {
+        slidesPerView: 3,
+        spaceBetween: 40,
+        loop: true,
+        centerSlide: true,
+        fade: true,
+        grabCursor: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+          dynamicBullets: true
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+          0: {
+            slidesPerView: 1,
+          },
+          600: {
+            slidesPerView: 2,
+          },
+          950: {
+            slidesPerView: 3,
+          }
+        },
+        autoplay: {
+          delay: 3000, 
+          disableOnInteraction: false,  
+        },
+        speed: 1300,
+      });
+      
+      swiperContainer.addEventListener('mouseenter', function () {
+        swiper.autoplay.stop();
+      });
+      
+      swiperContainer.addEventListener('mouseleave', function () {
+        swiper.autoplay.start();
+      });
+    })
+    .catch(error => {
+      console.error('There has been a problem with your fetch operation:', error);
+    });
 }

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   var consent = document.getElementById('consent');
   var mainContent = document.querySelector('.main-content');
-  var navbar = document.querySelector('.navbar');
+  var navbar = document.querySelector('.navbarHead');
   var acceptConsent = document.getElementById('acceptConsent');
   var rejectConsent = document.getElementById('rejectConsent');
   var rejectConfirmation = document.getElementById('rejectConfirmation');
