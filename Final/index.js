@@ -688,6 +688,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function resetBreadcrumb() {
+  document.getElementById("containertool2").style.display = "none";
+  document.getElementById("containertool").style.display = "none";
   updateBar(Object.values(allianceJson));
   const breadcrumbState = document.getElementById("breadcrumb-state");
   const breadcrumbConstituency = document.getElementById(
@@ -900,6 +902,7 @@ function updateMapBounds2() {
 }
 let pressed = 0;
 function handleSelection() {
+  document.getElementById("containertool").style.display = "none";
   // console.log(geo2);
   document.getElementById("breadcrumb-india").style.display = "block";
   document.getElementById("stateTabeleContainer").style.display = "none";
@@ -929,7 +932,6 @@ function handleSelection() {
         geo = L.geoJSON(geoJson, {
           onEachFeature: (feature, layer) => {
             layer.on("click", function (event) {
-              console.log("first");
               document.getElementById("stateTabeleContainer").style.display =
                 "none";
               document.querySelector("#Constituency-res").style.display =
@@ -960,6 +962,21 @@ function handleSelection() {
                 party_name_2,
                 feature.properties.pc_id
               );
+              var map = document.getElementById('map').getBoundingClientRect();
+              console.log("map the ", map);
+              console.log("event map the ", event);
+              var clickY = event.layerPoint.y - map.top;
+              var mapHeight = map.height;
+              var isAboveHalf = clickY < (mapHeight / 2);
+              var div = document.getElementById('containertool');
+
+              if (isAboveHalf) {
+                div.classList.add("above");
+                div.classList.remove("below");
+              } else {
+                div.classList.add("below");
+                div.classList.remove("above");
+              }
             });
             layer._leaflet_id = feature.properties.pc_id;
           },
@@ -976,7 +993,7 @@ function handleSelection() {
         geo2 = L.geoJSON(filteredGeoJson, {
           onEachFeature: (feature, layer) => {
             layer.on("click", function (event) {
-              console.log("change");
+              console.log("change", event);
               document.querySelector("#Constituency-res").style.display =
                 "none";
               document.querySelector("#Candidate-res").style.display = "block";
@@ -1003,6 +1020,22 @@ function handleSelection() {
                 party_name_2,
                 feature.properties.pc_id
               );
+              var map = document.getElementById('map').getBoundingClientRect();
+              console.log("map the ", map);
+              console.log("event map the ", event);
+              var clickY = event.layerPoint.y - map.top;
+              var mapHeight = map.height;
+              var isAboveHalf = clickY < (mapHeight / 2);
+              var div = document.getElementById('containertool');
+
+              if (isAboveHalf) {
+                div.classList.add("above");
+                div.classList.remove("below");
+              } else {
+                div.classList.add("below");
+                div.classList.remove("above");
+              }
+
             });
             layer._leaflet_id = feature.properties.pc_id;
           },
@@ -1323,6 +1356,7 @@ function showdatatable(
   div.innerHTML = "";
   div.innerHTML += htmlCode;
   div.style.display = "block";
+
 }
 function closedata() {
   document.getElementById("containertool").style.display = "none";
@@ -1477,6 +1511,21 @@ function state_map(value, text) {
                 party_name_2,
                 feature.properties.pc_id
               );
+              var map = document.getElementById('map').getBoundingClientRect();
+              console.log("map the ", map);
+              console.log("event map the ", event);
+              var clickY = event.layerPoint.y - map.top;
+              var mapHeight = map.height;
+              var isAboveHalf = clickY < (mapHeight / 2);
+              var div = document.getElementById('containertool');
+
+              if (isAboveHalf) {
+                div.classList.add("above");
+                div.classList.remove("below");
+              } else {
+                div.classList.add("below");
+                div.classList.remove("above");
+              }
               // render_table(feature.properties.pc_id,1);
             });
             layer._leaflet_id = feature.properties.pc_id;
@@ -1516,7 +1565,7 @@ function state_map(value, text) {
             // });
 
             layer.on("click", function (event) {
-              console.log("change");
+              console.log("change 2", event);
               document.querySelector("#Constituency-res").style.display =
                 "none";
               document.querySelector("#Candidate-res").style.display = "block";
@@ -1543,6 +1592,21 @@ function state_map(value, text) {
                 party_name_2,
                 feature.properties.pc_id
               );
+              var map = document.getElementById('map').getBoundingClientRect();
+              console.log("map the ", map);
+              console.log("event map the ", event);
+              var clickY = event.layerPoint.y - map.top;
+              var mapHeight = map.height;
+              var isAboveHalf = clickY < (mapHeight / 2);
+              var div = document.getElementById('containertool');
+
+              if (isAboveHalf) {
+                div.classList.add("above");
+                div.classList.remove("below");
+              } else {
+                div.classList.add("below");
+                div.classList.remove("above");
+              }
               // render_table(feature.properties.pc_id,1);
             });
             layer._leaflet_id = feature.properties.pc_id;
@@ -1594,6 +1658,7 @@ function resetMap() {
 function resetstatebread() {
   geo.remove(map);
   document.getElementById("stateTabeleContainer").style.display = "none";
+  document.getElementById("containertool").style.display = "none";
   breadcrumbConstituency.style.display = "none";
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";
@@ -1638,6 +1703,21 @@ function resetstatebread() {
               party_name_2,
               feature.properties.pc_id
             );
+            var map = document.getElementById('map').getBoundingClientRect();
+              console.log("map the ", map);
+              console.log("event map the ", event);
+              var clickY = event.layerPoint.y - map.top;
+              var mapHeight = map.height;
+              var isAboveHalf = clickY < (mapHeight / 2);
+              var div = document.getElementById('containertool');
+
+              if (isAboveHalf) {
+                div.classList.add("above");
+                div.classList.remove("below");
+              } else {
+                div.classList.add("below");
+                div.classList.remove("above");
+              }
             // render_table(feature.properties.pc_id,1);
           });
           layer._leaflet_id = feature.properties.pc_id;
@@ -1655,7 +1735,7 @@ function resetstatebread() {
       geo2 = L.geoJSON(filteredGeoJson, {
         onEachFeature: (feature, layer) => {
           layer.on("click", function (event) {
-            console.log("change");
+            console.log("change 3", event);
             document.querySelector("#Constituency-res").style.display = "none";
             // document.querySelector("#Candidate-res").style.display = "block";
             breadcrumbConstituency.textContent = feature.properties.pc_name;
@@ -1681,6 +1761,21 @@ function resetstatebread() {
               party_name_2,
               feature.properties.pc_id
             );
+            var map = document.getElementById('map').getBoundingClientRect();
+              console.log("map the ", map);
+              console.log("event map the ", event);
+              var clickY = event.layerPoint.y - map.top;
+              var mapHeight = map.height;
+              var isAboveHalf = clickY < (mapHeight / 2);
+              var div = document.getElementById('containertool');
+
+              if (isAboveHalf) {
+                div.classList.add("above");
+                div.classList.remove("below");
+              } else {
+                div.classList.add("below");
+                div.classList.remove("above");
+              }
             // render_table(feature.properties.pc_id,1);
           });
           layer._leaflet_id = feature.properties.pc_id;
@@ -1725,8 +1820,10 @@ function resetstatebread_option() {
   breadcrumbConstituency.style.display = "none";
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";
+  document.getElementById("containertool").style.display = "none";
 }
 function resetstatebread2() {
+  document.getElementById("containertool").style.display = "none";
   breadcrumbConstituency.style.display = "none";
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";

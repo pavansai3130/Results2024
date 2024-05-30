@@ -241,12 +241,12 @@ async function fetchGeoJSON(file) {
         a.pc_name > b.pc_name ? 1 : a.pc_name < b.pc_name ? -1 : 0
       );
     // Initialize the map and add the GeoJSON layer
-    console.log(L);
+    // console.log(L);
     map = L.map("map", { attributionControl: false, zoomSnap: 0.2 });
     geo = L.geoJSON(geoJson, {
       onEachFeature: (feature, layer) => {
         layer.on("click", function (event) {
-          console.log("first");
+          // console.log("first");
           state_value = feature.properties.st_code;
 
           breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread()">${feature.properties.st_name}`;
@@ -274,6 +274,21 @@ async function fetchGeoJSON(file) {
             party_name_2,
             feature.properties.pc_id
           );
+              var map = document.getElementById('map').getBoundingClientRect();
+              console.log("map the ", map);
+              console.log("event map the ", event);
+              var clickY = event.layerPoint.y - map.top;
+              var mapHeight = map.height;
+              var isAboveHalf = clickY < (mapHeight / 2);
+              var div = document.getElementById('containertool');
+
+              if (isAboveHalf) {
+                div.classList.add("above");
+                div.classList.remove("below");
+              } else {
+                div.classList.add("below");
+                div.classList.remove("above");
+              }
           // render_table(feature.properties.pc_id,1);
           document.getElementById("stateTabeleContainer").style.display =
             "none";
@@ -407,7 +422,7 @@ $(document).ready(async function () {
     //alert("aa");
     document.getElementById(
       "india-map"
-    ).innerHTML = `<svg id="india-svg" viewBox="0 100 1000 1150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>`;
+    ).innerHTML = `<div id="containertool2"></div><svg id="india-svg" viewBox="0 100 1000 1150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>`;
     var pathsStr = "";
     for (let state in paths) {
       pathsStr += `<path id="${states[state]}" d="${paths[state]}"></path>`;
@@ -644,10 +659,11 @@ $(document).ready(async function () {
   }
 
   // Example click event handler for state in India map
-  $("#india-map").on("click", "path", function () {
+  $("#india-map").on("click", "path", function (event) {
     const state = $(this).attr("id");
     handleStateClick(state);
     creatediv(state);
+    half(event)
   });
 
   let percent = 0;
@@ -977,7 +993,7 @@ function handleStateClick(state) {
   // state_map(state_codes[state], state);
   // Implement the logic to fetch and display state-wise results
   const constituencyTable = document.getElementById("stateTable");
-  const cells = constituencyTable.getElementsByTagName("th");
+  // const cells = constituencyTable.getElementsByTagName("th");
   for (const consti in stateDataJson[state]) {
     const leadingCandidate = stateDataJson[state][consti]["candidates"][0];
     4;
@@ -988,68 +1004,104 @@ function handleStateClick(state) {
   }
   updateBar([nda, india, others]);
 }
+function half(event) {
+  var map = document.getElementById('india-map').getBoundingClientRect();
+  var clickY = event.clientY - map.top;
+  var mapHeight = map.height;
+  var isAboveHalf = clickY < (mapHeight / 2);
+  var div = document.getElementById('containertool2');
+
+  if (isAboveHalf) {
+    div.classList.add("above-half");
+    div.classList.remove("below-half");
+  } else {
+    div.classList.add("below-half");
+    div.classList.remove("above-half");
+  }
+}
+// console.log(stateDataJson);
 function creatediv(state) {
-  var obj = {};
-  var partynames = [];
-  var partyseats = [];
-  var constituencyData = stateDataJson[state];
-  for (let constituencyname in constituencyData) {
-    let party_name =
-      stateDataJson[state][constituencyname]["candidates"][0]["prty"];
-    if (party_name in obj) {
-      obj[party_name] += 1;
-    } else obj[party_name] = 1;
-  }
-  var sortedPartyWins = Object.entries(obj).sort((a, b) => b[1] - a[1]);
-  for (let i = 0; i < sortedPartyWins.length; i++) {
-    partynames[i] = sortedPartyWins[i][0];
-    partyseats[i] = sortedPartyWins[i][1];
-  }
-  var maindiv = document.getElementById("containertool2");
-  var htmlcode = `<span class="close" onclick="close_btn()">&times;</span>
-                    <h2 class="sthead">${state}</h2>
-                    
-                    <table class="detailstable">
-                       <thead>
-                          <tr>
-                             <th class="tbhead">Party</th>
-                             <th id="wlright" class="tbhead">Won / Lead</th>
-                          </tr>
-                       </thead>`;
-  if (partynames)
-    for (let i = 0; i < partynames.length && i < 5; i++) {
-      htmlcode += `<tr>
-                                       <td class="tdData"><img class="party-icon" src="${
-                                         sym[partynames[i]]
-                                       }"> ${partynames[i]}</td>
-                                       <td class="tdData" id="wlright">${
-                                         obj[partynames[i]]
-                                       }</td>
-                                     </tr>`;
-    }
-  htmlcode += `</tbody>
-                    </table>
-                    <div class="results12">
-                       <h3 class="hdiv3">2019 results</h3>
-                       <div class="bars">
-                           <div class="barbox">
-                               <span class="barlabel" style="margin-left:-60px;">${partynames[0]}</span>
-                               <div class="bar1 inbar">${partyseats[0]}</div>
-                           </div>
-                           <div class="barbox">
-                               <span class="barlabel" style="margin-left:-50px;">${partynames[1]}</span>
-                               <div class="bar2 inbar">${partyseats[1]}</div>
-                           </div>
-                           <div class="barbox">
-                               <span class="barlabel" style="margin-left:-5px;">Others</span>
-                               <div class="bar3 inbar">81</div>
-                           </div>
-                       </div>
-                   </div>
-                   <div id="viewdetails" onclick="showmap('${state}')">Check Full Results<span id=gt>&gt</span></div>`;
-  maindiv.innerHTML = "";
-  maindiv.innerHTML += htmlcode;
-  maindiv.style.display = "block";
+  fetch('election2019.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+      return response.json();
+    })
+    .then(stateDataJson => {
+      var obj = {};
+      var partynames = [];
+      var partyseats = [];
+      var constituencyData = stateDataJson[0][state];
+      for (let const_name in constituencyData) {
+        let party_name = stateDataJson[0][state][const_name]["candidates"][0]["prty"];
+
+        if (party_name in obj) {
+          obj[party_name] += 1;
+        }
+        else
+          obj[party_name] = 1;
+      }
+      var sortedPartyWins = Object.entries(obj).sort((a, b) => b[1] - a[1]);
+      for (let i = 0; i < sortedPartyWins.length; i++) {
+        partynames[i] = sortedPartyWins[i][0];
+        partyseats[i] = sortedPartyWins[i][1];
+      }
+      var maindiv = document.getElementById('containertool2');
+      var mainindiamap = document.getElementById('india-map');
+      mainindiamap.append(maindiv);
+      var htmlcode = `<span class="close" onclick="close_btn()">&times;</span>
+                        <h2 class="sthead">${state}</h2>
+                        
+                        <table class="detailstable">
+                           <thead>
+                              <tr>
+                                 <th class="tbhead">Party</th>
+                                 <th id="wlright" class="tbhead">Won / Lead</th>
+                              </tr>
+                           </thead>`;
+      htmlcode += `</thead>`;
+      if (partynames) {
+        for (let i = 0; i < partynames.length && i < 5; i++) {
+          if (partynames[i] !== undefined) {
+            htmlcode += `<tr>
+                                  <td class="tdData"><img class="party-icon" src="${sym[partynames[i]]}"> ${partynames[i]}</td>
+                                  <td class="tdData" id="wlright">${obj[partynames[i]]}</td></tr>`;
+          }
+        }
+      }
+      htmlcode += `</tbody>
+                           </table><div class="results12">
+                            <h3 class="hdiv3">2019 results</h3>
+                           <div class="bars">`;
+
+      for (let i = 0; i < partynames.length && i < 3; i++) {
+        if (partynames[i] !== undefined && partyseats[i] !== undefined) {
+          htmlcode += `<div class="barbox">
+                                <span class="barlabel">${partynames[i]}</span>
+                              <div class="br${i + 1} inbar" id="id${i}">${partyseats[i]}</div> </div>`;
+        }
+      }
+      htmlcode += `    </div>
+                            </div> <div id="viewdetails" onclick="showmap('${state}')">Check Full Results<span id=gt>&gt</span></div>`;
+
+      maindiv.innerHTML = "";
+      maindiv.innerHTML += htmlcode;
+      maindiv.style.display = "block";
+      // Set the width after the HTML has been added to the DOM
+      if (partynames.length == 1) {
+        setTimeout(() => {
+          document.getElementById('id0').style.width = "13.215rem";
+        }, 0);
+      }
+      if (partynames.length == 2) {
+        setTimeout(() => {
+          document.getElementById('id0').style.width = "7.215rem";
+        }, 0);
+      }
+
+    });
+
 }
 function showmap(state) {
   state_map(state_codes[state], state);
