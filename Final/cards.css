@@ -4,11 +4,11 @@
     color: #fff;
   }
   
-  #root{
+  /* #root{
     display: flex;
     row-gap: 24px;
     column-gap: 28px;
-  }
+  } */
   
   .ribbon {
     --f: .5em;
@@ -54,9 +54,9 @@
     background: linear-gradient(to right, rgba(217, 242, 252, 255), rgba(190, 234, 241, 255));
     border-radius: 10px;
     padding: 0;
-    /* margin: 0.725rem; */
+    margin: 0.725rem;
     max-width: 300px;
-    /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     /* margin: 1rem; */
     /* height: 18.75rem; */

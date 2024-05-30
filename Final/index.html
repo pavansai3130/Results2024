@@ -347,7 +347,7 @@
                               src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"></a>
                         </form>
                      </div>
-                     <table class="table table-bordered rounded-2 mt-2"
+                     <table id="mainTable" class="table table-bordered rounded-2 mt-2"
                          id="stateTable">
                         <thead>
                            <tr>
@@ -375,7 +375,7 @@
                   <!-- Constitunecy Table -->
                   <div id="Constituency-res" style="margin-top: 0.9375rem;" class="table-responsive-sm"
                      style="display: none;">
-                     <table class="table  table-bordered" style="margin-top: 0.1rem;margin-bottom: 0.1rem;">
+                     <table id="constTable" class="table  table-bordered" style="margin-top: 0.1rem;margin-bottom: 0.1rem;">
                         <div id="theading" style="display: flex; align-items: center; ">
                            <span id="constituency-name"></span>
                            <input class="form-control" id="stateinput" type="text" placeholder="Search">
@@ -426,40 +426,17 @@
                      </div>
                   </div>
                </div>
+               <!-- HARI CONTAINER----------------------------------------------------- -->
                <div class="col-12 col-md-6">
                   <div class="root">
                      <h2 style="align-items: center;margin-top: 1rem;font-weight: bold;">Popular Candidates</h2>
                      <div class="container-fluid">
-                        <div id="root" class="row justify-content-between">
-                           <!-- <div class="col-lg-6 d-flex position-relative custom-container">
-                              <div class="ribbon">Trailing</div>
-                              <div class="temp custom-temp">
-                                  <div class="card-body w-100">
-                                      <h4 class="card-title custom-card-title">Rahul Gandhi</h4>
-                                      <div class="subheaders d-flex align-items-center mb-3 custom-subheaders">
-                                          <div class="logo"><img class="custom-img"
-                                                  src="https://upload.wikimedia.org/wikipedia/commons/6/63/Indian_National_Congress_hand_logo.png"
-                                                  alt=""></div>
-                                          <h4 style="font-weight: bold;">INC</h4>
-                                      </div>
-                                      <p class="card-text custom-card-text">Rai Bareilly (Uttar Pradesh)</p>
-                                      <p class="card-text custom-card-text-votes">Votes : 1,23,009</p>
-                                  </div>
-                                  <div
-                                      class="iribbon trail d-flex flex-column bg-white rounded-2 p-3 position-relative custom-iribbon">
-                                      <p class="card-text mb-1 custom-iribbon-text">Trailing by</p>
-                                      <p class="card-text custom-iribbon-text-votes">23,000 votes</p>
-                                  </div>
-                              </div>
-                              <div class="person-image d-flex custom-person-image">
-                                  <img class="person-img w-50" src="img/rahul.png" alt="Person Image">
-                              </div>
-                              </div> -->
+                        <div id="root">
+                          <!-- Rows with cards will be added here -->
                         </div>
-                        <!-- End of the row -->
-                        <button id="see-more-btn" style="margin-bottom: 1rem;margin-top: 1rem;" class="button">See
-                        More</button>
-                     </div>
+                        <!-- End of the root -->
+                        <button id="see-more-btn" style="margin-bottom: 1rem;margin-top: 1rem;" class="button">See More</button>
+                      </div>
                   </div>
                </div>
 
