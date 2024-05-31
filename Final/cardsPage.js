@@ -1,19 +1,50 @@
 async function fetchMoreCards() {
   try {
-    const response = await fetch("data.json");
-    const response2 = await fetch("celebdata.json");
-    const data = await response.json();
-    const data2 = await response2.json();
-    const moreCardsRoot = document.getElementById("more-cards-root");
-    const moreCardsRoot1 = document.getElementById("more-celeb-cards-root");
+    // Fetch the state-constituency-candidate JSON
+    const stateResponse = await fetch("popular.json");
+    const stateData = await stateResponse.json();
+    console.log('State Data:', stateData);
 
-    data.forEach((item) => {
-      const card = createCard(item);
-      moreCardsRoot.appendChild(card);
-    });
-    data2.forEach((item) => {
-      const card = createCard(item);
-      moreCardsRoot1.appendChild(card);
+    // Fetch the detailed candidate information JSON
+    const candidateResponse = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
+    const candidateData = await candidateResponse.json();
+    console.log('Candidate Data:', candidateData);
+
+    const moreCardsRoot = document.getElementById("more-cards-root");
+
+    // Function to get candidate details by ID from the fetched candidate data
+    function getCandidateDetails(candidateId) {
+      const statesData = candidateData[0];  // Assuming 0th index contains the relevant data
+      for (let state in statesData) {
+        for (let constituency in statesData[state]) {
+          const candidates = statesData[state][constituency].candidates;
+          if (candidates) {
+            const candidate = candidates.find(candidate => candidate.cId === candidateId);
+            if (candidate) {
+              candidate.place = `${constituency} (${state})`; 
+              return candidate;
+            }
+          } else {
+            console.error('Candidates array is undefined for', state, constituency);  // Add log to debug
+          }
+        }
+      }
+      return null;
+    }
+
+    // Loop through each state and constituency
+    Object.keys(stateData).forEach(state => {
+      Object.keys(stateData[state]).forEach(constituency => {
+        stateData[state][constituency].forEach(candidateId => {
+          const candidateDetails = getCandidateDetails(candidateId);
+          if (candidateDetails) {
+            const card = createCard(candidateDetails);
+            moreCardsRoot.appendChild(card);
+          } else {
+            console.error('Candidate details not found for ID:', candidateId);
+          }
+        });
+      });
     });
   } catch (error) {
     console.error("Error fetching or processing data:", error);
@@ -21,6 +52,7 @@ async function fetchMoreCards() {
 }
 
 function createCard(item) {
+  
   const card = document.createElement("div");
   card.className = "position-relative custom-container";
 
@@ -30,14 +62,14 @@ function createCard(item) {
   let nameColor;
 
   // Adjust colors based on the alliance field
-  if (item.alliance === "NDA") {
-    bgColor = " linear-gradient(56deg, #FFF8DC,#FFE4BF)";
+  if (item.alnce === "NDA") {
+    bgColor = "linear-gradient(56deg, #FFF8DC,#FFE4BF)";
     arrColor = "linear-gradient(90deg, #EC8E30,#A65E17)";
     nameColor = "#FF9933";
-  } else if (item.alliance === "INDA") {
+  } else if (item.alnce === "INDIA") {
     nameColor = "#19AAED";
-  } else if (item.alliance === "OTH") {
-    bgColor = " linear-gradient(56deg, #F5F5F5,#E0E0E0)";
+  } else if (item.alnce === "OTH") {
+    bgColor = "linear-gradient(56deg, #F5F5F5,#E0E0E0)";
     arrColor = "linear-gradient(90deg, #6F9088,#42615A)";
     nameColor = "#0c6b4b";
   }
@@ -45,45 +77,43 @@ function createCard(item) {
   card.style.background = bgColor;
 
   const ribbonText = item.lead ? "Leading" : "Trailing";
-  const ribbonColor = item.lead
-    ? "rgba(34, 177, 76, 255)"
-    : "rgba(240, 68, 56, 255)";
+  const ribbonColor = item.lead ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
 
   card.innerHTML = `
-        <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
-        <div class="temp custom-temp">
-            <div class="card-body w-100">
-                <h3 class="card-title custom-card-title" style="color:${nameColor}">${
-    item.name
-  }</h3>
-                <div class="subheaders d-flex align-items-center custom-subheaders">
-                    <div class="logo"><img class="custom-img" src="${
-                      item.logoimg
-                    }" alt=""></div>
-                    <h6 style="font-weight: bold;">${item.pid}</h6>
-                </div>
-                <p class="card-text custom-card-text card-place" style="font-size:small">${
-                  item.place
-                }</p>
-                <p class="card-text custom-card-text-votes" style="color:${nameColor}">
-                    <span style="color:gray;font-weight:500;font-size:bold">Votes : </span>${
-                      item.votes
-                    }
-                </p>
-            </div>
-            <div class="iribbon d-flex flex-column bg-white rounded-2 position-relative custom-iribbon" style="background:${arrColor}">
-                <p class="card-text mb-1 custom-iribbon-text">${
-                  item.lead ? "Leading by" : "Trailing by"
-                }</p>
-                <p class="card-text custom-iribbon-text-votes">${
-                  item.lead2votes
-                }</p>
-            </div>
-        </div>
-        <div class="person-image d-flex custom-person-image">
-            <img class="person-img wid" src="${item.perimg}" alt="Person Image">
-        </div>
-    `;
+  <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
+  <div class="temp custom-temp">
+      <div class="card-body w-100">
+          <h3 class="card-title custom-card-title" style="color:${nameColor}">${
+item.cName
+}</h3>
+          <div class="subheaders cd-flex align-items-center custom-subheaders">
+              <div class="logo"><img class="custom-img" src="${
+                item.logoimg
+              }" alt=""></div>
+              <h6 style="font-weight: bold;">${item.prty}</h6>
+          </div>
+          <p class="card-text custom-card-text">${
+            item.place
+          }</p>
+          <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
+              <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
+                item.vts
+              }
+          </p>
+      </div>
+      <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
+          <p class="card-text mb-1 custom-iribbon-text">${
+            item.lead ? "Leading by" : "Trailing by"
+          }</p>
+          <p class="card-text custom-iribbon-text-votes">${
+            item.lead2votes
+          }</p>
+      </div>
+  </div>
+  <div class="person-image d-flex custom-person-image">
+      <img class="person-img wid" src="${item.perimg}" alt="Person Image">
+  </div>
+`;
 
   return card;
 }
@@ -94,6 +124,8 @@ document.getElementById("back-btn").addEventListener("click", function () {
 
 // Fetch and render the cards when the page loads
 fetchMoreCards();
+
+
 
 function performSearch() {
   const searchInput = document
@@ -130,14 +162,6 @@ function scrollToSection(sectionId) {
   document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
 }
 
-document.getElementById("popular-btn").addEventListener("click", () => {
-  scrollToSection("popular-section");
-});
-
-document.getElementById("celebs-btn").addEventListener("click", () => {
-  scrollToSection("celebs-section");
-});
-
 // Function to filter cards by state
 document.getElementById("dropdown").addEventListener("change", () => {
   performSearch();
@@ -155,3 +179,11 @@ window.addEventListener("scroll", () => {
     backToTopBtn.style.display = "none";
   }
 });
+function getParameterByName(name, url = window.location.href) {
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
