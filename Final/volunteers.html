@@ -1,252 +1,487 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>India General Election 2024</title>
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+2BAamo4lVK5r+BN3eaqI0iKC5V/pbG2TcgPExl" crossorigin="anonymous">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>India General Election 2024</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+2BAamo4lVK5r+BN3eaqI0iKC5V/pbG2TcgPExl"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
       integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-      crossorigin="anonymous" referrerpolicy="no-referrer" />
-      <script src="leaflet/index.js"></script>
-      <script src="index.js"></script>
-      <script src="./cards.js"></script>
-      <script src="./disclaimer.js"></script>
-      <link rel="stylesheet" href="styles.css">
-      <link rel="stylesheet" href="styling.css">
-      <link rel="stylesheet" href="./volunteers.css">
-      <link rel="stylesheet" href="leaflet/index.css"/>
-      <link rel="stylesheet" href="./disclaimer.css">
-      <link rel="stylesheet" href="./navbarStyles.css">
-
-   </head>
-   <body>
-    <nav class="navbarHead">
-      <div class="containerHead">
-         <div class="logo">
-            <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
-         </div>
-         <div class="navlinks" id="navlinks">
-            <div class="headerPhone">
-               <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
-               <i class="fa-solid fa-xmark" onclick="hidemenu()"></i>
-            </div>
-            <div class="d-flex">
-               <div class="imgHover">
-                  <div class="tooltip-container">
-                     <!-- <span class="text">Tooltip</span> -->
-                        <a style="font-size: 1.5rem;">Candidates</a>
-                     <span class="tooltip">
-                        <li><a href="cardsPage.html">Popular</a></li>
-                        <li><a href="celebCards.html">Celebrities</a></li>
-                        </a></span>
-                  </div>
-
-               </div>
-               <div class="listBoxes">
-
-               
-               <ul>
-                  <li><a href="bigfights_viewall.html">Big Fights</a></li>
-                  <li><a href="">'19 vs '24</a></li>
-                  <div class="phoneMedia" id="phoneMedia"><i class="fa-brands fa-facebook" style="color: #158be5;"></i>
-
-                     <i class="fa-brands fa-whatsapp" style="color: #32ec6a;"></i>
-
-                     <i class="fa-brands fa-instagram" style="color: #d24196;"></i>
-
-                     <i class="fa-brands fa-telegram" style="color: #74deec;"></i>
-                  </div>
-               </ul>
-               <div class="footerContact">
-                  <ul id="footy" >
-                     <li><a href="./about.html">About Us</a></li>
-                     <li><a href="./volunteers.html">Our Team</a></li>
-                     <li><a href="./disclaimer.html">Disclaimer</a></li>
-                  </ul>
-               </div>
-               
-            </div>
-            </div>
-         </div>
-         <i id="menu" class="fa-solid fa-bars" onclick="showmenu()"></i>
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="leaflet/index.js"></script>
+    <script src="index.js"></script>
+    <script src="./cards.js"></script>
+    <script src="./disclaimer.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styling.css" />
+    <link rel="stylesheet" href="./volunteers.css" />
+    <link rel="stylesheet" href="leaflet/index.css" />
+    <link rel="stylesheet" href="./disclaimer.css" />
+    <link rel="stylesheet" href="./navbarStyles.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="logo">
+        <a href="index.html"
+          ><img src="imgs/RESULTS2024LOGO.png" alt="Logo"
+        /></a>
       </div>
-   </nav>
-      <!-- Common Header -->
-      <header class="header">
-         <div class="container">
-            <div class="row">
+      <div class="navigations">
+        <span id="menu" class="d-lg-none" onclick="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </span>
+        <div id="mobile-nav-content">
+          <ul id="nav-links">
+            <li><a href="index.html" class="links">2019 Results</a></li>
+            <li
+              id="hoverable"
+              onmouseenter="showTooltip()"
+              onmouseleave="hideTooltip()"
+              onclick="toggleTooltip()"
+            >
+              <a href="/" class="links disabled">Candidates</a>
+              <i class="fa-solid fa-chevron-down"></i>
+              <i class="fa-solid fa-chevron-up"></i>
+              <ul class="tooltip" id="tooltip">
+                <li id="celebrities">
+                  <a href="celebCards.html">Celebrities</a>
+                </li>
+                <li id="popular">
+                  <a href="cardsPage.html">Popular Candidates</a>
+                </li>
+              </ul>
+            </li>
+            <div class="hiding" id="mobile-tooltip">
+              <li>
+                <a href="celebCards.html" class="links" id="celebrities2"
+                  >Celebrities</a
+                >
+              </li>
+              <li>
+                <a href="cardsPage.html" class="links" id="popular2"
+                  >Popular Candidates</a
+                >
+              </li>
             </div>
-         </div>
+            <li><a href="index.html" class="links">'24 vs '19</a></li>
+            <li>
+              <a href="bigfights_viewall.html" class="links">Big fights</a>
+            </li>
+            <div class="a2a_kit a2a_kit_size_26 a2a_default_style socialMedia">
+              <a class="a2a_button_facebook"></a>
+              <a class="a2a_button_twitter"></a>
+              <a class="a2a_button_whatsapp"></a>
+              <a class="a2a_button_linkedin"></a>
+              <a class="a2a_button_copy_link"></a>
+            </div>
+          </ul>
+          <ul id="mobile-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="volunteers.html">Volunteers</a></li>
+            <li><a href="disclaimer.html">Disclaimer</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Common Header -->
+    <div class="body-main-content" style="display: block">
+      <header class="header">
+        <div class="container">
+          <div class="row"></div>
+        </div>
       </header>
 
-
       <div class="mainBody">
-        <img src="./imgs/teamPic.jpg" class="img-fluid" alt="Responsive image">
+        <img
+          src="./imgs/teamPic.jpg"
+          class="img-fluid"
+          alt="Responsive image"
+        />
         <div class="aboutContainer">
-          <p style="font-size: 54px;font-weight:bold;">About <span style="color: red;">results</span><span style="color: green;">2024.in</span></p>
+          <p style="font-size: 54px; font-weight: bold">
+            About <span style="color: red">results</span
+            ><span style="color: green">2024.in</span>
+          </p>
           <p class="aboutP">
-            results2024.in, is a crowdsourced initiative for visualizing Indian election results!
+            results2024.in, is a crowdsourced initiative for visualizing Indian
+            election results!
           </p>
         </div>
 
         <div class="teamMembers">
           <div class="member">
             <div class="memberImage">
-              <img src="./imgs/teamMembers/ramana.png" class="img-fluid" alt="">
+              <img
+                src="./imgs/teamMembers/ramana.png"
+                class="img-fluid"
+                alt=""
+              />
             </div>
             <div class="memberDetails">
               <p class="name">Ramana Gowrishetty</p>
               <div class="socials">
-                <a target="_blank" href="https://www.instagram.com/ramana_shetty/"><img src="./imgs/instagram.svg" class="img-fluid insta" alt=""></a>
-                <a target="_blank" href="https://x.com/Ramana_Shetty03"><img src="./imgs/twitter.svg" class="img-fluid twitter" alt=""></a>
-                <a target="_blank" href="https://github.com/RamanaShetty"><img src="./imgs/github.svg" class="img-fluid github" alt=""></a>
-                <a target="_blank" href="https://www.linkedin.com/in/ramana-gowrishetty-16a718228"><img src="./imgs/linkedin.svg" class="img-fluid linkedin" alt=""></a>
+                <a
+                  target="_blank"
+                  href="https://www.instagram.com/ramana_shetty/"
+                  ><img
+                    src="./imgs/instagram.svg"
+                    class="img-fluid insta"
+                    alt=""
+                /></a>
+                <a target="_blank" href="https://x.com/Ramana_Shetty03"
+                  ><img
+                    src="./imgs/twitter.svg"
+                    class="img-fluid twitter"
+                    alt=""
+                /></a>
+                <a target="_blank" href="https://github.com/RamanaShetty"
+                  ><img src="./imgs/github.svg" class="img-fluid github" alt=""
+                /></a>
+                <a
+                  target="_blank"
+                  href="https://www.linkedin.com/in/ramana-gowrishetty-16a718228"
+                  ><img
+                    src="./imgs/linkedin.svg"
+                    class="img-fluid linkedin"
+                    alt=""
+                /></a>
               </div>
             </div>
           </div>
-      
+
           <div class="member">
             <div class="memberImage">
-              <img src="./imgs/teamMembers/Prasad.png" class="img-fluid" alt="">
+              <img
+                src="./imgs/teamMembers/Prasad.png"
+                class="img-fluid"
+                alt=""
+              />
             </div>
             <div class="memberDetails">
               <p class="name">N. Hari prasad</p>
               <div class="socials">
-                <a target="_blank" href="https://www.instagram.com/hari.prasad_03/"><img src="./imgs/instagram.svg" class="img-fluid insta" alt=""></a>
-                <a target="_blank" href="https://www.facebook.com/profile.php?id=100068384601606"><img src="./imgs/facebook.svg" class="img-fluid facebook" alt=""></a>
-                <a target="_blank" href="https://github.com/hariprasad-03/"><img src="./imgs/github.svg" class="img-fluid github" alt=""></a>
-                <a target="_blank" href="https://www.linkedin.com/in/hariprasad-neerudi-8688bb27a/"><img src="./imgs/linkedin.svg" class="img-fluid linkedin" alt=""></a>
+                <a
+                  target="_blank"
+                  href="https://www.instagram.com/hari.prasad_03/"
+                  ><img
+                    src="./imgs/instagram.svg"
+                    class="img-fluid insta"
+                    alt=""
+                /></a>
+                <a
+                  target="_blank"
+                  href="https://www.facebook.com/profile.php?id=100068384601606"
+                  ><img
+                    src="./imgs/facebook.svg"
+                    class="img-fluid facebook"
+                    alt=""
+                /></a>
+                <a target="_blank" href="https://github.com/hariprasad-03/"
+                  ><img src="./imgs/github.svg" class="img-fluid github" alt=""
+                /></a>
+                <a
+                  target="_blank"
+                  href="https://www.linkedin.com/in/hariprasad-neerudi-8688bb27a/"
+                  ><img
+                    src="./imgs/linkedin.svg"
+                    class="img-fluid linkedin"
+                    alt=""
+                /></a>
               </div>
             </div>
           </div>
 
           <div class="member">
             <div class="memberImage">
-              <img src="./imgs/teamMembers/Karthik.png" class="img-fluid" alt="">
+              <img
+                src="./imgs/teamMembers/Karthik.png"
+                class="img-fluid"
+                alt=""
+              />
             </div>
             <div class="memberDetails">
               <p class="name">I Karthik Varma</p>
               <div class="socials">
-                <a target="_blank" href="https://www.facebook.com/profile.php/?id=100034595054676"><img src="./imgs/facebook.svg" class="img-fluid facebook" alt=""></a>
-                <a target="_blank" href="https://twitter.com/KarthikVarmaI"><img src="./imgs/twitter.svg" class="img-fluid twitter" alt=""></a>
-                <a target="_blank" href="https://github.com/Karthik-varma-I"><img src="./imgs/github.svg" class="img-fluid github" alt=""></a>
-                <a target="_blank" href="https://www.linkedin.com/in/karthik-varma-b3080822a"><img src="./imgs/linkedin.svg" class="img-fluid linkedin" alt=""></a>
+                <a
+                  target="_blank"
+                  href="https://www.facebook.com/profile.php/?id=100034595054676"
+                  ><img
+                    src="./imgs/facebook.svg"
+                    class="img-fluid facebook"
+                    alt=""
+                /></a>
+                <a target="_blank" href="https://twitter.com/KarthikVarmaI"
+                  ><img
+                    src="./imgs/twitter.svg"
+                    class="img-fluid twitter"
+                    alt=""
+                /></a>
+                <a target="_blank" href="https://github.com/Karthik-varma-I"
+                  ><img src="./imgs/github.svg" class="img-fluid github" alt=""
+                /></a>
+                <a
+                  target="_blank"
+                  href="https://www.linkedin.com/in/karthik-varma-b3080822a"
+                  ><img
+                    src="./imgs/linkedin.svg"
+                    class="img-fluid linkedin"
+                    alt=""
+                /></a>
               </div>
             </div>
           </div>
 
           <div class="member">
             <div class="memberImage">
-              <img src="./imgs/teamMembers/Charan.png" class="img-fluid" alt="">
+              <img
+                src="./imgs/teamMembers/Charan.png"
+                class="img-fluid"
+                alt=""
+              />
             </div>
             <div class="memberDetails">
               <p class="name">Charan Teja Bandaru</p>
               <div class="socials">
-                <a target="_blank" href="https://www.instagram.com/charanteja1060/"><img src="./imgs/instagram.svg" class="img-fluid insta" alt=""></a>
-                <a target="_blank" href="https://github.com/charantejabandaru"><img src="./imgs/github.svg" class="img-fluid github" alt=""></a>
-                <a target="_blank" href="https://www.linkedin.com/in/charan-teja-bandari-46a9b61b9/"><img src="./imgs/linkedin.svg" class="img-fluid linkedin" alt=""></a>
+                <a
+                  target="_blank"
+                  href="https://www.instagram.com/charanteja1060/"
+                  ><img
+                    src="./imgs/instagram.svg"
+                    class="img-fluid insta"
+                    alt=""
+                /></a>
+                <a target="_blank" href="https://github.com/charantejabandaru"
+                  ><img src="./imgs/github.svg" class="img-fluid github" alt=""
+                /></a>
+                <a
+                  target="_blank"
+                  href="https://www.linkedin.com/in/charan-teja-bandari-46a9b61b9/"
+                  ><img
+                    src="./imgs/linkedin.svg"
+                    class="img-fluid linkedin"
+                    alt=""
+                /></a>
               </div>
             </div>
           </div>
 
           <div class="member">
             <div class="memberImage">
-              <img src="./imgs/teamMembers/tusha.png" class="img-fluid" alt="">
+              <img
+                src="./imgs/teamMembers/tusha.png"
+                class="img-fluid"
+                alt=""
+              />
             </div>
             <div class="memberDetails">
               <p class="name">Tushar Lohan</p>
               <div class="socials">
-                <a target="_blank" href="https://www.instagram.com/tushar_lohann/"><img src="./imgs/instagram.svg" class="img-fluid insta" alt=""></a>
-                <a target="_blank" href="https://github.com/tusharlohannn"><img src="./imgs/github.svg" class="img-fluid github" alt=""></a>
-                <a target="_blank" href="https://www.linkedin.com/in/tushar-lohan-2a8b82261/"><img src="./imgs/linkedin.svg" class="img-fluid linkedin" alt=""></a>
+                <a
+                  target="_blank"
+                  href="https://www.instagram.com/tushar_lohann/"
+                  ><img
+                    src="./imgs/instagram.svg"
+                    class="img-fluid insta"
+                    alt=""
+                /></a>
+                <a target="_blank" href="https://github.com/tusharlohannn"
+                  ><img src="./imgs/github.svg" class="img-fluid github" alt=""
+                /></a>
+                <a
+                  target="_blank"
+                  href="https://www.linkedin.com/in/tushar-lohan-2a8b82261/"
+                  ><img
+                    src="./imgs/linkedin.svg"
+                    class="img-fluid linkedin"
+                    alt=""
+                /></a>
               </div>
             </div>
           </div>
 
           <div class="member">
             <div class="memberImage">
-              <img src="./imgs/teamMembers/Pavan.png" class="img-fluid" alt="">
+              <img
+                src="./imgs/teamMembers/Pavan.png"
+                class="img-fluid"
+                alt=""
+              />
             </div>
             <div class="memberDetails">
               <p class="name">Megha Pavan Sai</p>
               <div class="socials">
-                <a target="_blank" href="https://www.instagram.com/pavansai_yeeli?igsh=djl1eXloZGp5Mjhx"><img src="./imgs/instagram.svg" class="img-fluid insta" alt=""></a>
-                <a target="_blank" href="https://github.com/pavansai3130"><img src="./imgs/github.svg" class="img-fluid github" alt=""></a>
-                <a target="_blank" href="https://www.linkedin.com/in/megha-pavan-sai-yeeli-3953b9239?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><img src="./imgs/linkedin.svg" class="img-fluid linkedin" alt=""></a>
+                <a
+                  target="_blank"
+                  href="https://www.instagram.com/pavansai_yeeli?igsh=djl1eXloZGp5Mjhx"
+                  ><img
+                    src="./imgs/instagram.svg"
+                    class="img-fluid insta"
+                    alt=""
+                /></a>
+                <a target="_blank" href="https://github.com/pavansai3130"
+                  ><img src="./imgs/github.svg" class="img-fluid github" alt=""
+                /></a>
+                <a
+                  target="_blank"
+                  href="https://www.linkedin.com/in/megha-pavan-sai-yeeli-3953b9239?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                  ><img
+                    src="./imgs/linkedin.svg"
+                    class="img-fluid linkedin"
+                    alt=""
+                /></a>
               </div>
             </div>
           </div>
 
           <div class="member">
             <div class="memberImage">
-              <img src="./imgs/teamMembers/Rajendar.png" class="img-fluid" alt="">
+              <img
+                src="./imgs/teamMembers/Rajendar.png"
+                class="img-fluid"
+                alt=""
+              />
             </div>
             <div class="memberDetails">
               <p class="name">Srimarthi Rajendar</p>
               <div class="socials">
-                <a target="_blank" href="https://www.instagram.com/rajendar_987"><img src="./imgs/instagram.svg" class="img-fluid insta" alt=""></a>
-                <a target="_blank" href="https://x.com/Rajendar9876"><img src="./imgs/twitter.svg" class="img-fluid twitter" alt=""></a>
-                <a target="_blank" href="https://github.com/Rajendar98"><img src="./imgs/github.svg" class="img-fluid github" alt=""></a>
-                <a target="_blank" href="https://www.linkedin.com/in/srimarthi-rajendar"><img src="./imgs/linkedin.svg" class="img-fluid linkedin" alt=""></a>
+                <a target="_blank" href="https://www.instagram.com/rajendar_987"
+                  ><img
+                    src="./imgs/instagram.svg"
+                    class="img-fluid insta"
+                    alt=""
+                /></a>
+                <a target="_blank" href="https://x.com/Rajendar9876"
+                  ><img
+                    src="./imgs/twitter.svg"
+                    class="img-fluid twitter"
+                    alt=""
+                /></a>
+                <a target="_blank" href="https://github.com/Rajendar98"
+                  ><img src="./imgs/github.svg" class="img-fluid github" alt=""
+                /></a>
+                <a
+                  target="_blank"
+                  href="https://www.linkedin.com/in/srimarthi-rajendar"
+                  ><img
+                    src="./imgs/linkedin.svg"
+                    class="img-fluid linkedin"
+                    alt=""
+                /></a>
               </div>
             </div>
           </div>
 
           <div class="member">
             <div class="memberImage">
-              <img src="./imgs/teamMembers/sidharth.png" class="img-fluid" alt="">
+              <img
+                src="./imgs/teamMembers/sidharth.png"
+                class="img-fluid"
+                alt=""
+              />
             </div>
             <div class="memberDetails">
               <p class="name">Siddharth Punna</p>
               <div class="socials">
-                <a target="_blank" href="https://www.instagram.com/sidharth.punna/"><img src="./imgs/instagram.svg" class="img-fluid insta" alt=""></a>
-                <a target="_blank" href="https://x.com/PunnaSidharth"><img src="./imgs/twitter.svg" class="img-fluid twitter" alt=""></a>
-                <a target="_blank" href="https://github.com/Sidharth-Punna"><img src="./imgs/github.svg" class="img-fluid github" alt=""></a>
-                <a target="_blank" href="http://www.linkedin.com/in/sidharth-punna-900081241"><img src="./imgs/linkedin.svg" class="img-fluid linkedin" alt=""></a>
+                <a
+                  target="_blank"
+                  href="https://www.instagram.com/sidharth.punna/"
+                  ><img
+                    src="./imgs/instagram.svg"
+                    class="img-fluid insta"
+                    alt=""
+                /></a>
+                <a target="_blank" href="https://x.com/PunnaSidharth"
+                  ><img
+                    src="./imgs/twitter.svg"
+                    class="img-fluid twitter"
+                    alt=""
+                /></a>
+                <a target="_blank" href="https://github.com/Sidharth-Punna"
+                  ><img src="./imgs/github.svg" class="img-fluid github" alt=""
+                /></a>
+                <a
+                  target="_blank"
+                  href="http://www.linkedin.com/in/sidharth-punna-900081241"
+                  ><img
+                    src="./imgs/linkedin.svg"
+                    class="img-fluid linkedin"
+                    alt=""
+                /></a>
               </div>
             </div>
           </div>
-            
         </div>
       </div>
+    </div>
 
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="./paths.js"></script>
+    <script src="./script.js"></script>
+    <script src="./cards.js"></script>
+    <script src="./navbar.js"></script>
 
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-     <script src="./paths.js"></script>
-     <script src="./script.js"></script>
-     <script src="./cards.js"></script>
-     <script src="./navbar.js"></script>
-
-     <footer class="footer">
+    <footer class="footer">
       <div class="footerText">
-         <p>Crafted with <img src="./imgs/heart.svg" style="width: 1.2rem;" alt="heart"> by Gradious</p>
-         <p>results2024.in is a crowdsourced initiative for visualizing the 2024 Indian Parliamentary election results. It is not a source of data.</p>
-         <p style="margin: 2rem 0 0 0;" class="builtBy">Built by <img src="./imgs/gradious.svg" alt="gradious logo"><span style="font-weight: 800;margin-left:0.4rem;">Gradious</span></p>
+        <p>
+          Crafted with
+          <img src="./imgs/heart.svg" style="width: 1.2rem" alt="heart" /> by
+          Gradious
+        </p>
+        <p>
+          results2024.in is a crowdsourced initiative for visualizing the 2024
+          Indian Parliamentary election results. It is not a source of data.
+        </p>
+        <p style="margin: 2rem 0 0 0" class="builtBy">
+          Built by <img src="./imgs/gradious.svg" alt="gradious logo" /><span
+            style="font-weight: 800; margin-left: 0.4rem"
+            >Gradious</span
+          >
+        </p>
       </div>
       <div class="footerLinks">
-          <a href="./about.html">About Us</a>
-          <a href="./volunteers.html">Our Team</a>
-          <a href="./disclaimer.html">Disclaimer</a>
+        <a href="./about.html">About Us</a>
+        <a href="./volunteers.html">Our Team</a>
+        <a href="./disclaimer.html">Disclaimer</a>
       </div>
       <div class="footerSocials">
-         <div class="a2a_kit a2a_kit_size_26 a2a_default_style footerSocials">
-            <p>Sharing is Caring</p>
-            <a class="a2a_button_facebook">FaceBook</a>
-            <a class="a2a_button_linkedin">LinkedIn</a>
-            <a class="a2a_button_whatsapp">Whatsapp</a>
-            <a class="a2a_button_pinterest">Pinterest</a>
-            <a class="a2a_button_twitter">Twitter</a>
-            </div>
-          <script async src="https://static.addtoany.com/menu/page.js"></script>
-       </div>
-       
-   </footer>  
+        <div class="a2a_kit a2a_kit_size_26 a2a_default_style footerSocials">
+          <p>Sharing is Caring</p>
+          <a class="a2a_button_facebook">FaceBook</a>
+          <a class="a2a_button_linkedin">LinkedIn</a>
+          <a class="a2a_button_whatsapp">Whatsapp</a>
+          <a class="a2a_button_pinterest">Pinterest</a>
+          <a class="a2a_button_twitter">Twitter</a>
+        </div>
+        <script async src="https://static.addtoany.com/menu/page.js"></script>
+      </div>
+    </footer>
   </body>
 </html>
