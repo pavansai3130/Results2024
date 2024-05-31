@@ -247,9 +247,9 @@ async function fetchGeoJSON(file) {
         layer.on("click", function (event) {
           // console.log("first");
           state_value = feature.properties.st_code;
-
+          render_state_carousel(feature.properties.st_name);
           breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread()">${feature.properties.st_name}`;
-          breadcrumbState.style.display = "inline";
+          // breadcrumbState.style.display = "inline";
           breadcrumbConstituency.textContent = feature.properties.pc_name;
           breadcrumbConstituency.style.display = "inline";
           const candidate_1 =
@@ -261,7 +261,7 @@ async function fetchGeoJSON(file) {
           const votes_1 = data[feature.properties.pc_id][0]["votes"];
           const votes_2 = data[feature.properties.pc_id][1]["votes"];
           const margin = votes_1 - votes_2;
-    
+
           showdatatable(
             feature.properties.st_name,
             candidate_1,
@@ -274,40 +274,40 @@ async function fetchGeoJSON(file) {
             party_name_2,
             feature.properties.pc_id
           );
-              var map = document.getElementById('map').getBoundingClientRect();
-              console.log("map the ", map);
-              console.log("event map the ", event);
-              var clickY = event.layerPoint.y - map.top;
-              var mapHeight = map.height;
-              var isAboveHalf = clickY < (mapHeight / 2);
-              var div = document.getElementById('containertool');
+          var map = document.getElementById('map').getBoundingClientRect();
+          console.log("map the ", map);
+          console.log("event map the ", event);
+          var clickY = event.layerPoint.y - map.top;
+          var mapHeight = map.height;
+          var isAboveHalf = clickY < (mapHeight / 2);
+          var div = document.getElementById('containertool');
 
-              if (isAboveHalf) {
-                div.classList.add("above");
-                div.classList.remove("below");
-              } else {
-                div.classList.add("below");
-                div.classList.remove("above");
-              }
+          if (isAboveHalf) {
+            div.classList.add("above");
+            div.classList.remove("below");
+          } else {
+            div.classList.add("below");
+            div.classList.remove("above");
+          }
           // render_table(feature.properties.pc_id,1);
           document.getElementById("stateTabeleContainer").style.display =
             "none";
           document.querySelector("#Constituency-res").style.display = "none";
           document.querySelector("#Candidate-res").style.display = "block";
-    
+
           // Reset the styles of all layers
         });
-    
+
         layer._leaflet_id = feature.properties.pc_id;
       }
     });
-    
+
     map.setView(initialView, initialZoom);
     geo.addTo(map);
 
     updateMapBounds();
     map.on("resize", delayedBoundsUpdate);
-    
+
     geo.setStyle((feature) => ({
       weight: 0.2,
       color: "#000",
@@ -316,7 +316,7 @@ async function fetchGeoJSON(file) {
           ?.dataset.pccolor || "#fff",
       fillOpacity: 0.9,
     }));
-    
+
     // console.log("rendered");
 
     var filteredFeatures = geoJson.features.filter(
@@ -491,8 +491,8 @@ $(document).ready(async function () {
           nda >= india && nda >= others
             ? names.ndaColor
             : india > nda && india >= others
-            ? names.indiaColor
-            : names.othersColor;
+              ? names.indiaColor
+              : names.othersColor;
 
         if (stateCount <= 20) {
           const cells = newRow.getElementsByTagName("td");
@@ -613,8 +613,8 @@ $(document).ready(async function () {
         nda >= india && nda >= others
           ? names.ndaColor
           : india > nda && india >= others
-          ? names.indiaColor
-          : names.othersColor;
+            ? names.indiaColor
+            : names.othersColor;
 
       tbody.appendChild(newRow);
     });
@@ -992,7 +992,7 @@ function handleStateClick(state) {
     india = 0,
     others = 0;
   breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread2()">${state}`;
-  
+
   breadcrumbConstituency.style.display = "none";
   // state_map(state_codes[state], state);
   // Implement the logic to fetch and display state-wise results
@@ -1198,31 +1198,25 @@ function helper(item, row) {
         <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
         <div class="temp custom-temp">
             <div class="card-body w-100">
-                <h3 class="card-title custom-card-title" style="color:${nameColor}">${
-    item.name
-  }</h3>
+                <h3 class="card-title custom-card-title" style="color:${nameColor}">${item.name
+    }</h3>
                 <div class="subheaders cd-flex align-items-center custom-subheaders">
-                    <div class="logo"><img class="custom-img" src="${
-                      item.logoimg
-                    }" alt=""></div>
+                    <div class="logo"><img class="custom-img" src="${item.logoimg
+    }" alt=""></div>
                     <h6 style="font-weight: bold;">${item.pid}</h6>
                 </div>
-                <p class="card-text custom-card-text">${
-                  item.place
-                }</p>
+                <p class="card-text custom-card-text">${item.place
+    }</p>
                 <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
-                    <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
-                      item.votes
-                    }
+                    <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${item.votes
+    }
                 </p>
             </div>
             <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
-                <p class="card-text mb-1 custom-iribbon-text">${
-                  item.lead ? "Leading by" : "Trailing by"
-                }</p>
-                <p class="card-text custom-iribbon-text-votes">${
-                  item.lead2votes
-                }</p>
+                <p class="card-text mb-1 custom-iribbon-text">${item.lead ? "Leading by" : "Trailing by"
+    }</p>
+                <p class="card-text custom-iribbon-text-votes">${item.lead2votes
+    }</p>
             </div>
         </div>
         <div class="person-image d-flex custom-person-image">
@@ -1239,16 +1233,16 @@ document.getElementById("see-more-btn").addEventListener("click", function () {
   window.location.href = "cardsPage.html";
 });
 let renderAllianceResults;
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   const table = document.getElementById("mainTable");
   const observer = new ResizeObserver(entries => {
-      for (let entry of entries) {
-          if (entry.target === table) {
-              const numRows = table.getElementsByTagName("tr").length - 1; // Subtract 1 for the header row
-              // alert(`Table height changed. Number of rows: ${numRows}`);
-              fetchDataAndRenderCards(numRows);
-          }
+    for (let entry of entries) {
+      if (entry.target === table) {
+        const numRows = table.getElementsByTagName("tr").length - 1; // Subtract 1 for the header row
+        // alert(`Table height changed. Number of rows: ${numRows}`);
+        fetchDataAndRenderCards(numRows);
       }
+    }
   });
 
   observer.observe(table);
@@ -1336,31 +1330,25 @@ function helper(item, row) {
         <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
         <div class="temp custom-temp">
             <div class="card-body w-100">
-                <h3 class="card-title custom-card-title" style="color:${nameColor}">${
-    item.name
-  }</h3>
+                <h3 class="card-title custom-card-title" style="color:${nameColor}">${item.name
+    }</h3>
                 <div class="subheaders cd-flex align-items-center custom-subheaders">
-                    <div class="logo"><img class="custom-img" src="${
-                      item.logoimg
-                    }" alt=""></div>
+                    <div class="logo"><img class="custom-img" src="${item.logoimg
+    }" alt=""></div>
                     <h6 style="font-weight: bold;">${item.pid}</h6>
                 </div>
-                <p class="card-text custom-card-text">${
-                  item.place
-                }</p>
+                <p class="card-text custom-card-text">${item.place
+    }</p>
                 <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
-                    <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
-                      item.votes
-                    }
+                    <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${item.votes
+    }
                 </p>
             </div>
             <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
-                <p class="card-text mb-1 custom-iribbon-text">${
-                  item.lead ? "Leading by" : "Trailing by"
-                }</p>
-                <p class="card-text custom-iribbon-text-votes">${
-                  item.lead2votes
-                }</p>
+                <p class="card-text mb-1 custom-iribbon-text">${item.lead ? "Leading by" : "Trailing by"
+    }</p>
+                <p class="card-text custom-iribbon-text-votes">${item.lead2votes
+    }</p>
             </div>
         </div>
         <div class="person-image d-flex custom-person-image">
@@ -1377,29 +1365,31 @@ document.getElementById("see-more-btn").addEventListener("click", function () {
   window.location.href = "cardsPage.html";
 });
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   const table = document.getElementById("constTable");
   const observer = new ResizeObserver(entries => {
-      for (let entry of entries) {
-          if (entry.target === table) {
-              const numRows = table.getElementsByTagName("tr").length - 1; // Subtract 1 for the header row
-              // alert(`Table height changed. Number of rows: ${numRows}`);
-              fetchDataAndRenderCards(numRows);
-          }
+    for (let entry of entries) {
+      if (entry.target === table) {
+        const numRows = table.getElementsByTagName("tr").length - 1; // Subtract 1 for the header row
+        // alert(`Table height changed. Number of rows: ${numRows}`);
+        fetchDataAndRenderCards(numRows);
       }
+    }
   });
 
   observer.observe(table);
 });
 function render_state_carousel(state) {
-    let swiperContainer = document.getElementById('slider_div');
-    let party_img_json, candidates_data;
-    document.getElementById("view_all").setAttribute("href","./bigfights_viewall.html" + "?state=" + state);
-    function createSlide(const_name, state, partySymbol1, partySymbol2, candidateImg1, candidateImg2, cand_name1, cand_name2, votes1, votes2) {
-      let party_path1 = (partySymbol1 in party_img_json) ? party_img_json[partySymbol1] : party_img_json["default"];
-      let party_path2 = (partySymbol2 in party_img_json) ? party_img_json[partySymbol2] : party_img_json["default"];
-      let state_img = (state.toLowerCase() in party_img_json) ? party_img_json[state.toLowerCase()] : "./imgs2/madhya_pradesh.jpg";
-      return `
+  let heading = document.getElementById("big_fights_heading");
+  heading.innerHTML = `BIG FIGHTS (<span class = "heading_state">${state.toUpperCase()}</span>)`;
+  let swiperContainer = document.getElementById('slider_div');
+  let party_img_json, candidates_data;
+  document.getElementById("view_all").setAttribute("href", "./bigfights_viewall.html" + "?state=" + state);
+  function createSlide(const_name, state, partySymbol1, partySymbol2, candidateImg1, candidateImg2, cand_name1, cand_name2, votes1, votes2) {
+    let party_path1 = (partySymbol1 in party_img_json) ? party_img_json[partySymbol1] : party_img_json["default"];
+    let party_path2 = (partySymbol2 in party_img_json) ? party_img_json[partySymbol2] : party_img_json["default"];
+    let state_img = (state.toLowerCase() in party_img_json) ? party_img_json[state.toLowerCase()] : "./imgs2/madhya_pradesh.jpg";
+    return `
       <div class="card swiper-slide">
           <span class="state_name">${const_name} <span class="state_party_slot">(${state})</span></span>
           <div class="cand_desc1">
@@ -1428,84 +1418,84 @@ function render_state_carousel(state) {
           <span class="last_update">Last Updated : 12:10 pm</span>
       </div>
       `;
-    }
-  
-    fetch('./bigfights.json')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.json();
-      })
-      .then(data => {
-        party_img_json = data["images_key"];
-        candidates_data = data["candidate_details"][state.toLowerCase()];
-        
-        // Clear previous content and destroy previous Swiper instance if it exists
-        if (swiper) {
-          swiper.destroy(true, true);
-        }
-        swiperContainer.innerHTML = "";
-        console.log(candidates_data);
-        // function toTitleCase(name) {
-        //   return name.split(' ').map(word => {
-        //     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-        //   }).join(' ');
-        // }
-        for(const_name in candidates_data) {
-          for(let bigf = 0; bigf < candidates_data[const_name].length; bigf++) {
-          const slideMarkup = createSlide(const_name, state, candidates_data[const_name][bigf]["party1"],candidates_data[const_name][bigf]["party2"], "./imgs2/rahul.png",  "./imgs2/smriti_irani.png", candidates_data[const_name][bigf]["name1"],candidates_data[const_name][bigf]["name2"],"100000","50000")
-          swiperContainer.insertAdjacentHTML('beforeend', slideMarkup);
-          }
-        }
-        // candidates_data.forEach(data => {
-        //   const slideMarkup = createSlide(data["const_name"], data["state"], data["cand_party1"], data["cand_party2"], data["candidateImg1"], data["candidateImg2"], data["cand_name1"], data["cand_name2"], data["votes1"], data["votes2"]);
-        //   swiperContainer.insertAdjacentHTML('beforeend', slideMarkup);
-        // });
-        
-        swiper = new Swiper(".slide-content", {
-          slidesPerView: 3,
-          spaceBetween: 40,
-          loop: true,
-          centerSlide: true,
-          fade: true,
-          grabCursor: true,
-          pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-            dynamicBullets: true
-          },
-          navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-          },
-          breakpoints: {
-            0: {
-              slidesPerView: 1,
-            },
-            600: {
-              slidesPerView: 2,
-            },
-            950: {
-              slidesPerView: 3,
-            }
-          },
-          autoplay: {
-            delay: 3000, 
-            disableOnInteraction: false,  
-          },
-          speed: 1300,
-        });
-        
-        swiperContainer.addEventListener('mouseenter', function () {
-          swiper.autoplay.stop();
-        });
-        
-        swiperContainer.addEventListener('mouseleave', function () {
-          swiper.autoplay.start();
-        });
-      })
-      .catch(error => {
-        console.error('There has been a problem with your fetch operation:', error);
-      });
   }
+
+  fetch('./bigfights.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+      }
+      return response.json();
+    })
+    .then(data => {
+      party_img_json = data["images_key"];
+      candidates_data = data["candidate_details"][state.toLowerCase()];
+
+      // Clear previous content and destroy previous Swiper instance if it exists
+      if (swiper) {
+        swiper.destroy(true, true);
+      }
+      swiperContainer.innerHTML = "";
+      console.log(candidates_data);
+      // function toTitleCase(name) {
+      //   return name.split(' ').map(word => {
+      //     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      //   }).join(' ');
+      // }
+      for (const_name in candidates_data) {
+        for (let bigf = 0; bigf < candidates_data[const_name].length; bigf++) {
+          const slideMarkup = createSlide(const_name, state, candidates_data[const_name][bigf]["party1"], candidates_data[const_name][bigf]["party2"], "./imgs2/rahul.png", "./imgs2/smriti_irani.png", candidates_data[const_name][bigf]["name1"], candidates_data[const_name][bigf]["name2"], "100000", "50000")
+          swiperContainer.insertAdjacentHTML('beforeend', slideMarkup);
+        }
+      }
+      // candidates_data.forEach(data => {
+      //   const slideMarkup = createSlide(data["const_name"], data["state"], data["cand_party1"], data["cand_party2"], data["candidateImg1"], data["candidateImg2"], data["cand_name1"], data["cand_name2"], data["votes1"], data["votes2"]);
+      //   swiperContainer.insertAdjacentHTML('beforeend', slideMarkup);
+      // });
+
+      swiper = new Swiper(".slide-content", {
+        slidesPerView: 3,
+        spaceBetween: 40,
+        loop: true,
+        centerSlide: true,
+        fade: true,
+        grabCursor: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+          dynamicBullets: true
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+          0: {
+            slidesPerView: 1,
+          },
+          600: {
+            slidesPerView: 2,
+          },
+          950: {
+            slidesPerView: 3,
+          }
+        },
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+        speed: 1300,
+      });
+
+      swiperContainer.addEventListener('mouseenter', function () {
+        swiper.autoplay.stop();
+      });
+
+      swiperContainer.addEventListener('mouseleave', function () {
+        swiper.autoplay.start();
+      });
+    })
+    .catch(error => {
+      console.error('There has been a problem with your fetch operation:', error);
+    });
+}

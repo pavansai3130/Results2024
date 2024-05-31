@@ -38,6 +38,15 @@
     align-items: center;
 }
 
+/* #big_fights_heading {
+    font-family: 'Roboto';
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 37.5px;
+    letter-spacing: 0.04em;
+     width: 75%; 
+} */
+
 .hands_div {
     position: relative;
     width: 30%;
@@ -71,11 +80,18 @@
 .big_fights {
     font-family: 'Roboto';
     font-size: 32px;
-    font-weight: 900;
+    font-weight: 700;
     line-height: 37.5px;
     letter-spacing: 0.04em;
     text-align: left;
     margin: auto 0px;
+    /* width: 25%; */
+}
+
+.heading_state {
+    font-family: 'Roboto';
+    font-size: 32px;
+    font-weight: 600;   
 }
 
 .card {
@@ -260,6 +276,9 @@
     font-size: 20px;
 }
 
+.cancel_state {
+    background: linear-gradient(90deg, #FFFEF5 0%, #FFF4EB 45.4%, #FFFEF5 100%);
+}
 
 @media (max-width: 400px) {
     /* .card {
@@ -270,12 +289,15 @@
     }
 
     .img_map {
-        width: 20%;
+        width: 12vw;
+        height:7vw;
+        margin-bottom: 3vw;
     }
 
     .big_fights {
-        font-size: 22px;
+        font-size: 15px;
         font-weight: 900;
+        line-height: 20.5px;
     }
 
     .hands {
@@ -285,7 +307,11 @@
     .state_party_slot {
         font-size: 0.5rem;
     }
-
+    .heading_state {
+        font-family: 'Roboto';
+        font-size: 15px;
+        font-weight: 600;   
+    }
 }
 
 @media ((min-width: 401px) and (max-width: 700px)) {
@@ -297,16 +323,28 @@
     }
 
     .img_map {
-        width: 4rem;
+        width: 12vw;
+        height:7vw;
+        margin-bottom: 3vw;
     }
     .big_fights {
-        font-size: 22px;
+        font-size: 15px;
         font-weight: 900;
+        line-height: 20.5px;
     }
 
     .hands {
         height: 100%;
         margin-top: 12%;
+    }
+    .heading_state {
+        font-size: 15px;
+        font-weight: 600;   
+    }
+    .state_name,
+    .state_party_slot {
+        font-size: 0.6rem;
+        padding: 3px 8px;
     }
 }
 
@@ -319,12 +357,23 @@
     }
 
     .img_map {
-        width: 4rem;
+        width: 8vw;
+        height:4vw;
+        margin-bottom: 2vw;
     }
 
     .hands {
         height: 100%;
         margin-top: 6%;
+    }
+    .big_fights {
+        font-size: 20px;
+        font-weight: 900;
+        line-height: 20.5px;
+    }
+    .heading_state {
+        font-size: 20px;
+        font-weight: 600;   
     }
 }
 
