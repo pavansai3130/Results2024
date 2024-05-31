@@ -1858,17 +1858,12 @@ function render_table(code, page) {
         fillColor: document.querySelector(`#table-body tr[data-pc="${code}"]`)?.dataset.pccolor,  // Specific color or default gray
         fillOpacity: 2,        // Fully opaque for the clicked layer
         color: "#000",      // Border color
-        weight: 2            // Border width
-        fillColor: document.querySelector(`#table-body tr[data-pc="${code}"]`)
-          ?.dataset.pccolor, // Specific color or default gray
-        fillOpacity: 2, // Fully opaque for the clicked layer
-        color: "#000", // Border color
-        weight: 0.5, // Border width
+        weight: 2,            // Border width
       });
     } else {
       l.setStyle({
         fillColor: document.querySelector(`#table-body tr[data-pc="${l.feature.properties.pc_id}"]`)?.dataset.pccolor,  // Default color
-        fillOpacity: 0.1,      // Semi-transparent for other layers
+        fillOpacity: 0.4,      // Semi-transparent for other layers
         color: "#000",      // Border color
         weight: 0.3           // Border width
       });
