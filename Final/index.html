@@ -30,39 +30,6 @@
    <link rel="stylesheet" href="styles.css">
       <link rel="stylesheet" href="cards.css">
       <link rel="stylesheet" href="styling.css">
-   <script type="text/javascript">
-      // Load google charts
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-      
-      // Draw the chart and set the chart values
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-        ['Task', 'Hours per Day'],
-        ['INC', 8],
-        ['TDP', 2],
-        ['BJP', 2],
-      ]);
-      var data2 = google.visualization.arrayToDataTable([
-        ['Task', 'Hours per Day'],
-        ['INC', 8],
-        ['TDP', 2],
-        ['BJP', 2],
-      ]);
-      
-        // Optional; add a title and set the width and height of the chart
-        var options = {'title':'Seats', 'width':'fit-content', 'height':'fir-content','legend':"none","margin":"none"};
-        var options2={'title':'VoteShare', 'width':'fit-content', 'height':'fir-content','legend':"none","margin":"none"};
-
-      
-        // Display the chart inside the <div> element with id="piechart"
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-        chart.draw(data, options);
-        var chart2= new google.visualization.PieChart(document.getElementById('piechart2'));
-        chart2.draw(data2,options2);
-      }
-      </script>
-      
       <link rel="stylesheet" href="./disclaimer.css">
       <link rel="stylesheet" href="leaflet/index.css" />
       <link rel="stylesheet" href="navbarStyles.css">
@@ -223,6 +190,7 @@
                   </div>
                </div>
                <div class="col-12 col-md-6 order-md-2 order-1">
+                  <div id="piechart" style="display: none;"></div>
                   <div class=" ">
                      
                      <!-- <div id="square-container"></div> -->
@@ -431,34 +399,35 @@
                   <!-- Constitunecy Table -->
                   <div id="Constituency-res" style="margin-top: 0.9375rem;" class="table-responsive-sm"
                      style="display: none;">
-                     <table id="constTable" class="table  table-bordered" style="margin-top: 0.1rem;margin-bottom: 0.1rem;">
-                        <div id="theading" style="display: flex; align-items: center; ">
-                           <span id="constituency-name"></span>
+                     <table id="constTable" class="table  table-bordered" style="margin-top: 0rem;margin-bottom: 0rem;">
+                        <div id="theading" class="d-flex" style="display: flex; align-items: center; ">
+                           <span  id="constituency-name"></span>
                            <input class="form-control" id="stateinput" type="text" placeholder="Search">
                         </div>
+                        
                         <thead class="thead">
                            <tr>
-                              <th class="col-3 col-lg-3 align-middle" style="background:#EAECF0; color: #101828;">Constituency
+                              <th class="col-1 col-lg-3 align-middle sticky" style="background:#EAECF0; color: #101828;">Constituency
                               </th>
-                              <th class="col-3 col-lg-3 align-middle"
+                              <th class="col-1 col-lg-3 align-middle"
                                  style="background: #12B76A; text-align: center; color: white; border: none;">Leading/Won</th>
-                              <th class="col-3 col-lg-3 align-middle"
+                              <th class="col-1 col-lg-3 align-middle"
                                  style="background: #F96343; text-align: center;color: white;border: none; "> Trailing/Lost
                               </th>
-                              <th class="col-3 col-lg-3 align-middle" style=" text-align: center;background:#EAECF0; color: #101828;">Margin</th>
+                              <th class="col-1 col-lg-3 align-middle" style=" text-align: center;background:#EAECF0; color: #101828;">Margin</th>
                            </tr>
                         </thead>
                         <tbody id="table-body">
                            <!-- Dynamic rows will be inserted here -->
                         </tbody>
                      </table>
-                     <div id="pagination-controls" style="display: flex; justify-content: space-between; margin-top: 0.1rem;">
+                     <div id="pagination-controls" style="display: flex; justify-content: space-between; margin-top: 0rem;">
                         <!-- Pagination buttons will be inserted here -->
                      </div>
                   </div>
                   <!-- table2 pavan -->
                   <div class="table-responsive-sm" id="Candidate-res" style="margin-top: 0.9375rem; display: none;">
-                     <table class="table table-bordered" style="margin-top: 0.1rem; margin-bottom: 0.1rem;">
+                     <table class="table table-bordered" style="margin-top: 0rem; margin-bottom: 0rem;">
                         <div id="theading2" style="display: flex;align-items: center; ">
                            <span id="constituency-name"></span>
                            <input class="form-control" id="candidateinput" type="text" placeholder="Search">
@@ -478,7 +447,7 @@
                         </tbody>
                      </table>
                      <div id="pagination-controls-candidates"
-                        style="display: flex; justify-content: space-between; margin-top: 0.1rem;">
+                        style="display: flex; justify-content: space-between; margin-top: 0rem;">
                         <!-- Pagination buttons will be inserted here -->
                      </div>
                   </div>
