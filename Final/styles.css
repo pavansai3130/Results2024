@@ -778,14 +778,13 @@ input#stateSearch{
   overflow-y: hidden;
 }
 #numberOfSeats{
-  position:absolute;
-  text-align: center;
-
-  /* font-size:60px; */
-  top: 27%;
-  left: 50%;
-  /* transform: translateY(-50%); */
-  transform:translateX(-50%);
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
 
 
 }
