@@ -2183,7 +2183,8 @@ function resetstatebread2() {
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";
 }
-let swiper;
+
+var swiper;
 
 function render_whole_carousel() {
   let heading = document.getElementById("big_fights_heading");
