@@ -537,6 +537,14 @@ input#stateSearch{
 }
 
 /* HARI CSS*/
+.cd-flex{
+  display: flex;
+}
+
+
+#cardsID{
+  padding: 0;
+}
 .cardsHeader{
   margin: 1.5rem 0;
   display: flex;

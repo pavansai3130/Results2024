@@ -57,6 +57,7 @@ const rowsPerPage = 10;
 let breadcrumbConstituency;
 let breadcrumbState;
 let state_button_pressed = 1;
+let top10Cand=["cand260","cand1597","cand5189","cand3140","cand1434","cand7055","cand4116","cand4630"];
 const constCodes = {
   "Andaman and Nicobar Islands": {
     "andaman and nicobar islands": 3501,
@@ -962,6 +963,69 @@ function updateMapBounds2() {
   }
 }
 let pressed = 0;
+// Define the candidates array at the global scope
+
+
+//HARI JS
+let candidates = [];
+// Define the fetchMoreCards function
+async function fetchMoreCards() {
+  try {
+    // Fetch the state-constituency-candidate JSON
+    const stateResponse = await fetch("popular.json");
+    const stateData = await stateResponse.json();
+    console.log('State Data:', stateData);
+
+    
+    const candidateResponse = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
+    const candidateData = await candidateResponse.json();
+    console.log('Candidate Data:', candidateData);
+
+    // Function to get candidate details by ID from the fetched candidate data
+    function getCandidateDetails(candidateId) {
+      const statesData = candidateData[0];
+      for (let state in statesData) {
+        for (let constituency in statesData[state]) {
+          const candidates = statesData[state][constituency].candidates;
+          if (candidates) {
+            const candidate = candidates.find(candidate => candidate.cId === candidateId);
+            if (candidate) {
+              candidate.state = state;
+              candidate.constituency = constituency;
+              return candidate;
+            }
+          } else {
+            console.error('Candidates array is undefined for', state, constituency);
+          }
+        }
+      }
+      return null;
+    }
+
+    // Populate the global `candidates` array
+    Object.keys(stateData).forEach(state => {
+      Object.keys(stateData[state]).forEach(constituency => {
+        stateData[state][constituency].forEach(candidateId => {
+          const candidateDetails = getCandidateDetails(candidateId);
+          if (candidateDetails) {
+            candidates.push(candidateDetails);
+          } else {
+            console.error('Candidate details not found for ID:', candidateId);
+          }
+        });
+      });
+    });
+
+    console.log('Candidates:', candidates);
+  } catch (error) {
+    console.error("Error fetching or processing data:", error);
+  }
+}
+document.addEventListener('DOMContentLoaded', async () => {
+  await fetchMoreCards();
+});
+
+
 function handleSelection() {
   document.getElementById("containertool").style.display = "none";
   // console.log(geo2);
@@ -974,11 +1038,11 @@ function handleSelection() {
   const selectElement = document.getElementById("state-select");
   const selectedValue = selectElement.value;
   const text = selectElement.options[selectElement.selectedIndex].text;
-  if (selectedValue === "reset") {
+  // alert(text);
+  if (selectedValue === "reset" ) {
     resetMap();
     return;
   }
-
   if (selectedValue) {
     geo.remove(map);
 
@@ -1124,17 +1188,102 @@ function handleSelection() {
         render();
         render2();
 
-        render_state_table(
-          filteredFeatures.map((feature) => feature.properties),
-          text
-        );
+        // render_state_table(
+        //   filteredFeatures.map((feature) => feature.properties),
+        //   text
+        // );
       })
       .catch((e) => console.error(e));
   }
   render_state_carousel(text);
 }
-function updatePaginationControls(totalRows, class_name, second_class_name) {
-  const numPages = Math.ceil(totalRows / rowsPerPage);
+
+document.getElementById("see-more-btn").addEventListener("click", function () {
+  window.location.href =  `./bigfights_viewall.html" + "?state=" + "all"`;
+});
+
+
+function renderCandidateCards(item,row) {
+  const allianceImages = {
+    "NDA": "imgs/NDA  (1)png",
+    "INDIA": "imgs/NDA (3).png",
+    "OTH": "imgs/NDA (2).png"
+  };
+  const imageUrl = item.perimg || allianceImages[item.alnce];
+  
+  const constituency = item.constituency
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+  const card = document.createElement("div");
+  card.className = "position-relative custom-container";
+
+  // Define default background, arrow colors, and name color
+  let bgColor;
+  let arrColor;
+  let nameColor;
+
+  // Adjust colors based on the alliance field
+  if (item.alnce === "NDA") {
+    bgColor = "linear-gradient(56deg, #FFF8DC,#FFE4BF)";
+    arrColor = "linear-gradient(90deg, #EC8E30,#A65E17)";
+    nameColor = "#FF9933";
+  } else if (item.alnce === "INDIA") {
+    nameColor = "#19AAED";
+  } else if (item.alnce === "OTH") {
+    bgColor = "linear-gradient(56deg, #F5F5F5,#E0E0E0)";
+    arrColor = "linear-gradient(90deg, #6F9088,#42615A)";
+    nameColor = "#0c6b4b";
+  }
+
+  card.style.background = bgColor;
+
+  const ribbonText = item.lead ? "Leading" : "Trailing";
+  const ribbonColor = item.lead ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+
+  card.innerHTML = `
+  <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
+  <div class="temp custom-temp">
+      <div class="card-body w-100">
+          <h3 class="card-title custom-card-title" style="color:${nameColor}">${
+item.cName
+}</h3>
+          <div class="subheaders cd-flex align-items-center custom-subheaders">
+              <div class="logo"><img class="custom-img" src="${
+                item.logoimg
+              }" alt=""></div>
+              <h6 style="font-weight: bold;">${item.prty}</h6>
+          </div>
+          <p class="card-text custom-card-text">${constituency} (${item.state});</p>
+          <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
+              <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
+                item.vts
+              }
+          </p>
+      </div>
+      <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
+          <p class="card-text mb-1 custom-iribbon-text">${
+            item.lead ? "Leading by" : "Trailing by"
+          }</p>
+          <p class="card-text custom-iribbon-text-votes">${
+            item.lead2votes
+          }</p>
+      </div>
+  </div>
+  <div class="person-image d-flex custom-person-image">
+      <img class="person-img wid" src="${imageUrl}" alt="Person Image">
+  </div>
+`;
+row.append(card);
+}
+
+function updatePaginationControls(
+  totalRows,
+  class_name,
+  second_class_name,
+  numberOfRows
+) {
+  const numPages = Math.ceil(totalRows / numberOfRows);
   const paginationControls = document.getElementById(class_name);
   paginationControls.innerHTML = ""; // Clear previous pagination controls
 
@@ -1363,6 +1512,37 @@ function render_state_table(feature, state) {
     // updatePaginationControls(document.querySelectorAll("#table-body tr:visible").length);
     // displayPage(currentPage);
   });
+  const selectElement = document.getElementById("state-select");
+  const text = selectElement.options[selectElement.selectedIndex].text;
+  
+  if(text){
+    document.getElementById("see-more-btn").addEventListener("click", function () {
+      window.location.href =  "./cardsPage.html" + "?text=" + "all";
+    });
+    const rootElement = document.getElementById("root");
+    rootElement.innerHTML = "";
+    console.log("here are",candidates);
+    const filteredCandidates = candidates.filter(candidate => candidate.state === text); 
+    console.log('filtered candidates are : ' , filteredCandidates);
+    
+
+    let cardRowsNeeded = Math.ceil(count/3);
+    if(cardRowsNeeded>5){
+      cardRowsNeeded=4;
+    }
+    for (let i = 0; i < cardRowsNeeded; i++) {
+      const row = document.createElement("div");
+      row.className = "row raw justify-content-between";
+      document.getElementById("root").appendChild(row);
+      for (let j = 0; j < 2; j++) {
+        const cardIndex = i * 2 + j;
+        if (cardIndex < filteredCandidates.length) {
+          renderCandidateCards(filteredCandidates[cardIndex], row);
+        }
+      }
+    }
+  }
+
 }
 
 // rendering
@@ -2003,7 +2183,8 @@ function resetstatebread2() {
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";
 }
-let swiper;
+
+var swiper;
 
 function render_whole_carousel() {
   let heading = document.getElementById("big_fights_heading");
@@ -2150,3 +2331,8 @@ function render_whole_carousel() {
       );
     });
 }
+
+
+
+
+
