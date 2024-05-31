@@ -167,8 +167,35 @@ body {
     padding-right: 20px;
     width: 100%;
     outline: none;
-    /* background-color: white; */
     font-size: medium;
+}
+#cancel_state_span {
+    /* height: 2vw; */
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    /* border: 1px solid black; */
+    border-radius: 15px;
+    padding: 2px;
+    position: relative;
+    left:4%;
+    background-color:#F2F4F7;
+    ;
+}
+#cancel_state_span i {
+    display: inline-block;
+    margin-right: 5px;
+    font-size: 12px;
+    cursor: pointer;
+
+}
+#state_tag {
+    background: linear-gradient(90deg, #FFFEF5 0%, #FFF4EB 45.4%, #FFFEF5 100%);
+}
+
+#state_tag_name {
+    padding: 0px 5px;
+    font-size: 12px;
 }
 
 #search_unorderlist2, #search_unorderlist1 {
@@ -285,6 +312,7 @@ body {
     position: absolute;
     right: 10px;
     display: none;
+    /* margin: 3vw 0vw; */
     /* border: 1px solid black ; */
 }
 
@@ -297,8 +325,28 @@ body {
 .search_button img:hover {
     cursor: pointer;
 }
+#candname_search_bar2::placeholder {
+    font-size: 13px;
+}
 
-@media (max-width: 570px) {
+@media (max-width: 400px) {
+    #hands_img {
+        width: 10vh;
+        height: 10vh;
+    }   
+    .img_map {
+        width: 20vw;
+        height: 11vw;
+    }
+    .search-container {
+        display: none;
+    }
+
+    .search_button {
+        display: block;
+    }
+}
+@media ((min-width: 401px) and (max-width: 570px)) {
     #back_top {
         padding-bottom: 10px;
     }
@@ -315,7 +363,10 @@ body {
     .search_button {
         display: block;
     }
-
+    .img_map {
+        width: 20vw;
+        height: 11vw;
+    }
     .nav_links,
     #home_span,
     #big_fights_span,
@@ -362,10 +413,24 @@ body {
     .search-container {
         width: 60%;
     }
+    #candname_search_bar1::placeholder {
+        font-size: 12px;
+    }
 }
 
-@media ((min-width: 750px) and (max-width: 1000px)) {
+@media ((min-width: 700px) and (max-width: 890px)) {
     .card {
         width: 20rem;
+    }
+    #candname_search_bar1::placeholder {
+        font-size: 15px;
+    }
+}
+@media ((min-width: 900px) and (max-width: 1100px)) {
+    .card {
+        width: 20rem;
+    }
+    #candname_search_bar1::placeholder {
+        font-size: 14px;
     }
 }

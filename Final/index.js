@@ -1,5 +1,6 @@
 
 /*-------------creating fetching 2019------*/
+let state_table_pressed = 0;
 let data_201;
 let data_2019 = {}; // Initialize data_2019 as an empty object
 async function fetchJSON2(file) {
@@ -8,7 +9,7 @@ async function fetchJSON2(file) {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    data_201 = await response.json(); 
+    data_201 = await response.json();
     console.log("JSON data fetched and stored globally:", data_201);
     function format2(data2024) {
       for (let state in data2024) {
@@ -747,11 +748,11 @@ function resetBreadcrumb() {
   document.getElementById("containertool2").style.display = "none";
   document.getElementById("containertool").style.display = "none";
   updateBar(Object.values(allianceJson));
-    renderAllianceResults();
+  renderAllianceResults();
   const breadcrumbState = document.getElementById("breadcrumb-state");
   const breadcrumbConstituency = document.getElementById(
     "breadcrumb-constituency");
-    render_whole_carousel(breadcrumbState.innerText);
+  render_whole_carousel(breadcrumbState.innerText);
   breadcrumbState.style.display = "none";
   breadcrumbState.textContent = "";
   console.log(state_button_pressed);
@@ -762,16 +763,16 @@ function resetBreadcrumb() {
     geo.addTo(map);
     document.getElementById("map").style.display = "none";
     document.getElementById("india-map").style.display = "block";
-    document.getElementById("Constituency-res").style.display="none";
-    document.getElementById("stateTabeleContainer").style.display="block";
-    document.getElementById("Candidate-res").style.display="none";
-    }
-    else{
-  resetMap();
-    document.getElementById("stateTabeleContainer").style.display="block";
-    document.getElementById("Candidate-res").style.display="none";
-    }
-  
+    document.getElementById("Constituency-res").style.display = "none";
+    document.getElementById("stateTabeleContainer").style.display = "block";
+    document.getElementById("Candidate-res").style.display = "none";
+  }
+  else {
+    resetMap();
+    document.getElementById("stateTabeleContainer").style.display = "block";
+    document.getElementById("Candidate-res").style.display = "none";
+  }
+
 }
 
 const zooming = {
@@ -1209,6 +1210,7 @@ function displayPage(page, class_name) {
 }
 
 function render_state_table(feature, state) {
+  state_table_pressed = 1;
   let count = 0;
   const tb = document.getElementById("table-body");
   tb.innerHTML = "";
@@ -1269,7 +1271,7 @@ function render_state_table(feature, state) {
 
       const td1 = document.createElement("td");
       td1.innerHTML = `${candid}<br><img src="${sym[party_name]}"><span>${party_name}</span>`;
-      td1.style.background="#F6FEF9";
+      td1.style.background = "#F6FEF9";
       tr.appendChild(td1);
       td1.classList.add("td1");
 
@@ -1282,25 +1284,25 @@ function render_state_table(feature, state) {
       td3.innerHTML = `${(votes - votes2).toLocaleString()}<br>`;
       tr.appendChild(td3);
       td3.classList.add("td3");
-          count++;
-          if (firstCandidateKey.alliance === "NDA") {
-            if (alliancePatries["nda"][firstCandidateKey.party] !== undefined)
-              alliancePatries["nda"][firstCandidateKey.party]++;
-            else alliancePatries["nda"][firstCandidateKey.party] = 1;
-          } else if (firstCandidateKey.alliance === "OTH") {
-            if (alliancePatries["others"][firstCandidateKey.party] !== undefined)
-              alliancePatries["others"][firstCandidateKey.party]++;
-            else alliancePatries["others"][firstCandidateKey.party] = 1;
-          } else {
-            if (alliancePatries["india"][firstCandidateKey.party] !== undefined)
-              alliancePatries["india"][firstCandidateKey.party]++;
-            else alliancePatries["india"][firstCandidateKey.party] = 1;
-          }
-      } 
-      else {
-          tr.dataset.pccolor = "#fff";
+      count++;
+      if (firstCandidateKey.alliance === "NDA") {
+        if (alliancePatries["nda"][firstCandidateKey.party] !== undefined)
+          alliancePatries["nda"][firstCandidateKey.party]++;
+        else alliancePatries["nda"][firstCandidateKey.party] = 1;
+      } else if (firstCandidateKey.alliance === "OTH") {
+        if (alliancePatries["others"][firstCandidateKey.party] !== undefined)
+          alliancePatries["others"][firstCandidateKey.party]++;
+        else alliancePatries["others"][firstCandidateKey.party] = 1;
+      } else {
+        if (alliancePatries["india"][firstCandidateKey.party] !== undefined)
+          alliancePatries["india"][firstCandidateKey.party]++;
+        else alliancePatries["india"][firstCandidateKey.party] = 1;
       }
-   
+    }
+    else {
+      tr.dataset.pccolor = "#fff";
+    }
+
 
   }
   console.log("afhkhbfz");
@@ -1346,20 +1348,19 @@ function render_state_table(feature, state) {
 
   // Search functionality
   $("#stateinput").on("keyup", function () {
-      var value = $(this).val().toLowerCase();
-      if(value==="")
-        {
-          displayPage(1,"#table-body tr");
-          return;
-        }
-      $("#table-body tr").filter(function () {
-          var text = $(this).text().toLowerCase();
-          var words = text.split(/\s+/); // Split text into words
-          var match = words.some(function (word) {
-              return word.startsWith(value);
-          });
-          $(this).toggle(match);
+    var value = $(this).val().toLowerCase();
+    if (value === "") {
+      displayPage(1, "#table-body tr");
+      return;
+    }
+    $("#table-body tr").filter(function () {
+      var text = $(this).text().toLowerCase();
+      var words = text.split(/\s+/); // Split text into words
+      var match = words.some(function (word) {
+        return word.startsWith(value);
       });
+      $(this).toggle(match);
+    });
 
     // Reset to the first page after filtering
     currentPage = 1;
@@ -1406,8 +1407,8 @@ function showdatatable(
   // console.log(layer);
   breadcrumbConstituency.style.display = "none";
   document.getElementById('containertool').style.display = "block";
-            var div = document.getElementById('containertool');
-    var htmlCode = `
+  var div = document.getElementById('containertool');
+  var htmlCode = `
     <h2 id="h2"><span class="city">${con1}</span><br><span class="state">${state}</span></h2><div id="close" onclick="closedata()">&times;</div>
         <div id="candidatediv">
           <div class="header">
@@ -1457,10 +1458,18 @@ function closedata() {
   // document.getElementById("stateTabeleContainer").style.display = "block";
   // document
   render2();
-  document.getElementById("Constituency-res").style.display="block";
+  if (state_table_pressed) {
+    document.getElementById("Constituency-res").style.display = "block";
+  }
+  else {
+    document.getElementById("stateTabeleContainer").style.display = "block";
+  }
   document.getElementById("Candidate-res").style.display = "none";
 }
 function render_table(code, page) {
+  if (!state_table_pressed) {
+    breadcrumbState.style.display = "inline";
+  }
   breadcrumbConstituency.style.display = "inline";
   const tbody = document.querySelector(".candidateBody");
   tbody.innerHTML = "";
@@ -1473,7 +1482,7 @@ function render_table(code, page) {
     // alert(l.feature.properties.pc_id === code);
     splCount++;
     console.log("#########splCount::", splCount);
-    if(l.feature.properties.pc_id == code) {
+    if (l.feature.properties.pc_id == code) {
       console.log("pressed");
       l.setStyle({
         fillColor: document.querySelector(`#table-body tr[data-pc="${code}"]`)?.dataset.pccolor,  // Specific color or default gray
@@ -1494,7 +1503,7 @@ function render_table(code, page) {
 
   document.getElementById("stateTabeleContainer").style.display = "none";
   document.getElementById("Candidate-res").style.display = "block";
-  document.getElementById("Constituency-res").style.display="none";
+  document.getElementById("Constituency-res").style.display = "none";
   const pageSize = 10; // Number of rows per page
   const candi = data[code];
   const candi_len = candi.length;
@@ -1524,19 +1533,19 @@ function render_table(code, page) {
     row.appendChild(votes);
 
     const votes2 = document.createElement("td");
-      if (i == 0) {
-          votes2.textContent = "-";
-      } else if (i > 0) {
-          votes2.textContent = (candi[i - 1].votes - candi[i].votes).toLocaleString();
-      }
-      votes2.classList.add("tdata3");
-      row.appendChild(votes2);
-      const margin2=document.createElement("td");
-      if (i == 0) {
-        margin2.textContent = "-";
+    if (i == 0) {
+      votes2.textContent = "-";
     } else if (i > 0) {
-        // margin2.textContent = 
-        margin2.innerHTML=`${(((candi[i - 1].votes - candi[i].votes)/(candi[i - 1].votes + candi[i].votes))*100).toFixed(1)} %`
+      votes2.textContent = (candi[i - 1].votes - candi[i].votes).toLocaleString();
+    }
+    votes2.classList.add("tdata3");
+    row.appendChild(votes2);
+    const margin2 = document.createElement("td");
+    if (i == 0) {
+      margin2.textContent = "-";
+    } else if (i > 0) {
+      // margin2.textContent = 
+      margin2.innerHTML = `${(((candi[i - 1].votes - candi[i].votes) / (candi[i - 1].votes + candi[i].votes)) * 100).toFixed(1)} %`
     }
     margin2.classList.add("tdata3");
     row.appendChild(margin2);
@@ -1545,15 +1554,15 @@ function render_table(code, page) {
     // row.appendChild(votes_2019);
     console.log(data_2019);
     data_2019.forEach
-   let votes2019;
-    
-  //   const isPresentIn2019 = data_2019[0].states.some(state => {
-  //     return state.constituencies.some(constituency => {
-  //         return constituency.candidates.some(candidate2019 => candidate2019.cName === candi[i].candidateName);
-  //     });
-  // });
-  // votes_2019.textContent = isPresentIn2019 ? "True" : "False";
-  // row.appendChild(votes_2019);
+    let votes2019;
+
+    //   const isPresentIn2019 = data_2019[0].states.some(state => {
+    //     return state.constituencies.some(constituency => {
+    //         return constituency.candidates.some(candidate2019 => candidate2019.cName === candi[i].candidateName);
+    //     });
+    // });
+    // votes_2019.textContent = isPresentIn2019 ? "True" : "False";
+    // row.appendChild(votes_2019);
     tbody.appendChild(row);
     ct++;
   }
@@ -1597,18 +1606,17 @@ function render_table(code, page) {
     .off("keyup")
     .on("keyup", function () {
       var value = $(this).val().toLowerCase();
-      if(value==="")
-        {
-          displayPage(1,".candidateBody tr");
-          return;
-        }
-      $(".candidateBody tr").filter(function() {
-          var text = $(this).text().toLowerCase();
-          var words = text.split(/\s+/); // Split text into words
-          var match = words.some(function(word) {
-              return word.startsWith(value);
-          });
-          $(this).toggle(match);
+      if (value === "") {
+        displayPage(1, ".candidateBody tr");
+        return;
+      }
+      $(".candidateBody tr").filter(function () {
+        var text = $(this).text().toLowerCase();
+        var words = text.split(/\s+/); // Split text into words
+        var match = words.some(function (word) {
+          return word.startsWith(value);
+        });
+        $(this).toggle(match);
       });
     });
 }
@@ -1638,9 +1646,10 @@ function state_map(value, text) {
                 "none";
               document.querySelector("#Candidate-res").style.display = "block";
               breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread()">${feature.properties.st_name}`;
+              render_state_carousel(feature.properties.st_name);
               breadcrumbState.style.display = "inline";
               breadcrumbConstituency.textContent = feature.properties.pc_name;
-             //breadcrumbConstituency.style.display = "inline";
+              //breadcrumbConstituency.style.display = "inline";
               const candidate_1 =
                 data[feature.properties.pc_id][0]["candidateName"];
               const candidate_2 =
@@ -1860,23 +1869,23 @@ function resetstatebread() {
               party_name_2,
               feature.properties.pc_id,
               feature,
-                layer
+              layer
             );
             var map = document.getElementById('map').getBoundingClientRect();
-              console.log("map the ", map);
-              console.log("event map the ", event);
-              var clickY = event.layerPoint.y - map.top;
-              var mapHeight = map.height;
-              var isAboveHalf = clickY < (mapHeight / 2);
-              var div = document.getElementById('containertool');
+            console.log("map the ", map);
+            console.log("event map the ", event);
+            var clickY = event.layerPoint.y - map.top;
+            var mapHeight = map.height;
+            var isAboveHalf = clickY < (mapHeight / 2);
+            var div = document.getElementById('containertool');
 
-              if (isAboveHalf) {
-                div.classList.add("above");
-                div.classList.remove("below");
-              } else {
-                div.classList.add("below");
-                div.classList.remove("above");
-              }
+            if (isAboveHalf) {
+              div.classList.add("above");
+              div.classList.remove("below");
+            } else {
+              div.classList.add("below");
+              div.classList.remove("above");
+            }
             // render_table(feature.properties.pc_id,1);
           });
           layer._leaflet_id = feature.properties.pc_id;
@@ -1920,23 +1929,23 @@ function resetstatebread() {
               party_name_2,
               feature.properties.pc_id,
               feature,
-                layer
+              layer
             );
             var map = document.getElementById('map').getBoundingClientRect();
-              console.log("map the ", map);
-              console.log("event map the ", event);
-              var clickY = event.layerPoint.y - map.top;
-              var mapHeight = map.height;
-              var isAboveHalf = clickY < (mapHeight / 2);
-              var div = document.getElementById('containertool');
+            console.log("map the ", map);
+            console.log("event map the ", event);
+            var clickY = event.layerPoint.y - map.top;
+            var mapHeight = map.height;
+            var isAboveHalf = clickY < (mapHeight / 2);
+            var div = document.getElementById('containertool');
 
-              if (isAboveHalf) {
-                div.classList.add("above");
-                div.classList.remove("below");
-              } else {
-                div.classList.add("below");
-                div.classList.remove("above");
-              }
+            if (isAboveHalf) {
+              div.classList.add("above");
+              div.classList.remove("below");
+            } else {
+              div.classList.add("below");
+              div.classList.remove("above");
+            }
             // render_table(feature.properties.pc_id,1);
           });
           layer._leaflet_id = feature.properties.pc_id;
@@ -1979,14 +1988,14 @@ function resetstatebread() {
     .catch((e) => console.error(e));
 }
 function resetstatebread_option() {
-render2();
+  render2();
   breadcrumbConstituency.style.display = "none";
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";
   document.getElementById("containertool").style.display = "none";
 }
 function resetstatebread2() {
-render2();
+  render2();
   document.getElementById("containertool").style.display = "none";
   breadcrumbConstituency.style.display = "none";
   document.querySelector("#Candidate-res").style.display = "none";
@@ -1995,9 +2004,11 @@ render2();
 let swiper;
 
 function render_whole_carousel() {
+  let heading = document.getElementById("big_fights_heading");
+  heading.innerHTML = `BIG FIGHTS`;
   let swiperContainer = document.getElementById('slider_div');
   let party_img_json, candidates_data;
-  document.getElementById("view_all").setAttribute("href","./bigfights_viewall.html" + "?state=" + "all");
+  document.getElementById("view_all").setAttribute("href", "./bigfights_viewall.html" + "?state=" + "all");
   function createSlide(const_name, state, partySymbol1, partySymbol2, candidateImg1, candidateImg2, cand_name1, cand_name2, votes1, votes2) {
     let party_path1 = (partySymbol1 in party_img_json) ? party_img_json[partySymbol1] : party_img_json["default"];
     let party_path2 = (partySymbol2 in party_img_json) ? party_img_json[partySymbol2] : party_img_json["default"];
@@ -2043,18 +2054,18 @@ function render_whole_carousel() {
     .then(data => {
       party_img_json = data["images_key"];
       candidates_data = data["candidate_details"];
-      
+
       // Clear previous content and destroy previous Swiper instance if it exists
       if (swiper) {
         swiper.destroy(true, true);
       }
       swiperContainer.innerHTML = "";
-      
+
       candidates_data.forEach(data => {
         const slideMarkup = createSlide(data["const_name"], data["state"], data["cand_party1"], data["cand_party2"], data["candidateImg1"], data["candidateImg2"], data["cand_name1"], data["cand_name2"], data["votes1"], data["votes2"]);
         swiperContainer.insertAdjacentHTML('beforeend', slideMarkup);
       });
-      
+
       swiper = new Swiper(".slide-content", {
         slidesPerView: 3,
         spaceBetween: 40,
@@ -2083,16 +2094,16 @@ function render_whole_carousel() {
           }
         },
         autoplay: {
-          delay: 3000, 
-          disableOnInteraction: false,  
+          delay: 3000,
+          disableOnInteraction: false,
         },
         speed: 1300,
       });
-      
+
       swiperContainer.addEventListener('mouseenter', function () {
         swiper.autoplay.stop();
       });
-      
+
       swiperContainer.addEventListener('mouseleave', function () {
         swiper.autoplay.start();
       });

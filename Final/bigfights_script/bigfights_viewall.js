@@ -25,6 +25,9 @@ search_but.addEventListener("click", () => {
 });
 var main_div = document.getElementById("more-cards-root");
 function represent_All() {
+  let state_tag = document.getElementById("state_tag");
+  state_tag.style.display = "none";
+  main_div.innerHTML = "";
   fetch('./bigfights.json')
     .then(response => {
       if (!response.ok) {
@@ -94,6 +97,19 @@ function getParameterByName(name, url = window.location.href) {
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 function represent_state(state) {
+  // let back_top = document.getElementById("back_top");
+  // let state_cancel = document.createElement("div");
+  // back_top.insertAdjacentHTML('afterend', state_cancel);
+  // let button = document.createElement("button");
+  // state_cancel.appendChild(button);
+  main_div.innerHTML = "";
+  let state_tag = document.getElementById("state_tag");
+  state_tag.style.display = "block";
+  let state_tag_name = document.getElementById("state_tag_name");
+  state_tag_name.innerText = state;
+  document.getElementById("state_cancel_icon").addEventListener("click", function () {
+    represent_All();
+  });
   fetch('./bigfights.json')
     .then(response => {
       if (!response.ok) {
@@ -153,12 +169,13 @@ function represent_state(state) {
 
     });
 }
-if (getParameterByName("state") === "all")
+if (!getParameterByName("state") || getParameterByName("state") === "all")
   represent_All();
 else
   represent_state(getParameterByName("state"));
 searchBar1.addEventListener("keyup", function () { recommendations(searchBar1, "search_unorderlist1") });
 searchBar2.addEventListener("keyup", function () { recommendations(searchBar2, "search_unorderlist2") });
+
 function recommendations(searchBar, id_name) {
   var unorderList = document.getElementById(id_name);
   clearList(id_name);
@@ -166,15 +183,17 @@ function recommendations(searchBar, id_name) {
   if (input == "")
     return;
   var ct = 0;
-  var list = document.createElement("li");
-  list.classList.add("search_list_heading");
-  list.classList.add("start_list");
-  list.innerHTML = "States";
-  unorderList.appendChild(list);
   for (let full_name of temp_states) {
-    if (ct > 1)
+    if (ct > 2)
       break;
     if (full_name.toLowerCase().startsWith(input)) {
+      if (ct === 0) {
+        var list = document.createElement("li");
+        list.classList.add("search_list_heading");
+        list.classList.add("start_list");
+        list.innerHTML = "States";
+        unorderList.appendChild(list);
+      }
       list = document.createElement("li");
       list.classList.add("search_list");
       list.classList.add("index_class");
@@ -190,9 +209,16 @@ function recommendations(searchBar, id_name) {
     // console.log(input +' '+ name+ name.startsWith(input));
     // console.log(input);
     for (let name of full_name.toLowerCase().split(" ")) {
-      if (ct > 1)
+      if (ct > 2)
         break;
       if (name.startsWith(input) && input != "") {
+        if (ct === 0) {
+          var list = document.createElement("li");
+          list.classList.add("search_list_heading");
+          list.classList.add("start_list");
+          list.innerHTML = "States";
+          unorderList.appendChild(list);
+        }
         list = document.createElement("li");
         list.classList.add("search_list");
         list.classList.add("index_class");
@@ -207,24 +233,21 @@ function recommendations(searchBar, id_name) {
       }
     }
   }
-  if (ct == 0) {
-    list = document.createElement("li");
-    list.classList.add("search_list");
-    list.innerHTML = "No results found..";
-    unorderList.appendChild(list);
-  }
-  list.classList.add("search_list_last");
+  if (ct > 0)
+    list.classList.add("search_list_last");
   var ct = 0;
-  var list = document.createElement("li");
-  list.classList.add("search_list_heading");
-  list.innerHTML = "Constituencies";
-  unorderList.appendChild(list);
   for (let full_name of temp_const) {
     // console.log(input +' '+ name+ name.startsWith(input));
     // console.log(input);
-    if (ct > 1)
+    if (ct > 2)
       break;
     if (full_name.toLowerCase().startsWith(input)) {
+      if (ct === 0) {
+        var list = document.createElement("li");
+        list.classList.add("search_list_heading");
+        list.innerHTML = "Constituencies";
+        unorderList.appendChild(list);
+      }
       list = document.createElement("li");
       list.classList.add("search_list");
       list.classList.add("index_class");
@@ -238,9 +261,15 @@ function recommendations(searchBar, id_name) {
       continue;
     }
     for (let name of full_name.toLowerCase().split(" ")) {
-      if (ct > 1)
+      if (ct > 2)
         break;
       if (name.startsWith(input) && input != "") {
+        if (ct === 0) {
+          var list = document.createElement("li");
+          list.classList.add("search_list_heading");
+          list.innerHTML = "Constituencies";
+          unorderList.appendChild(list);
+        }
         list = document.createElement("li");
         list.classList.add("search_list");
         list.classList.add("index_class");
@@ -255,25 +284,21 @@ function recommendations(searchBar, id_name) {
       }
     }
   }
-
-  if (ct == 0) {
-    list = document.createElement("li");
-    list.classList.add("search_list");
-    list.innerHTML = "No results found..";
-    unorderList.appendChild(list);
-  }
-  list.classList.add("search_list_last");
+  if (ct > 0)
+    list.classList.add("search_list_last");
   var ct = 0;
-  list = document.createElement("li");
-  list.classList.add("search_list_heading");
-  list.innerHTML = "Candidates";
-  unorderList.appendChild(list);
   for (let full_name of temp_data) {
     // console.log(input +' '+ name+ name.startsWith(input));
     // console.log(input);
-    if (ct > 1)
+    if (ct > 2)
       break;
     if (full_name.toLowerCase().startsWith(input)) {
+      if (ct === 0) {
+        list = document.createElement("li");
+        list.classList.add("search_list_heading");
+        list.innerHTML = "Candidates";
+        unorderList.appendChild(list);
+      }
       list = document.createElement("li");
       list.classList.add("search_list");
       list.classList.add("index_class");
@@ -287,9 +312,15 @@ function recommendations(searchBar, id_name) {
       continue;
     }
     for (let name of full_name.toLowerCase().split(" ")) {
-      if (ct > 1)
+      if (ct > 2)
         break;
       if (name.startsWith(input) && input != "") {
+        if (ct === 0) {
+          list = document.createElement("li");
+          list.classList.add("search_list_heading");
+          list.innerHTML = "Candidates";
+          unorderList.appendChild(list);
+        }
         list = document.createElement("li");
         list.classList.add("search_list");
         list.classList.add("index_class");
@@ -304,14 +335,16 @@ function recommendations(searchBar, id_name) {
       }
     }
   }
-  if (ct == 0) {
-    list = document.createElement("li");
-    list.classList.add("search_list");
-    list.innerHTML = "No results found..";
-    unorderList.appendChild(list);
+  if (ct > 0) {
+    list.classList.add("search_list_last");
+    list.classList.add("end_list");
   }
-  list.classList.add("search_list_last");
-  list.classList.add("end_list");
+  // if (ct == 0) {
+  //   let list = document.createElement("li");
+  //   list.classList.add("search_list");
+  //   list.innerHTML = "No results found..";
+  //   unorderList.appendChild(list);
+  // }
   unorderList.style.display = '';
   back_bottom.classList.add("blur_class");
 }
@@ -349,7 +382,10 @@ searchBar1.addEventListener("input", function () {
   if (searchBar1.value === "") {
     main_div.innerHTML = ""
     back_bottom.classList.remove("blur_class");
-    represent_All();
+    if(!getParameterByName("state") || getParameterByName("state") === "all")
+      represent_All();
+    else
+      represent_state(getParameterByName("state"));
     return;
   }
 });
@@ -357,7 +393,10 @@ searchBar2.addEventListener("input", function () {
   if (searchBar2.value === "") {
     main_div.innerHTML = ""
     back_bottom.classList.remove("blur_class");
-    represent_All();
+    if(!getParameterByName("state") || getParameterByName("state") === "all")
+      represent_All();
+    else
+      represent_state(getParameterByName("state"));
     return;
   }
 });
