@@ -76,7 +76,7 @@
    </head>
    <body>
       <nav>
-      <div class="logo">
+      <div class="headerlogo">
         <a href="index.html"
           ><img src="imgs/RESULTS2024LOGO.png" alt="Logo"
         /></a>
@@ -219,8 +219,15 @@
                </div>
                <div class="col-12 col-md-6 order-md-2 order-1">
                   <div class=" ">
-                     <div class="d-flex justify-content-center w-100">
-                        <svg id="allianceChart"></svg>
+                     
+                     <!-- <div id="square-container"></div> -->
+                     <div class="p-2" id="chartContainer">
+                        <!-- <h1 id="numberOfSeats">543</h1> -->
+                        <div id="allianceChart2"></div>
+                        <!-- <div class="d-flex justify-content-center w-80 " style="height: 227px;">
+                           <svg id="allianceChart"  viewBox="1 900 900"></svg>
+                        </div> -->
+
                      </div>
                      <div class="bar-container" id="bar-container">
                         <div class="bar bar-1" id="bar1"></div>
@@ -572,7 +579,8 @@
             <script async src="https://static.addtoany.com/menu/page.js"></script>
          </div>
       </footer>
-      
+
+      <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
          crossorigin="anonymous"></script>
@@ -586,6 +594,6 @@
       <script src="./cards.js"></script>
       <script src="./disclaimer.js"></script>
       <script src="./navbar.js"></script>
-      
+      <script src="./bigfights_script/swiper-bundle.min.js"></script>
    </body>
 </html>

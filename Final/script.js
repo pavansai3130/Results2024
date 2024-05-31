@@ -2,24 +2,9 @@
 // Ensure you have included JQuery library before this script
 
 // JSON object containing party colors
-const json2019 = [
-  {
-    id: "nda",
-    name: "NDA",
-    seats: 300,
-  },
-  {
-    id: "india",
-    name: "I.N.D.I.A",
-    seats: 200,
-  },
-  {
-    id: "others",
-    name: "Others",
-    seats: 43,
-  },
-];
-
+let data_201;
+let data_2019 = {};
+let bars;
 const initialView = [23, 82.5];
 const initialZoom = 5;
 let state_value = 36;
@@ -235,6 +220,8 @@ let alliancePatries = {
   india: {},
   others: {},
 };
+let stateDataJson2019;
+let allianceJson2019;
 let data2024 = {};
 let stateDataJson;
 let allianceJson;
@@ -248,6 +235,45 @@ let names = {
   indiaColor: "#87CEEB",
   othersColor: "#BFC8D0",
 };
+async function fetchJSON2(file) {
+  // data_2019 = {};
+  try {
+    const response = await fetch(file); // Fetch the JSON file
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    data_201 = await response.json();
+    console.log("JSON data fetched and stored globally:", data_201);
+    function format2(data2024) {
+      for (let state in data2024) {
+        for (let const_name in data2024[state]) {
+          const candidates = [];
+          for (let item of data2024[state][const_name]["candidates"]) {
+            const candidate = {
+              candidateId: item.cId,
+              candidateName: item.cName,
+              constituencyName: const_name,
+              party: item.prty,
+              alliance: item.alnce,
+              votes: item.vts,
+            };
+            candidates.push(candidate);
+          }
+          // Access constituency code from constCodes if properly defined
+          const constituencyCode = constCodes[state][const_name];
+          if (constituencyCode) {
+            // Assign candidates to the corresponding constituency code in data_2019
+            data_2019[constituencyCode] = candidates;
+          }
+        }
+      }
+    }
+    format2(data_201[0]);
+  } catch (error) {
+    console.error("Error fetching the JSON file:", error);
+    throw error; // Rethrow the error for the caller to handle
+  }
+}
 async function fetchGeoJSON(file) {
   try {
     const response = await fetch(file);
@@ -292,13 +318,13 @@ async function fetchGeoJSON(file) {
             party_name_2,
             feature.properties.pc_id
           );
-          var map = document.getElementById('map').getBoundingClientRect();
+          var map = document.getElementById("map").getBoundingClientRect();
           console.log("map the ", map);
           console.log("event map the ", event);
           var clickY = event.layerPoint.y - map.top;
           var mapHeight = map.height;
-          var isAboveHalf = clickY < (mapHeight / 2);
-          var div = document.getElementById('containertool');
+          var isAboveHalf = clickY < mapHeight / 2;
+          var div = document.getElementById("containertool");
 
           if (isAboveHalf) {
             div.classList.add("above");
@@ -317,7 +343,7 @@ async function fetchGeoJSON(file) {
         });
 
         layer._leaflet_id = feature.properties.pc_id;
-      }
+      },
     });
 
     map.setView(initialView, initialZoom);
@@ -434,13 +460,26 @@ async function fetchJSON(file1, file2) {
 
 $(document).ready(async function () {
   await fetchJSON("./election2024.json");
+  await fetchJSON2("./election2019.json");
   await fetchGeoJSON("geo.json");
   //   let intervalId = setInterval(async () => {
   //     await fetchData();
   //     // handleStateClick(lastClickedState);
   //   }, 10000);
   // console.log(data);
-  console.log(stateDataJson);
+
+  stateDataJson2019 = data_201[0];
+  allianceJson2019 = data_201[1];
+  // console.log(stateDataJson2019);
+  // console.log(allianceJson2019);
+  if (getParameterByName("year") === "2019") {
+    stateDataJson = stateDataJson2019;
+    allianceJson = allianceJson2019;
+    // console.log(data_2019);
+    data = data_2019;
+    console.log("datsis");
+    console.log(data);
+  }
   // console.log(allianceJson);
   // Function to render India map with statewise colors
   function renderIndiaMap() {
@@ -514,8 +553,8 @@ $(document).ready(async function () {
           nda >= india && nda >= others
             ? names.ndaColor
             : india > nda && india >= others
-              ? names.indiaColor
-              : names.othersColor;
+            ? names.indiaColor
+            : names.othersColor;
 
         if (stateCount <= 20) {
           const cells = newRow.getElementsByTagName("td");
@@ -636,8 +675,8 @@ $(document).ready(async function () {
         nda >= india && nda >= others
           ? names.ndaColor
           : india > nda && india >= others
-            ? names.indiaColor
-            : names.othersColor;
+          ? names.indiaColor
+          : names.othersColor;
 
       tbody.appendChild(newRow);
     });
@@ -690,7 +729,7 @@ $(document).ready(async function () {
     const state = $(this).attr("id");
     handleStateClick(state);
     creatediv(state);
-    half(event)
+    half(event);
   });
 
   let percent = 0;
@@ -707,20 +746,6 @@ $(document).ready(async function () {
 
   // Function to animate the progress bar and change slides
   function progressBarCarousel() {
-    let activeElement = document.querySelector(".carousel-item.active");
-    // console.log(activeElement.id);
-    // console.log(activeElement.id);
-    if (activeElement.id.startsWith("nda")) {
-      document.getElementById("carouselProgress").style.backgroundColor =
-        "#FF9933";
-    } else if (activeElement.id.startsWith("india")) {
-      document.getElementById("carouselProgress").style.backgroundColor =
-        "#87CEEB";
-    } else if (activeElement.id.startsWith("others")) {
-      document.getElementById("carouselProgress").style.backgroundColor =
-        "#EAECF0";
-    }
-    progress_bar.style.width = percent + "%";
     percent = percent + 1;
     if (percent > 100) {
       percent = 0;
@@ -729,7 +754,7 @@ $(document).ready(async function () {
   }
 
   // Start the progress bar animation
-  var barInterval = setInterval(progressBarCarousel, 1000000);
+  // var barInterval = setInterval(progressBarCarousel, 50);
 
   // Pause the progress bar animation on hover
   progress_crsl._element.addEventListener("mouseenter", function () {
@@ -738,7 +763,7 @@ $(document).ready(async function () {
   });
 
   progress_crsl._element.addEventListener("mouseleave", function () {
-    barInterval = setInterval(progressBarCarousel, 1000000);
+    // barInterval = setInterval(progressBarCarousel, 50);
     // progress_crsl.cycle();
   });
   // $("#myInput").on("keyup", function () {
@@ -753,7 +778,9 @@ $(document).ready(async function () {
   //   });
   // });
   //   const exampleValues = [335, 65, 81]; // Change these values to see different results
-  updateBar(Object.values(allianceJson));
+  console.log("before updating");
+  console.log(allianceJson);
+  updateBar([allianceJson.NDA, allianceJson.INDIA, allianceJson.OTH]);
 
   const carousel = document.querySelector("#carouselExampleIndicators");
   const indicators = document.querySelectorAll(".carousel-indicators button");
@@ -794,8 +821,9 @@ $(document).ready(async function () {
     //   });
     // });
   });
+  // ---------------------------------------------------------
   // toggleButton.addEventListener("click", toggleEntries);
-  var parliament = d3.parliament().width(400).innerRadiusCoef(0.3);
+  var parliament = d3.parliament().width(469).innerRadiusCoef(0.3);
   parliament.enter.fromCenter(true).smallToBig(true);
   parliament.exit.toCenter(true).bigToSmall(true);
   parliament.on("click", function (e) {
@@ -807,6 +835,57 @@ $(document).ready(async function () {
   };
 
   d3.json("./lib/european.json", setData);
+  // --------------------------------------------------------------
+
+  // ----------------------------------------------------
+  var options = {
+    lables: [names[bars[0].color], names[bars[1].color], names[bars[2].color]],
+    series: [bars[0].value, bars[1].value, bars[2].value],
+    colors: [bars[0].color, bars[1].color, bars[2].color],
+    chart: {
+      type: "donut",
+      // height: "100%",
+      width: "100%",
+    },
+    dataLabels: {
+      enabled: true,
+    },
+    plotOptions: {
+      pie: {
+        startAngle: -90,
+        endAngle: 90,
+        offsetY: 0,
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    legend: {
+      show: false,
+    },
+    grid: {
+      padding: {
+        bottom: -80,
+      },
+    },
+    responsive: [
+      {
+        // breakpoint: 480,
+        options: {
+          chart: {
+            width: "100%",
+          },
+        },
+      },
+    ],
+  };
+
+  var chart = new ApexCharts(
+    document.querySelector("#allianceChart2"),
+    options
+  );
+  document.getElementById("allianceChart2").style.minHeight = `${300}px`;
+  chart.render();
 });
 function toggleEntries() {
   const toggleButtons = document.querySelectorAll(".toggleButton");
@@ -968,7 +1047,7 @@ function updateBar(values) {
   const barText = document.getElementById("bar-text");
 
   // Create an array of objects to sort by value
-  const bars = [
+  bars = [
     {
       element: bar1,
       value: values[0],
@@ -1042,14 +1121,13 @@ function handleStateClick(state) {
     else india++;
   }
   updateBar([nda, india, others]);
-
 }
 function half(event) {
-  var map = document.getElementById('india-map').getBoundingClientRect();
+  var map = document.getElementById("india-map").getBoundingClientRect();
   var clickY = event.clientY - map.top;
   var mapHeight = map.height;
-  var isAboveHalf = clickY < (mapHeight / 2);
-  var div = document.getElementById('containertool2');
+  var isAboveHalf = clickY < mapHeight / 2;
+  var div = document.getElementById("containertool2");
 
   if (isAboveHalf) {
     div.classList.add("above-half");
@@ -1061,34 +1139,33 @@ function half(event) {
 }
 // console.log(stateDataJson);
 function creatediv(state) {
-  fetch('election2019.json')
-    .then(response => {
+  fetch("election2019.json")
+    .then((response) => {
       if (!response.ok) {
-        throw new Error('Network response was not ok ' + response.statusText);
+        throw new Error("Network response was not ok " + response.statusText);
       }
       return response.json();
     })
-    .then(stateDataJson => {
+    .then((stateDataJson) => {
       var obj = {};
       var partynames = [];
       var partyseats = [];
       var constituencyData = stateDataJson[0][state];
       for (let const_name in constituencyData) {
-        let party_name = stateDataJson[0][state][const_name]["candidates"][0]["prty"];
+        let party_name =
+          stateDataJson[0][state][const_name]["candidates"][0]["prty"];
 
         if (party_name in obj) {
           obj[party_name] += 1;
-        }
-        else
-          obj[party_name] = 1;
+        } else obj[party_name] = 1;
       }
       var sortedPartyWins = Object.entries(obj).sort((a, b) => b[1] - a[1]);
       for (let i = 0; i < sortedPartyWins.length; i++) {
         partynames[i] = sortedPartyWins[i][0];
         partyseats[i] = sortedPartyWins[i][1];
       }
-      var maindiv = document.getElementById('containertool2');
-      var mainindiamap = document.getElementById('india-map');
+      var maindiv = document.getElementById("containertool2");
+      var mainindiamap = document.getElementById("india-map");
       mainindiamap.append(maindiv);
       var htmlcode = `<span class="close" onclick="close_btn()">&times;</span>
                         <h2 class="sthead">${state}</h2>
@@ -1105,8 +1182,12 @@ function creatediv(state) {
         for (let i = 0; i < partynames.length && i < 5; i++) {
           if (partynames[i] !== undefined) {
             htmlcode += `<tr>
-                                  <td class="tdData"><img class="party-icon" src="${sym[partynames[i]]}"> ${partynames[i]}</td>
-                                  <td class="tdData" id="wlright">${obj[partynames[i]]}</td></tr>`;
+                                  <td class="tdData"><img class="party-icon" src="${
+                                    sym[partynames[i]]
+                                  }"> ${partynames[i]}</td>
+                                  <td class="tdData" id="wlright">${
+                                    obj[partynames[i]]
+                                  }</td></tr>`;
           }
         }
       }
@@ -1119,7 +1200,9 @@ function creatediv(state) {
         if (partynames[i] !== undefined && partyseats[i] !== undefined) {
           htmlcode += `<div class="barbox">
                                 <span class="barlabel">${partynames[i]}</span>
-                              <div class="br${i + 1} inbar" id="id${i}">${partyseats[i]}</div> </div>`;
+                              <div class="br${i + 1} inbar" id="id${i}">${
+            partyseats[i]
+          }</div> </div>`;
         }
       }
       htmlcode += `    </div>
@@ -1131,17 +1214,15 @@ function creatediv(state) {
       // Set the width after the HTML has been added to the DOM
       if (partynames.length == 1) {
         setTimeout(() => {
-          document.getElementById('id0').style.width = "13.215rem";
+          document.getElementById("id0").style.width = "13.215rem";
         }, 0);
       }
       if (partynames.length == 2) {
         setTimeout(() => {
-          document.getElementById('id0').style.width = "7.215rem";
+          document.getElementById("id0").style.width = "7.215rem";
         }, 0);
       }
-
     });
-
 }
 function showmap(state) {
   render_state_carousel(state);
@@ -1233,25 +1314,29 @@ function helper(item, row) {
         <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
         <div class="temp custom-temp">
             <div class="card-body w-100">
-                <h3 class="card-title custom-card-title" style="color:${nameColor}">${item.name
-    }</h3>
+                <h3 class="card-title custom-card-title" style="color:${nameColor}">${
+    item.name
+  }</h3>
                 <div class="subheaders cd-flex align-items-center custom-subheaders">
-                    <div class="logo"><img class="custom-img" src="${item.logoimg
-    }" alt=""></div>
+                    <div class="logo"><img class="custom-img" src="${
+                      item.logoimg
+                    }" alt=""></div>
                     <h6 style="font-weight: bold;">${item.pid}</h6>
                 </div>
-                <p class="card-text custom-card-text">${item.place
-    }</p>
+                <p class="card-text custom-card-text">${item.place}</p>
                 <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
-                    <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${item.votes
-    }
+                    <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
+                      item.votes
+                    }
                 </p>
             </div>
             <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
-                <p class="card-text mb-1 custom-iribbon-text">${item.lead ? "Leading by" : "Trailing by"
-    }</p>
-                <p class="card-text custom-iribbon-text-votes">${item.lead2votes
-    }</p>
+                <p class="card-text mb-1 custom-iribbon-text">${
+                  item.lead ? "Leading by" : "Trailing by"
+                }</p>
+                <p class="card-text custom-iribbon-text-votes">${
+                  item.lead2votes
+                }</p>
             </div>
         </div>
         <div class="person-image d-flex custom-person-image">
@@ -1270,7 +1355,7 @@ document.getElementById("see-more-btn").addEventListener("click", function () {
 let renderAllianceResults;
 document.addEventListener("DOMContentLoaded", function () {
   const table = document.getElementById("mainTable");
-  const observer = new ResizeObserver(entries => {
+  const observer = new ResizeObserver((entries) => {
     for (let entry of entries) {
       if (entry.target === table) {
         const numRows = table.getElementsByTagName("tr").length - 1; // Subtract 1 for the header row
@@ -1283,13 +1368,12 @@ document.addEventListener("DOMContentLoaded", function () {
   observer.observe(table);
 });
 
-
 async function fetchDataAndRenderCards(numRows) {
   console.log("fetchDataAndRenderCards called");
   try {
     const response = await fetch("data.json");
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
 
     // Sort the data by votes in descending order and select the top 10
     const topTen = data.sort((a, b) => b.votes - a.votes).slice(0, 10);
@@ -1324,7 +1408,7 @@ async function fetchDataAndRenderCards(numRows) {
 }
 
 function helper(item, row) {
-  console.log("Creating card for:", item.name);
+  // console.log("Creating card for:", item.name);
   const card = document.createElement("div");
   card.className = "position-relative custom-container";
 
@@ -1365,25 +1449,29 @@ function helper(item, row) {
         <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
         <div class="temp custom-temp">
             <div class="card-body w-100">
-                <h3 class="card-title custom-card-title" style="color:${nameColor}">${item.name
-    }</h3>
+                <h3 class="card-title custom-card-title" style="color:${nameColor}">${
+    item.name
+  }</h3>
                 <div class="subheaders cd-flex align-items-center custom-subheaders">
-                    <div class="logo"><img class="custom-img" src="${item.logoimg
-    }" alt=""></div>
+                    <div class="logo"><img class="custom-img" src="${
+                      item.logoimg
+                    }" alt=""></div>
                     <h6 style="font-weight: bold;">${item.pid}</h6>
                 </div>
-                <p class="card-text custom-card-text">${item.place
-    }</p>
+                <p class="card-text custom-card-text">${item.place}</p>
                 <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
-                    <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${item.votes
-    }
+                    <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
+                      item.votes
+                    }
                 </p>
             </div>
             <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
-                <p class="card-text mb-1 custom-iribbon-text">${item.lead ? "Leading by" : "Trailing by"
-    }</p>
-                <p class="card-text custom-iribbon-text-votes">${item.lead2votes
-    }</p>
+                <p class="card-text mb-1 custom-iribbon-text">${
+                  item.lead ? "Leading by" : "Trailing by"
+                }</p>
+                <p class="card-text custom-iribbon-text-votes">${
+                  item.lead2votes
+                }</p>
             </div>
         </div>
         <div class="person-image d-flex custom-person-image">
@@ -1402,7 +1490,7 @@ document.getElementById("see-more-btn").addEventListener("click", function () {
 
 document.addEventListener("DOMContentLoaded", function () {
   const table = document.getElementById("constTable");
-  const observer = new ResizeObserver(entries => {
+  const observer = new ResizeObserver((entries) => {
     for (let entry of entries) {
       if (entry.target === table) {
         const numRows = table.getElementsByTagName("tr").length - 1; // Subtract 1 for the header row
@@ -1417,13 +1505,35 @@ document.addEventListener("DOMContentLoaded", function () {
 function render_state_carousel(state) {
   let heading = document.getElementById("big_fights_heading");
   heading.innerHTML = `BIG FIGHTS (<span class = "heading_state">${state.toUpperCase()}</span>)`;
-  let swiperContainer = document.getElementById('slider_div');
+  let swiperContainer = document.getElementById("slider_div");
   let party_img_json, candidates_data;
-  document.getElementById("view_all").setAttribute("href", "./bigfights_viewall.html" + "?state=" + state);
-  function createSlide(const_name, state, partySymbol1, partySymbol2, candidateImg1, candidateImg2, cand_name1, cand_name2, votes1, votes2) {
-    let party_path1 = (partySymbol1 in party_img_json) ? party_img_json[partySymbol1] : party_img_json["default"];
-    let party_path2 = (partySymbol2 in party_img_json) ? party_img_json[partySymbol2] : party_img_json["default"];
-    let state_img = (state.toLowerCase() in party_img_json) ? party_img_json[state.toLowerCase()] : "./imgs2/madhya_pradesh.jpg";
+  document
+    .getElementById("view_all")
+    .setAttribute("href", "./bigfights_viewall.html" + "?state=" + state);
+  function createSlide(
+    const_name,
+    state,
+    partySymbol1,
+    partySymbol2,
+    candidateImg1,
+    candidateImg2,
+    cand_name1,
+    cand_name2,
+    votes1,
+    votes2
+  ) {
+    let party_path1 =
+      partySymbol1 in party_img_json
+        ? party_img_json[partySymbol1]
+        : party_img_json["default"];
+    let party_path2 =
+      partySymbol2 in party_img_json
+        ? party_img_json[partySymbol2]
+        : party_img_json["default"];
+    let state_img =
+      state.toLowerCase() in party_img_json
+        ? party_img_json[state.toLowerCase()]
+        : "./imgs2/madhya_pradesh.jpg";
     return `
       <div class="card swiper-slide">
           <span class="state_name">${const_name} <span class="state_party_slot">(${state})</span></span>
@@ -1455,14 +1565,14 @@ function render_state_carousel(state) {
       `;
   }
 
-  fetch('./bigfights.json')
-    .then(response => {
+  fetch("./bigfights.json")
+    .then((response) => {
       if (!response.ok) {
-        throw new Error('Network response was not ok ' + response.statusText);
+        throw new Error("Network response was not ok " + response.statusText);
       }
       return response.json();
     })
-    .then(data => {
+    .then((data) => {
       party_img_json = data["images_key"];
       candidates_data = data["candidate_details"][state.toLowerCase()];
 
@@ -1479,8 +1589,19 @@ function render_state_carousel(state) {
       // }
       for (const_name in candidates_data) {
         for (let bigf = 0; bigf < candidates_data[const_name].length; bigf++) {
-          const slideMarkup = createSlide(const_name, state, candidates_data[const_name][bigf]["party1"], candidates_data[const_name][bigf]["party2"], "./imgs2/rahul.png", "./imgs2/smriti_irani.png", candidates_data[const_name][bigf]["name1"], candidates_data[const_name][bigf]["name2"], "100000", "50000")
-          swiperContainer.insertAdjacentHTML('beforeend', slideMarkup);
+          const slideMarkup = createSlide(
+            const_name,
+            state,
+            candidates_data[const_name][bigf]["party1"],
+            candidates_data[const_name][bigf]["party2"],
+            "./imgs2/rahul.png",
+            "./imgs2/smriti_irani.png",
+            candidates_data[const_name][bigf]["name1"],
+            candidates_data[const_name][bigf]["name2"],
+            "100000",
+            "50000"
+          );
+          swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
         }
       }
       // candidates_data.forEach(data => {
@@ -1498,7 +1619,7 @@ function render_state_carousel(state) {
         pagination: {
           el: ".swiper-pagination",
           clickable: true,
-          dynamicBullets: true
+          dynamicBullets: true,
         },
         navigation: {
           nextEl: ".swiper-button-next",
@@ -1513,7 +1634,7 @@ function render_state_carousel(state) {
           },
           950: {
             slidesPerView: 3,
-          }
+          },
         },
         autoplay: {
           delay: 3000,
@@ -1522,15 +1643,26 @@ function render_state_carousel(state) {
         speed: 1300,
       });
 
-      swiperContainer.addEventListener('mouseenter', function () {
+      swiperContainer.addEventListener("mouseenter", function () {
         swiper.autoplay.stop();
       });
 
-      swiperContainer.addEventListener('mouseleave', function () {
+      swiperContainer.addEventListener("mouseleave", function () {
         swiper.autoplay.start();
       });
     })
-    .catch(error => {
-      console.error('There has been a problem with your fetch operation:', error);
+    .catch((error) => {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
     });
+}
+function getParameterByName(name, url = window.location.href) {
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return "";
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
