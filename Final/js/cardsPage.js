@@ -1,7 +1,7 @@
 async function fetchMoreCards() {
   try {
     // Fetch the state-constituency-candidate JSON
-    const stateResponse = await fetch("popular.json");
+    const stateResponse = await fetch("./data/popular.json");
     const stateData = await stateResponse.json();
     console.log('State Data:', stateData);
 
@@ -119,7 +119,7 @@ item.cName
 }
 
 document.getElementById("back-btn").addEventListener("click", function () {
-  window.location.href = "index.html";
+  window.location.href = "./index.html";
 });
 
 // Fetch and render the cards when the page loads

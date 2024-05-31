@@ -1,7 +1,7 @@
 // async function fetchDataAndRenderCards(numRows) {
 //   console.log("fetchDataAndRenderCards called");
 //   try {
-//     const response = await fetch("data.json");
+//     const response = await fetch("./data/data.json");
 //     const data = await response.json();
 //     console.log(data);
 
