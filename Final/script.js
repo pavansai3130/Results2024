@@ -2,6 +2,24 @@
 // Ensure you have included JQuery library before this script
 
 // JSON object containing party colors
+const json2019 = [
+  {
+    id: "nda",
+    name: "NDA",
+    seats: 300,
+  },
+  {
+    id: "india",
+    name: "I.N.D.I.A",
+    seats: 200,
+  },
+  {
+    id: "others",
+    name: "Others",
+    seats: 43,
+  },
+];
+
 const initialView = [23, 82.5];
 const initialZoom = 5;
 let state_value = 36;
@@ -349,10 +367,15 @@ async function fetchGeoJSON(file) {
     console.error("Error loading GeoJSON:", error);
   }
 }
-async function fetchJSON(file) {
+async function fetchJSON(file1, file2) {
   try {
     const url = "https://results2024.s3.ap-south-1.amazonaws.com/results.json";
-    const response = await fetch(file);
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -416,8 +439,8 @@ $(document).ready(async function () {
   //     await fetchData();
   //     // handleStateClick(lastClickedState);
   //   }, 10000);
-  console.log(data);
-  // console.log(stateDataJson);
+  // console.log(data);
+  console.log(stateDataJson);
   // console.log(allianceJson);
   // Function to render India map with statewise colors
   function renderIndiaMap() {
@@ -772,6 +795,18 @@ $(document).ready(async function () {
     // });
   });
   // toggleButton.addEventListener("click", toggleEntries);
+  var parliament = d3.parliament().width(400).innerRadiusCoef(0.3);
+  parliament.enter.fromCenter(true).smallToBig(true);
+  parliament.exit.toCenter(true).bigToSmall(true);
+  parliament.on("click", function (e) {
+    console.log(e);
+  });
+
+  var setData = function (d) {
+    d3.select("#allianceChart").datum(d).call(parliament);
+  };
+
+  d3.json("./lib/european.json", setData);
 });
 function toggleEntries() {
   const toggleButtons = document.querySelectorAll(".toggleButton");

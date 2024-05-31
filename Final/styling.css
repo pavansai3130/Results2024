@@ -487,9 +487,10 @@ tr {
   /* Remove space between buttons */
 }
 
-#state-bt,
-#consti-bt {
-  height: 1.875rem;
+#state-bt, #consti-bt {
+  height: 24px;
+  /* width: 55px; */
+  font-size: 10px;
   background-color: white;
   padding: 0.2rem 1rem 0.75rem 1rem;
   color: black;
@@ -504,20 +505,17 @@ tr {
 }
 
 #state-bt {
-  border-top-right-radius: 0;
-  /* Remove top-right border radius */
-  border-bottom-right-radius: 0;
-  /* Remove bottom-right border radius */
-  border-right: none;
-  /* Remove right border to merge with #consti-bt */
-  padding: 10px, 16px, 10px, 16px;
+  width: 55px;
+  border-top-right-radius: 0; /* Remove top-right border radius */
+  border-bottom-right-radius: 0; /* Remove bottom-right border radius */
+  border-right: none; /* Remove right border to merge with #consti-bt */
+  padding:  10px, 16px, 10px, 16px;
 }
 
 #consti-bt {
-  border-top-left-radius: 0;
-  /* Remove top-left border radius */
-  border-bottom-left-radius: 0;
-  /* Remove bottom-left border radius */
+  width: 87px;
+  border-top-left-radius: 0; /* Remove top-left border radius */
+  border-bottom-left-radius: 0; /* Remove bottom-left border radius */
 }
 
 #state-bt:hover,
@@ -784,27 +782,41 @@ tr {
 
 /* media query */
 /* container 2 */
-.form-control {
-  width: 12.5rem;
-  border-radius: 0.5rem;
-  border: 0.063rem solid rgb(208, 213, 221, 1);
-  padding-left: 0.625rem;
+#state-select{
+  width:120px;
+  height: 18px;
+  border: none;
+  font-size: 12px;
+  font-weight: 400;
+  border-radius: 0;
+  border-bottom: 1px solid black; 
+  padding: 0;
+
+}
+#state-select option{
+  color: black;
+}
+@media (max-width:600px) {
+
+  #containertool{
+    left: 0.9rem;
+    top:12rem;
+  }
 }
 
-.above {
-  left: 1rem;
-  top: 1.6rem;
+
+@media (max-width:1000px) {
+
+  #containertool{
+    left: 0.9rem;
+    top:12rem;
+  }
 }
 
-.below {
-  left: 1rem;
-  top: 21rem;
-}
-#selectstatemaps{
-  border: 1px solid black;
-  display: inline;
-}
-#imgs{
-  position: relative;
-  width: 10rem;
+@media (max-width:2000px) {
+ 
+  #containertool{
+    left: 0.9rem;
+    top:19rem;
+  }
 }
