@@ -1,146 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>India General Election 2024</title>
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>India General Election 2024</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
       integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-      crossorigin="anonymous" referrerpolicy="no-referrer" />
-      <script src="leaflet/index.js"></script>
-      <script src="index.js"></script>
-      <link rel="stylesheet" href="styles.css">
-      <link rel="stylesheet" href="styling.css">
-      <link rel="stylesheet" href="leaflet/index.css"/>
-      <link rel="stylesheet" href="./about.css">
-      <link rel="stylesheet" href="./disclaimer.css">
-      <link rel="stylesheet" href="navbarStyles.css">
-
-   </head>
-   <body>
-      <nav class="navbarHead">
-         <div class="containerHead">
-            <div class="logo">
-               <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="leaflet/index.js"></script>
+    <script src="index.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styling.css" />
+    <link rel="stylesheet" href="leaflet/index.css" />
+    <link rel="stylesheet" href="./about.css" />
+    <link rel="stylesheet" href="./disclaimer.css" />
+    <link rel="stylesheet" href="navbarStyles.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="logo">
+        <a href="index.html"
+          ><img src="imgs/RESULTS2024LOGO.png" alt="Logo"
+        /></a>
+      </div>
+      <div class="navigations">
+        <span id="menu" class="d-lg-none" onclick="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </span>
+        <div id="mobile-nav-content">
+          <ul id="nav-links">
+            <li><a href="index.html" class="links">2019 Results</a></li>
+            <li
+              id="hoverable"
+              onmouseenter="showTooltip()"
+              onmouseleave="hideTooltip()"
+              onclick="toggleTooltip()"
+            >
+              <a href="/" class="links disabled">Candidates</a>
+              <i class="fa-solid fa-chevron-down"></i>
+              <i class="fa-solid fa-chevron-up"></i>
+              <ul class="tooltip" id="tooltip">
+                <li id="celebrities">
+                  <a href="celebCards.html">Celebrities</a>
+                </li>
+                <li id="popular">
+                  <a href="cardsPage.html">Popular Candidates</a>
+                </li>
+              </ul>
+            </li>
+            <div class="hiding" id="mobile-tooltip">
+              <li>
+                <a href="celebCards.html" class="links" id="celebrities2"
+                  >Celebrities</a
+                >
+              </li>
+              <li>
+                <a href="cardsPage.html" class="links" id="popular2"
+                  >Popular Candidates</a
+                >
+              </li>
             </div>
-            <div class="navlinks" id="navlinks">
-               <div class="headerPhone">
-                  <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
-                  <i class="fa-solid fa-xmark" onclick="hidemenu()"></i>
-               </div>
-               <div class="d-flex">
-                  <div class="imgHover">
-                     <div class="tooltip-container">
-                        <!-- <span class="text">Tooltip</span> -->
-                           <a style="font-size: 1.5rem;">Candidates</a>
-                        <span class="tooltip">
-                           <li><a href="cardsPage.html">Popular</a></li>
-                           <li><a href="celebCards.html">Celebrities</a></li>
-                           </a></span>
-                     </div>
-   
-                  </div>
-                  <div class="listBoxes">
-   
-                  
-                  <ul>
-                     <li><a href="bigfights_viewall.html">Big Fights</a></li>
-                     <li><a href="">'19 vs '24</a></li>
-                     <div class="phoneMedia" id="phoneMedia"><i class="fa-brands fa-facebook" style="color: #158be5;"></i>
-   
-                        <i class="fa-brands fa-whatsapp" style="color: #32ec6a;"></i>
-   
-                        <i class="fa-brands fa-instagram" style="color: #d24196;"></i>
-   
-                        <i class="fa-brands fa-telegram" style="color: #74deec;"></i>
-                     </div>
-                  </ul>
-                  <div class="footerContact">
-                     <ul id="footy" >
-                        <li><a href="./about.html">About Us</a></li>
-                        <li><a href="./volunteers.html">Our Team</a></li>
-                        <li><a href="./disclaimer.html">Disclaimer</a></li>
-                     </ul>
-                  </div>
-                  
-               </div>
-               </div>
+            <li><a href="index.html" class="links">'24 vs '19</a></li>
+            <li>
+              <a href="bigfights_viewall.html" class="links">Big fights</a>
+            </li>
+            <div class="a2a_kit a2a_kit_size_26 a2a_default_style socialMedia">
+              <a class="a2a_button_facebook"></a>
+              <a class="a2a_button_twitter"></a>
+              <a class="a2a_button_whatsapp"></a>
+              <a class="a2a_button_linkedin"></a>
+              <a class="a2a_button_copy_link"></a>
             </div>
-            <i id="menu" class="fa-solid fa-bars" onclick="showmenu()"></i>
-         </div>
-      </nav>
-      <!-- Common Header -->
+          </ul>
+          <ul id="mobile-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="volunteers.html">Volunteers</a></li>
+            <li><a href="disclaimer.html">Disclaimer</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Common Header -->
+    <div class="body-main-content" style="display: block">
       <header class="header">
-         <div class="container">
-            <div class="row "  >
-            </div>
-         </div>
+        <div class="container">
+          <div class="row"></div>
+        </div>
       </header>
-      
+
       <div class="upperAbout">
-        <p style="font-size: 1.75rem;"><span style="color: red;">results</span><span style="color: green;">2024.in</span>, is a crowdsourced initiative for visualizing election results!</p>
-        <p>We're sourcing data on the 2024 Indian election and creating detailed visualizations. You can explore information at the country, state, and constituency levels, along with graphics on popular candidates and top poll battles. This educational initiative is by Gradious Technologies, with development done by Gradious CoE students. All data is sourced from the Election Commission site.</p>
-        
+        <p style="font-size: 1.75rem">
+          <span style="color: red">results</span
+          ><span style="color: green">2024.in</span>, is a crowdsourced
+          initiative for visualizing election results!
+        </p>
+        <p>
+          We're sourcing data on the 2024 Indian election and creating detailed
+          visualizations. You can explore information at the country, state, and
+          constituency levels, along with graphics on popular candidates and top
+          poll battles. This educational initiative is by Gradious Technologies,
+          with development done by Gradious CoE students. All data is sourced
+          from the Election Commission site.
+        </p>
       </div>
 
       <div class="lowerAbout">
         <div class="question">
           <p class="que">Who are you?</p>
-          <p class="ans">We are a group of dedicated volunteers who curate and verify the data from Election commission site. We extract data like candidate, constituency, votes from the source and are presenting it to visualise. This is part of an hackathon for education purpose. This should not be taken as a source of information.</p>
+          <p class="ans">
+            We are a group of dedicated volunteers who curate and verify the
+            data from Election commission site. We extract data like candidate,
+            constituency, votes from the source and are presenting it to
+            visualise. This is part of an hackathon for education purpose. This
+            should not be taken as a source of information.
+          </p>
         </div>
         <div class="question">
           <p class="que">Are you official?</p>
           <p class="ans">No.</p>
         </div>
         <div class="question">
-          <p class="que">What are your sources? How is the data gathered for this project?</p>
-          <p class="ans">We are collecting information from the official websites of the election commission(<a class="eciLink" href="https://results.eci.gov.in/">https://results.eci.gov.in/</a>). The data is manually sourced and updated for users of this web page to visualize. The data is validated by a group of volunteers and published, but as there is manual work, there is a scope of mismatch. We are trying our best to ensure that there is no discrepancy, but we request you not use this as any official source.</p>
+          <p class="que">
+            What are your sources? How is the data gathered for this project?
+          </p>
+          <p class="ans">
+            We are collecting information from the official websites of the
+            election commission(<a
+              class="eciLink"
+              href="https://results.eci.gov.in/"
+              >https://results.eci.gov.in/</a
+            >). The data is manually sourced and updated for users of this web
+            page to visualize. The data is validated by a group of volunteers
+            and published, but as there is manual work, there is a scope of
+            mismatch. We are trying our best to ensure that there is no
+            discrepancy, but we request you not use this as any official source.
+          </p>
         </div>
         <div class="question">
-          <p class="que">Why does results2024.in have a difference in numbers compared to the ECI website?</p>
-          <p class="ans">ECI updates the data at a scheduled time. However, we get the data and try verifying it and uploading. This may result in mismatch of data.</p>
+          <p class="que">
+            Why does results2024.in have a difference in numbers compared to the
+            ECI website?
+          </p>
+          <p class="ans">
+            ECI updates the data at a scheduled time. However, we get the data
+            and try verifying it and uploading. This may result in mismatch of
+            data.
+          </p>
         </div>
         <div class="question">
-          <p class="que">Why are you guys putting in time and resources to do this while not gaining a single penny from it?</p>
-          <p class="ans">We started this as a passion project and wanted to showcase how with limited resources and time, bunch of engineering students can create something exciting.</p>
+          <p class="que">
+            Why are you guys putting in time and resources to do this while not
+            gaining a single penny from it?
+          </p>
+          <p class="ans">
+            We started this as a passion project and wanted to showcase how with
+            limited resources and time, bunch of engineering students can create
+            something exciting.
+          </p>
         </div>
       </div>
+    </div>
 
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-      <script src="./paths.js"></script>
-      <script src="./script.js"></script>
-      <script src="./disclaimer.js"></script>
-      <script src="./navbar.js"></script>
-      <footer class="footer">
-         <div class="footerText">
-            <p>Crafted with <img src="./imgs/heart.svg" style="width: 1.2rem;" alt="heart"> by Gradious</p>
-            <p>results2024.in is a crowdsourced initiative for visualizing the 2024 Indian Parliamentary election results. It is not a source of data.</p>
-            <p style="margin: 2rem 0 0 0;" class="builtBy">Built by <img src="./imgs/gradious.svg" alt="gradious logo"><span style="font-weight: 800;margin-left:0.4rem;">Gradious</span></p>
-         </div>
-         <div class="footerLinks">
-             <a href="./about.html">About Us</a>
-             <a href="./volunteers.html">Our Team</a>
-             <a href="./disclaimer.html">Disclaimer</a>
-         </div>
-         <div class="footerSocials">
-            <div class="a2a_kit a2a_kit_size_26 a2a_default_style footerSocials">
-               <p>Sharing is Caring</p>
-               <a class="a2a_button_facebook">FaceBook</a>
-               <a class="a2a_button_linkedin">LinkedIn</a>
-               <a class="a2a_button_whatsapp">Whatsapp</a>
-               <a class="a2a_button_pinterest">Pinterest</a>
-               <a class="a2a_button_twitter">Twitter</a>
-               </div>
-   <script async src="https://static.addtoany.com/menu/page.js"></script>
-   <!-- AddToAny END -->
-          </div>
-          
-      </footer>
-
-   </body>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="./paths.js"></script>
+    <script src="./script.js"></script>
+    <script src="./disclaimer.js"></script>
+    <script src="./navbar.js"></script>
+    <footer class="footer">
+      <div class="footerText">
+        <p>
+          Crafted with
+          <img src="./imgs/heart.svg" style="width: 1.2rem" alt="heart" /> by
+          Gradious
+        </p>
+        <p>
+          results2024.in is a crowdsourced initiative for visualizing the 2024
+          Indian Parliamentary election results. It is not a source of data.
+        </p>
+        <p style="margin: 2rem 0 0 0" class="builtBy">
+          Built by <img src="./imgs/gradious.svg" alt="gradious logo" /><span
+            style="font-weight: 800; margin-left: 0.4rem"
+            >Gradious</span
+          >
+        </p>
+      </div>
+      <div class="footerLinks">
+        <a href="./about.html">About Us</a>
+        <a href="./volunteers.html">Our Team</a>
+        <a href="./disclaimer.html">Disclaimer</a>
+      </div>
+      <div class="footerSocials">
+        <div class="a2a_kit a2a_kit_size_26 a2a_default_style footerSocials">
+          <p>Sharing is Caring</p>
+          <a class="a2a_button_facebook">FaceBook</a>
+          <a class="a2a_button_linkedin">LinkedIn</a>
+          <a class="a2a_button_whatsapp">Whatsapp</a>
+          <a class="a2a_button_pinterest">Pinterest</a>
+          <a class="a2a_button_twitter">Twitter</a>
+        </div>
+        <script async src="https://static.addtoany.com/menu/page.js"></script>
+        <!-- AddToAny END -->
+      </div>
+    </footer>
+  </body>
 </html>
