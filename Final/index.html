@@ -75,44 +75,69 @@
       </style>
    </head>
    <body>
-      <nav class="navbarHead blur">
-         <div class="containerHead">
-            <div class="logo">
-               <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
+      <nav>
+      <div class="logo">
+        <a href="index.html"
+          ><img src="imgs/RESULTS2024LOGO.png" alt="Logo"
+        /></a>
+      </div>
+      <div class="navigations">
+        <span id="menu" class="d-lg-none" onclick="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </span>
+        <div id="mobile-nav-content">
+          <ul id="nav-links">
+            <li><a href="index.html?year=2019" class="links">2019 Results</a></li>
+            <li
+              id="hoverable"
+              onmouseenter="showTooltip()"
+              onmouseleave="hideTooltip()"
+              onclick="toggleTooltip()"
+            >
+              <a href="/" class="links disabled">Candidates</a>
+              <i class="fa-solid fa-chevron-down"></i>
+              <i class="fa-solid fa-chevron-up"></i>
+              <ul class="tooltip" id="tooltip">
+                <li id="celebrities">
+                  <a href="celebCards.html">Celebrities</a>
+                </li>
+                <li id="popular">
+                  <a href="cardsPage.html">Popular Candidates</a>
+                </li>
+              </ul>
+            </li>
+            <div class="hiding" id="mobile-tooltip">
+              <li>
+                <a href="celebCards.html" class="links" id="celebrities2"
+                  >Celebrities</a
+                >
+              </li>
+              <li>
+                <a href="cardsPage.html" class="links" id="popular2"
+                  >Popular Candidates</a
+                >
+              </li>
             </div>
-            <div class="navlinks" id="navlinks">
-               <div class="headerPhone">
-                  <a href="index.html"><img src="imgs/RESULTS2024LOGO.png" alt=""></a>
-                  <i class="fa-solid fa-xmark" onclick="hidemenu()"></i>
-               </div>
-               <div class="d-flex">
-                  <div class="imgHover">
-                     <div class="tooltip-container">
-                        <!-- <span class="text">Tooltip</span> -->
-                        <img src="imgs/share.png" alt="">
-                        <span class="tooltip">
-                        <i class="fa-brands fa-facebook"></i>
-                        <i class="fa-brands fa-whatsapp"></i>
-                        <i class="fa-brands fa-instagram"></i>
-                        <i class="fa-brands fa-telegram"></i>
-                        </a></span>
-                     </div>
-                  </div>
-                  <ul>
-                     <li><a href="cardsPage.html">Popular & Celebrities</a></li>
-                     <li><a href="bigfights_viewall.html">Big Fights</a></li>
-                     <li><a href="">'19 vs '24</a></li>
-                     <div class="phoneMedia" id="phoneMedia"><i class="fa-brands fa-facebook" style="color: #158be5;"></i>
-                        <i class="fa-brands fa-whatsapp" style="color: #32ec6a;"></i>
-                        <i class="fa-brands fa-instagram" style="color: #d24196;"></i>
-                        <i class="fa-brands fa-telegram" style="color: #74deec;"></i>
-                     </div>
-                  </ul>
-               </div>
+            <li><a href="index.html" class="links">'24 vs '19</a></li>
+            <li>
+              <a href="bigfights_viewall.html" class="links">Big fights</a>
+            </li>
+            <div class="a2a_kit a2a_kit_size_26 a2a_default_style socialMedia">
+              <a class="a2a_button_facebook"></a>
+              <a class="a2a_button_twitter"></a>
+              <a class="a2a_button_whatsapp"></a>
+              <a class="a2a_button_linkedin"></a>
+              <a class="a2a_button_copy_link"></a>
             </div>
-            <i id="menu" class="fa-solid fa-bars" onclick="showmenu()"></i>
-         </div>
-      </nav>
+          </ul>
+          <ul id="mobile-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="volunteers.html">Volunteers</a></li>
+            <li><a href="disclaimer.html">Disclaimer</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
       <!-- Common Header -->
       <header class="header">
          <div class="container">
@@ -121,7 +146,7 @@
          </div>
       </header>
       <!-- Main Content -->
-      <div class="container-fluid main-content blur p-0">
+      <div class="container-fluid main-content blur body-main-content" style="display: block">
          <!-- Page 1: Landing Page -->
          <div class="container-fluid landing-page p-0 ">
             <div class="row row1 mt-4 mx-lg-5 g-6 mx-sm-2 ">
@@ -477,7 +502,8 @@
          <div class="slide-container swiper">
             <div class="topContainer">
                <div class="big_fights_div">
-                  <h1 class="big_fights">BIG FIGHTS</h1>
+                  <h1 class="big_fights" id="big_fights_heading">BIG FIGHTS</h1>
+                  <!-- <div ></div> -->
                </div>
                <div class="hands_div">
                   <img class="hands" src="./imgs2/hands.png" alt="">

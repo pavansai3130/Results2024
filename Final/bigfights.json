@@ -62,7 +62,7 @@
     "tripura": "./imgs2/tripura.png",
     "uttar pradesh": "./imgs2/uttar_pradesh.png",
     "uttarakhand": "./imgs2/uttarakhand.png",
-    "west Bengal": "./imgs2/west_bengal.png",
+    "west bengal": "./imgs2/west_bengal.png",
     "default": "./imgs2/default.jpg"
 },
 "candidate_details":{
@@ -1125,7 +1125,7 @@
         "name1": "dr.tamilisai soundararajan",
         "party1": "BJP",
         "id2": "cand7422",
-        "name2": "t.sumathy (alias) thamizhachi thangapandian",
+        "name2": "t.sumathy",
         "party2": "DMK"
       }
     ],
