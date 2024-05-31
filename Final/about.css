@@ -1,6 +1,6 @@
 .upperAbout p {
-  margin: 1rem 3rem;
-  font-size: 1.5rem;
+  margin: 1rem 7rem;
+  font-size: 1.25rem;
   text-align: center;
 }
 
@@ -21,13 +21,16 @@
   font-weight: 600;
 }
 
+
 .ans, .eciLink {
-  color: #007bff;
+  font-size: 1rem;
+  font-weight: 600;
+  color: grey;
 }
 
 .eciLink {
   color: #007bff;
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0.2rem;
   border-radius: 5px;
   text-decoration: none;
   word-break: break-all;
