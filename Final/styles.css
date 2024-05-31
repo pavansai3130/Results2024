@@ -537,6 +537,11 @@ input#stateSearch{
 }
 
 /* HARI CSS*/
+.cd-flex{
+  display: flex;
+}
+
+
 #cardsID{
   padding: 0;
 }

@@ -128,35 +128,32 @@ fetchMoreCards();
 
 
 function performSearch() {
-  const searchInput = document
-    .getElementById("search-input")
-    .value.toLowerCase();
-  const selectedState = document.getElementById("dropdown").value.toLowerCase();
-  const cards = document.querySelectorAll(".custom-container");
+  const searchInput = document.getElementById('search-input').value.toLowerCase();
+  const selectedState = document.getElementById('dropdown').value.toLowerCase();
+  const cards = document.querySelectorAll('.custom-container');
   let noRes = true;
 
-  cards.forEach((card) => {
-    const title = card.querySelector(".card-title").textContent.toLowerCase();
-    const place = card.querySelector(".card-place").textContent.toLowerCase();
-
-    if (
-      (title.includes(searchInput) || searchInput === "") &&
-      (selectedState === "" || place.includes(selectedState))
-    ) {
-      card.style.display = "";
-      noRes = false;
-    } else {
-      card.style.display = "none";
-    }
+  cards.forEach(card => {
+      const title = card.querySelector('.card-title').textContent.toLowerCase();
+      const place = card.querySelector('.card-text').textContent.toLowerCase(); // Changed from '.card-place'
+      
+      if ((title.includes(searchInput) || searchInput === '') && (selectedState === '' || place.includes(selectedState))) {
+          card.style.display = '';
+          noRes = false;
+      } else {
+          card.style.display = 'none';
+      }
   });
 
-  const noResImg = document.getElementById("no-results-img");
+  const noResImg = document.getElementById('no-results-img');
   if (noRes) {
-    noResImg.style.display = "block";
+      noResImg.style.display = 'block';
   } else {
-    noResImg.style.display = "none";
+      noResImg.style.display = 'none';
   }
 }
+
+
 
 function scrollToSection(sectionId) {
   document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
