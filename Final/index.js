@@ -1,58 +1,55 @@
+// /*-------------creating fetching 2019------*/
+// let data_201;
+// let data_2019; // Initialize data_2019 as an empty object
+// async function fetchJSON2(file) {
+//   // data_2019 = {};
+//   try {
+//     const response = await fetch(file); // Fetch the JSON file
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! Status: ${response.status}`);
+//     }
+//     data_201 = await response.json();
+//     console.log("JSON data fetched and stored globally:", data_201);
+//     function format2(data2024) {
+//       for (let state in data2024) {
+//         for (let const_name in data2024[state]) {
+//           const candidates = [];
+//           for (let item of data2024[state][const_name]["candidates"]) {
+//             const candidate = {
+//               candidateId: item.cId,
+//               candidateName: item.cName,
+//               constituencyName: const_name,
+//               party: item.prty,
+//               alliance: item.alnce,
+//               votes: item.vts,
+//             };
+//             candidates.push(candidate);
+//           }
+//           // Access constituency code from constCodes if properly defined
+//           const constituencyCode = constCodes[state][const_name];
+//           if (constituencyCode) {
+//             // Assign candidates to the corresponding constituency code in data_2019
+//             data_2019[constituencyCode] = candidates;
+//           }
+//         }
+//       }
+//     }
+//     format2(data_201[0]);
+//   } catch (error) {
+//     console.error("Error fetching the JSON file:", error);
+//     throw error; // Rethrow the error for the caller to handle
+//   }
+// }
 
-/*-------------creating fetching 2019------*/
-let state_table_pressed = 0;
-let data_201;
-let data_2019 = {}; // Initialize data_2019 as an empty object
-async function fetchJSON2(file) {
-  try {
-    const response = await fetch(file); // Fetch the JSON file
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    data_201 = await response.json();
-    console.log("JSON data fetched and stored globally:", data_201);
-    function format2(data2024) {
-      for (let state in data2024) {
-        for (let const_name in data2024[state]) {
-          const candidates = [];
-          for (let item of data2024[state][const_name]["candidates"]) {
-            const candidate = {
-              candidateId: item.cId,
-              candidateName: item.cName,
-              constituencyName: const_name,
-              party: item.prty,
-              alliance: item.alnce,
-              votes: item.vts,
-            };
-            candidates.push(candidate);
-          }
-          // Access constituency code from constCodes if properly defined
-          const constituencyCode = constCodes[state][const_name];
-          if (constituencyCode) {
-            // Assign candidates to the corresponding constituency code in data_2019
-            data_2019[constituencyCode] = candidates;
-          }
-        }
-      }
-    }
-    format2(data_201[0]);
-
-  } catch (error) {
-    console.error("Error fetching the JSON file:", error);
-    throw error; // Rethrow the error for the caller to handle
-  }
-}
-
-
-// Usage example
-(async () => {
-  try {
-    await fetchJSON2('./election2019.json');
-    console.log(data_2019);
-  } catch (error) {
-    console.error("Error occurred:", error);
-  }
-})();
+// // Usage example
+// (async () => {
+//   try {
+//     await fetchJSON2("./election2019.json");
+//     console.log(data_2019);
+//   } catch (error) {
+//     console.error("Error occurred:", error);
+//   }
+// })();
 /*----------------------------*/
 let currentPage = 1;
 let currentPageCandidates = 1;
@@ -229,6 +226,7 @@ const constCodes = {
     jammu: 106,
     srinagar: 102,
     udhampur: 105,
+    ladakh: 104,
   },
   Jharkhand: {
     chatra: 2004,
@@ -751,7 +749,8 @@ function resetBreadcrumb() {
   renderAllianceResults();
   const breadcrumbState = document.getElementById("breadcrumb-state");
   const breadcrumbConstituency = document.getElementById(
-    "breadcrumb-constituency");
+    "breadcrumb-constituency"
+  );
   render_whole_carousel(breadcrumbState.innerText);
   breadcrumbState.style.display = "none";
   breadcrumbState.textContent = "";
@@ -766,13 +765,11 @@ function resetBreadcrumb() {
     document.getElementById("Constituency-res").style.display = "none";
     document.getElementById("stateTabeleContainer").style.display = "block";
     document.getElementById("Candidate-res").style.display = "none";
-  }
-  else {
+  } else {
     resetMap();
     document.getElementById("stateTabeleContainer").style.display = "block";
     document.getElementById("Candidate-res").style.display = "none";
   }
-
 }
 
 const zooming = {
@@ -833,7 +830,7 @@ function render_whole_table() {
   tb.innerHTML = "";
 
   let count = 0;
-
+  console.log(data);
   // Create all rows first
   for (let i of ftrs) {
     if (i.pc_id == null) continue;
@@ -857,6 +854,9 @@ function render_whole_table() {
     let votes2 = 0;
 
     let win;
+    // console.log("this is");
+    console.log(i.pc_id);
+
     const firstCandidateKey = data[i.pc_id][0];
     if (!firstCandidateKey) {
       votes = 0;
@@ -867,8 +867,8 @@ function render_whole_table() {
       id = i.pc_id;
       name = data[i.pc_id][0].constituencyName;
       candid = data[i.pc_id][0].candidateName;
-      console.log(data[i.pc_id][0]);
-      console.log(data[i.pc_id][1]);
+      // console.log(data[i.pc_id][0]);
+      // console.log(data[i.pc_id][1]);
       votes = data[i.pc_id][0].votes;
       party_name = data[i.pc_id][0].party;
       if (data[i.pc_id][1] !== undefined) {
@@ -1025,13 +1025,13 @@ function handleSelection() {
                 feature,
                 layer
               );
-              var map = document.getElementById('map').getBoundingClientRect();
+              var map = document.getElementById("map").getBoundingClientRect();
               console.log("map the ", map);
               console.log("event map the ", event);
               var clickY = event.layerPoint.y - map.top;
               var mapHeight = map.height;
-              var isAboveHalf = clickY < (mapHeight / 2);
-              var div = document.getElementById('containertool');
+              var isAboveHalf = clickY < mapHeight / 2;
+              var div = document.getElementById("containertool");
 
               if (isAboveHalf) {
                 div.classList.add("above");
@@ -1083,13 +1083,13 @@ function handleSelection() {
                 party_name_2,
                 feature.properties.pc_id
               );
-              var map = document.getElementById('map').getBoundingClientRect();
+              var map = document.getElementById("map").getBoundingClientRect();
               console.log("map the ", map);
               console.log("event map the ", event);
               var clickY = event.layerPoint.y - map.top;
               var mapHeight = map.height;
-              var isAboveHalf = clickY < (mapHeight / 2);
-              var div = document.getElementById('containertool');
+              var isAboveHalf = clickY < mapHeight / 2;
+              var div = document.getElementById("containertool");
 
               if (isAboveHalf) {
                 div.classList.add("above");
@@ -1098,7 +1098,6 @@ function handleSelection() {
                 div.classList.add("below");
                 div.classList.remove("above");
               }
-
             });
             layer._leaflet_id = feature.properties.pc_id;
           },
@@ -1298,12 +1297,9 @@ function render_state_table(feature, state) {
           alliancePatries["india"][firstCandidateKey.party]++;
         else alliancePatries["india"][firstCandidateKey.party] = 1;
       }
-    }
-    else {
+    } else {
       tr.dataset.pccolor = "#fff";
     }
-
-
   }
   console.log("afhkhbfz");
   console.log(alliancePatries);
@@ -1367,7 +1363,6 @@ function render_state_table(feature, state) {
     // updatePaginationControls(document.querySelectorAll("#table-body tr:visible").length);
     // displayPage(currentPage);
   });
-
 }
 
 // rendering
@@ -1406,8 +1401,8 @@ function showdatatable(
   // console.log(feature);
   // console.log(layer);
   breadcrumbConstituency.style.display = "none";
-  document.getElementById('containertool').style.display = "block";
-  var div = document.getElementById('containertool');
+  document.getElementById("containertool").style.display = "block";
+  var div = document.getElementById("containertool");
   var htmlCode = `
     <h2 id="h2"><span class="city">${con1}</span><br><span class="state">${state}</span></h2><div id="close" onclick="closedata()">&times;</div>
         <div id="candidatediv">
@@ -1460,8 +1455,7 @@ function closedata() {
   render2();
   if (state_table_pressed) {
     document.getElementById("Constituency-res").style.display = "block";
-  }
-  else {
+  } else {
     document.getElementById("stateTabeleContainer").style.display = "block";
   }
   document.getElementById("Candidate-res").style.display = "none";
@@ -1485,21 +1479,23 @@ function render_table(code, page) {
     if (l.feature.properties.pc_id == code) {
       console.log("pressed");
       l.setStyle({
-        fillColor: document.querySelector(`#table-body tr[data-pc="${code}"]`)?.dataset.pccolor,  // Specific color or default gray
-        fillOpacity: 2,        // Fully opaque for the clicked layer
-        color: "#000",      // Border color
-        weight: 0.5            // Border width
+        fillColor: document.querySelector(`#table-body tr[data-pc="${code}"]`)
+          ?.dataset.pccolor, // Specific color or default gray
+        fillOpacity: 2, // Fully opaque for the clicked layer
+        color: "#000", // Border color
+        weight: 0.5, // Border width
       });
     } else {
       l.setStyle({
-        fillColor: document.querySelector(`#table-body tr[data-pc="${l.feature.properties.pc_id}"]`)?.dataset.pccolor,  // Default color
-        fillOpacity: 0.1,      // Semi-transparent for other layers
-        color: "#000",      // Border color
-        weight: 0.3           // Border width
+        fillColor: document.querySelector(
+          `#table-body tr[data-pc="${l.feature.properties.pc_id}"]`
+        )?.dataset.pccolor, // Default color
+        fillOpacity: 0.1, // Semi-transparent for other layers
+        color: "#000", // Border color
+        weight: 0.3, // Border width
       });
     }
   });
-
 
   document.getElementById("stateTabeleContainer").style.display = "none";
   document.getElementById("Candidate-res").style.display = "block";
@@ -1528,7 +1524,7 @@ function render_table(code, page) {
     row.appendChild(party);
 
     const votes = document.createElement("td");
-    votes.textContent = (candi[i].votes).toLocaleString();
+    votes.textContent = candi[i].votes.toLocaleString();
     votes.classList.add("tdata2");
     row.appendChild(votes);
 
@@ -1536,7 +1532,9 @@ function render_table(code, page) {
     if (i == 0) {
       votes2.textContent = "-";
     } else if (i > 0) {
-      votes2.textContent = (candi[i - 1].votes - candi[i].votes).toLocaleString();
+      votes2.textContent = (
+        candi[i - 1].votes - candi[i].votes
+      ).toLocaleString();
     }
     votes2.classList.add("tdata3");
     row.appendChild(votes2);
@@ -1544,8 +1542,12 @@ function render_table(code, page) {
     if (i == 0) {
       margin2.textContent = "-";
     } else if (i > 0) {
-      // margin2.textContent = 
-      margin2.innerHTML = `${(((candi[i - 1].votes - candi[i].votes) / (candi[i - 1].votes + candi[i].votes)) * 100).toFixed(1)} %`
+      // margin2.textContent =
+      margin2.innerHTML = `${(
+        ((candi[i - 1].votes - candi[i].votes) /
+          (candi[i - 1].votes + candi[i].votes)) *
+        100
+      ).toFixed(1)} %`;
     }
     margin2.classList.add("tdata3");
     row.appendChild(margin2);
@@ -1553,7 +1555,7 @@ function render_table(code, page) {
     // votes_2019.innerHTML=candi[i].votes;
     // row.appendChild(votes_2019);
     console.log(data_2019);
-    data_2019.forEach
+    data_2019.forEach;
     let votes2019;
 
     //   const isPresentIn2019 = data_2019[0].states.some(state => {
@@ -1673,13 +1675,13 @@ function state_map(value, text) {
                 feature,
                 layer
               );
-              var map = document.getElementById('map').getBoundingClientRect();
+              var map = document.getElementById("map").getBoundingClientRect();
               console.log("map the ", map);
               console.log("event map the ", event);
               var clickY = event.layerPoint.y - map.top;
               var mapHeight = map.height;
-              var isAboveHalf = clickY < (mapHeight / 2);
-              var div = document.getElementById('containertool');
+              var isAboveHalf = clickY < mapHeight / 2;
+              var div = document.getElementById("containertool");
 
               if (isAboveHalf) {
                 div.classList.add("above");
@@ -1756,13 +1758,13 @@ function state_map(value, text) {
                 feature,
                 layer
               );
-              var map = document.getElementById('map').getBoundingClientRect();
+              var map = document.getElementById("map").getBoundingClientRect();
               console.log("map the ", map);
               console.log("event map the ", event);
               var clickY = event.layerPoint.y - map.top;
               var mapHeight = map.height;
-              var isAboveHalf = clickY < (mapHeight / 2);
-              var div = document.getElementById('containertool');
+              var isAboveHalf = clickY < mapHeight / 2;
+              var div = document.getElementById("containertool");
 
               if (isAboveHalf) {
                 div.classList.add("above");
@@ -1871,13 +1873,13 @@ function resetstatebread() {
               feature,
               layer
             );
-            var map = document.getElementById('map').getBoundingClientRect();
+            var map = document.getElementById("map").getBoundingClientRect();
             console.log("map the ", map);
             console.log("event map the ", event);
             var clickY = event.layerPoint.y - map.top;
             var mapHeight = map.height;
-            var isAboveHalf = clickY < (mapHeight / 2);
-            var div = document.getElementById('containertool');
+            var isAboveHalf = clickY < mapHeight / 2;
+            var div = document.getElementById("containertool");
 
             if (isAboveHalf) {
               div.classList.add("above");
@@ -1931,13 +1933,13 @@ function resetstatebread() {
               feature,
               layer
             );
-            var map = document.getElementById('map').getBoundingClientRect();
+            var map = document.getElementById("map").getBoundingClientRect();
             console.log("map the ", map);
             console.log("event map the ", event);
             var clickY = event.layerPoint.y - map.top;
             var mapHeight = map.height;
-            var isAboveHalf = clickY < (mapHeight / 2);
-            var div = document.getElementById('containertool');
+            var isAboveHalf = clickY < mapHeight / 2;
+            var div = document.getElementById("containertool");
 
             if (isAboveHalf) {
               div.classList.add("above");
@@ -2006,13 +2008,35 @@ let swiper;
 function render_whole_carousel() {
   let heading = document.getElementById("big_fights_heading");
   heading.innerHTML = `BIG FIGHTS`;
-  let swiperContainer = document.getElementById('slider_div');
+  let swiperContainer = document.getElementById("slider_div");
   let party_img_json, candidates_data;
-  document.getElementById("view_all").setAttribute("href", "./bigfights_viewall.html" + "?state=" + "all");
-  function createSlide(const_name, state, partySymbol1, partySymbol2, candidateImg1, candidateImg2, cand_name1, cand_name2, votes1, votes2) {
-    let party_path1 = (partySymbol1 in party_img_json) ? party_img_json[partySymbol1] : party_img_json["default"];
-    let party_path2 = (partySymbol2 in party_img_json) ? party_img_json[partySymbol2] : party_img_json["default"];
-    let state_img = (state.toLowerCase() in party_img_json) ? party_img_json[state.toLowerCase()] : "./imgs2/madhya_pradesh.jpg";
+  document
+    .getElementById("view_all")
+    .setAttribute("href", "./bigfights_viewall.html" + "?state=" + "all");
+  function createSlide(
+    const_name,
+    state,
+    partySymbol1,
+    partySymbol2,
+    candidateImg1,
+    candidateImg2,
+    cand_name1,
+    cand_name2,
+    votes1,
+    votes2
+  ) {
+    let party_path1 =
+      partySymbol1 in party_img_json
+        ? party_img_json[partySymbol1]
+        : party_img_json["default"];
+    let party_path2 =
+      partySymbol2 in party_img_json
+        ? party_img_json[partySymbol2]
+        : party_img_json["default"];
+    let state_img =
+      state.toLowerCase() in party_img_json
+        ? party_img_json[state.toLowerCase()]
+        : "./imgs2/madhya_pradesh.jpg";
     return `
     <div class="card swiper-slide">
         <span class="state_name">${const_name} <span class="state_party_slot">(${state})</span></span>
@@ -2044,14 +2068,14 @@ function render_whole_carousel() {
     `;
   }
 
-  fetch('./partyicon-candimg.json')
-    .then(response => {
+  fetch("./partyicon-candimg.json")
+    .then((response) => {
       if (!response.ok) {
-        throw new Error('Network response was not ok ' + response.statusText);
+        throw new Error("Network response was not ok " + response.statusText);
       }
       return response.json();
     })
-    .then(data => {
+    .then((data) => {
       party_img_json = data["images_key"];
       candidates_data = data["candidate_details"];
 
@@ -2061,9 +2085,20 @@ function render_whole_carousel() {
       }
       swiperContainer.innerHTML = "";
 
-      candidates_data.forEach(data => {
-        const slideMarkup = createSlide(data["const_name"], data["state"], data["cand_party1"], data["cand_party2"], data["candidateImg1"], data["candidateImg2"], data["cand_name1"], data["cand_name2"], data["votes1"], data["votes2"]);
-        swiperContainer.insertAdjacentHTML('beforeend', slideMarkup);
+      candidates_data.forEach((data) => {
+        const slideMarkup = createSlide(
+          data["const_name"],
+          data["state"],
+          data["cand_party1"],
+          data["cand_party2"],
+          data["candidateImg1"],
+          data["candidateImg2"],
+          data["cand_name1"],
+          data["cand_name2"],
+          data["votes1"],
+          data["votes2"]
+        );
+        swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
       });
 
       swiper = new Swiper(".slide-content", {
@@ -2076,7 +2111,7 @@ function render_whole_carousel() {
         pagination: {
           el: ".swiper-pagination",
           clickable: true,
-          dynamicBullets: true
+          dynamicBullets: true,
         },
         navigation: {
           nextEl: ".swiper-button-next",
@@ -2091,7 +2126,7 @@ function render_whole_carousel() {
           },
           950: {
             slidesPerView: 3,
-          }
+          },
         },
         autoplay: {
           delay: 3000,
@@ -2100,15 +2135,18 @@ function render_whole_carousel() {
         speed: 1300,
       });
 
-      swiperContainer.addEventListener('mouseenter', function () {
+      swiperContainer.addEventListener("mouseenter", function () {
         swiper.autoplay.stop();
       });
 
-      swiperContainer.addEventListener('mouseleave', function () {
+      swiperContainer.addEventListener("mouseleave", function () {
         swiper.autoplay.start();
       });
     })
-    .catch(error => {
-      console.error('There has been a problem with your fetch operation:', error);
+    .catch((error) => {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
     });
 }
