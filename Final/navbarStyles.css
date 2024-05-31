@@ -1,4 +1,4 @@
-nav {
+#navHeader {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -164,7 +164,7 @@ nav {
 }
 
 @media (max-width: 950px) {
-  nav {
+  #navHeader {
     margin-left: 0px;
     margin-right: 0px;
     padding: 0 15px;
@@ -209,7 +209,7 @@ nav {
     transition: 0.5s ease;
   }
 
-  .fa-solid {
+  #upIcons,#downIcons {
     pointer-events: none;
   }
 
@@ -251,7 +251,7 @@ nav {
   #popular2 {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
-  .fa-solid {
+ #upIcons,#downIcons {
     margin-right: 20px;
     margin-top: 20px;
   }
