@@ -1,7 +1,7 @@
 async function fetchMoreCards() {
     try {
-        // const response = await fetch('data.json');
-        const response2 = await fetch('celebdata.json');
+        // const response = await fetch('./data/data.json');
+        const response2 = await fetch('./data/celebdata.json');
         // const data = await response.json();
         const data2 = await response2.json();
         // const moreCardsRoot = document.getElementById('more-cards-root');

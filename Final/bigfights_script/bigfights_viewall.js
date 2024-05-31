@@ -21,7 +21,7 @@ function represent_All() {
   let state_tag = document.getElementById("state_tag");
   state_tag.style.display = "none";
   main_div.innerHTML = "";
-  fetch("./bigfights.json")
+  fetch("./data/bigfights.json")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);
@@ -57,7 +57,7 @@ function represent_All() {
             let state_img =
               state in party_img_json
                 ? party_img_json[state]
-                : "./imgs2/madhya_pradesh.png";
+                : "./images/imgs2/madhya_pradesh.png";
             console.log(state);
             let bar_length =
               (parseInt(50000) / (parseInt(100000) + parseInt(50000))) * 100;
@@ -67,7 +67,7 @@ function represent_All() {
       <div class="cand_desc1">
           <span class="img_container">
               <img class="party_symbol" src="${party_path1}" alt="">
-              <img class="cand_img1" src="./imgs2/rahul.png" alt="">
+              <img class="cand_img1" src="./images/imgs2/rahul.png" alt="">
           </span>
           <div class="desc_container">
               <div class="cand_name1 render_name1" data-candname="${
@@ -81,7 +81,7 @@ function represent_All() {
       <div class="cand_desc2">
           <span class="img_container">
               <img class="party_symbol" src=${party_path2} alt="">
-              <img class="cand_img1" src="./imgs2/smriti_irani.png" alt="">
+              <img class="cand_img1" src="./images/imgs2/smriti_irani.png" alt="">
           </span>
           <div class="desc_container">
               <div class="cand_name1 render_name2" data-candname="${
@@ -129,7 +129,7 @@ function represent_state(state) {
     .addEventListener("click", function () {
       represent_All();
     });
-  fetch("./bigfights.json")
+  fetch("./data/bigfights.json")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);
@@ -161,7 +161,7 @@ function represent_state(state) {
           let state_img =
             state.toLowerCase() in party_img_json
               ? party_img_json[state.toLowerCase()]
-              : "./imgs2/madhya_pradesh.png";
+              : "./images/imgs2/madhya_pradesh.png";
           let bar_length =
             (parseInt(50000) / (parseInt(obj[100000]) + parseInt(obj[50000]))) *
             100;
@@ -171,7 +171,7 @@ function represent_state(state) {
           <div class="cand_desc1">
               <span class="img_container">
                   <img class="party_symbol" src="${party_path1}" alt="">
-                  <img class="cand_img1" src="./imgs2/rahul.png" alt="">
+                  <img class="cand_img1" src="./images/imgs2/rahul.png" alt="">
               </span>
               <div class="desc_container">
                   <div class="cand_name1 render_name1" data-candname="${
@@ -185,7 +185,7 @@ function represent_state(state) {
           <div class="cand_desc2">
               <span class="img_container">
                   <img class="party_symbol" src=${party_path2} alt="">
-                  <img class="cand_img1" src="./imgs2/smriti_irani.png" alt="">
+                  <img class="cand_img1" src="./images/imgs2/smriti_irani.png" alt="">
               </span>
               <div class="desc_container">
                   <div class="cand_name1 render_name2" data-candname="${
