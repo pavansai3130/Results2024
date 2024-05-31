@@ -235,6 +235,7 @@ let names = {
   indiaColor: "#87CEEB",
   othersColor: "#BFC8D0",
 };
+let temp = 1;
 async function fetchJSON2(file) {
   // data_2019 = {};
   try {
@@ -394,6 +395,7 @@ async function fetchGeoJSON(file) {
   }
 }
 async function fetchJSON(file1, file2) {
+  console.log(`called ${temp++}`);
   try {
     const url = "https://results2024.s3.ap-south-1.amazonaws.com/results.json";
     const response = await fetch(url, {
@@ -462,11 +464,11 @@ $(document).ready(async function () {
   await fetchJSON("./election2024.json");
   await fetchJSON2("./election2019.json");
   await fetchGeoJSON("geo.json");
-  //   let intervalId = setInterval(async () => {
-  //     await fetchData();
-  //     // handleStateClick(lastClickedState);
-  //   }, 10000);
-  // console.log(data);
+  let intervalId = setInterval(async () => {
+    await fetchJSON();
+    // handleStateClick(lastClickedState);
+  }, 10000);
+  console.log(data);
 
   stateDataJson2019 = data_201[0];
   allianceJson2019 = data_201[1];
