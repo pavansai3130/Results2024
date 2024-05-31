@@ -22,6 +22,9 @@
       <!-- <script src="./disclaimer.js"></script> -->
       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
+      <script src="./disclaimer.js"></script>
+      <script src="./statusTable.js"></script>
+      <script src="./marginTable.js"></script>
    <link rel="stylesheet" href="styles.css">
       <link rel="stylesheet" href="cards.css">
       <link rel="stylesheet" href="styling.css">
@@ -75,7 +78,7 @@
       </style>
    </head>
    <body>
-      <nav>
+      <nav class="navbarHead blur">
       <div class="headerlogo">
         <a href="index.html"
           ><img src="imgs/RESULTS2024LOGO.png" alt="Logo"
@@ -498,6 +501,7 @@
             </div>
             <!-- <div class="row row3"></div>------------------Big fights-------- -->
             <!-- <div class="row row4"></div>------------------Tables -->
+            
             <!-- <div class="row row5"></div>-----------Map Navi--- -->
 
             <!-- ---------ROw here in case------- -->
@@ -527,6 +531,144 @@
                <div class="view_all" ><a id="view_all" href="./bigfights_viewall.html">View All</a></div>
             </div>
          </div>
+
+         <div class="tablesDivOne">
+            <div class="table-container">
+              <div class="table-header sticky">
+                <h3>High Margin</h3>
+                <p>Candidates with the highest winning/Leading votes</p>
+              </div>
+              <table class="custom-table-one table-bordered">
+                <thead>
+                  <tr>
+                    <th class="sticky" style="text-align: left;margin-left:0.4rem;">Candidate Name</th>
+                    <th>Constituency</th>
+                    <th>Votes</th>
+                    <th>Margin</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+        
+            <div class="table-container">
+              <div class="table-header sticky">
+                <h3>Low Margin</h3>
+                <p>Candidates with the lowest winning/Leading votes</p>
+              </div>
+              <table class="custom-table-two table-bordered">
+                <thead>
+                  <tr>
+                    <th class="sticky" style="text-align: left;margin-left:0.4rem;">Candidate Name</th>
+                    <th>Constituency</th>
+                    <th>Votes</th>
+                    <th>Margin</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        
+          <div class="tablesDivTwo">
+            <div class="table-container">
+              <div class="table-header sticky">
+                <h3>Richest Candidates</h3>
+                <p>Candidates with highest assets declared as per the Affidavit</p>
+              </div>
+              <table class="custom-table-three table-bordered">
+                <thead>
+                  <tr>
+                    <th class="sticky" style="text-align: left;">Candidate Name</th>
+                    <th>Constituency</th>
+                    <th style="line-height: 1rem;">Asset <br><span>(in Rs)</span></th>
+                    <th style="line-height: 1rem;">Total Votes <br><span>(Margin)</span></th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr class="richestOne">
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Naveen Jindal <br><span><img src="./imgs/BJP.jpg" alt="">BJP</span></td>
+                    <td>Kurukshetra</td>
+                    <td>1241+ Cr</td>
+                </tr>
+                <tr class="richestTwo">
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Santrupt Mishra <br><span><img src="./imgs/BJD.png" alt="">BJD</span></td>
+                    <td>Cuttack</td>
+                    <td>482+ Cr</td>
+                </tr>
+                <tr class="richestThree">
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Sushil Gupta <br><span><img src="./imgs/AAP.png" alt="">AAP</span></td>
+                    <td>Kurukshetra</td>
+                    <td>169+ Cr</td>
+                </tr>
+                <tr class="richestFour">
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Naina Singh Chautala <br><span><img src="./imgs/JJP.png" alt="">JJP</span></td>
+                    <td>Hisar</td>
+                    <td>139+ Cr</td>
+                </tr>
+                <tr class="richestFive">
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Rao Inderjit Singh <br><span><img src="./imgs/BJP.jpg" alt="">BJP</span></td>
+                    <td>Gurugram</td>
+                    <td>121+ Cr</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+        
+        
+            
+            <div class="table-container">
+              <div class="table-header sticky">
+                <h3>Poorest Candidates</h3>
+                <p>Candidates with lowest assets declared as per the Affidavit</p>
+              </div>
+              <table class="custom-table-four table-bordered">
+                <thead>
+                  <tr>
+                    <th class="sticky" style="text-align: left;margin-left:0.4rem;">Candidate Name</th>
+                    <th>Constituency</th>
+                    <th style="line-height: 1rem;">Asset <br><span>(in Rs)</span></th>
+                    <th style="line-height: 1rem;">Total Votes <br><span>(Margin)</span></th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="poorestOne">
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Master Randir Singh <br><span><img src="./imgs/independent.svg" alt="">IND</span></td>
+                    <td>Rohtak</td>
+                    <td>2</td>
+                  </tr>
+                  <tr class="poorestTwo">
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Ram Kumar Yadav <br><span><img src="" alt="">SUCI (C)</span></td>
+                    <td>Pratapgarh</td>
+                    <td>1686</td>
+                  </tr>
+                  <tr class="poorestThree">
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Khikhlikakar <br><span><img src="" alt="">BSSSSP</span></td>
+                    <td>North West Delhi (SC)</td>
+                    <td>2000</td>
+                  </tr>
+                  <tr class="poorestFour">
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Nand Ram Bagri <br><span><img src="" alt="">VPI</span></td>
+                    <td>North West Delhi (SC)</td>
+                    <td>2000</td>
+                  </tr>
+                  <tr class="poorestFive">
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Dillip Kumar Baral <br><span><img src="./imgs/independent.svg" alt="">IND</span></td>
+                    <td>Puri</td>
+                    <td>4032</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+            </div>
+          </div>
+
+
       </div>
       <!-- Common Footer -->
       <div class="consent" id="consent">
@@ -556,28 +698,28 @@
       <footer class="footer">
          <div class="footerText">
             <p>Crafted with <img src="./imgs/heart.svg" style="width: 1.2rem;" alt="heart"> by Gradious</p>
-            <p>results2024.in is a crowdsourced initiative for visualizing the 2024 Indian Parliamentary election results.
+            <p><img style="width: 6.8rem;margin-bottom:0.2rem;" src="./imgs/RESULTS2024LOGOcropped.png" alt=""> is a crowdsourced initiative for visualizing the 2024 Indian Parliamentary election results.
                It is not a source of data.
             </p>
-            <p style="margin: 2rem 0 0 0;" class="builtBy">Built by <img src="./imgs/gradious.svg"
-               alt="gradious logo"><span style="font-weight: 800;margin-left:0.4rem;">Gradious</span></p>
+            <p style="margin: 2rem 0 0 0;" class="builtBy">Built by <img style="width:6rem;margin-bottom:0.2rem;" src="./imgs/Gradious Logo.svg" alt=""></p>
          </div>
          <div class="footerLinks">
             <a href="./about.html">About Us</a>
-            <a href="./volunteers.html">Our Team</a>
+            <a href="./volunteers.html">Volunteers</a>
             <a href="./disclaimer.html">Disclaimer</a>
+            <div class="a2a_kit a2a_kit_size_36 a2a_default_style" style="transform:translateX(-50%);margin:0.4rem 0 0 4.6rem;">
+               <a class="a2a_button_facebook"></a>
+               <a class="a2a_button_twitter"></a>
+               <a class="a2a_button_whatsapp"></a>
+               <a class="a2a_button_linkedin"></a>
+           </div>
+           <script async src="https://static.addtoany.com/menu/page.js"></script>
+           <script>
+            var a2a_config = a2a_config || {};
+            a2a_config.icon_color = "transparent";
+          </script>
          </div>
-         <div class="footerSocials">
-            <div class="a2a_kit a2a_kit_size_26 a2a_default_style footerSocials">
-               <p>Sharing is Caring</p>
-               <a class="a2a_button_facebook">FaceBook</a>
-               <a class="a2a_button_linkedin">LinkedIn</a>
-               <a class="a2a_button_whatsapp">Whatsapp</a>
-               <a class="a2a_button_pinterest">Pinterest</a>
-               <a class="a2a_button_twitter">Twitter</a>
-            </div>
-            <script async src="https://static.addtoany.com/menu/page.js"></script>
-         </div>
+         
       </footer>
 
       <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>

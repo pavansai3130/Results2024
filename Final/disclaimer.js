@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
   var rejectConfirmation = document.getElementById('rejectConfirmation');
   var cancelRejectModal = document.getElementById('cancelRejectModal');
   var confirmRejectModal = document.getElementById('confirmRejectModal');
-  
-  var consentValue = localStorage.getItem('consent');
+
+  let consentValue = localStorage.getItem('consent');
     if(consentValue==='accepted'){
       consent.style.display = 'none';
       mainContent.classList.remove('blur');
