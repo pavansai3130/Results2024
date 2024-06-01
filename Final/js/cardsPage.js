@@ -1,5 +1,15 @@
+let candidatesData = [];
+
+// Fetch candidate data and store it in the global variable
+async function fetchCandidateData() {
+  const response = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
+  const data = await response.json();
+  candidatesData = data[0];  // Store the 1st index in the global variable
+}
+
+// Fetch more cards and populate them
 async function fetchMoreCards1() {
-  document.getElementById("more-cards-root").innerHTML="";
+  document.getElementById("more-cards-root").innerHTML = "";
   try {
     // Fetch the state-constituency-candidate JSON
     const stateResponse = await fetch("../data/popular.json");
@@ -40,7 +50,6 @@ async function fetchMoreCards1() {
       }
       return null;
     }
-    //Getting error below check it
 
     // Loop through each state and constituency
     Object.keys(stateData).forEach((state) => {
@@ -63,9 +72,9 @@ async function fetchMoreCards1() {
 
 function createCard(item) {
   const allianceImages = {
-    "NDA": "./images/imgs/NDA  (1).png",
-    "INDIA": "./images/imgs/NDA  (2).png",
-    "OTH": "./images/imgs/NDA  (3).png"
+    "NDA": "./images/imgs/NDA.png",
+    "INDIA": "./images/imgs/INDA.png",
+    "OTH": "./images/imgs/OTH.png"
   };
   const imageUrl = item.perimg || allianceImages[item.alnce];
   
@@ -91,43 +100,51 @@ function createCard(item) {
   }
 
   card.style.background = bgColor;
+  let position = 1;
+  let voteDifference = 0;
 
-  const ribbonText = item.lead ? "Leading" : "Trailing";
-  const ribbonColor = item.lead
-    ? "rgba(34, 177, 76, 255)"
-    : "rgba(240, 68, 56, 255)";
+  if (candidatesData[item.state] && candidatesData[item.state][item.constituency]) {
+    const constituencyData = candidatesData[item.state][item.constituency].candidates;
+    for (let i = 0; i < constituencyData.length; i++) {
+      if (constituencyData[i].cId === item.cId) {
+        position = i + 1;
+        if (i === 0 && constituencyData.length > 1) {
+          voteDifference = item.vts - constituencyData[1].vts;
+        } else if (i > 0) {
+          voteDifference = constituencyData[0].vts - item.vts;
+        }
+        break;
+      }
+    }
+  }
+
+  const ribbonText = position === 1 ? "Won" : "Lost";
+  const ribbonColor = position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+  const leadTrailText = "Margin"
 
   card.innerHTML = `
-  <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
-  <div class="temp custom-temp">
-      <div class="card-body w-100">
-          <h3 class="card-title custom-card-title" style="color:${nameColor}">${
-    item.cName
-  }</h3>
-          <div class="subheaders cd-flex align-items-center custom-subheaders" style="display:flex" > 
-              <div class="logo"><img class="custom-img" src="${
-                item.logoimg
-              }" alt=""></div>
-              <h6 style="font-weight: bold;">${item.prty}</h6>
-          </div>
-          <p class="card-text custom-card-text">${item.place}</p>
-          <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
-              <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
-                item.vts
-              }
-          </p>
-      </div>
-      <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
-          <p class="card-text mb-1 custom-iribbon-text">${
-            item.lead ? "Leading by" : "Trailing by"
-          }</p>
-          <p class="card-text custom-iribbon-text-votes">${item.lead2votes}</p>
-      </div>
-  </div>
-  <div class="person-image d-flex custom-person-image">
-      <img class="person-img wid" src="${imageUrl}" alt="Person Image">
-  </div>
-`;
+    <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
+    <div class="temp custom-temp">
+        <div class="card-body w-100">
+            <h3 class="card-title custom-card-title" style="color:${nameColor}">${item.cName}</h3>
+            <div class="subheaders cd-flex align-items-center custom-subheaders" style="display:flex"> 
+                <div class="logo"><img class="custom-img" src="${item.logoimg}" alt=""></div>
+                <h6 style="font-weight: bold;">${item.prty}</h6>
+            </div>
+            <p class="card-text custom-card-text">${item.place};</p>
+            <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
+                <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${item.vts}
+            </p>
+        </div>
+        <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
+            <p class="card-text mb-1 custom-iribbon-text">${leadTrailText}</p>
+            <p class="card-text custom-iribbon-text-votes">${voteDifference}</p>
+        </div>
+    </div>
+    <div class="person-image d-flex custom-person-image">
+        <img class="person-img wid" src="${imageUrl}" alt="Person Image">
+    </div>
+  `;
 
   return card;
 }
@@ -224,12 +241,13 @@ function getURLParameter(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
 
-window.onload = function() {
+window.onload = async function() {
+  await fetchCandidateData();  // Ensure data is fetched before proceeding
   const state = getURLParameter('state');
-  if (state!==null) {
+  if (state !== null) {
     displayCardsForState(state);
-    document.getElementById("tempState1").style.display="inline-block";
-    document.getElementById("tempState").innerText=state;
+    document.getElementById("tempState1").style.display = "inline-block";
+    document.getElementById("tempState").innerText = state;
   } else {
     fetchMoreCards1();
   }
@@ -242,4 +260,4 @@ document.getElementById("dropdown").addEventListener("change", () => {
 document.getElementById("delFil").addEventListener("click",()=>{
   fetchMoreCards1();
   document.getElementById("tempState1").style.display="none";
-})
+});
