@@ -23,7 +23,7 @@
   </head>
 
   <body>
-    <nav id="navHeader">
+    <nav class="navbarHead blur" id="navHeader">
       <div class="headerlogo">
         <a href="index.html"
           ><img src="./images/imgs/RESULTS2024LOGO.png" alt="Logo"
@@ -35,9 +35,7 @@
         </span>
         <div id="mobile-nav-content">
           <ul id="nav-links">
-            <li>
-              <a href="index.html?year=2019" class="links">2019 Results</a>
-            </li>
+            <li><a href="./index.html?year=2019" class="links">2019 Results</a></li>
             <li
               id="hoverable"
               onmouseenter="showTooltip()"
@@ -45,8 +43,8 @@
               onclick="toggleTooltip()"
             >
               <a href="/" class="links disabled">Candidates</a>
-              <i class="fa-solid fa-chevron-down"></i>
-              <i class="fa-solid fa-chevron-up"></i>
+              <i id="downIcons" class="fa-solid fa-chevron-down"></i>
+              <i id="upIcons" class="fa-solid fa-chevron-up"></i>
               <ul class="tooltip" id="tooltip">
                 <li id="celebrities">
                   <a href="celebCards.html">Celebrities</a>
@@ -79,6 +77,7 @@
               <a class="a2a_button_linkedin"></a>
               <a class="a2a_button_copy_link"></a>
             </div>
+            <script async src="https://static.addtoany.com/menu/page.js"></script>
           </ul>
           <ul id="mobile-links">
             <li><a href="about.html">About Us</a></li>
@@ -174,7 +173,7 @@
         <i class="fa-solid fa-angle-up"></i>
       </button>
     </div>
-    <<footer class="footer">
+    <footer class="footer">
       <div class="footerText">
          <p style="margin-bottom: 0;">Crafted with <img src="./imgs/heart.svg" style="width: 1.2rem;" alt="heart"> by Gradious</p>
          <p><img style="width: 6.8rem;margin-bottom:0.2rem;" src="./imgs/RESULTS2024LOGOcropped.png" alt=""> is a crowdsourced initiative for visualizing the 2024 Indian Parliamentary election results.
@@ -194,9 +193,9 @@
         </div>
         <script async src="https://static.addtoany.com/menu/page.js"></script>
         <script>
-         var a2a_config = a2a_config || {};
-         a2a_config.icon_color = "transparent";
-       </script>
+            var a2a_config = a2a_config || {};
+            a2a_config.icon_color = "#003333";
+        </script>
       </div>
       
    </footer>

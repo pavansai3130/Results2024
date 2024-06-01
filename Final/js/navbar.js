@@ -15,13 +15,20 @@ function toggleMenu() {
   var navLinks = document.getElementById("nav-links");
   var mobileLinks = document.getElementById("mobile-links");
   const mainBody = document.querySelector(".body-main-content");
+  const footer = document.querySelector(".footer");
+  const navHeader = document.getElementById("navHeader");
+
   navBorder.style.border = "none";
   navLinks.classList.toggle("show");
   mobileLinks.classList.toggle("show");
   if (mainBody.style.display === "block") {
     mainBody.style.display = "none";
+    navHeader.style.border = "none";
+    footer.classList.add("hideFooter");
   } else {
     mainBody.style.display = "block";
+    navHeader.style.borderBottom = "1px solid rgba(0, 0, 0, 0.1)";
+    footer.classList.remove("hideFooter");
   }
 }
 
@@ -32,7 +39,7 @@ function toggleTooltip() {
   const up = document.querySelector(".fa-chevron-up");
   const down = document.querySelector(".fa-chevron-down");
 
-  if (window.innerWidth < 950) {
+  if (window.innerWidth < 998) {
     if (mobiletoolTip.style.display === "block") {
       mobiletoolTip.style.display = "none";
       up.style.display = "none";

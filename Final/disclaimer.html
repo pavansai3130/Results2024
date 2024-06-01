@@ -24,16 +24,13 @@
     <link rel="stylesheet" href="./css/styles.css" />
     <link rel="stylesheet" href="./css/styling.css" />
     <link rel="stylesheet" href="leaflet/index.css" />
-    <<<<<<< Updated upstream
     <link rel="stylesheet" href="./css/disclaimer.css" />
     <link rel="stylesheet" href="./css/navbarStyles.css" />
-    =======
     <link rel="stylesheet" href="../css//disclaimer.css" />
     <link rel="stylesheet" href="../css//navbarStyles.css" />
-    >>>>>>> Stashed changes
   </head>
   <body>
-    <nav id="navHeader">
+    <nav class="navbarHead blur" id="navHeader">
       <div class="headerlogo">
         <a href="./index.html"
           ><img src="./images/imgs/RESULTS2024LOGO.png" alt="Logo"
@@ -55,14 +52,14 @@
               onclick="toggleTooltip()"
             >
               <a href="/" class="links disabled">Candidates</a>
-              <i class="fa-solid fa-chevron-down"></i>
-              <i class="fa-solid fa-chevron-up"></i>
+              <i id="downIcons" class="fa-solid fa-chevron-down"></i>
+              <i id="upIcons" class="fa-solid fa-chevron-up"></i>
               <ul class="tooltip" id="tooltip">
                 <li id="celebrities">
                   <a href="./celebCards.html">Celebrities</a>
                 </li>
                 <li id="popular">
-                  <a href="./cardsPage.html">Popular Candidates</a>
+                  <a href="cardsPage.html">Popular Candidates</a>
                 </li>
               </ul>
             </li>
@@ -73,7 +70,7 @@
                 >
               </li>
               <li>
-                <a href="./cardsPage.html" class="links" id="popular2"
+                <a href="cardsPage.html" class="links" id="popular2"
                   >Popular Candidates</a
                 >
               </li>
@@ -89,6 +86,10 @@
               <a class="a2a_button_linkedin"></a>
               <a class="a2a_button_copy_link"></a>
             </div>
+            <script
+              async
+              src="https://static.addtoany.com/menu/page.js"
+            ></script>
           </ul>
           <ul id="mobile-links">
             <li><a href="./about.html">About Us</a></li>
@@ -239,7 +240,7 @@
         <script async src="https://static.addtoany.com/menu/page.js"></script>
         <script>
           var a2a_config = a2a_config || {};
-          a2a_config.icon_color = "transparent";
+          a2a_config.icon_color = "#003333";
         </script>
       </div>
     </footer>
