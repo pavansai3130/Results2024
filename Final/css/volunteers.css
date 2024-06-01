@@ -15,16 +15,17 @@
 
 .teamMembers{
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   flex-wrap: wrap;
-  margin: 8%;
+  margin: 1rem 10rem 6rem;
   align-items: center;
 }
 
 .name{
-  /* margin: 1.2rem auto 0 auto; */
-  font-size: 1.4rem;
-  font-weight: 400;
+  margin:0.2rem 0 0.4rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #344054;
 }
 
 .memberDetails{
@@ -40,7 +41,7 @@
 .socials{
   display: flex;
   gap: 0.8rem;
-  margin-top: 0.7rem;
+  margin-top: 0.2rem;
 }
 
 .socials a{
@@ -49,14 +50,14 @@
 }
 
 .socials img{
-  width: 100%;
+  width: 30px;
 }
 
 .member{
-  width: 30%;
-  height: 8.5rem;
+  width: 360px;
+  height: 92px;
   display: flex;
-  background: #EDEEEF;
+  background: #F6F6F7;
   border: 1px solid #ddd;
   border-radius: 5px;
   overflow: hidden;
@@ -70,18 +71,18 @@
 .memberImage > img {
   border-radius: 0.75rem;
   position: absolute;
-  top: 46%;
-  left: 40%;
+  top: 50%;
+  left: 50%;
   max-height: 100%;
-  width: 60%;
+  width: 100%;
   transform: translate(-50%, -50%);
   object-fit: cover;
 }
 
 .memberImage{
-  width: 46%;
+  width: 88px;
   padding-top: 30%;
-  display: flex;
+  margin:0 1rem;
   position: relative;
   overflow: hidden;
   align-items: center;
