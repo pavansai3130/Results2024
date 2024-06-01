@@ -63,7 +63,7 @@ function represent_All() {
               (parseInt(50000) / (parseInt(100000) + parseInt(50000))) * 100;
             temp_data.push(obj["name1"]);
             temp_data.push(obj["name2"]);
-            let html_data = `<span class="state_name" data-state="${state}" data-const="${const_name}">${const_name} <span class="state_party_slot">(${state})</span></span>
+            let html_data = `<span class="state_name" data-state="${state}" data-const="${const_name}">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
       <div class="cand_desc1">
           <span class="img_container">
               <img class="party_symbol" src="${party_path1}" alt="">
@@ -72,7 +72,7 @@ function represent_All() {
           <div class="desc_container">
               <div class="cand_name1 render_name1" data-candname="${
                 obj["name1"]
-              }">${obj["name1"]} <span class="state_party_slot">(${
+              }">${toTitleCase(obj["name1"])} <span class="state_party_slot">(${
               obj["party1"]
             })</span></div>
               <span class="lead_bar">${100000}</span>
@@ -86,7 +86,7 @@ function represent_All() {
           <div class="desc_container">
               <div class="cand_name1 render_name2" data-candname="${
                 obj["name2"]
-              }">${obj["name2"]} <span class="state_party_slot">(${
+              }">${toTitleCase(obj["name2"])} <span class="state_party_slot">(${
               obj["party2"]
             })</span></div>
               <span class="trail_bar" style="width:${
@@ -105,6 +105,7 @@ function represent_All() {
       }
     });
 }
+var currentpage = "-";
 function getParameterByName(name, url = window.location.href) {
   name = name.replace(/[\[\]]/g, "\\$&");
   var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
@@ -127,6 +128,7 @@ function represent_state(state) {
   document
     .getElementById("state_cancel_icon")
     .addEventListener("click", function () {
+      currentpage = "all";
       represent_All();
     });
   fetch("./data/bigfights.json")
@@ -167,7 +169,7 @@ function represent_state(state) {
             100;
           temp_data.push(obj["name1"]);
           temp_data.push(obj["name2"]);
-          let html_data = `<span class="state_name" data-state="${state}" data-const="${const_name}">${const_name} <span class="state_party_slot">(${state})</span></span>
+          let html_data = `<span class="state_name" data-state="${state}" data-const="${const_name}">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
           <div class="cand_desc1">
               <span class="img_container">
                   <img class="party_symbol" src="${party_path1}" alt="">
@@ -176,8 +178,8 @@ function represent_state(state) {
               <div class="desc_container">
                   <div class="cand_name1 render_name1" data-candname="${
                     obj["name1"]
-                  }">${obj["name1"]} <span class="state_party_slot">(${
-            obj["party1"]
+                  }">${toTitleCase(obj["name1"])} <span class="state_party_slot">(${
+            toTitleCase(obj["party1"])
           })</span></div>
                   <span class="lead_bar">${100000}</span>
               </div>
@@ -190,7 +192,7 @@ function represent_state(state) {
               <div class="desc_container">
                   <div class="cand_name1 render_name2" data-candname="${
                     obj["name2"]
-                  }">${obj["name2"]} <span class="state_party_slot">(${
+                  }">${toTitleCase(obj["name2"])} <span class="state_party_slot">(${
             obj["party2"]
           })</span></div>
                   <span class="trail_bar" style="width:${
@@ -430,7 +432,7 @@ searchBar1.addEventListener("input", function () {
   if (searchBar1.value === "") {
     main_div.innerHTML = "";
     back_bottom.classList.remove("blur_class");
-    if (!getParameterByName("state") || getParameterByName("state") === "all")
+    if (!getParameterByName("state") || getParameterByName("state") === "all" || currentpage == "all")
       represent_All();
     else represent_state(getParameterByName("state"));
     return;
@@ -440,9 +442,14 @@ searchBar2.addEventListener("input", function () {
   if (searchBar2.value === "") {
     main_div.innerHTML = "";
     back_bottom.classList.remove("blur_class");
-    if (!getParameterByName("state") || getParameterByName("state") === "all")
+    if (!getParameterByName("state") || getParameterByName("state") === "all" || currentpage == "all")
       represent_All();
     else represent_state(getParameterByName("state"));
     return;
   }
 });
+function toTitleCase(name) {
+  return name.split(' ').map(word => {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }).join(' ');
+}

@@ -2138,14 +2138,14 @@ function render_state_carousel(state) {
         : "./images/imgs2/madhya_pradesh.jpg";
     return `
       <div class="card swiper-slide">
-          <span class="state_name">${const_name} <span class="state_party_slot">(${state})</span></span>
+          <span class="state_name">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
           <div class="cand_desc1">
               <span class="img_container">
                   <img class="party_symbol" src=${party_path1} alt="">
                   <img class="cand_img1" src="${candidateImg1}" alt="">
               </span>
               <div class="desc_container">
-                  <div class="cand_name1">${cand_name1} <span class="state_party_slot">(${partySymbol1})</span></div>
+                  <div class="cand_name1">${toTitleCase(cand_name1)} <span class="state_party_slot">(${partySymbol1})</span></div>
                   <span class="lead_bar">${votes1}</span>
               </div>
           </div>
@@ -2155,7 +2155,7 @@ function render_state_carousel(state) {
                   <img class="cand_img1" src="${candidateImg2}" alt="">
               </span>
               <div class="desc_container">
-                  <div class="cand_name1">${cand_name2} <span class="state_party_slot">(${partySymbol2})</span></div>
+                  <div class="cand_name1">${toTitleCase(cand_name2)} <span class="state_party_slot">(${partySymbol2})</span></div>
                   <span class="trail_bar" >${votes2}</span>
               </div>
           </div>
@@ -2267,4 +2267,9 @@ function getParameterByName(name, url = window.location.href) {
   if (!results) return null;
   if (!results[2]) return "";
   return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+function toTitleCase(name) {
+  return name.split(' ').map(word => {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }).join(' ');
 }
