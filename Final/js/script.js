@@ -1524,6 +1524,14 @@ $(document).ready(async function () {
         y: {
           beginAtZero: true,
           max: 543, // Setting the maximum value of the y-axis
+          grid: {
+            display: false, // Remove the grid lines on y-axis
+          },
+        },
+        x: {
+          grid: {
+            display: false, // Remove the grid lines on x-axis
+          },
         },
       },
       plugins: {
@@ -2004,22 +2012,16 @@ function close_btn() {
   document.getElementById("containertool2").style.display = "none";
 }
 
-
-
-
-
-document.getElementById('see-more-btn').addEventListener('click', function() {
-
-  const dropdown = document.getElementById('state-select');
+document.getElementById("see-more-btn").addEventListener("click", function () {
+  const dropdown = document.getElementById("state-select");
   let state = dropdown.options[dropdown.selectedIndex].text; // Changed 'const' to 'let'
-  if(state !== "Select State"){
+  if (state !== "Select State") {
     state = state;
-  }
-  else{
+  } else {
     state = document.getElementById("breadcrumb-state").innerText;
   }
 
-  window.location.href = 'cardsPage.html?state=' + encodeURIComponent(state);
+  window.location.href = "cardsPage.html?state=" + encodeURIComponent(state);
 });
 let renderAllianceResults;
 

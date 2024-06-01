@@ -247,8 +247,11 @@ a {
 #carouselProgress {
   background-color: #FF9933;
 }
+.carousel-inner{
+  box-shadow: 0px 2px 4px -2px #1018280F, 0px 4px 8px -2px #1018281A;
 
-.toggleButton {
+}
+.toggleButton{
   font-size: 14px;
   font-weight: 600;
   color: #344054;
@@ -261,7 +264,8 @@ a {
 }
 
 .carousel-indicators [data-bs-target] {
-  background-color: gray;
+  margin-top: 28px;
+  background-color:gray;
 }
 
 .carousel-indicators .active {
@@ -284,6 +288,7 @@ a {
   align-items: center;
 }
 #carouselExampleIndicators{
+
   z-index: 0;
 }
 #ndaCarousel{
@@ -987,17 +992,23 @@ input#stateSearch {
   display: none;
   background-color: black;
   font-size: 14px;
-  position:sticky;
+  position:fixed;
+  vertical-align: middle;
   color: white;
   padding: 10px;
   text-align: center;
   bottom: 0;
+  right: 0;
   z-index: 3;
+  width: 385px;
+  height: 42px;
+  background-color: #003333;
+
 }
 
 #disclaimer2019 a{
   background-color:transparent;
   border: none;
-  color:blue;
-  border-bottom: 1px solid white;
+  color:#1570EF;
+  /* border-bottom: 1px solid white; */
 }
