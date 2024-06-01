@@ -576,8 +576,6 @@ a {
   margin-right: 0.5rem;
 }
 
-
-
 /* -------------------------------state search---------- */
 /* body{
   padding-top: 4.6875rem;
@@ -1011,4 +1009,9 @@ input#stateSearch {
   border: none;
   color:#1570EF;
   /* border-bottom: 1px solid white; */
+}
+
+/* 2019 fixes */
+td #stateLogo{
+  display:none;
 }

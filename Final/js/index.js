@@ -1,56 +1,3 @@
-// /*-------------creating fetching 2019------*/
-// let data_201;
-// let data_2019; // Initialize data_2019 as an empty object
-// async function fetchJSON2(file) {
-//   // data_2019 = {};
-//   try {
-//     const response = await fetch(file); // Fetch the JSON file
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! Status: ${response.status}`);
-//     }
-//     data_201 = await response.json();
-//     console.log("JSON data fetched and stored globally:", data_201);
-//     function format2(data2024) {
-//       for (let state in data2024) {
-//         for (let const_name in data2024[state]) {
-//           const candidates = [];
-//           for (let item of data2024[state][const_name]["candidates"]) {
-//             const candidate = {
-//               candidateId: item.cId,
-//               candidateName: item.cName,
-//               constituencyName: const_name,
-//               party: item.prty,
-//               alliance: item.alnce,
-//               votes: item.vts,
-//             };
-//             candidates.push(candidate);
-//           }
-//           // Access constituency code from constCodes if properly defined
-//           const constituencyCode = constCodes[state][const_name];
-//           if (constituencyCode) {
-//             // Assign candidates to the corresponding constituency code in data_2019
-//             data_2019[constituencyCode] = candidates;
-//           }
-//         }
-//       }
-//     }
-//     format2(data_201[0]);
-//   } catch (error) {
-//     console.error("Error fetching the JSON file:", error);
-//     throw error; // Rethrow the error for the caller to handle
-//   }
-// }
-
-// // Usage example
-// (async () => {
-//   try {
-//     await fetchJSON2("./election2019.json");
-//     console.log(data_2019);
-//   } catch (error) {
-//     console.error("Error occurred:", error);
-//   }
-// })();
-/*----------------------------*/
 let currentPage = 1;
 let state_table_pressed=0;
 let currentPageCandidates = 1;
@@ -58,6 +5,8 @@ const rowsPerPage = 10;
 let breadcrumbConstituency;
 let breadcrumbState;
 let state_button_pressed = 1;
+var pictureMapping, results2019;
+let s3PicUrl = "https://results2024.s3.ap-south-1.amazonaws.com/candpics/";
 let top10Cand = [
   "cand260",
   "cand1597",
@@ -687,6 +636,30 @@ const constCodes = {
   },
 };
 
+  //Fetching profile picture mapping with candidate ID 
+  fetch("./data/popular-cand-profile-pic-mapping.json")
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok " + response.statusText);
+    }
+    return response.json();
+  })
+  .then((picMap) => {
+    pictureMapping = picMap;
+  });
+
+  //Fetching election result 2019
+  fetch("./data/election2019.json")
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok " + response.statusText);
+    }
+    return response.json();
+  })
+  .then((result) => {
+    results2019 = result;
+  });
+
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("Constituency-res").style.display = "none";
   const stateSelect = document.getElementById("state-select");
@@ -737,7 +710,8 @@ document.addEventListener("DOMContentLoaded", function () {
     render_whole_carousel();
   });
   render_whole_carousel();
-  // --------------------
+  
+    // --------------------
   // const constiMap = document.getElementById("map");
   // constiMap.on("wheel", function (event) {
   //   event.preventDefault();
@@ -1003,7 +977,7 @@ async function fetchMoreCards() {
     console.log("State Data:", stateData);
 
     const candidateResponse = await fetch(
-      "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
+      "./data/election2019.json"
     );
     const candidateData = await candidateResponse.json();
     console.log("Candidate Data:", candidateData);
@@ -1054,9 +1028,9 @@ async function fetchMoreCards() {
     console.error("Error fetching or processing data:", error);
   }
 }
-document.addEventListener("DOMContentLoaded", async () => {
+/*document.addEventListener("DOMContentLoaded", async () => {
   await fetchMoreCards();
-});
+});*/
 
 function handleSelection() {
   
@@ -1226,28 +1200,29 @@ function handleSelection() {
         console.log(pressed);
         render();
         render2();
-
-        // render_state_table(
-        //   filteredFeatures.map((feature) => feature.properties),
-        //   text
-        // );
       })
       .catch((e) => console.error(e));
   }
   render_state_carousel(text);
 }
 
-document.getElementById("see-more-btn").addEventListener("click", function () {
-  window.location.href = `./bigfights_viewall.html" + "?state=" + "all"`;
-});
+if(document.getElementById("see-more-btn")){
+  document.getElementById("see-more-btn").addEventListener("click", function () {
+    window.location.href = `./bigfights_viewall.html" + "?state=" + "all"`;
+  });
+}
 
-function renderCandidateCards(item, row) {
+function getProfilePic(candId, alnce){
   const allianceImages = {
     "NDA": "./images/imgs/NDA  (1).png",
     "INDIA": "./images/imgs/NDA  (2).png",
     "OTH": "./images/imgs/NDA  (3).png"
   };
-  const imageUrl = item.perimg || allianceImages[item.alnce];
+  return (pictureMapping && pictureMapping[candId]) ? s3PicUrl + pictureMapping[candId] + ".png" : allianceImages[alnce];
+}
+
+function renderCandidateCards(item, row) {
+  const imageUrl = getProfilePic(item.cId, item.alnce);
 
   const constituency = item.constituency
     .split(" ")
@@ -1266,7 +1241,7 @@ function renderCandidateCards(item, row) {
     bgColor = "linear-gradient(56deg, #FFF8DC,#FFE4BF)";
     arrColor = "linear-gradient(90deg, #EC8E30,#A65E17)";
     nameColor = "#FF9933";
-  } else if (item.alnce === "INDIA") {
+  } else if (item.alnce === "INDIA" || item.alnce === "UPA") {
     nameColor = "#19AAED";
   } else if (item.alnce === "OTH") {
     bgColor = "linear-gradient(56deg, #F5F5F5,#E0E0E0)";
@@ -1276,10 +1251,13 @@ function renderCandidateCards(item, row) {
 
   card.style.background = bgColor;
 
-  const ribbonText = item.lead ? "Leading" : "Trailing";
+  const ribbonText = (results2019 && results2019[0][item.state][item.constituency].candidates[0].cName == item.cName) ? "Won" : "Lost";
+  const ribbonColor = (ribbonText === "Won") ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+  /*const ribbonText = item.lead ? "Won" : "Lost";
   const ribbonColor = item.lead
     ? "rgba(34, 177, 76, 255)"
     : "rgba(240, 68, 56, 255)";
+  */
 
   card.innerHTML = `
   <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
@@ -1303,11 +1281,11 @@ function renderCandidateCards(item, row) {
               }
           </p>
       </div>
-      <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
-          <p class="card-text mb-1 custom-iribbon-text">${
+      <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor};">
+          <p class="card-text mb-1 custom-iribbon-text" style="display:none;">${
             item.lead ? "Leading by" : "Trailing by"
           }</p>
-          <p class="card-text custom-iribbon-text-votes">${item.lead2votes}</p>
+          <p class="card-text custom-iribbon-text-votes" style="display:none;">${item.lead2votes}</p>
       </div>
   </div>
   <div class="person-image d-flex custom-person-image">
@@ -1403,10 +1381,11 @@ prevButton.classList.add("col-auto"); // Adjust column width for the "Previous" 
   // Ensure the pagination controls are displayed as flex
   paginationControls.style.display = "flex";
 }
-nextButton.addEventListener("click", function (event) {
+/*nextButton.addEventListener("click", function (event) {
   event.preventDefault(); // Prevent default action
   // Your existing code for handling the "Next" button click
-});
+});*/
+
 function setActiveButton(page, class_name) {
   const paginationControls = document.getElementById(class_name);
   const buttons = paginationControls.querySelectorAll(".newbuttons");
@@ -2003,7 +1982,7 @@ function render_table(code, page,constiti1,st) {
     }
     votes2.classList.add("tdata3");
     row.appendChild(votes2);
-    const margin2 = document.createElement("td");
+   /* const margin2 = document.createElement("td");
     if (i == 0) {
       margin2.textContent = "-";
     } else if (i > 0) {
@@ -2071,6 +2050,7 @@ function render_table(code, page,constiti1,st) {
     // });
     // votes_2019.textContent = isPresentIn2019 ? "True" : "False";
     // row.appendChild(votes_2019);
+    */
     tbody.appendChild(row);
     ct++;
   }
@@ -2702,6 +2682,75 @@ function viewingstate(stateId){
       }
   }
   handleSelection();
+}
+
+function createCard(item,id) {
+  const imageUrl = getProfilePic(item.cId, item.alnce);
+
+  const card = document.createElement("div");
+  card.className = "position-relative custom-container";
+
+  // Define default background, arrow colors, and name color
+  let bgColor;
+  let arrColor;
+  let nameColor;
+
+  // Adjust colors based on the alliance field
+  if (item.alliance === "NDA") {
+    bgColor = "linear-gradient(56deg, #FFF8DC,#FFE4BF)";
+    arrColor = "linear-gradient(90deg, #EC8E30,#A65E17)";
+    nameColor = "#FF9933";
+  } else if (item.alliance === "INDIA") {
+    nameColor = "#19AAED";
+  } else if (item.alliance === "OTH") {
+    bgColor = "linear-gradient(56deg, #F5F5F5,#E0E0E0)";
+    arrColor = "linear-gradient(90deg, #6F9088,#42615A)";
+    nameColor = "#0c6b4b";
+  }
+
+
+  card.style.background = bgColor;
+
+  const ribbonText = item.lead ? "Leading" : "Trailing";
+  const ribbonColor = item.lead ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+
+  card.innerHTML = `
+  <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
+  <div class="temp custom-temp">
+      <div class="card-body w-100">
+          <h3 class="card-title custom-card-title" style="color:${nameColor}">${
+item.candidateName
+}</h3>
+          <div class="subheaders cd-flex align-items-center custom-subheaders" style="display:flex">
+              <div class="logo"><img class="custom-img" src="${
+                sym[item.party]
+              }" alt=""></div>
+              <h6 style="font-weight: bold;">${item.party}</h6>
+          </div>
+          <p class="card-text custom-card-text">${
+            item.constituencyName
+          }</p>
+          <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
+              <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
+                item.votes
+              }
+          </p>
+      </div>
+      <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
+          <p class="card-text mb-1 custom-iribbon-text">${
+            item.lead ? "Leading by" : "Trailing by"
+          }</p>
+          <p class="card-text custom-iribbon-text-votes">${
+            item.lead2votes
+          }</p>
+      </div>
+  </div>
+  <div class="person-image d-flex custom-person-image">
+      <img class="person-img wid" src="${imageUrl}" alt="Person Image">
+  </div>
+`;
+
+  id.append(card);
 }
 
 function toTitleCase(name) {

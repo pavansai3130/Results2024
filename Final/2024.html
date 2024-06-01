@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>India General Election 2024</title>
+    <title>India General Election 2024 - Volunteers</title>
     <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-JF3DM9WV3B"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-JF3DM9WV3B'); </script>
     <link
       rel="stylesheet"
@@ -15,23 +15,46 @@
     />
     <link
       rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+2BAamo4lVK5r+BN3eaqI0iKC5V/pbG2TcgPExl"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
       integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <script src="leaflet/index.js"></script>
+    <script src="./leaflet/index.js"></script>
     <script src="./js/index.js"></script>
+    <script src="leaflet/index.js"></script>
+    <script src="/jsindex.js"></script>
+    <script src="./js/cards.js"></script>
+    <script src="./js/disclaimer.js"></script>
     <link rel="stylesheet" href="./css/styles.css" />
     <link rel="stylesheet" href="./css/styling.css" />
-    <link rel="stylesheet" href="leaflet/index.css" />
+    <link rel="stylesheet" href="./css/volunteers.css" />
+    <link rel="stylesheet" href="./leaflet/index.css" />
     <link rel="stylesheet" href="./css/disclaimer.css" />
     <link rel="stylesheet" href="./css/navbarStyles.css" />
+    <link rel="stylesheet" href="../css//volunteers.css" />
+    <link rel="stylesheet" href="leaflet/index.css" />
     <link rel="stylesheet" href="../css//disclaimer.css" />
     <link rel="stylesheet" href="../css//navbarStyles.css" />
+    <style>
+      .mainBody{
+        align-content: center;
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
-    <nav class="navbarHead blur" id="navHeader">
+    <nav id="navHeader">
       <div class="headerlogo">
         <a href="./index.html"
           ><img src="./images/imgs/RESULTS2024LOGO.png" alt="Logo"
@@ -44,40 +67,41 @@
         <div id="mobile-nav-content">
           <ul id="nav-links">
             <li>
-              <a href="./2024.html" class="links">2024 Results</a>
+              <a href="./index.html" class="links">2019 Results</a>
             </li>
             <li
               id="hoverable"
               onmouseenter="showTooltip()"
               onmouseleave="hideTooltip()"
               onclick="toggleTooltip()"
+              style="display:none;"
             >
               <a href="/" class="links disabled">Candidates</a>
-              <i id="downIcons" class="fa-solid fa-chevron-down"></i>
-              <i id="upIcons" class="fa-solid fa-chevron-up"></i>
+              <i class="fa-solid fa-chevron-down"></i>
+              <i class="fa-solid fa-chevron-up"></i>
               <ul class="tooltip" id="tooltip">
                 <li id="celebrities">
                   <a href="./celebCards.html">Celebrities</a>
                 </li>
                 <li id="popular">
-                  <a href="cardsPage.html">Popular Candidates</a>
+                  <a href="./cardsPage.html">Popular Candidates</a>
                 </li>
               </ul>
             </li>
-            <div class="hiding" id="mobile-tooltip">
+            <div class="hiding" id="mobile-tooltip" style="display:none;">
               <li>
                 <a href="./celebCards.html" class="links" id="celebrities2"
                   >Celebrities</a
                 >
               </li>
               <li>
-                <a href="cardsPage.html" class="links" id="popular2"
+                <a href="./cardsPage.html" class="links" id="popular2"
                   >Popular Candidates</a
                 >
               </li>
             </div>
-            <li><a href="./index.html" class="links">'24 vs '19</a></li>
-            <li>
+            <li style="display:none;"><a href="./index.html" class="links">'24 vs '19</a></li>
+            <li style="display:none;">
               <a href="./bigfights_viewall.html" class="links">Big fights</a>
             </li>
             <div class="a2a_kit a2a_kit_size_26 a2a_default_style socialMedia">
@@ -87,10 +111,6 @@
               <a class="a2a_button_linkedin"></a>
               <a class="a2a_button_copy_link"></a>
             </div>
-            <script
-              async
-              src="https://static.addtoany.com/menu/page.js"
-            ></script>
           </ul>
           <ul id="mobile-links">
             <li><a href="./about.html">About Us</a></li>
@@ -107,79 +127,14 @@
           <div class="row"></div>
         </div>
       </header>
-      <!-- Main Content -->
-      <h1
-        style="
-          text-align: center;
-          font-weight: 600;
-          margin-top: 2rem;
-          font-size: 3.25rem;
-        "
-      >
-        Disclaimer
-      </h1>
-      <div class="upperText">
-        <p>
-          Welcome to <span style="color: red">results</span
-          ><span style="color: green">2024.in.</span> This website is a
-          crowdsourced initiative aimed at providing visualizations of the 2024
-          Indian election results. The information presented on this site,
-          including data at the country, state, and constituency levels, as well
-          as graphics on popular candidates and top poll battles, is created
-          based on data sourced from the Election Commission of India web pages.
-        </p>
-        <p>
-          By accessing results2024.in, you have read, understood and agree to be
-          legally bound by the terms of the following disclaimer and user
-          agreement:
-        </p>
-        <p>
-          This Site is owned and operated by Gradious Technologies and contains
-          material which is derived in whole or in part from material supplied
-          by the Company, Election Commission of India website.
-        </p>
-      </div>
 
-      <div class="lowerText">
-        <h3>Educational Initiative</h3>
-        <p>
-          This project is an educational initiative by Gradious Technologies,
-          with the majority of development done by CMR College of Engineering
-          and Technology(CMRCET) Gradious CoE students. The purpose of this
-          project is to provide educational insights and enhance public
-          understanding of the election results through visual representations.
-        </p>
-        <h3>Accuracy of Information</h3>
-        <p>
-          While we strive to ensure the accuracy and completeness of the data
-          presented, we make no guarantees or warranties, either express or
-          implied, about the accuracy, reliability, or completeness of any
-          information on this site. Users are advised to cross-check with
-          official sources for the most accurate and updated information.We
-          especially state that we have no financial liability whatsoever to any
-          user on account of the use of information provided on its website.
-        </p>
-        <h3>No Endorsement</h3>
-        <p>
-          The information and visualizations provided on results2024.in are for
-          informational purposes only. The views and opinions expressed on this
-          site do not necessarily reflect those of Gradious Technologies, CMRCET
-          and all other volunteers associated with results2024.in. This site
-          does not endorse any political party, candidate, or viewpoint.
-        </p>
-        <h3>Liability</h3>
-        <p>
-          Gradious Technologies, CMRCET and all other volunteers associated with
-          results2024.in will not be liable for any errors or omissions in the
-          information provided, nor for any losses, injuries, or damages arising
-          from its use.
-        </p>
+      <div class="mainBody">
+        <img
+          src="./images/results2024.png"
+          class="img-fluid"
+          alt="Responsive image"
+        />
 
-        <p>
-          By using this site, you acknowledge that you have read, understood,
-          and agreed to this disclaimer. If you do not agree with any part of
-          this disclaimer, please do not use our website.
-        </p>
       </div>
     </div>
 
@@ -193,7 +148,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="./js/paths.js"></script>
     <script src="./js/script.js"></script>
-    <script src="./js/disclaimer.js"></script>
+    <script src="./js/cards.js"></script>
     <script src="./js/navbar.js"></script>
 
     <footer class="footer">
@@ -241,9 +196,11 @@
         <script async src="https://static.addtoany.com/menu/page.js"></script>
         <script>
           var a2a_config = a2a_config || {};
-          a2a_config.icon_color = "#003333";
+          a2a_config.icon_color = "transparent";
         </script>
       </div>
     </footer>
   </body>
+</html>
+</body>
 </html>

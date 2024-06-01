@@ -886,7 +886,7 @@ let data = {};
 let ftrs, geo, geo2, map;
 let names = {
   "#FF9933": "NDA",
-  "#87CEEB": "I.N.D.I.A",
+  "#87CEEB": "UPA",
   "#EAECF0": "Others",
   ndaColor: "#FF9933",
   indiaColor: "#87CEEB",
@@ -1119,20 +1119,20 @@ async function fetchJSON() {
 // }
 
 $(document).ready(async function () {
-  await fetchJSON();
+  //await fetchJSON();
   await fetchJSON2("./data/election2019.json");
   await fetchGeoJSON("./data/geo.json");
-  let intervalId = setInterval(async () => {
+  /*let intervalId = setInterval(async () => {
     await fetchJSON();
     // handleStateClick(lastClickedState);
     // console.log(stateDataJson);
-  }, 10000);
+  }, 10000);*/
   // console.log(data);
 
   stateDataJson2019 = data_201[0];
   allianceJson2019 = data_201[1];
   console.log(allianceJson);
-  if (getParameterByName("year") === "2019") {
+  //if (getParameterByName("year") === "2019") {
     stateDataJson = stateDataJson2019;
     allianceJson = allianceJson2019;
     // console.log(data_2019);
@@ -1140,7 +1140,7 @@ $(document).ready(async function () {
     // console.log("datsis");
     // console.log(data);
     document.getElementById("disclaimer2019").style.display = "block";
-  }
+  //}
   // console.log(allianceJson);
   // Function to render India map with statewise colors
   function renderIndiaMap() {
