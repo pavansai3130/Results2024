@@ -15,22 +15,25 @@
 
 .teamMembers{
   display: flex;
-  gap: 2rem;
+  justify-content: space-around;
   flex-wrap: wrap;
-  margin: 1rem 10rem 6rem;
+  width: 88%;
+  margin: 1rem auto;
   align-items: center;
 }
 
 .name{
-  margin:0.2rem 0 0.4rem 0;
+  margin:0 0 0.4rem 0;
   font-size: 1.25rem;
   font-weight: 600;
   color: #344054;
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
 }
 
 .memberDetails{
   width: 100%;
-  margin-left: 0.1rem;
+  margin-left: 0.8rem;
 }
 
 .role{
@@ -54,22 +57,18 @@
 }
 
 .member{
-  width: 360px;
-  height: 92px;
+  width: 22.5rem;
+  height: 7.5rem;
   display: flex;
   background: #F6F6F7;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   overflow: hidden;
-  align-items: center;
-  justify-content: center;
-  margin: 0.1rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
   transition: transform 0.3s ease-in-out;
 }
 
 .memberImage > img {
-  border-radius: 0.75rem;
+  border-radius: 0.25rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -80,7 +79,7 @@
 }
 
 .memberImage{
-  width: 88px;
+  width: 120px;
   padding-top: 30%;
   margin:0 1rem;
   position: relative;
@@ -90,36 +89,69 @@
   transition: transform 0.3s ease-in-out;
 }
 
-@media (max-width: 1120px) {
+@media (max-width: 1280px) {
   .member {
-    width: 47%;
-    margin: auto;
+    width: 20rem;
   }
 
   .teamMembers{
-    margin: 4rem;
+    width: 92%;
+    justify-content: space-around;
+  }
+
+  .name{
+    font-size: 1.2rem;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1100px) {
   .member {
-    width: 60%;
-    margin: auto;
+    width: 18.8rem;
   }
   .teamMembers{
-    margin: 0;
+    width: 94%;
+  }
+  .name{
+    margin-top: 1.2rem;
+    font-size: 1.1rem;
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 1000px) {
   .member {
+    width: 20rem;
+  }
+  .teamMembers{
+    width: 84%;
+  }
+} 
+
+@media (max-width: 800px) {
+  .member {
+    width: 18.4rem;
+  }
+  .teamMembers{
+    width: 88%;
+  }
+} 
+
+@media (max-width: 700px) {
+  .member {
+    width: 18rem;
+  }
+  .teamMembers{
     width: 90%;
-    margin: auto;
+  }
+} 
+
+@media (max-width: 660px) {
+  .member {
+    width: 22rem;
   }
   .teamMembers{
-    margin: 0;
+    width: 84%;
   }
-}
+} 
 
 .socials img {
   transition: filter 0.3s ease-in-out;
@@ -142,6 +174,10 @@
 }
 
 .github:hover{
+  filter: drop-shadow(0 0 10px #2B3137)
+}
+
+.gmail:hover{
   filter: drop-shadow(0 0 10px #2B3137)
 }
 
