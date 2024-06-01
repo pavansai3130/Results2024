@@ -9,7 +9,7 @@ const initialView = [23, 82.5];
 const initialZoom = 5;
 let state_value = 36;
 let sym = {
-  extra:"./images/imgs/notknown.svg",
+  extra: "./images/imgs/notknown.svg",
   IND: "./images/imgs/IND.svg",
   BJP: "./images/imgs/BJP.svg",
   INC: "./images/imgs/INC.svg",
@@ -110,7 +110,7 @@ let state_codes = {
   Haryana: 6,
   "Jammu and Kashmir": 1,
   "Jammu & Kashmir": 1,
-  "Delhi":7,
+  Delhi: 7,
   "NCT OF Delhi": 7,
   "Dadra and Nagar Haveli": 26,
   "West Bengal": 19,
@@ -877,6 +877,7 @@ let alliancePatries = {
   india: {},
   others: {},
 };
+let stateAlliance;
 let stateDataJson2019;
 let allianceJson2019;
 let data2024 = {};
@@ -893,14 +894,16 @@ let names = {
   othersColor: "#EAECF0",
 };
 let temp = 1;
-async function fetchJSON2(file) {
+async function fetchJSON2(file1, file2) {
   // data_2019 = {};
   try {
-    const response = await fetch(file); // Fetch the JSON file
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+    const response1 = await fetch(file1);
+    const response2 = await fetch(file2); // Fetch the JSON file
+    if (!response1.ok || !response2.ok) {
+      throw new Error(`HTTP error! Status: ${response1.status}`);
     }
-    data_201 = await response.json();
+    data_201 = await response1.json();
+    stateAlliance = await response2.json();
     // console.log("JSON data fetched and stored globally:", data_201);
     function format2(data2024) {
       for (let state in data2024) {
@@ -943,7 +946,11 @@ async function fetchGeoJSON(file) {
       );
     // Initialize the map and add the GeoJSON layer
     // console.log(L);
-    map = L.map("map", { attributionControl: false, zoomSnap: 0.2,minZoom:5});
+    map = L.map("map", {
+      attributionControl: false,
+      zoomSnap: 0.2,
+      minZoom: 5,
+    });
     geo = L.geoJSON(geoJson, {
       onEachFeature: (feature, layer) => {
         layer.on("click", function (event) {
@@ -1120,8 +1127,11 @@ async function fetchJSON() {
 
 $(document).ready(async function () {
   await fetchJSON();
-  await fetchJSON2("./data/election2019.json");
-  await fetchGeoJSON("./data/geo.json");
+  await fetchJSON2(
+    "../data/election2019.json",
+    "../data/stateAllianceCount.json"
+  );
+  await fetchGeoJSON("../data/geo.json");
   let intervalId = setInterval(async () => {
     await fetchJSON();
     // handleStateClick(lastClickedState);
@@ -1129,6 +1139,7 @@ $(document).ready(async function () {
   }, 10000);
   // console.log(data);
 
+  console.log(stateAlliance);
   stateDataJson2019 = data_201[0];
   allianceJson2019 = data_201[1];
   console.log(allianceJson);
@@ -1141,7 +1152,8 @@ $(document).ready(async function () {
     // console.log(data);
     document.getElementById("disclaimer2019").style.display = "block";
   }
-  // console.log(allianceJson);
+
+  console.log(allianceJson);
   // Function to render India map with statewise colors
   function renderIndiaMap() {
     // Implement the logic to render India map using SVG or any other method
@@ -1179,9 +1191,13 @@ $(document).ready(async function () {
     for (const state in stateDataJson) {
       // console.log(unionTerritories.includes(state));
       // if (!unionTerritories.includes(state)) {
+      console.log(state);
       let nda = 0,
         india = 0,
         others = 0;
+      let NDA = state != "Ladakh" ? stateAlliance[state]["NDA"] : 0,
+        INDIA = state != "Ladakh" ? stateAlliance[state]["INDIA"] : 0,
+        OTH = state != "Ladakh" ? stateAlliance[state]["OTH"] : 0;
 
       // console.log(state);
       const stateMap = document.getElementById(state);
@@ -1217,14 +1233,24 @@ $(document).ready(async function () {
               ? names.indiaColor
               : names.othersColor;
         }
-        // }
 
         if (stateCount <= 20) {
           const cells = newRow.getElementsByTagName("td");
           cells[0].innerHTML = `<img id="stateLogo" src='${sym[state]}'>${state}`;
-          cells[1].textContent = nda;
-          cells[2].textContent = india;
-          cells[3].textContent = others;
+
+          let value = nda - NDA;
+          cells[1].innerHTML = `${nda}<span class=${
+            value < 0 ? "negative" : "positive"
+          }> (${value})</span>`;
+          value = india - INDIA;
+          cells[2].innerHTML = `${nda}<span class=${
+            value < 0 ? "negative" : "positive"
+          }> (${value})</span>`;
+          value = others - OTH;
+          cells[3].innerHTML = `${nda}<span class=${
+            value < 0 ? "negative" : "positive"
+          }> (${value})</span>`;
+
           tbody.appendChild(newRow);
         }
       }
@@ -1299,10 +1325,28 @@ $(document).ready(async function () {
     //   "btn btn-light border border-5";
     // document.getElementById("stateRow").textContent = "State";
     // document.getElementById("stateButton").className += " active";
+    if (getParameterByName("year") === "2019") {
+      stateDataJson = stateDataJson2019;
+      allianceJson = allianceJson2019;
+      // console.log(data_2019);
+      data = data_2019;
+      // console.log("datsis");
+      // console.log(data);
+      document.getElementById("disclaimer2019").style.display = "block";
+    }
     renderAllianceResults();
   });
 
   document.getElementById("nextButton").addEventListener("click", function () {
+    if (getParameterByName("year") === "2019") {
+      stateDataJson = stateDataJson2019;
+      allianceJson = allianceJson2019;
+      // console.log(data_2019);
+      data = data_2019;
+      // console.log("datsis");
+      // console.log(data);
+      document.getElementById("disclaimer2019").style.display = "block";
+    }
     // document.getElementById("stateRow").textContent = "Union Territory";
     // document.getElementById("stateButton").className =
     //   "btn btn-light border border-5";
@@ -1317,6 +1361,9 @@ $(document).ready(async function () {
       let nda = 0,
         india = 0,
         others = 0;
+      let NDA = state != "Ladakh" ? stateAlliance[state]["NDA"] : 0,
+        INDIA = state != "Ladakh" ? stateAlliance[state]["INDIA"] : 0,
+        OTH = state != "Ladakh" ? stateAlliance[state]["OTH"] : 0;
 
       const stateMap = document.getElementById(state);
       const newRow = referenceRow.cloneNode(true);
@@ -1331,9 +1378,22 @@ $(document).ready(async function () {
         else india++;
       }
 
-      cells[1].textContent = nda;
-      cells[2].textContent = india;
-      cells[3].textContent = others;
+      cells[0].innerHTML = `<img id="stateLogo" src='${sym[state]}'>${state}`;
+
+      let value = nda - NDA;
+      cells[1].innerHTML = `${nda}<span class=${
+        value < 0 ? "negative" : "positive"
+      }> (${value})</span>`;
+      value = india - INDIA;
+      cells[2].innerHTML = `${nda}<span class=${
+        value < 0 ? "negative" : "positive"
+      }> (${value})</span>`;
+      value = others - OTH;
+      cells[3].innerHTML = `${nda}<span class=${
+        value < 0 ? "negative" : "positive"
+      }> (${value})</span>`;
+
+      tbody.appendChild(newRow);
       stateMap.style.fill =
         nda >= india && nda >= others
           ? names.ndaColor
@@ -2004,11 +2064,11 @@ function creatediv(state) {
 }
 function showmap(state) {
   render_state_carousel(state);
-  let state_naming=document.getElementById("st_con_heading");
-  state_naming.innerHTML=`${state}`;
-  state_naming.style.marginBottom="40px";
-  document.getElementById("st_con_heading").style.display="block";
-  document.getElementById("myChart").style.display="none";
+  let state_naming = document.getElementById("st_con_heading");
+  state_naming.innerHTML = `${state}`;
+  state_naming.style.marginBottom = "40px";
+  document.getElementById("st_con_heading").style.display = "block";
+  document.getElementById("myChart").style.display = "none";
   breadcrumbState.style.display = "inline";
   state_map(state_codes[state], state);
   close_btn();
@@ -2074,7 +2134,7 @@ async function fetchTop10() {
       "cand4116",
       "cand4630",
       "cand6978",
-      "cand2051"
+      "cand2051",
     ];
 
     for (let i = 0; i < top10Cand.length; i += 2) {
@@ -2138,14 +2198,20 @@ function render_state_carousel(state) {
         : "./images/imgs2/madhya_pradesh.jpg";
     return `
       <div class="card swiper-slide">
-          <span class="state_name">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
+          <span class="state_name">${toTitleCase(
+            const_name
+          )} <span class="state_party_slot">(${toTitleCase(
+      state
+    )})</span></span>
           <div class="cand_desc1">
               <span class="img_container">
                   <img class="party_symbol" src=${party_path1} alt="">
                   <img class="cand_img1" src="${candidateImg1}" alt="">
               </span>
               <div class="desc_container">
-                  <div class="cand_name1">${toTitleCase(cand_name1)} <span class="state_party_slot">(${partySymbol1})</span></div>
+                  <div class="cand_name1">${toTitleCase(
+                    cand_name1
+                  )} <span class="state_party_slot">(${partySymbol1})</span></div>
                   <span class="lead_bar">${votes1}</span>
               </div>
           </div>
@@ -2155,7 +2221,9 @@ function render_state_carousel(state) {
                   <img class="cand_img1" src="${candidateImg2}" alt="">
               </span>
               <div class="desc_container">
-                  <div class="cand_name1">${toTitleCase(cand_name2)} <span class="state_party_slot">(${partySymbol2})</span></div>
+                  <div class="cand_name1">${toTitleCase(
+                    cand_name2
+                  )} <span class="state_party_slot">(${partySymbol2})</span></div>
                   <span class="trail_bar" >${votes2}</span>
               </div>
           </div>
@@ -2269,7 +2337,10 @@ function getParameterByName(name, url = window.location.href) {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 function toTitleCase(name) {
-  return name.split(' ').map(word => {
-    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-  }).join(' ');
+  return name
+    .split(" ")
+    .map((word) => {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join(" ");
 }

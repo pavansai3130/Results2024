@@ -544,11 +544,17 @@ a {
   text-align: left;
   padding-left: 1rem;
 }
-.postive{
-  color: #027A48;
+.positive{
+  color:  #027A48;
+  ;
+  font-size: 10px;
+  font-weight: 500;
 }
 .negative{
   color: #F04438;
+  font-size: 10px;
+  font-weight: 500;
+
 }
 #NDASeats{
   background-color: #FFF9F5;
@@ -575,6 +581,7 @@ a {
   /* margin-left: 0.5rem; */
   margin-right: 0.5rem;
 }
+
 
 
 
