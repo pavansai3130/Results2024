@@ -1991,8 +1991,22 @@ function close_btn() {
   document.getElementById("containertool2").style.display = "none";
 }
 
-document.getElementById("see-more-btn").addEventListener("click", function () {
-  window.location.href = "cardsPage.html";
+
+
+
+
+document.getElementById('see-more-btn').addEventListener('click', function() {
+
+  const dropdown = document.getElementById('state-select');
+  let state = dropdown.options[dropdown.selectedIndex].text; // Changed 'const' to 'let'
+  if(state !== "Select State"){
+    state = state;
+  }
+  else{
+    state = document.getElementById("breadcrumb-state").innerText;
+  }
+
+  window.location.href = 'cardsPage.html?state=' + encodeURIComponent(state);
 });
 let renderAllianceResults;
 
