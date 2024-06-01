@@ -1139,6 +1139,7 @@ $(document).ready(async function () {
     data = data_2019;
     // console.log("datsis");
     // console.log(data);
+    document.getElementById("disclaimer2019").style.display = "block";
   }
   // console.log(allianceJson);
   // Function to render India map with statewise colors
@@ -1220,7 +1221,7 @@ $(document).ready(async function () {
 
         if (stateCount <= 20) {
           const cells = newRow.getElementsByTagName("td");
-          cells[0].innerHTML = `<img id="stateLogo" src='${stateMaps[state]}'>${state}`;
+          cells[0].innerHTML = `<img id="stateLogo" src='${sym[state]}'>${state}`;
           cells[1].textContent = nda;
           cells[2].textContent = india;
           cells[3].textContent = others;
@@ -1523,6 +1524,14 @@ $(document).ready(async function () {
         y: {
           beginAtZero: true,
           max: 543, // Setting the maximum value of the y-axis
+          grid: {
+            display: false, // Remove the grid lines on y-axis
+          },
+        },
+        x: {
+          grid: {
+            display: false, // Remove the grid lines on x-axis
+          },
         },
       },
       plugins: {
@@ -1533,6 +1542,15 @@ $(document).ready(async function () {
             },
           },
           display: false,
+        },
+        datalabels: {
+          display: true,
+          anchor: "end",
+          align: "end",
+          color: "black",
+          font: {
+            weight: "bold",
+          },
         },
       },
       elements: {
@@ -1783,13 +1801,13 @@ function populateTable(alliance, carouselId) {
 }
 function updateBar(values) {
   const total = values.reduce((acc, val) => acc + val, 0);
-  const barContainer = document.getElementById("bar-container");
+  /*  const barContainer = document.getElementById("bar-container");
   const bar1 = document.getElementById("bar1");
   const bar2 = document.getElementById("bar2");
   const bar3 = document.getElementById("bar3");
   bar1.style.display = "block";
   bar2.style.display = "block";
-  bar3.style.display = "block";
+  bar3.style.display = "block"; */
 
   // const ndaBar = document.getElementById("ndaBar");
   // const indiaBar = document.getElementById("indiaBar");
@@ -1807,19 +1825,19 @@ function updateBar(values) {
   // Create an array of objects to sort by value
   bars = [
     {
-      element: bar1,
+      // element: bar1,
       value: values[0],
       colors: `linear-gradient(90deg, #FF9933 0%, #F57A00 100%)`,
       color: "#FF9933",
     }, // Blue
     {
-      element: bar2,
+      // element: bar2,
       value: values[1],
       colors: ` linear-gradient(90deg, #87CEEB 0%, #3AAFDE 100%)`,
       color: "#87CEEB",
     },
     {
-      element: bar3,
+      // element: bar3,
       value: values[2],
       colors: `linear-gradient(90deg, #D3D3D3 0%, #B8B8B8 100%)`,
       color: "#EAECF0",
@@ -1830,17 +1848,17 @@ function updateBar(values) {
   bars.sort((a, b) => b.value - a.value);
 
   // Clear existing bars from the container
-  barContainer.innerHTML = "";
+  // barContainer.innerHTML = "";
 
   // Append sorted bars to the container
-  bars.forEach((bar, index) => {
+  /*  bars.forEach((bar, index) => {
     const width = (bar.value / total) * 100;
     bar.element.style.width = width + "%";
     bar.element.style.background = bar.colors;
     bar.element.innerText = `${bar.value}`;
-    barContainer.appendChild(bar.element);
+    // barContainer.appendChild(bar.element);
     if (bar.value === 0) bar.element.style.display = "none";
-  });
+  }); */
   // word2.textContent = names[bars[1].color];
   // word2.style.cssText = `left:${(bars[0].value / total) * 100}%;
   // color:${bars[1].color}`;
@@ -1994,22 +2012,16 @@ function close_btn() {
   document.getElementById("containertool2").style.display = "none";
 }
 
-
-
-
-
-document.getElementById('see-more-btn').addEventListener('click', function() {
-
-  const dropdown = document.getElementById('state-select');
+document.getElementById("see-more-btn").addEventListener("click", function () {
+  const dropdown = document.getElementById("state-select");
   let state = dropdown.options[dropdown.selectedIndex].text; // Changed 'const' to 'let'
-  if(state !== "Select State"){
+  if (state !== "Select State") {
     state = state;
-  }
-  else{
+  } else {
     state = document.getElementById("breadcrumb-state").innerText;
   }
 
-  window.location.href = 'cardsPage.html?state=' + encodeURIComponent(state);
+  window.location.href = "cardsPage.html?state=" + encodeURIComponent(state);
 });
 let renderAllianceResults;
 
