@@ -110,6 +110,7 @@ let state_codes = {
   Haryana: 6,
   "Jammu and Kashmir": 1,
   "Jammu & Kashmir": 1,
+  "Delhi":7,
   "NCT OF Delhi": 7,
   "Dadra and Nagar Haveli": 26,
   "West Bengal": 19,
@@ -1934,9 +1935,8 @@ function creatediv(state) {
       var maindiv = document.getElementById("containertool2");
       var mainindiamap = document.getElementById("india-map");
       mainindiamap.append(maindiv);
-      var htmlcode = `<span class="close" onclick="close_btn()">&times;</span>
+      var htmlcode = `<span class="rclose" onclick="close_btn()">&times;</span>
                         <h2 class="sthead">${state}</h2>
-                        
                         <table class="detailstable">
                            <thead>
                               <tr>
@@ -1960,20 +1960,20 @@ function creatediv(state) {
       }
       htmlcode += `</tbody>
                            </table><div class="results12">
-                            <h3 class="hdiv3">2019 results</h3>
+                            <div class="hdiv3">2019 results</div>
                            <div class="bars">`;
 
       for (let i = 0; i < partynames.length && i < 3; i++) {
         if (partynames[i] !== undefined && partyseats[i] !== undefined) {
           htmlcode += `<div class="barbox">
-                                <span class="barlabel">${partynames[i]}</span>
+                                <span id="barlabel${i}">${partynames[i]}</span>
                               <div class="br${i + 1} inbar" id="id${i}">${
             partyseats[i]
           }</div> </div>`;
         }
       }
-      htmlcode += `    </div>
-                            </div> <div id="viewdetails" onclick="showmap('${state}')">Check Full Results<span id=gt>&gt</span></div>`;
+      htmlcode += `</div>
+     </div> <div id="viewdetails" onclick="showmap('${state}')">Check Full Results<span id=gt>&gt</span></div>`;
 
       maindiv.innerHTML = "";
       maindiv.innerHTML += htmlcode;
@@ -1982,11 +1982,14 @@ function creatediv(state) {
       if (partynames.length == 1) {
         setTimeout(() => {
           document.getElementById("id0").style.width = "13.215rem";
+          document.getElementById("barlabel0").style.marginLeft = "-11.8rem";
         }, 0);
       }
       if (partynames.length == 2) {
         setTimeout(() => {
           document.getElementById("id0").style.width = "7.215rem";
+          document.getElementById("barlabel0").style.marginLeft = "-5.8rem";
+          document.getElementById("barlabel1").style.marginLeft = "-4.8rem";
         }, 0);
       }
     });
