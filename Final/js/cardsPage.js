@@ -4,7 +4,11 @@ let candidatesData = [];
 async function fetchCandidateData() {
   const response = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
   const data = await response.json();
-  candidatesData = data[0];  // Store the 1st index in the global variable
+  candidatesData = data[0]; 
+   // Store the 1st index in the global variable
+   console.log("---------------------------------------aaska",candidatesData);
+//    alert(candidatesData[item.state])
+// alert(candidatesData[item.state][lowerCaseConstituency])
 }
 
 // Fetch more cards and populate them
@@ -32,19 +36,17 @@ async function fetchMoreCards1() {
         for (let constituency in statesData[state]) {
           const candidates = statesData[state][constituency].candidates;
           if (candidates) {
-            const candidate = candidates.find(
-              (candidate) => candidate.cId === candidateId
-            );
+            const candidate = candidates.find(candidate => candidate.cId === candidateId);
             if (candidate) {
-              candidate.place = `${constituency.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')} (${state})`; 
+              candidate.state = state;
+              candidate.constituency = constituency
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
               return candidate;
             }
           } else {
-            console.error(
-              "Candidates array is undefined for",
-              state,
-              constituency
-            ); // Add log to debug
+            console.error("Candidates array is undefined for", state, constituency);
           }
         }
       }
@@ -77,16 +79,15 @@ function createCard(item) {
     "OTH": "./images/imgs/OTH.png"
   };
   const imageUrl = item.perimg || allianceImages[item.alnce];
-  
+
+
   const card = document.createElement("div");
   card.className = "position-relative custom-container";
 
-  // Define default background, arrow colors, and name color
   let bgColor;
   let arrColor;
   let nameColor;
 
-  // Adjust colors based on the alliance field
   if (item.alnce === "NDA") {
     bgColor = "linear-gradient(56deg, #FFF8DC,#FFE4BF)";
     arrColor = "linear-gradient(90deg, #EC8E30,#A65E17)";
@@ -102,9 +103,13 @@ function createCard(item) {
   card.style.background = bgColor;
   let position = 1;
   let voteDifference = 0;
-
-  if (candidatesData[item.state] && candidatesData[item.state][item.constituency]) {
-    const constituencyData = candidatesData[item.state][item.constituency].candidates;
+  let rsDecl = 1;  // Default value
+  const lowerCaseConstituency = item.constituency.toLowerCase();
+  
+  if (candidatesData[item.state] && candidatesData[item.state][lowerCaseConstituency]) {
+    const constituencyData = candidatesData[item.state][lowerCaseConstituency].candidates;
+    rsDecl = candidatesData[item.state][lowerCaseConstituency].rsDecl;  // Get the rsDecl value
+    // alert(rsDecl);
     for (let i = 0; i < constituencyData.length; i++) {
       if (constituencyData[i].cId === item.cId) {
         position = i + 1;
@@ -118,36 +123,50 @@ function createCard(item) {
     }
   }
 
-  const ribbonText = position === 1 ? "Won" : "Lost";
-  const ribbonColor = position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
-  const leadTrailText = "Margin"
+  let ribbonText;
+  let ribbonColor;
+  if (rsDecl === 1) {
+    ribbonText = position === 1 ? "Won" : "Lost";
+    ribbonColor = position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+  } else {
+    ribbonText = "In Progress";
+    ribbonColor = "grey";
+  }
+  const leadTrailText = rsDecl === 1 ? "Margin" : (position === 1 ? "Leading by" : "Trailing by");
 
   card.innerHTML = `
-    <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
-    <div class="temp custom-temp">
-        <div class="card-body w-100">
-            <h3 class="card-title custom-card-title" style="color:${nameColor}">${item.cName}</h3>
-            <div class="subheaders cd-flex align-items-center custom-subheaders" style="display:flex"> 
-                <div class="logo"><img class="custom-img" src="${item.logoimg}" alt=""></div>
-                <h6 style="font-weight: bold;">${item.prty}</h6>
-            </div>
-            <p class="card-text custom-card-text">${item.place};</p>
-            <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
-                <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${item.vts}
-            </p>
-        </div>
-        <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
-            <p class="card-text mb-1 custom-iribbon-text">${leadTrailText}</p>
-            <p class="card-text custom-iribbon-text-votes">${voteDifference}</p>
-        </div>
-    </div>
-    <div class="person-image d-flex custom-person-image">
-        <img class="person-img wid" src="${imageUrl}" alt="Person Image">
-    </div>
+  <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
+  <div class="temp custom-temp">
+      <div class="card-body w-100">
+          <h3 class="card-title custom-card-title" style="color:${nameColor}">${
+    item.cName
+  }</h3>
+          <div class="subheaders cd-flex align-items-center custom-subheaders" style="display:flex" > 
+              <div class="logo"><img class="custom-img" src="${
+                item.logoimg
+              }" alt=""></div>
+              <h6 style="font-weight: bold;">${item.prty}</h6>
+          </div>
+          <p class="card-text custom-card-text">${item.place});</p>
+          <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
+              <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
+                item.vts
+              }
+          </p>
+      </div>
+      <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
+      <p class="card-text mb-1 custom-iribbon-text">${leadTrailText}</p>
+      <p class="card-text custom-iribbon-text-votes">${voteDifference}</p>
+  </div>
+  </div>
+  <div class="person-image d-flex custom-person-image">
+      <img class="person-img wid" src="${imageUrl}" alt="Person Image">
+  </div>
   `;
 
   return card;
 }
+
 
 
 async function displayCardsForState(stateName) {
@@ -261,3 +280,5 @@ document.getElementById("delFil").addEventListener("click",()=>{
   fetchMoreCards1();
   document.getElementById("tempState1").style.display="none";
 });
+
+
