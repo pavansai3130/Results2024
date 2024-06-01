@@ -60,14 +60,13 @@
   animation: loader 3s   infinite linear;
   transition: all 0.5s ease;
 }
-/* .custom-container:hover{
+.custom-container:hover{
   scale: 1.05;
   .wid{
       scale: 1.05;
       padding-bottom: 0.3rem;
   }
-} */
-
+}
 
 .custom-temp {
   width: 70%;

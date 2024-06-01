@@ -783,6 +783,8 @@ function resetBreadcrumb() {
     document.getElementById("stateTabeleContainer").style.display = "block";
     document.getElementById("Candidate-res").style.display = "none";
   }
+  document.getElementById("root").innerHTML="";
+  fetchTop10();
 }
 
 const zooming = {
@@ -1271,7 +1273,7 @@ function renderCandidateCards(item, row) {
           <h3 class="card-title custom-card-title" style="color:${nameColor}">${
     item.cName
   }</h3>
-          <div class="subheaders cd-flex align-items-center custom-subheaders">
+          <div class="subheaders cd-flex align-items-center custom-subheaders" style="display:flex" >
               <div class="logo"><img class="custom-img" src="${
                 item.logoimg
               }" alt=""></div>

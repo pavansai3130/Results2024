@@ -88,10 +88,6 @@ function createCard(item) {
   return card;
 }
 
-document.getElementById("back-btn").addEventListener("click", function () {
-  window.location.href = "index.html";
-});
-
 // Fetch and render the cards when the page loads
 fetchMoreCards();
 
