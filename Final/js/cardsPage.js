@@ -1,4 +1,5 @@
 async function fetchMoreCards1() {
+  document.getElementById("more-cards-root").innerHTML="";
   try {
     // Fetch the state-constituency-candidate JSON
     const stateResponse = await fetch("../data/popular.json");
@@ -62,9 +63,9 @@ async function fetchMoreCards1() {
 
 function createCard(item) {
   const allianceImages = {
-    "NDA": "imgs/NDA  (1).png",
-    "INDIA": "imgs/NDA  (2).png",
-    "OTH": "imgs/NDA  (3).png"
+    "NDA": "./images/imgs/NDA  (1).png",
+    "INDIA": "./images/imgs/NDA  (2).png",
+    "OTH": "./images/imgs/NDA  (3).png"
   };
   const imageUrl = item.perimg || allianceImages[item.alnce];
   
@@ -103,7 +104,7 @@ function createCard(item) {
           <h3 class="card-title custom-card-title" style="color:${nameColor}">${
     item.cName
   }</h3>
-          <div class="subheaders cd-flex align-items-center custom-subheaders">
+          <div class="subheaders cd-flex align-items-center custom-subheaders" style="display:flex">
               <div class="logo"><img class="custom-img" src="${
                 item.logoimg
               }" alt=""></div>
@@ -131,9 +132,6 @@ function createCard(item) {
   return card;
 }
 
-document.getElementById("back-btn").addEventListener("click", function () {
-  window.location.href = "./index.html";
-});
 
 async function displayCardsForState(stateName) {
   try {
@@ -230,6 +228,7 @@ window.onload = function() {
   const state = getURLParameter('state');
   if (state!==null) {
     displayCardsForState(state);
+    document.getElementById("tempState1").style.display="inline-block";
     document.getElementById("tempState").innerText=state;
   } else {
     fetchMoreCards1();
@@ -239,3 +238,8 @@ window.onload = function() {
 document.getElementById("dropdown").addEventListener("change", () => {
   performSearch();
 });
+
+document.getElementById("delFil").addEventListener("click",()=>{
+  fetchMoreCards1();
+  document.getElementById("tempState1").style.display="none";
+})

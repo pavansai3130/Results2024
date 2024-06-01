@@ -2088,6 +2088,7 @@ async function fetchTop10() {
       "cand4116",
       "cand4630",
       "cand6978",
+      "cand2051"
     ];
 
     for (let i = 0; i < top10Cand.length; i += 2) {
