@@ -15,6 +15,11 @@ function toggleMenu() {
   var navLinks = document.getElementById("nav-links");
   var mobileLinks = document.getElementById("mobile-links");
   const mainBody = document.querySelector(".body-main-content");
+  const slideBody = document.querySelector(".slide-main-content");
+  const oneBody = document.querySelector(".table-main-one");
+  const twoBody = document.querySelector(".table-main-two");
+  const btnBody = document.querySelector(".select-main-btn");
+  const mapBody = document.querySelector(".select-main-map");
   const footer = document.querySelector(".footer");
   const navHeader = document.getElementById("navHeader");
 
@@ -23,10 +28,20 @@ function toggleMenu() {
   mobileLinks.classList.toggle("show");
   if (mainBody.style.display === "block") {
     mainBody.style.display = "none";
+    slideBody.style.display = "none";
+    oneBody.style.display = "none";
+    twoBody.style.display = "none";
+    btnBody.style.display = "none";
+    mapBody.style.display = "none";
     navHeader.style.border = "none";
     footer.classList.add("hideFooter");
   } else {
     mainBody.style.display = "block";
+    slideBody.style.display = "block";
+    oneBody.style.display = "block";
+    twoBody.style.display = "block";
+    btnBody.style.display = "block";
+    mapBody.style.display = "block";
     navHeader.style.borderBottom = "1px solid rgba(0, 0, 0, 0.1)";
     footer.classList.remove("hideFooter");
   }
