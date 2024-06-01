@@ -102,33 +102,6 @@ a {
   position: relative;
 }
 
-.bar {
-  height: 40px;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  color: white;
-  float: left;
-  font-size: 20px;
-  padding: 10px 8px;
-  font-weight: 500;
-}
-
-.bar-1 {
-  background-color: #2196F3;
-  /* Blue */
-}
-
-.bar-2 {
-  background-color: #4caf50;
-  /* Green */
-}
-
-.bar-3 {
-  background-color: #f44336;
-  /* Red */
-}
-
 /* .bar-label {
   position: absolute;
   width: 100%;
