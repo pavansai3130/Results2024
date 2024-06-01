@@ -9,9 +9,9 @@ const initialView = [23, 82.5];
 const initialZoom = 5;
 let state_value = 36;
 let sym = {
-  extra: "./images/imgs/notknown.svg",
-  IND: "./images/imgs/ind.svg",
-  BJP: "./images/imgs/BJP.webp",
+  extra:"./images/imgs/notknown.svg",
+  IND: "./images/imgs/IND.svg",
+  BJP: "./images/imgs/BJP.svg",
   INC: "./images/imgs/INC.svg",
   DMK: "./images/imgs/DMK.webp",
   YSRCP: "./images/imgs/YSRCP.jpeg",
@@ -21,7 +21,7 @@ let sym = {
   BJD: "./images/imgs/BJD.png",
   BSP: "./images/imgs/BSP.jpg",
   TRS: "./images/imgs/TRS.jpg",
-  BRS: "./images/imgs/BRS.jpg",
+  BRS: "./images/imgs/BRS.svg",
   LJP: "./images/imgs/LJP.jpg",
   NCP: "./images/imgs/NCP.webp",
   SP: "./images/imgs/SP.jpg",
@@ -943,7 +943,7 @@ async function fetchGeoJSON(file) {
       );
     // Initialize the map and add the GeoJSON layer
     // console.log(L);
-    map = L.map("map", { attributionControl: false, zoomSnap: 0.2 });
+    map = L.map("map", { attributionControl: false, zoomSnap: 0.2,minZoom:5});
     geo = L.geoJSON(geoJson, {
       onEachFeature: (feature, layer) => {
         layer.on("click", function (event) {
@@ -1120,8 +1120,8 @@ async function fetchJSON() {
 
 $(document).ready(async function () {
   await fetchJSON();
-  await fetchJSON2("../data/election2019.json");
-  await fetchGeoJSON("../data/geo.json");
+  await fetchJSON2("./data/election2019.json");
+  await fetchGeoJSON("./data/geo.json");
   let intervalId = setInterval(async () => {
     await fetchJSON();
     // handleStateClick(lastClickedState);
@@ -1934,7 +1934,7 @@ function half(event) {
 }
 // console.log(stateDataJson);
 function creatediv(state) {
-  fetch("../data/election2019.json")
+  fetch("./data/election2019.json")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);
@@ -2023,6 +2023,11 @@ function creatediv(state) {
 }
 function showmap(state) {
   render_state_carousel(state);
+  let state_naming=document.getElementById("st_con_heading");
+  state_naming.innerHTML=`${state}`;
+  state_naming.style.marginBottom="40px";
+  document.getElementById("st_con_heading").style.display="block";
+  document.getElementById("myChart").style.display="none";
   breadcrumbState.style.display = "inline";
   state_map(state_codes[state], state);
   close_btn();
@@ -2149,17 +2154,17 @@ function render_state_carousel(state) {
     let state_img =
       state.toLowerCase() in party_img_json
         ? party_img_json[state.toLowerCase()]
-        : "./imgs2/madhya_pradesh.jpg";
+        : "./images/imgs2/madhya_pradesh.jpg";
     return `
       <div class="card swiper-slide">
-          <span class="state_name">${const_name} <span class="state_party_slot">(${state})</span></span>
+          <span class="state_name">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
           <div class="cand_desc1">
               <span class="img_container">
                   <img class="party_symbol" src=${party_path1} alt="">
                   <img class="cand_img1" src="${candidateImg1}" alt="">
               </span>
               <div class="desc_container">
-                  <div class="cand_name1">${cand_name1} <span class="state_party_slot">(${partySymbol1})</span></div>
+                  <div class="cand_name1">${toTitleCase(cand_name1)} <span class="state_party_slot">(${partySymbol1})</span></div>
                   <span class="lead_bar">${votes1}</span>
               </div>
           </div>
@@ -2169,7 +2174,7 @@ function render_state_carousel(state) {
                   <img class="cand_img1" src="${candidateImg2}" alt="">
               </span>
               <div class="desc_container">
-                  <div class="cand_name1">${cand_name2} <span class="state_party_slot">(${partySymbol2})</span></div>
+                  <div class="cand_name1">${toTitleCase(cand_name2)} <span class="state_party_slot">(${partySymbol2})</span></div>
                   <span class="trail_bar" >${votes2}</span>
               </div>
           </div>
@@ -2181,7 +2186,7 @@ function render_state_carousel(state) {
       `;
   }
 
-  fetch("../data/bigfights.json")
+  fetch("./data/bigfights.json")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);
@@ -2210,8 +2215,8 @@ function render_state_carousel(state) {
             state,
             candidates_data[const_name][bigf]["party1"],
             candidates_data[const_name][bigf]["party2"],
-            "../images/imgs2/rahul.png",
-            "../images/imgs2/smriti_irani.png",
+            "./images/imgs2/rahul.png",
+            "./images/imgs2/smriti_irani.png",
             candidates_data[const_name][bigf]["name1"],
             candidates_data[const_name][bigf]["name2"],
             "100000",
@@ -2281,4 +2286,9 @@ function getParameterByName(name, url = window.location.href) {
   if (!results) return null;
   if (!results[2]) return "";
   return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+function toTitleCase(name) {
+  return name.split(' ').map(word => {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }).join(' ');
 }
