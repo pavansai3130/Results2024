@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="./css/navbarStyles.css" />
   </head>
   <body>
-    <nav id="navHeader">
+    <nav class="navbarHead blur" id="navHeader">
       <div class="headerlogo">
         <a href="./index.html"
           ><img src="./images/imgs/RESULTS2024LOGO.png" alt="Logo"
@@ -41,9 +41,7 @@
         </span>
         <div id="mobile-nav-content">
           <ul id="nav-links">
-            <li>
-              <a href="./index.html?year=2019" class="links">2019 Results</a>
-            </li>
+            <li><a href="./index.html?year=2019" class="links">2019 Results</a></li>
             <li
               id="hoverable"
               onmouseenter="showTooltip()"
@@ -51,8 +49,8 @@
               onclick="toggleTooltip()"
             >
               <a href="/" class="links disabled">Candidates</a>
-              <i class="fa-solid fa-chevron-down"></i>
-              <i class="fa-solid fa-chevron-up"></i>
+              <i id="downIcons" class="fa-solid fa-chevron-down"></i>
+              <i id="upIcons" class="fa-solid fa-chevron-up"></i>
               <ul class="tooltip" id="tooltip">
                 <li id="celebrities">
                   <a href="./celebCards.html">Celebrities</a>
@@ -76,7 +74,7 @@
             </div>
             <li><a href="./index.html" class="links">'24 vs '19</a></li>
             <li>
-              <a href="bigfights_viewall.html" class="links">Big fights</a>
+              <a href="./bigfights_viewall.html" class="links">Big fights</a>
             </li>
             <div class="a2a_kit a2a_kit_size_26 a2a_default_style socialMedia">
               <a class="a2a_button_facebook"></a>
@@ -85,6 +83,7 @@
               <a class="a2a_button_linkedin"></a>
               <a class="a2a_button_copy_link"></a>
             </div>
+            <script async src="https://static.addtoany.com/menu/page.js"></script>
           </ul>
           <ul id="mobile-links">
             <li><a href="./about.html">About Us</a></li>
@@ -103,11 +102,24 @@
       </header>
 
       <div class="upperAbout">
-        <p style="font-size: 1.5rem;margin-top:2rem;"><img style="width: 10rem;margin-bottom:0.4rem;" src="./images/imgs/RESULTS2024LOGOcropped.png" alt="">, is a crowdsourced initiative for visualizing election results!</p>
+        <p style="font-size: 1.5rem; margin-top: 2rem">
+          <img
+            style="width: 10rem; margin-bottom: 0.4rem"
+            src="./images/imgs/RESULTS2024LOGOcropped.png"
+            alt=""
+          />, is a crowdsourced initiative for visualizing election results!
+        </p>
       </div>
 
       <div class="lowerAbout">
-         <p style="font-size: 1.2rem;margin:0 0.2rem;">We're sourcing data on the 2024 Indian election and creating detailed visualizations. You can explore information at the country, state, and constituency levels, along with graphics on popular candidates and top poll battles. This educational initiative is by Gradious Technologies, with development done by Gradious CoE students. All data is sourced from the Election Commission site.</p>
+        <p style="font-size: 1.2rem; margin: 0 0.2rem">
+          We're sourcing data on the 2024 Indian election and creating detailed
+          visualizations. You can explore information at the country, state, and
+          constituency levels, along with graphics on popular candidates and top
+          poll battles. This educational initiative is by Gradious Technologies,
+          with development done by Gradious CoE students. All data is sourced
+          from the Election Commission site.
+        </p>
         <div class="question">
           <p class="que">Who are you?</p>
           <p class="ans">
@@ -193,7 +205,7 @@
            <script async src="https://static.addtoany.com/menu/page.js"></script>
            <script>
             var a2a_config = a2a_config || {};
-            a2a_config.icon_color = "transparent";
+            a2a_config.icon_color = "#003333";
           </script>
          </div>
          

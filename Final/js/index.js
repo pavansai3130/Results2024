@@ -44,7 +44,7 @@
 // // Usage example
 // (async () => {
 //   try {
-//     await fetchJSON2("./data/election2019.json");
+//     await fetchJSON2("./election2019.json");
 //     console.log(data_2019);
 //   } catch (error) {
 //     console.error("Error occurred:", error);
@@ -52,12 +52,22 @@
 // })();
 /*----------------------------*/
 let currentPage = 1;
+let state_table_pressed = 0;
 let currentPageCandidates = 1;
 const rowsPerPage = 10;
 let breadcrumbConstituency;
 let breadcrumbState;
 let state_button_pressed = 1;
-let top10Cand=["cand260","cand1597","cand5189","cand3140","cand1434","cand7055","cand4116","cand4630"];
+let top10Cand = [
+  "cand260",
+  "cand1597",
+  "cand5189",
+  "cand3140",
+  "cand1434",
+  "cand7055",
+  "cand4116",
+  "cand4630",
+];
 const constCodes = {
   "Andaman and Nicobar Islands": {
     "andaman and nicobar islands": 3501,
@@ -746,6 +756,8 @@ document.addEventListener("DOMContentLoaded", function () {
 function resetBreadcrumb() {
   document.getElementById("containertool2").style.display = "none";
   document.getElementById("containertool").style.display = "none";
+  document.querySelector(".bt_grp").style.display = "block";
+  document.getElementById("piechart").style.display = "none";
   updateBar(Object.values(allianceJson));
   renderAllianceResults();
   const breadcrumbState = document.getElementById("breadcrumb-state");
@@ -889,8 +901,8 @@ function render_whole_table() {
 
     const td1 = document.createElement("td");
     td1.innerHTML = `${candid}<br><img src="${sym[party_name]}"><span>${party_name}</span>`;
-    tr.appendChild(td1);
     td1.classList.add("td1");
+    tr.appendChild(td1);
 
     const td2 = document.createElement("td");
     td2.innerHTML = `${candid2}<br><img src="${sym[party_2]}"><span>${party_2}</span>`;
@@ -898,7 +910,7 @@ function render_whole_table() {
     tr.appendChild(td2);
 
     const td3 = document.createElement("td");
-    td3.innerHTML = `${votes - votes2}<br>`;
+    td3.innerHTML = `${votes - votes2}`;
     tr.appendChild(td3);
     td3.classList.add("td3");
 
@@ -908,18 +920,21 @@ function render_whole_table() {
 
   // Update the heading with the count of candidates
   const th = document.getElementById("theading");
-  th.innerHTML = `<span id="constituency-name">ALL</span><div>${count} Constituencies</div>`;
-  let input = document.getElementById("stateinput");
-  if (!input) {
-    input = document.createElement("input");
-    input.className = "form-control";
-    input.id = "stateinput";
-    input.type = "text";
-    input.placeholder = "Search";
-  }
-  th.appendChild(input);
-  th.style.display = "flex";
+  th.innerHTML = `
+      <div class="container-fluid py-3">
+          <div class="row justify-content-between align-items-center">
+              <div class="col-auto">
+                  <span id="constituency-name">ALL</span>
+                  <div>${count} Constituencies</div>
+              </div>
+              <div class="col-auto">
+                  <input class="form-control" id="stateinput" type="text" placeholder="Search">
+              </div>
+          </div>
+      </div>`;
   th.style.background = "white";
+  th.style.display = "flex";
+  th.style.justifyContent = "space-between";
   updateMapStyles();
   // Search functionality
   document.getElementById("stateinput").addEventListener("keyup", function () {
@@ -965,21 +980,21 @@ function updateMapBounds2() {
 let pressed = 0;
 // Define the candidates array at the global scope
 
-
 //HARI JS
 let candidates = [];
 // Define the fetchMoreCards function
 async function fetchMoreCards() {
   try {
     // Fetch the state-constituency-candidate JSON
-    const stateResponse = await fetch("./data/popular.json");
+    const stateResponse = await fetch("../data/popular.json");
     const stateData = await stateResponse.json();
-    console.log('State Data:', stateData);
+    console.log("State Data:", stateData);
 
-    
-    const candidateResponse = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
+    const candidateResponse = await fetch(
+      "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
+    );
     const candidateData = await candidateResponse.json();
-    console.log('Candidate Data:', candidateData);
+    console.log("Candidate Data:", candidateData);
 
     // Function to get candidate details by ID from the fetched candidate data
     function getCandidateDetails(candidateId) {
@@ -988,14 +1003,20 @@ async function fetchMoreCards() {
         for (let constituency in statesData[state]) {
           const candidates = statesData[state][constituency].candidates;
           if (candidates) {
-            const candidate = candidates.find(candidate => candidate.cId === candidateId);
+            const candidate = candidates.find(
+              (candidate) => candidate.cId === candidateId
+            );
             if (candidate) {
               candidate.state = state;
               candidate.constituency = constituency;
               return candidate;
             }
           } else {
-            console.error('Candidates array is undefined for', state, constituency);
+            console.error(
+              "Candidates array is undefined for",
+              state,
+              constituency
+            );
           }
         }
       }
@@ -1003,30 +1024,31 @@ async function fetchMoreCards() {
     }
 
     // Populate the global `candidates` array
-    Object.keys(stateData).forEach(state => {
-      Object.keys(stateData[state]).forEach(constituency => {
-        stateData[state][constituency].forEach(candidateId => {
+    Object.keys(stateData).forEach((state) => {
+      Object.keys(stateData[state]).forEach((constituency) => {
+        stateData[state][constituency].forEach((candidateId) => {
           const candidateDetails = getCandidateDetails(candidateId);
           if (candidateDetails) {
             candidates.push(candidateDetails);
           } else {
-            console.error('Candidate details not found for ID:', candidateId);
+            console.error("Candidate details not found for ID:", candidateId);
           }
         });
       });
     });
 
-    console.log('Candidates:', candidates);
+    console.log("Candidates:", candidates);
   } catch (error) {
     console.error("Error fetching or processing data:", error);
   }
 }
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener("DOMContentLoaded", async () => {
   await fetchMoreCards();
 });
 
-
 function handleSelection() {
+  document.querySelector(".bt_grp").style.display = "none";
+
   document.getElementById("containertool").style.display = "none";
   // console.log(geo2);
   document.getElementById("breadcrumb-india").style.display = "block";
@@ -1038,8 +1060,8 @@ function handleSelection() {
   const selectElement = document.getElementById("state-select");
   const selectedValue = selectElement.value;
   const text = selectElement.options[selectElement.selectedIndex].text;
-  // alert(text);
-  if (selectedValue === "reset" ) {
+  
+  if (selectedValue === "reset") {
     resetMap();
     return;
   }
@@ -1199,22 +1221,21 @@ function handleSelection() {
 }
 
 document.getElementById("see-more-btn").addEventListener("click", function () {
-  window.location.href =  `./bigfights_viewall.html" + "?state=" + "all"`;
+  window.location.href = `./bigfights_viewall.html" + "?state=" + "all"`;
 });
 
-
-function renderCandidateCards(item,row) {
+function renderCandidateCards(item, row) {
   const allianceImages = {
-    "NDA": "./images/imgs/NDA  (1)png",
-    "INDIA": "./images/imgs/NDA (3).png",
-    "OTH": "./images/imgs/NDA (2).png"
+    "NDA": "./images/imgs/NDA  (1).png",
+    "INDIA": "./images/imgs/NDA  (2).png",
+    "OTH": "./images/imgs/NDA  (3).png"
   };
   const imageUrl = item.perimg || allianceImages[item.alnce];
-  
+
   const constituency = item.constituency
-    .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
   const card = document.createElement("div");
   card.className = "position-relative custom-container";
 
@@ -1239,22 +1260,26 @@ function renderCandidateCards(item,row) {
   card.style.background = bgColor;
 
   const ribbonText = item.lead ? "Leading" : "Trailing";
-  const ribbonColor = item.lead ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+  const ribbonColor = item.lead
+    ? "rgba(34, 177, 76, 255)"
+    : "rgba(240, 68, 56, 255)";
 
   card.innerHTML = `
   <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
   <div class="temp custom-temp">
       <div class="card-body w-100">
           <h3 class="card-title custom-card-title" style="color:${nameColor}">${
-item.cName
-}</h3>
+    item.cName
+  }</h3>
           <div class="subheaders cd-flex align-items-center custom-subheaders">
               <div class="logo"><img class="custom-img" src="${
                 item.logoimg
               }" alt=""></div>
               <h6 style="font-weight: bold;">${item.prty}</h6>
           </div>
-          <p class="card-text custom-card-text">${constituency} (${item.state});</p>
+          <p class="card-text custom-card-text">${constituency} (${
+    item.state
+  });</p>
           <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
               <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
                 item.vts
@@ -1265,82 +1290,110 @@ item.cName
           <p class="card-text mb-1 custom-iribbon-text">${
             item.lead ? "Leading by" : "Trailing by"
           }</p>
-          <p class="card-text custom-iribbon-text-votes">${
-            item.lead2votes
-          }</p>
+          <p class="card-text custom-iribbon-text-votes">${item.lead2votes}</p>
       </div>
   </div>
   <div class="person-image d-flex custom-person-image">
       <img class="person-img wid" src="${imageUrl}" alt="Person Image">
   </div>
 `;
-row.append(card);
+  row.append(card);
 }
 
-function updatePaginationControls(
-  totalRows,
-  class_name,
-  second_class_name,
-  numberOfRows
-) {
-  const numPages = Math.ceil(totalRows / numberOfRows);
+function updatePaginationControls(totalRows, class_name, second_class_name) {
+  const numPages = Math.ceil(totalRows / rowsPerPage);
+  console.log(numPages);
   const paginationControls = document.getElementById(class_name);
   paginationControls.innerHTML = ""; // Clear previous pagination controls
 
-  const pageButtonsContainer = document.createElement("div");
-  pageButtonsContainer.className = "page-buttons";
-
+  // Create and add the previous button
   const prevButton = document.createElement("button");
   prevButton.innerHTML = `&lt; Previous`;
+  prevButton.classList.add("flex-fill");
+  prevButton.className = "pagination-button";
   prevButton.addEventListener("click", function () {
     if (class_name == "pagination-controls") {
       if (currentPage > 1) {
         currentPage--;
         displayPage(currentPage, second_class_name);
+        setActiveButton(currentPage, class_name);
       }
     } else {
       if (currentPageCandidates > 1) {
         currentPageCandidates--;
         displayPage(currentPageCandidates, second_class_name);
+        setActiveButton(currentPageCandidates, class_name);
       }
     }
   });
-  pageButtonsContainer.appendChild(prevButton);
 
+  // Create a container for the number buttons
+  const numberDiv = document.createElement("div");
+  numberDiv.className = "number-div";
+  numberDiv.classList.add("flex-fill");
+  prevButton.classList.add("col-auto"); // Adjust column width for the "Previous" button
   for (let i = 1; i <= numPages; i++) {
     const button = document.createElement("button");
     button.textContent = i;
+    button.className = "newbuttons";
+    if (i === 1) button.classList.add("active");
     button.addEventListener("click", function () {
       if (class_name == "pagination-controls") {
         currentPage = i;
         displayPage(currentPage, second_class_name);
+        setActiveButton(currentPage, class_name);
       } else {
         currentPageCandidates = i;
         displayPage(currentPageCandidates, second_class_name);
+        setActiveButton(currentPageCandidates, class_name);
       }
     });
-    button.className = "newbuttons";
-    pageButtonsContainer.appendChild(button);
+    numberDiv.appendChild(button);
   }
 
+  // Add the previous button, numberDiv, and next button to the paginationControls
+
+  // Adjust button alignment for smaller screens
+  prevButton.classList.add("text-center");
+
+  paginationControls.appendChild(prevButton);
+  paginationControls.appendChild(numberDiv);
+
+  // Create and add the next button
   const nextButton = document.createElement("button");
   nextButton.innerHTML = `Next &gt;`;
+  nextButton.className = "pagination-button";
   nextButton.addEventListener("click", function () {
     if (class_name == "pagination-controls") {
       if (currentPage < numPages) {
         currentPage++;
         displayPage(currentPage, second_class_name);
+        setActiveButton(currentPage, class_name);
       }
     } else {
       if (currentPageCandidates < numPages) {
         currentPageCandidates++;
         displayPage(currentPageCandidates, second_class_name);
+        setActiveButton(currentPageCandidates, class_name);
       }
     }
   });
-  pageButtonsContainer.appendChild(nextButton);
+  nextButton.classList.add("col-auto"); // Adjust column width for the "Previous" button
+  nextButton.classList.add("text-center");
+  paginationControls.appendChild(nextButton);
 
-  paginationControls.appendChild(pageButtonsContainer);
+  // Ensure the pagination controls are displayed as flex
+  paginationControls.style.display = "flex";
+}
+nextButton.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default action
+  // Your existing code for handling the "Next" button click
+});
+function setActiveButton(page, class_name) {
+  const paginationControls = document.getElementById(class_name);
+  const buttons = paginationControls.querySelectorAll(".newbuttons");
+  buttons.forEach((button) => button.classList.remove("active")); // Remove active class from all buttons
+  buttons[page - 1].classList.add("active"); // Add active class to the current page button
 }
 
 function displayPage(page, class_name) {
@@ -1414,24 +1467,48 @@ function render_state_table(feature, state) {
 
       const td = document.createElement("td");
       td.textContent = name;
+      td.style.paddingLeft = "1rem";
       td.classList.add("td");
       tr.appendChild(td);
-
       const td1 = document.createElement("td");
-      td1.innerHTML = `${candid}<br><img src="${sym[party_name]}"><span>${party_name}</span>`;
+      if (!sym[party_name]) {
+        console.log(candid);
+        td1.innerHTML = `${candid}<br><img src="${sym["extra"]}"><span>${party_name}</span>`;
+      } else {
+        td1.innerHTML = `${candid}<br><img src="${sym[party_name]}"><span>${party_name}</span>`;
+      }
       td1.style.background = "#F6FEF9";
-      tr.appendChild(td1);
+      td1.style.color = "#344054";
+      td1.style.paddingLeft = "24px";
       td1.classList.add("td1");
+      tr.appendChild(td1);
 
       const td2 = document.createElement("td");
-      td2.innerHTML = `${candid2}<br><img src="${sym[party_2]}"><span>${party_2}</span>`;
+      if (!sym[party_2]) {
+        td2.innerHTML = `${candid2}<br><img src="${sym["extra"]}"><span>${party_2}</span>`;
+      } else {
+        td2.innerHTML = `${candid2}<br><img src="${sym[party_2]}"><span>${party_2}</span>`;
+      }
+
       td2.classList.add("td2");
+      td2.style.fontFamily = "Roboto";
+      td2.style.fontWeight = "600";
+      td2.style.color = "#344054";
+      td2.style.background = "#FFFAFA";
+      td2.style.paddingLeft = "1.5rem";
       tr.appendChild(td2);
 
       const td3 = document.createElement("td");
-      td3.innerHTML = `${(votes - votes2).toLocaleString()}<br>`;
-      tr.appendChild(td3);
+      td3.innerHTML = `${(votes - votes2).toLocaleString()}`;
+
+      td3.style.background = "#FAF9FB";
+      td3.style.textAlign = "center";
+      td3.style.paddingTop = "20px";
+      td3.style.justifyContent = "center";
+      td3.style.alignItems = "center";
       td3.classList.add("td3");
+      tr.appendChild(td3);
+
       count++;
       if (firstCandidateKey.alliance === "NDA") {
         if (alliancePatries["nda"][firstCandidateKey.party] !== undefined)
@@ -1459,12 +1536,13 @@ function render_state_table(feature, state) {
   alliancePatries.nda = sortObjectByValuesDesc(alliancePatries.nda);
   alliancePatries.india = sortObjectByValuesDesc(alliancePatries.india);
   alliancePatries.others = sortObjectByValuesDesc(alliancePatries.others);
-
+  document.getElementById("piechart").style.display = "block";
+  drawpiechart(alliancePatries);
   populateCarousel();
 
   // Update the heading with the count of candidates
   const th = document.getElementById("theading");
-  th.innerHTML = `<span id="constituency-name">${state}</span><div>${count} Constituencies</div>`;
+  th.innerHTML = `<span id="constituency-name">${state}</span><div style="font-size:10px;">${count}&nbsp;Constituencies</div>`;
   let input = document.getElementById("stateinput");
   if (!input) {
     input = document.createElement("input");
@@ -1472,17 +1550,46 @@ function render_state_table(feature, state) {
     input.id = "stateinput";
     input.type = "text";
     input.placeholder = "Search";
+    input.style.outline = "none";
   }
   th.appendChild(input);
+  const numPages = Math.ceil(count / rowsPerPage);
+  const divv = document.createElement("span");
+  divv.classList.add("divv");
+  const prevButton1 = document.createElement("button");
+  prevButton1.style.border = "none";
+  prevButton1.innerHTML = `<img src="./images/imgs/left_bt.svg">`;
+  prevButton1.addEventListener("click", function () {
+    console.log("pressed");
+    if (currentPage > 1) {
+      currentPage--;
+      displayPage(currentPage, "#table-body tr");
+      setActiveButton(currentPage, "pagination-controls");
+    }
+  });
+  divv.appendChild(prevButton1);
+  const nextButton1 = document.createElement("button");
+  nextButton1.style.border = "none";
+  nextButton1.innerHTML = `<img src="./images/imgs/right_bt.svg">`;
+  nextButton1.addEventListener("click", function () {
+    if (currentPage < numPages) {
+      currentPage++;
+      displayPage(currentPage, "#table-body tr");
+      setActiveButton(currentPage, "pagination-controls");
+    }
+  });
+  divv.appendChild(nextButton1);
+  th.appendChild(divv);
   th.style.display = "flex";
   th.style.background = "white";
+  console.log(count);
 
   // Hide pagination controls if the number of candidates is less than or equal to 36
   const paginationControls = document.getElementById("pagination-controls");
   if (count <= rowsPerPage) {
     paginationControls.style.display = "none";
   } else {
-    paginationControls.style.display = "block";
+    paginationControls.style.display = "flex";
   }
 
   // Initialize pagination only if needed
@@ -1514,21 +1621,22 @@ function render_state_table(feature, state) {
   });
   const selectElement = document.getElementById("state-select");
   const text = selectElement.options[selectElement.selectedIndex].text;
+  if (text!=="Select State") {
+    displayCardsForState(text);
+  } else if (state) {
+    displayCardsForState(state);
+  }
   
-  if(text){
-    document.getElementById("see-more-btn").addEventListener("click", function () {
-      window.location.href =  "./cardsPage.html" + "?text=" + "all";
-    });
+  function displayCardsForState(stateName) {
     const rootElement = document.getElementById("root");
     rootElement.innerHTML = "";
-    console.log("here are",candidates);
-    const filteredCandidates = candidates.filter(candidate => candidate.state === text); 
+    console.log("here are", candidates);
+    const filteredCandidates = candidates.filter(candidate => candidate.state === stateName); 
     console.log('filtered candidates are : ' , filteredCandidates);
-    
-
+  
     let cardRowsNeeded = Math.ceil(count/3);
-    if(cardRowsNeeded>5){
-      cardRowsNeeded=4;
+    if (cardRowsNeeded > 5) {
+      cardRowsNeeded = 5;
     }
     for (let i = 0; i < cardRowsNeeded; i++) {
       const row = document.createElement("div");
@@ -1542,7 +1650,124 @@ function render_state_table(feature, state) {
       }
     }
   }
+}
 
+function drawpiechart(allainceparties) {
+  // Load google charts
+  google.charts.load("current", { packages: ["corechart"] });
+  google.charts.setOnLoadCallback(drawChart);
+
+  // Draw the chart and set the chart values
+  function drawChart() {
+    // Assuming alliancePatries is structured like this:
+    var alliancePatries = allainceparties;
+
+    // Initialize the data array with headers
+    var data = [["party", "votes"]];
+
+    // Function to populate the data array from alliancePatries
+    function populateData() {
+      for (var alliance in alliancePatries) {
+        for (var party in alliancePatries[alliance]) {
+          data.push([party, alliancePatries[alliance][party]]);
+        }
+      }
+    }
+
+    // Populate the data array
+    populateData();
+    var totalVotes = 0;
+    data.slice(1).forEach(function (row) {
+      totalVotes += row[1];
+    });
+
+    // Create the chart data table
+    var chartData = google.visualization.arrayToDataTable(data);
+    var formatter = new google.visualization.NumberFormat({
+      pattern: "#",
+    });
+    formatter.format(chartData, 1);
+    var colors = data.slice(1).map(function (row) {
+      return partyColors[row[0]] || "#808080";
+    });
+    // Optional; add a title and set the width and height of the chart
+    var options = {
+      title: "Votes Distribution",
+      width: "fit-content",
+      height: "fit-content",
+      legend: "none", // Hide legend
+      pieSliceText: "value", // Display data value in slice
+      tooltip: { trigger: "none" }, // Disable tooltip on hover
+      pieSliceBorderColor: "transparent", // Hide pie slice borders
+      pieSliceTextStyle: { color: "black" }, // Style for pie slice labels
+      chartArea: { left: 10, top: 20, width: "100%", height: "80%" }, // Adjust chart area
+      colors: colors, // Assign colors based on partyColors
+    };
+    // Display the chart inside the <div> element with id="piechart"
+    var chart = new google.visualization.PieChart(
+      document.getElementById("piechart")
+    );
+    chart.draw(chartData, options);
+  }
+}
+
+function drawpiechart(allainceparties) {
+  // Load google charts
+  google.charts.load("current", { packages: ["corechart"] });
+  google.charts.setOnLoadCallback(drawChart);
+
+  // Draw the chart and set the chart values
+  function drawChart() {
+    // Assuming alliancePatries is structured like this:
+    var alliancePatries = allainceparties;
+
+    // Initialize the data array with headers
+    var data = [["party", "votes"]];
+
+    // Function to populate the data array from alliancePatries
+    function populateData() {
+      for (var alliance in alliancePatries) {
+        for (var party in alliancePatries[alliance]) {
+          data.push([party, alliancePatries[alliance][party]]);
+        }
+      }
+    }
+
+    // Populate the data array
+    populateData();
+    var totalVotes = 0;
+    data.slice(1).forEach(function (row) {
+      totalVotes += row[1];
+    });
+
+    // Create the chart data table
+    var chartData = google.visualization.arrayToDataTable(data);
+    var formatter = new google.visualization.NumberFormat({
+      pattern: "#",
+    });
+    formatter.format(chartData, 1);
+    var colors = data.slice(1).map(function (row) {
+      return partyColors[row[0]] || "#808080";
+    });
+    // Optional; add a title and set the width and height of the chart
+    var options = {
+      title: "Votes Distribution",
+      width: "fit-content",
+      height: "fit-content",
+      legend: "none", // Hide legend
+      pieSliceText: "value", // Display data value in slice
+      tooltip: { trigger: "none" }, // Disable tooltip on hover
+      pieSliceBorderColor: "transparent", // Hide pie slice borders
+      pieSliceTextStyle: { color: "black" }, // Style for pie slice labels
+      chartArea: { left: 10, top: 20, width: "100%", height: "80%" }, // Adjust chart area
+      colors: colors, // Assign colors based on partyColors
+    };
+    // Display the chart inside the <div> element with id="piechart"
+    var chart = new google.visualization.PieChart(
+      document.getElementById("piechart")
+    );
+    chart.draw(chartData, options);
+  }
 }
 
 // rendering
@@ -1583,6 +1808,14 @@ function showdatatable(
   breadcrumbConstituency.style.display = "none";
   document.getElementById("containertool").style.display = "block";
   var div = document.getElementById("containertool");
+  let img_none = sym[party1];
+  let img_none2 = sym[party2];
+  if (!sym[party1]) {
+    img_none = sym["extra"];
+  }
+  if (!sym[party2]) {
+    img_none2 = sym["extra"];
+  }
   var htmlCode = `
     <h2 id="h2"><span class="city">${con1}</span><br><span class="state">${state}</span></h2><div id="close" onclick="closedata()">&times;</div>
         <div id="candidatediv">
@@ -1594,7 +1827,7 @@ function showdatatable(
               <div class="candidate-info">
                   <div>
                       <div class="candidate-name">${cand1}</div>
-                      <div class="party"><img src="${sym[party1]}" class="party-logo">${party1}</div>
+                      <div class="party"><img src="${img_none}" class="party-logo">${party1}</div>
                   </div>
               </div>
               <div class="votes">
@@ -1607,7 +1840,7 @@ function showdatatable(
                   
                   <div>
                       <div class="candidate-name">${cand2}</div>
-                      <div class="party"><img src="${sym[party2]}"class="party-logo">${party2}</div>
+                      <div class="party"><img src="${img_none2}"class="party-logo">${party2}</div>
                   </div>
               </div>
               <div class="votes" id="v2">${votes2}</div>
@@ -1619,16 +1852,21 @@ function showdatatable(
                 <div class="vote-title">Votes</div>
             </span>
             <div class="winner-info">
-                <div class="winner-name">${cand1}</div>
-                <div class="winner-votes">${votes1}</div>
+                <div class="winner-name">${data_2019[id][0].candidateName}</div>
+                <div class="winner-votes">${data_2019[id][0].votes}</div>
             </div>
+            <div class="party"><img src="${sym[party1]}" class="party-logo">${party1}</div>
+            <div class="margin1">Margin - ${mvotes}</div>
         </div>
-        <div id="checkdetails" onclick="render_table('${id}',1)">Check Full Results <span id="gt">&gt</span></div>`;
+        <div id="checkdetails" onclick="render_table('${id}',1)">Check Full Results <span id="gt1">&gt</span></div>`;
   div.innerHTML = "";
   div.innerHTML += htmlCode;
   div.style.display = "block";
 }
 function closedata() {
+  // if(!stateis_pressed)
+  //   {
+  document.getElementById("Constituency-res").style.display = "none";
   document.getElementById("containertool").style.display = "none";
   // document.getElementById("stateTabeleContainer").style.display = "block";
   // document
@@ -1649,7 +1887,6 @@ function render_table(code, page) {
   tbody.innerHTML = "";
   let ct = 0;
   closedata();
-  console.log(code);
   var splCount = 0;
   geo2.eachLayer((l) => {
     console.log(l.feature.properties.pc_id);
@@ -1663,14 +1900,14 @@ function render_table(code, page) {
           ?.dataset.pccolor, // Specific color or default gray
         fillOpacity: 2, // Fully opaque for the clicked layer
         color: "#000", // Border color
-        weight: 0.5, // Border width
+        weight: 2, // Border width
       });
     } else {
       l.setStyle({
         fillColor: document.querySelector(
           `#table-body tr[data-pc="${l.feature.properties.pc_id}"]`
         )?.dataset.pccolor, // Default color
-        fillOpacity: 0.1, // Semi-transparent for other layers
+        fillOpacity: 0.4, // Semi-transparent for other layers
         color: "#000", // Border color
         weight: 0.3, // Border width
       });
@@ -1699,7 +1936,12 @@ function render_table(code, page) {
 
     const party = document.createElement("td");
     const par = candi[i].party;
-    party.innerHTML = `<img src="${sym[par]}"><span>${candi[i].party}</span>`;
+    if (!sym[par]) {
+      party.innerHTML = `<img src="${sym["extra"]}"><span>${candi[i].party}</span>`;
+    } else {
+      party.innerHTML = `<img src="${sym[par]}"><span>${candi[i].party}</span>`;
+    }
+
     party.className = "tdata1";
     row.appendChild(party);
 
@@ -1712,9 +1954,7 @@ function render_table(code, page) {
     if (i == 0) {
       votes2.textContent = "-";
     } else if (i > 0) {
-      votes2.textContent = (
-        candi[i - 1].votes - candi[i].votes
-      ).toLocaleString();
+      votes2.textContent = (candi[0].votes - candi[i].votes).toLocaleString();
     }
     votes2.classList.add("tdata3");
     row.appendChild(votes2);
@@ -1724,20 +1964,61 @@ function render_table(code, page) {
     } else if (i > 0) {
       // margin2.textContent =
       margin2.innerHTML = `${(
-        ((candi[i - 1].votes - candi[i].votes) /
-          (candi[i - 1].votes + candi[i].votes)) *
+        ((candi[0].votes - candi[i].votes) /
+          (candi[0].votes + candi[i].votes)) *
         100
       ).toFixed(1)} %`;
     }
     margin2.classList.add("tdata3");
     row.appendChild(margin2);
-    // const votes_2019=document.createElement("td");
-    // votes_2019.innerHTML=candi[i].votes;
-    // row.appendChild(votes_2019);
+    const votes_2019 = document.createElement("td");
+    let candidateFound = false;
     console.log(data_2019);
-    data_2019.forEach;
-    let votes2019;
-
+    for (con in data_2019) {
+      if (con == code) {
+        for (can in data_2019[con]) {
+          console.log(data_2019[con][can]);
+          if (
+            data_2019[con][can].candidateName.toLowerCase() ==
+            candi[i].candidateName.toLowerCase()
+          ) {
+            console.log(true);
+            candidateFound = true;
+            if (can == 0) {
+              votes_2019.innerHTML = `<div>2019 Winner</div><div>${data_2019[
+                con
+              ][can].votes.toLocaleString()}</div>`;
+              votes_2019.style.background = "#ECFDF3";
+            } else if (data_2019[con][can].party != candi[i].party) {
+              if (!sym[data_2019[con][can].party]) {
+                votes_2019.innerHTML = `<div>Contested From <img src="${
+                  sym["extra"]
+                }"> ${data_2019[con][can].party}</div><div>votes:${data_2019[
+                  con
+                ][can].votes.toLocaleString()}</div>`;
+              } else {
+                votes_2019.innerHTML = `<div>Contested From <img src="${
+                  sym[data_2019[con][can].party]
+                }"> ${data_2019[con][can].party}</div><div>votes:${data_2019[
+                  con
+                ][can].votes.toLocaleString()}</div>`;
+              }
+            } else if (data_2019[con][can].party == "IND") {
+              votes_2019.innerHTML = `<div>Contested as Independent</div><div>${data_2019[
+                con
+              ][can].votes.toLocaleString()}</div>`;
+            } else {
+              votes_2019.innerHTML = `<div>${data_2019[con][can].votes}</div>`;
+            }
+          }
+        }
+      }
+    }
+    if (!candidateFound) {
+      votes_2019.innerHTML = "<div>Did Not Contest</div>";
+    }
+    votes_2019.classList.add("votes_2019");
+    row.appendChild(votes_2019);
     //   const isPresentIn2019 = data_2019[0].states.some(state => {
     //     return state.constituencies.some(constituency => {
     //         return constituency.candidates.some(candidate2019 => candidate2019.cName === candi[i].candidateName);
@@ -1759,7 +2040,7 @@ function render_table(code, page) {
     );
     currentPageCandidates = 1;
     displayPage(currentPageCandidates, ".candidateBody tr");
-    paginationControls.style.display = "block";
+    paginationControls.style.display = "flex";
   } else {
     paginationControls.innerHTML = "";
     paginationControls.style.display = "none";
@@ -1770,7 +2051,7 @@ function render_table(code, page) {
   // Update theading2 with input
 
   const th = document.getElementById("theading2");
-  th.innerHTML = `<span id="constituency-name">${candi[0].constituencyName}</span><div>${ct} candidates</div>`;
+  th.innerHTML = `<span id="constituency-name">${candi[0].constituencyName}</span><div>${ct}&nbsp;candidates</div>`;
   let input = document.getElementById("candidateinput");
   if (!input) {
     input = document.createElement("input");
@@ -1808,10 +2089,11 @@ function state_map(value, text) {
   document.getElementById("Candidate-res").style.display = "block";
   document.getElementById("india-map").style.display = "none";
   document.getElementById("map").style.display = "block";
+  document.querySelector(".bt_grp").style.display = "none";
 
   if (value) {
     geo.remove(map);
-    fetch("./data/geo.json")
+    fetch("../data/geo.json")
       .then((res) => res.json())
       .then((geoJson) => {
         for (con in ftrs) {
@@ -2011,7 +2293,7 @@ function resetstatebread() {
   document.querySelector("#Constituency-res").style.display = "block";
   console.log(breadcrumbState.textContent);
   render_state_carousel(breadcrumbState.textContent);
-  fetch("./data/geo.json")
+  fetch("../data/geo.json")
     .then((res) => res.json())
     .then((geoJson) => {
       ftrs;
@@ -2217,7 +2499,7 @@ function render_whole_carousel() {
     let state_img =
       state.toLowerCase() in party_img_json
         ? party_img_json[state.toLowerCase()]
-        : "./images/imgs2/madhya_pradesh.jpg";
+        : "./imgs2/madhya_pradesh.jpg";
     return `
     <div class="card swiper-slide">
         <span class="state_name">${const_name} <span class="state_party_slot">(${state})</span></span>
@@ -2249,7 +2531,7 @@ function render_whole_carousel() {
     `;
   }
 
-  fetch("./data/partyicon-candimg.json")
+  fetch("../data/partyicon-candimg.json")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);
@@ -2332,7 +2614,26 @@ function render_whole_carousel() {
     });
 }
 
-
-
-
+function viewingstate(stateId){
+  var m = document.getElementById('india-map');
+  if(m){
+    m.scrollIntoView({ behavior: 'smooth' });
+  }
+  var mainbar = document.getElementById('map');
+  if(mainbar){
+    mainbar.scrollIntoView({ behavior: 'smooth' });
+  }
+  var dropdown = document.getElementById('state-select');
+  if (dropdown) {
+      for (var i = 0; i < dropdown.options.length; i++) {
+          var option = dropdown.options[i];
+          console.log(option.dataset.st_code +" "+stateId+" "+option.dataset.st_code === stateId);
+          if (option.dataset.st_code == stateId) {
+              dropdown.selectedIndex = i;
+              break;
+          }
+      }
+  }
+  handleSelection();
+}
 

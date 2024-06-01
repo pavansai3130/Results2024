@@ -1,25 +1,30 @@
+body {
+  margin-top: 0;
+}
+
 #navHeader {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   height: 5.625rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  margin-left: 30px;
-  margin-right: 30px;
+  padding: 0px 60px 0 60px;
   margin-bottom: 0;
   padding-top: 13px;
 }
 
 .headerlogo {
   margin: 0;
+  padding-bottom: 40px;
   padding: 0;
-  width: 25rem;
+  width: 27.688;
   height: 5.625rem;
 }
 
 .headerlogo img {
   width: 100%;
   height: 100%;
+  padding-bottom: 20px;
 }
 
 .navigations {
@@ -135,12 +140,17 @@
 
 #mobile-links {
   display: none;
-  height: 192px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+  opacity: 0;
   margin: 0;
 }
 
 #mobile-links.show {
   display: flex;
+  max-height: 500px; /* Adjust this value according to your content's height */
+  opacity: 1;
 }
 
 .hiding {
@@ -163,20 +173,29 @@
   display: none;
 }
 
+.hideFooter {
+  display: none;
+}
+
+/* Mobile Styles */
 @media (max-width: 950px) {
   #navHeader {
-    margin-left: 0px;
-    margin-right: 0px;
-    padding: 0 15px;
+    padding: 0 10px 20px 30px;
     width: 100%;
     overflow: hidden;
+    height: 80px;
     background-color: #ffffff;
     z-index: 1000;
   }
 
   .headerlogo {
-    width: 40%;
-    height: 80%;
+    width: 180px;
+    height: 45px;
+    margin-top: 20px;
+  }
+
+  .headerlogo img {
+    padding-bottom: 0;
   }
 
   .navigations {
@@ -209,7 +228,8 @@
     transition: 0.5s ease;
   }
 
-  #upIcons,#downIcons {
+  #upIcons,
+  #downIcons {
     pointer-events: none;
   }
 
@@ -219,13 +239,13 @@
 
   .navigations li {
     width: 100%;
-    height: 64px;
+    height: auto;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
 
   .navigations li a {
     color: #101828;
-    padding: 1rem 10px 0 10px;
+    padding: 1rem 10px;
     margin-top: 3px;
     display: block;
     text-align: left center;
@@ -245,13 +265,19 @@
 
   #hoverable {
     display: flex;
-    pointer-events: auto; /* Enable pointer-events for hoverable */
+    pointer-events: auto;
+  }
+
+  .nav-links {
+    margin-top: 0;
   }
 
   #popular2 {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
- #upIcons,#downIcons {
+
+  #upIcons,
+  #downIcons {
     margin-right: 20px;
     margin-top: 20px;
   }
@@ -278,13 +304,41 @@
   .a2a_button_facebook {
     margin-right: 10px;
   }
+
   .a2a_button_twitter {
     margin-right: 10px;
   }
+
   .a2a_button_whatsapp {
     margin-right: 10px;
   }
+
   .a2a_button_linkedin {
     margin-right: 10px;
+  }
+
+  .footer-links li {
+    list-style-type: none;
+    position: relative;
+    margin: 0 5px;
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .footer-links li a {
+    color: #101828;
+    padding: 1rem 10px;
+    margin-top: 3px;
+    display: block;
+    text-align: left center;
+    width: 100%;
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 951px) and (max-width: 1021px) {
+  #navHeader {
+    padding: 13px 20px 0 20px;
   }
 }
