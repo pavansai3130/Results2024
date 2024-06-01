@@ -59,6 +59,7 @@ async function fetchCandidateData() {
   const response = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
   const data = await response.json();
   candidatesData = data[0];  // Store the 1st index in the global variable
+  console.log("-------------------------------------",candidatesData)
 }
 
 let currentPage = 1;
@@ -1233,6 +1234,7 @@ function handleSelection() {
 }
 
 function renderCandidateCards(item, row) {
+  
   const allianceImages = {
     "NDA": "./images/imgs/NDA.png",
     "INDIA": "./images/imgs/INDA.png",
@@ -1262,26 +1264,37 @@ function renderCandidateCards(item, row) {
     arrColor = "linear-gradient(90deg, #6F9088,#42615A)";
     nameColor = "#0c6b4b";
   }
+  card.style.background = bgColor;
   let position = 1;
   let voteDifference = 0;
-  const constituencyData = candidatesData[item.state][item.constituency].candidates;
-  for (let i = 0; i < constituencyData.length; i++) {
-    if (constituencyData[i].cId === item.cId) {
-      position = i + 1;
-      if (i === 0 && constituencyData.length > 1) {
-        voteDifference = item.vts - constituencyData[1].vts;
-      } else if (i > 0) {
-        voteDifference = constituencyData[0].vts - item.vts;
+  let rsDecl = 1;  // Default value
+
+  if (candidatesData[item.state] && candidatesData[item.state][item.constituency]) {
+    const constituencyData = candidatesData[item.state][item.constituency].candidates;
+    rsDecl = candidatesData[item.state][item.constituency].rsDecl;  // Get the rsDecl value
+    for (let i = 0; i < constituencyData.length; i++) {
+      if (constituencyData[i].cId === item.cId) {
+        position = i + 1;
+        if (i === 0 && constituencyData.length > 1) {
+          voteDifference = item.vts - constituencyData[1].vts;
+        } else if (i > 0) {
+          voteDifference = constituencyData[0].vts - item.vts;
+        }
+        break;
       }
-      break;
     }
   }
-  card.style.background = bgColor;
 
-  
-  const ribbonText = position === 1 ? "Won" : "Lost";
-  const ribbonColor = position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
-  const leadTrailText = "Margin"
+  let ribbonText;
+  let ribbonColor;
+  if (rsDecl === 1) {
+    ribbonText = position === 1 ? "Won" : "Lost";
+    ribbonColor = position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+  } else {
+    ribbonText = "In Progress";
+    ribbonColor = "grey";
+  }
+  const leadTrailText = rsDecl === 1 ? "Margin" : (position === 1 ? "Leading by" : "Trailing by");
 
   card.innerHTML = `
   <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
@@ -1306,9 +1319,9 @@ function renderCandidateCards(item, row) {
           </p>
       </div>
       <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
-          <p class="card-text mb-1 custom-iribbon-text">${leadTrailText}</p>
-          <p class="card-text custom-iribbon-text-votes">${voteDifference}</p>
-      </div>
+      <p class="card-text mb-1 custom-iribbon-text">${leadTrailText}</p>
+      <p class="card-text custom-iribbon-text-votes">${voteDifference}</p>
+  </div>
   </div>
   <div class="person-image d-flex custom-person-image">
       <img class="person-img wid" src="${imageUrl}" alt="Person Image">
