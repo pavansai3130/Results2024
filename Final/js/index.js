@@ -44,7 +44,7 @@
 // // Usage example
 // (async () => {
 //   try {
-//     await fetchJSON2("./data/election2019.json");
+//     await fetchJSON2("./election2019.json");
 //     console.log(data_2019);
 //   } catch (error) {
 //     console.error("Error occurred:", error);
@@ -52,6 +52,7 @@
 // })();
 /*----------------------------*/
 let currentPage = 1;
+let state_table_pressed=0;
 let currentPageCandidates = 1;
 const rowsPerPage = 10;
 let breadcrumbConstituency;
@@ -746,6 +747,8 @@ document.addEventListener("DOMContentLoaded", function () {
 function resetBreadcrumb() {
   document.getElementById("containertool2").style.display = "none";
   document.getElementById("containertool").style.display = "none";
+  document.querySelector(".bt_grp").style.display="block";
+  document.getElementById('piechart').style.display="none";
   updateBar(Object.values(allianceJson));
   renderAllianceResults();
   const breadcrumbState = document.getElementById("breadcrumb-state");
@@ -889,8 +892,9 @@ function render_whole_table() {
 
     const td1 = document.createElement("td");
     td1.innerHTML = `${candid}<br><img src="${sym[party_name]}"><span>${party_name}</span>`;
-    tr.appendChild(td1);
     td1.classList.add("td1");
+    tr.appendChild(td1);
+   
 
     const td2 = document.createElement("td");
     td2.innerHTML = `${candid2}<br><img src="${sym[party_2]}"><span>${party_2}</span>`;
@@ -898,7 +902,7 @@ function render_whole_table() {
     tr.appendChild(td2);
 
     const td3 = document.createElement("td");
-    td3.innerHTML = `${votes - votes2}<br>`;
+    td3.innerHTML = `${votes - votes2}`;
     tr.appendChild(td3);
     td3.classList.add("td3");
 
@@ -908,18 +912,21 @@ function render_whole_table() {
 
   // Update the heading with the count of candidates
   const th = document.getElementById("theading");
-  th.innerHTML = `<span id="constituency-name">ALL</span><div>${count} Constituencies</div>`;
-  let input = document.getElementById("stateinput");
-  if (!input) {
-    input = document.createElement("input");
-    input.className = "form-control";
-    input.id = "stateinput";
-    input.type = "text";
-    input.placeholder = "Search";
-  }
-  th.appendChild(input);
-  th.style.display = "flex";
+  th.innerHTML = `
+      <div class="container-fluid py-3">
+          <div class="row justify-content-between align-items-center">
+              <div class="col-auto">
+                  <span id="constituency-name">ALL</span>
+                  <div>${count} Constituencies</div>
+              </div>
+              <div class="col-auto">
+                  <input class="form-control" id="stateinput" type="text" placeholder="Search">
+              </div>
+          </div>
+      </div>`;
   th.style.background = "white";
+  th.style.display = "flex";
+  th.style.justifyContent = "space-between";
   updateMapStyles();
   // Search functionality
   document.getElementById("stateinput").addEventListener("keyup", function () {
@@ -972,7 +979,7 @@ let candidates = [];
 async function fetchMoreCards() {
   try {
     // Fetch the state-constituency-candidate JSON
-    const stateResponse = await fetch("./data/popular.json");
+    const stateResponse = await fetch("popular.json");
     const stateData = await stateResponse.json();
     console.log('State Data:', stateData);
 
@@ -1027,6 +1034,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 function handleSelection() {
+  document.querySelector(".bt_grp").style.display="none";
+
   document.getElementById("containertool").style.display = "none";
   // console.log(geo2);
   document.getElementById("breadcrumb-india").style.display = "block";
@@ -1205,9 +1214,9 @@ document.getElementById("see-more-btn").addEventListener("click", function () {
 
 function renderCandidateCards(item,row) {
   const allianceImages = {
-    "NDA": "./images/imgs/NDA  (1)png",
-    "INDIA": "./images/imgs/NDA (3).png",
-    "OTH": "./images/imgs/NDA (2).png"
+    "NDA": "imgs/NDA  (1)png",
+    "INDIA": "imgs/NDA (3).png",
+    "OTH": "imgs/NDA (2).png"
   };
   const imageUrl = item.perimg || allianceImages[item.alnce];
   
@@ -1277,71 +1286,104 @@ item.cName
 row.append(card);
 }
 
-function updatePaginationControls(
-  totalRows,
-  class_name,
-  second_class_name,
-  numberOfRows
-) {
-  const numPages = Math.ceil(totalRows / numberOfRows);
+function updatePaginationControls(totalRows, class_name, second_class_name) {
+  const numPages = Math.ceil(totalRows / rowsPerPage);
+  console.log(numPages);
   const paginationControls = document.getElementById(class_name);
   paginationControls.innerHTML = ""; // Clear previous pagination controls
 
-  const pageButtonsContainer = document.createElement("div");
-  pageButtonsContainer.className = "page-buttons";
-
+  // Create and add the previous button
   const prevButton = document.createElement("button");
   prevButton.innerHTML = `&lt; Previous`;
+  prevButton.classList.add("flex-fill");
+  prevButton.className = "pagination-button";
   prevButton.addEventListener("click", function () {
     if (class_name == "pagination-controls") {
       if (currentPage > 1) {
         currentPage--;
         displayPage(currentPage, second_class_name);
+        setActiveButton(currentPage, class_name);
       }
     } else {
       if (currentPageCandidates > 1) {
         currentPageCandidates--;
         displayPage(currentPageCandidates, second_class_name);
+        setActiveButton(currentPageCandidates, class_name);
       }
     }
   });
-  pageButtonsContainer.appendChild(prevButton);
 
+  // Create a container for the number buttons
+  const numberDiv = document.createElement("div");
+  numberDiv.className = "number-div";
+numberDiv.classList.add("flex-fill");
+prevButton.classList.add("col-auto"); // Adjust column width for the "Previous" button
   for (let i = 1; i <= numPages; i++) {
     const button = document.createElement("button");
     button.textContent = i;
+    button.className = "newbuttons";
+    if (i === 1) button.classList.add("active");
     button.addEventListener("click", function () {
       if (class_name == "pagination-controls") {
         currentPage = i;
         displayPage(currentPage, second_class_name);
+        setActiveButton(currentPage, class_name);
       } else {
         currentPageCandidates = i;
         displayPage(currentPageCandidates, second_class_name);
+        setActiveButton(currentPageCandidates, class_name);
       }
     });
-    button.className = "newbuttons";
-    pageButtonsContainer.appendChild(button);
+    numberDiv.appendChild(button);
   }
 
+  // Add the previous button, numberDiv, and next button to the paginationControls
+  
+
+
+// Adjust button alignment for smaller screens
+prevButton.classList.add("text-center");
+
+  paginationControls.appendChild(prevButton);
+  paginationControls.appendChild(numberDiv);
+
+  // Create and add the next button
   const nextButton = document.createElement("button");
   nextButton.innerHTML = `Next &gt;`;
+  nextButton.className = "pagination-button";
   nextButton.addEventListener("click", function () {
     if (class_name == "pagination-controls") {
       if (currentPage < numPages) {
         currentPage++;
         displayPage(currentPage, second_class_name);
+        setActiveButton(currentPage, class_name);
       }
     } else {
       if (currentPageCandidates < numPages) {
         currentPageCandidates++;
         displayPage(currentPageCandidates, second_class_name);
+        setActiveButton(currentPageCandidates, class_name);
       }
     }
   });
-  pageButtonsContainer.appendChild(nextButton);
+  nextButton.classList.add("col-auto"); // Adjust column width for the "Previous" button
+  nextButton.classList.add("text-center");
+  paginationControls.appendChild(nextButton);
 
-  paginationControls.appendChild(pageButtonsContainer);
+  // Ensure the pagination controls are displayed as flex
+  paginationControls.style.display = "flex";
 }
+nextButton.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default action
+  // Your existing code for handling the "Next" button click
+});
+function setActiveButton(page, class_name) {
+  const paginationControls = document.getElementById(class_name);
+  const buttons = paginationControls.querySelectorAll(".newbuttons");
+  buttons.forEach(button => button.classList.remove("active")); // Remove active class from all buttons
+  buttons[page - 1].classList.add("active"); // Add active class to the current page button
+}
+
 
 function displayPage(page, class_name) {
   const rows = document.querySelectorAll(class_name);
@@ -1414,41 +1456,73 @@ function render_state_table(feature, state) {
 
       const td = document.createElement("td");
       td.textContent = name;
+      td.style.paddingLeft="1rem";
       td.classList.add("td");
       tr.appendChild(td);
-
       const td1 = document.createElement("td");
+      if(!sym[party_name])
+        {
+          console.log(candid);
+          td1.innerHTML = `${candid}<br><img src="${sym["extra"]}"><span>${party_name}</span>`;
+        }
+        else{
       td1.innerHTML = `${candid}<br><img src="${sym[party_name]}"><span>${party_name}</span>`;
-      td1.style.background = "#F6FEF9";
-      tr.appendChild(td1);
+        }
+      td1.style.background="#F6FEF9";
+      td1.style.color="#344054";
+      td1.style.paddingLeft="24px";
       td1.classList.add("td1");
+      tr.appendChild(td1);
+   
 
       const td2 = document.createElement("td");
-      td2.innerHTML = `${candid2}<br><img src="${sym[party_2]}"><span>${party_2}</span>`;
+      if(!sym[party_2])
+        {
+          td2.innerHTML = `${candid2}<br><img src="${sym["extra"]}"><span>${party_2}</span>`;
+        }
+        else{
+          td2.innerHTML = `${candid2}<br><img src="${sym[party_2]}"><span>${party_2}</span>`;
+        }
+   
       td2.classList.add("td2");
+      td2.style.fontFamily="Roboto";
+      td2.style.fontWeight="600";
+      td2.style.color="#344054";
+      td2.style.background="#FFFAFA";
+      td2.style.paddingLeft="1.5rem";
       tr.appendChild(td2);
 
       const td3 = document.createElement("td");
-      td3.innerHTML = `${(votes - votes2).toLocaleString()}<br>`;
-      tr.appendChild(td3);
+      td3.innerHTML = `${(votes - votes2).toLocaleString()}`;
+     
+      td3.style.background="#FAF9FB";
+      td3.style.textAlign="center";
+      td3.style.paddingTop="20px";
+      td3.style.justifyContent="center";
+      td3.style.alignItems="center";
       td3.classList.add("td3");
-      count++;
-      if (firstCandidateKey.alliance === "NDA") {
-        if (alliancePatries["nda"][firstCandidateKey.party] !== undefined)
-          alliancePatries["nda"][firstCandidateKey.party]++;
-        else alliancePatries["nda"][firstCandidateKey.party] = 1;
-      } else if (firstCandidateKey.alliance === "OTH") {
-        if (alliancePatries["others"][firstCandidateKey.party] !== undefined)
-          alliancePatries["others"][firstCandidateKey.party]++;
-        else alliancePatries["others"][firstCandidateKey.party] = 1;
-      } else {
-        if (alliancePatries["india"][firstCandidateKey.party] !== undefined)
-          alliancePatries["india"][firstCandidateKey.party]++;
-        else alliancePatries["india"][firstCandidateKey.party] = 1;
+      tr.appendChild(td3);
+      
+          count++;
+          if (firstCandidateKey.alliance === "NDA") {
+            if (alliancePatries["nda"][firstCandidateKey.party] !== undefined)
+              alliancePatries["nda"][firstCandidateKey.party]++;
+            else alliancePatries["nda"][firstCandidateKey.party] = 1;
+          } else if (firstCandidateKey.alliance === "OTH") {
+            if (alliancePatries["others"][firstCandidateKey.party] !== undefined)
+              alliancePatries["others"][firstCandidateKey.party]++;
+            else alliancePatries["others"][firstCandidateKey.party] = 1;
+          } else {
+            if (alliancePatries["india"][firstCandidateKey.party] !== undefined)
+              alliancePatries["india"][firstCandidateKey.party]++;
+            else alliancePatries["india"][firstCandidateKey.party] = 1;
+          }
+      } 
+      else {
+          tr.dataset.pccolor = "#fff";
       }
-    } else {
-      tr.dataset.pccolor = "#fff";
-    }
+   
+
   }
   console.log("afhkhbfz");
   console.log(alliancePatries);
@@ -1459,12 +1533,13 @@ function render_state_table(feature, state) {
   alliancePatries.nda = sortObjectByValuesDesc(alliancePatries.nda);
   alliancePatries.india = sortObjectByValuesDesc(alliancePatries.india);
   alliancePatries.others = sortObjectByValuesDesc(alliancePatries.others);
-
+  document.getElementById('piechart').style.display="block";
+  drawpiechart(alliancePatries);
   populateCarousel();
 
   // Update the heading with the count of candidates
   const th = document.getElementById("theading");
-  th.innerHTML = `<span id="constituency-name">${state}</span><div>${count} Constituencies</div>`;
+  th.innerHTML = `<span id="constituency-name">${state}</span><div style="font-size:10px;">${count}&nbsp;Constituencies</div>`;
   let input = document.getElementById("stateinput");
   if (!input) {
     input = document.createElement("input");
@@ -1472,17 +1547,47 @@ function render_state_table(feature, state) {
     input.id = "stateinput";
     input.type = "text";
     input.placeholder = "Search";
+    input.style.outline="none";
   }
   th.appendChild(input);
+  const numPages = Math.ceil(count / rowsPerPage);
+  const divv=document.createElement("span");
+  divv.classList.add("divv");
+  const prevButton1 = document.createElement("button");
+  prevButton1.style.border="none";
+  prevButton1.innerHTML = `<img src="./images/imgs/left_bt.svg">`;
+  prevButton1.addEventListener("click", function () {
+      console.log("pressed");
+      if (currentPage > 1) {
+        currentPage--;
+        displayPage(currentPage, "#table-body tr");
+        setActiveButton(currentPage, "pagination-controls");
+      }
+    
+  });
+  divv.appendChild(prevButton1);
+  const nextButton1 = document.createElement("button");
+  nextButton1.style.border="none";
+  nextButton1.innerHTML = `<img src="./images/imgs/right_bt.svg">`;
+  nextButton1.addEventListener("click", function () {
+      if (currentPage < numPages) {
+        currentPage++;
+        displayPage(currentPage, "#table-body tr");
+        setActiveButton(currentPage, "pagination-controls");
+      }
+  });
+  divv.appendChild(nextButton1);
+  th.appendChild(divv);
   th.style.display = "flex";
   th.style.background = "white";
+  console.log(count);
 
   // Hide pagination controls if the number of candidates is less than or equal to 36
   const paginationControls = document.getElementById("pagination-controls");
   if (count <= rowsPerPage) {
     paginationControls.style.display = "none";
   } else {
-    paginationControls.style.display = "block";
+    paginationControls.style.display = "flex";
   }
 
   // Initialize pagination only if needed
@@ -1545,6 +1650,124 @@ function render_state_table(feature, state) {
 
 }
 
+function drawpiechart(allainceparties) {
+  // Load google charts
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+  
+  // Draw the chart and set the chart values
+  function drawChart() {
+    // Assuming alliancePatries is structured like this:
+    var alliancePatries =allainceparties;
+
+    // Initialize the data array with headers
+    var data = [
+      ['party', 'votes']
+    ];
+
+    // Function to populate the data array from alliancePatries
+    function populateData() {
+      for (var alliance in alliancePatries) {
+        for (var party in alliancePatries[alliance]) {
+          data.push([party, alliancePatries[alliance][party]]);
+        }
+      }
+    }
+
+    // Populate the data array
+    populateData();
+    var totalVotes = 0;
+    data.slice(1).forEach(function(row) {
+      totalVotes += row[1];
+    });
+
+    // Create the chart data table
+    var chartData = google.visualization.arrayToDataTable(data);
+    var formatter = new google.visualization.NumberFormat({
+      pattern: '#'
+    });
+    formatter.format(chartData, 1); 
+    var colors = data.slice(1).map(function(row) {
+      return partyColors[row[0]] || '#808080';
+    });
+    // Optional; add a title and set the width and height of the chart
+    var options = {
+      'title': 'Votes Distribution',
+      'width': 'fit-content',
+      'height': 'fit-content',
+      'legend': 'none', // Hide legend
+      'pieSliceText': 'value', // Display data value in slice
+      'tooltip': { trigger: 'none' }, // Disable tooltip on hover
+      'pieSliceBorderColor': 'transparent', // Hide pie slice borders
+      'pieSliceTextStyle': { color: 'black' }, // Style for pie slice labels
+      'chartArea': { left: 10, top: 20, width: '100%', height: '80%' }, // Adjust chart area
+      'colors': colors // Assign colors based on partyColors
+    };
+    // Display the chart inside the <div> element with id="piechart"
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    chart.draw(chartData, options);
+  }
+}
+
+function drawpiechart(allainceparties) {
+  // Load google charts
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+  
+  // Draw the chart and set the chart values
+  function drawChart() {
+    // Assuming alliancePatries is structured like this:
+    var alliancePatries =allainceparties;
+
+    // Initialize the data array with headers
+    var data = [
+      ['party', 'votes']
+    ];
+
+    // Function to populate the data array from alliancePatries
+    function populateData() {
+      for (var alliance in alliancePatries) {
+        for (var party in alliancePatries[alliance]) {
+          data.push([party, alliancePatries[alliance][party]]);
+        }
+      }
+    }
+
+    // Populate the data array
+    populateData();
+    var totalVotes = 0;
+    data.slice(1).forEach(function(row) {
+      totalVotes += row[1];
+    });
+
+    // Create the chart data table
+    var chartData = google.visualization.arrayToDataTable(data);
+    var formatter = new google.visualization.NumberFormat({
+      pattern: '#'
+    });
+    formatter.format(chartData, 1); 
+    var colors = data.slice(1).map(function(row) {
+      return partyColors[row[0]] || '#808080';
+    });
+    // Optional; add a title and set the width and height of the chart
+    var options = {
+      'title': 'Votes Distribution',
+      'width': 'fit-content',
+      'height': 'fit-content',
+      'legend': 'none', // Hide legend
+      'pieSliceText': 'value', // Display data value in slice
+      'tooltip': { trigger: 'none' }, // Disable tooltip on hover
+      'pieSliceBorderColor': 'transparent', // Hide pie slice borders
+      'pieSliceTextStyle': { color: 'black' }, // Style for pie slice labels
+      'chartArea': { left: 10, top: 20, width: '100%', height: '80%' }, // Adjust chart area
+      'colors': colors // Assign colors based on partyColors
+    };
+    // Display the chart inside the <div> element with id="piechart"
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    chart.draw(chartData, options);
+  }
+}
+
 // rendering
 function render() {
   geo.setStyle((feature) => ({
@@ -1581,9 +1804,19 @@ function showdatatable(
   // console.log(feature);
   // console.log(layer);
   breadcrumbConstituency.style.display = "none";
-  document.getElementById("containertool").style.display = "block";
-  var div = document.getElementById("containertool");
-  var htmlCode = `
+  document.getElementById('containertool').style.display = "block";
+            var div = document.getElementById('containertool');
+            let img_none=sym[party1];
+            let img_none2=sym[party2];
+            if(!sym[party1])
+              {
+                img_none=sym["extra"];
+              }
+             if(!sym[party2])
+              {
+                img_none2=sym['extra'];
+              }
+    var htmlCode = `
     <h2 id="h2"><span class="city">${con1}</span><br><span class="state">${state}</span></h2><div id="close" onclick="closedata()">&times;</div>
         <div id="candidatediv">
           <div class="header">
@@ -1594,7 +1827,7 @@ function showdatatable(
               <div class="candidate-info">
                   <div>
                       <div class="candidate-name">${cand1}</div>
-                      <div class="party"><img src="${sym[party1]}" class="party-logo">${party1}</div>
+                      <div class="party"><img src="${img_none}" class="party-logo">${party1}</div>
                   </div>
               </div>
               <div class="votes">
@@ -1607,7 +1840,7 @@ function showdatatable(
                   
                   <div>
                       <div class="candidate-name">${cand2}</div>
-                      <div class="party"><img src="${sym[party2]}"class="party-logo">${party2}</div>
+                      <div class="party"><img src="${img_none2}"class="party-logo">${party2}</div>
                   </div>
               </div>
               <div class="votes" id="v2">${votes2}</div>
@@ -1619,8 +1852,8 @@ function showdatatable(
                 <div class="vote-title">Votes</div>
             </span>
             <div class="winner-info">
-                <div class="winner-name">${cand1}</div>
-                <div class="winner-votes">${votes1}</div>
+                <div class="winner-name">${data_2019[id][0].candidateName}</div>
+                <div class="winner-votes">${data_2019[id][0].votes}</div>
             </div>
         </div>
         <div id="checkdetails" onclick="render_table('${id}',1)">Check Full Results <span id="gt">&gt</span></div>`;
@@ -1629,6 +1862,9 @@ function showdatatable(
   div.style.display = "block";
 }
 function closedata() {
+  // if(!stateis_pressed)
+  //   {
+  document.getElementById("Constituency-res").style.display="none";
   document.getElementById("containertool").style.display = "none";
   // document.getElementById("stateTabeleContainer").style.display = "block";
   // document
@@ -1649,7 +1885,6 @@ function render_table(code, page) {
   tbody.innerHTML = "";
   let ct = 0;
   closedata();
-  console.log(code);
   var splCount = 0;
   geo2.eachLayer((l) => {
     console.log(l.feature.properties.pc_id);
@@ -1659,20 +1894,17 @@ function render_table(code, page) {
     if (l.feature.properties.pc_id == code) {
       console.log("pressed");
       l.setStyle({
-        fillColor: document.querySelector(`#table-body tr[data-pc="${code}"]`)
-          ?.dataset.pccolor, // Specific color or default gray
-        fillOpacity: 2, // Fully opaque for the clicked layer
-        color: "#000", // Border color
-        weight: 0.5, // Border width
+        fillColor: document.querySelector(`#table-body tr[data-pc="${code}"]`)?.dataset.pccolor,  // Specific color or default gray
+        fillOpacity: 2,        // Fully opaque for the clicked layer
+        color: "#000",      // Border color
+        weight: 2,            // Border width
       });
     } else {
       l.setStyle({
-        fillColor: document.querySelector(
-          `#table-body tr[data-pc="${l.feature.properties.pc_id}"]`
-        )?.dataset.pccolor, // Default color
-        fillOpacity: 0.1, // Semi-transparent for other layers
-        color: "#000", // Border color
-        weight: 0.3, // Border width
+        fillColor: document.querySelector(`#table-body tr[data-pc="${l.feature.properties.pc_id}"]`)?.dataset.pccolor,  // Default color
+        fillOpacity: 0.4,      // Semi-transparent for other layers
+        color: "#000",      // Border color
+        weight: 0.3           // Border width
       });
     }
   });
@@ -1699,7 +1931,14 @@ function render_table(code, page) {
 
     const party = document.createElement("td");
     const par = candi[i].party;
-    party.innerHTML = `<img src="${sym[par]}"><span>${candi[i].party}</span>`;
+    if(!sym[par])
+      {
+        party.innerHTML = `<img src="${sym['extra']}"><span>${candi[i].party}</span>`;
+      }
+      else{
+        party.innerHTML = `<img src="${sym[par]}"><span>${candi[i].party}</span>`;
+      }
+   
     party.className = "tdata1";
     row.appendChild(party);
 
@@ -1709,48 +1948,80 @@ function render_table(code, page) {
     row.appendChild(votes);
 
     const votes2 = document.createElement("td");
-    if (i == 0) {
-      votes2.textContent = "-";
+      if (i == 0) {
+          votes2.textContent = "-";
+      } else if (i > 0) {
+          votes2.textContent = (candi[0].votes - candi[i].votes).toLocaleString();
+      }
+      votes2.classList.add("tdata3");
+      row.appendChild(votes2);
+      const margin2=document.createElement("td");
+      if (i == 0) {
+        margin2.textContent = "-";
     } else if (i > 0) {
-      votes2.textContent = (
-        candi[i - 1].votes - candi[i].votes
-      ).toLocaleString();
-    }
-    votes2.classList.add("tdata3");
-    row.appendChild(votes2);
-    const margin2 = document.createElement("td");
-    if (i == 0) {
-      margin2.textContent = "-";
-    } else if (i > 0) {
-      // margin2.textContent =
-      margin2.innerHTML = `${(
-        ((candi[i - 1].votes - candi[i].votes) /
-          (candi[i - 1].votes + candi[i].votes)) *
-        100
-      ).toFixed(1)} %`;
+        // margin2.textContent = 
+        margin2.innerHTML=`${(((candi[0].votes - candi[i].votes)/(candi[0].votes + candi[i].votes))*100).toFixed(1)} %`
     }
     margin2.classList.add("tdata3");
     row.appendChild(margin2);
-    // const votes_2019=document.createElement("td");
-    // votes_2019.innerHTML=candi[i].votes;
-    // row.appendChild(votes_2019);
+    const votes_2019=document.createElement("td");
+    let candidateFound = false;
     console.log(data_2019);
-    data_2019.forEach;
-    let votes2019;
-
-    //   const isPresentIn2019 = data_2019[0].states.some(state => {
-    //     return state.constituencies.some(constituency => {
-    //         return constituency.candidates.some(candidate2019 => candidate2019.cName === candi[i].candidateName);
-    //     });
-    // });
-    // votes_2019.textContent = isPresentIn2019 ? "True" : "False";
-    // row.appendChild(votes_2019);
+    for(con in data_2019)
+      {
+        if(con==code)
+          {
+            for(can in data_2019[con])
+            {
+              console.log(data_2019[con][can]);
+              if((data_2019[con][can].candidateName).toLowerCase()==(candi[i].candidateName).toLowerCase())
+                {
+                  console.log(true);
+                  candidateFound = true; 
+                  if(can==0)
+                  {
+                    votes_2019.innerHTML=`<div>2019 Winner</div><div>${(data_2019[con][can].votes.toLocaleString())}</div>`;
+                    votes_2019.style.background="#ECFDF3";
+                  }
+                  else if(data_2019[con][can].party!=candi[i].party)
+                    {
+                      if(!sym[data_2019[con][can].party])
+                        {
+                          votes_2019.innerHTML=`<div>Contested From <img src="${sym['extra']}"> ${data_2019[con][can].party}</div><div>votes:${(data_2019[con][can].votes.toLocaleString())}</div>`
+                        }
+                        else{
+                      votes_2019.innerHTML=`<div>Contested From <img src="${sym[data_2019[con][can].party]}"> ${data_2019[con][can].party}</div><div>votes:${(data_2019[con][can].votes.toLocaleString())}</div>`
+                        }
+                    }
+                    else if(data_2019[con][can].party=="IND")
+                      {
+                        votes_2019.innerHTML=`<div>Contested as Independent</div><div>${(data_2019[con][can].votes.toLocaleString())}</div>`
+                      }
+                  else{
+                    votes_2019.innerHTML=`<div>${data_2019[con][can].votes}</div>`;
+                  }
+                }
+               
+            }
+          }
+      }
+      if (!candidateFound) {
+        votes_2019.innerHTML = '<div>Did Not Contest</div>';
+      }
+      votes_2019.classList.add("votes_2019");
+    row.appendChild(votes_2019);
+  //   const isPresentIn2019 = data_2019[0].states.some(state => {
+  //     return state.constituencies.some(constituency => {
+  //         return constituency.candidates.some(candidate2019 => candidate2019.cName === candi[i].candidateName);
+  //     });
+  // });
+  // votes_2019.textContent = isPresentIn2019 ? "True" : "False";
+  // row.appendChild(votes_2019);
     tbody.appendChild(row);
     ct++;
   }
   const paginationControls = document.getElementById(
-    "pagination-controls-candidates"
-  );
+    "pagination-controls-candidates");
   if (candi_len > pageSize) {
     updatePaginationControls(
       candi_len,
@@ -1759,7 +2030,7 @@ function render_table(code, page) {
     );
     currentPageCandidates = 1;
     displayPage(currentPageCandidates, ".candidateBody tr");
-    paginationControls.style.display = "block";
+    paginationControls.style.display = "flex";
   } else {
     paginationControls.innerHTML = "";
     paginationControls.style.display = "none";
@@ -1770,7 +2041,7 @@ function render_table(code, page) {
   // Update theading2 with input
 
   const th = document.getElementById("theading2");
-  th.innerHTML = `<span id="constituency-name">${candi[0].constituencyName}</span><div>${ct} candidates</div>`;
+  th.innerHTML = `<span id="constituency-name">${candi[0].constituencyName}</span><div>${ct}&nbsp;candidates</div>`;
   let input = document.getElementById("candidateinput");
   if (!input) {
     input = document.createElement("input");
@@ -1808,6 +2079,7 @@ function state_map(value, text) {
   document.getElementById("Candidate-res").style.display = "block";
   document.getElementById("india-map").style.display = "none";
   document.getElementById("map").style.display = "block";
+  document.querySelector(".bt_grp").style.display="none";
 
   if (value) {
     geo.remove(map);
@@ -2217,7 +2489,7 @@ function render_whole_carousel() {
     let state_img =
       state.toLowerCase() in party_img_json
         ? party_img_json[state.toLowerCase()]
-        : "./images/imgs2/madhya_pradesh.jpg";
+        : "./imgs2/madhya_pradesh.jpg";
     return `
     <div class="card swiper-slide">
         <span class="state_name">${const_name} <span class="state_party_slot">(${state})</span></span>
@@ -2249,7 +2521,7 @@ function render_whole_carousel() {
     `;
   }
 
-  fetch("./data/partyicon-candimg.json")
+  fetch("./partyicon-candimg.json")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);
