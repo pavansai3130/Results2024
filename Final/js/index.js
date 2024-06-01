@@ -52,6 +52,7 @@
 // })();
 /*----------------------------*/
 let currentPage = 1;
+let state_table_pressed=0;
 let currentPageCandidates = 1;
 const rowsPerPage = 10;
 let breadcrumbConstituency;
@@ -891,8 +892,9 @@ function render_whole_table() {
 
     const td1 = document.createElement("td");
     td1.innerHTML = `${candid}<br><img src="${sym[party_name]}"><span>${party_name}</span>`;
-    tr.appendChild(td1);
     td1.classList.add("td1");
+    tr.appendChild(td1);
+   
 
     const td2 = document.createElement("td");
     td2.innerHTML = `${candid2}<br><img src="${sym[party_2]}"><span>${party_2}</span>`;
@@ -900,7 +902,7 @@ function render_whole_table() {
     tr.appendChild(td2);
 
     const td3 = document.createElement("td");
-    td3.innerHTML = `${votes - votes2}<br>`;
+    td3.innerHTML = `${votes - votes2}`;
     tr.appendChild(td3);
     td3.classList.add("td3");
 
@@ -910,18 +912,21 @@ function render_whole_table() {
 
   // Update the heading with the count of candidates
   const th = document.getElementById("theading");
-  th.innerHTML = `<span id="constituency-name">ALL</span><div>${count} Constituencies</div>`;
-  let input = document.getElementById("stateinput");
-  if (!input) {
-    input = document.createElement("input");
-    input.className = "form-control";
-    input.id = "stateinput";
-    input.type = "text";
-    input.placeholder = "Search";
-  }
-  th.appendChild(input);
-  th.style.display = "flex";
+  th.innerHTML = `
+      <div class="container-fluid py-3">
+          <div class="row justify-content-between align-items-center">
+              <div class="col-auto">
+                  <span id="constituency-name">ALL</span>
+                  <div>${count} Constituencies</div>
+              </div>
+              <div class="col-auto">
+                  <input class="form-control" id="stateinput" type="text" placeholder="Search">
+              </div>
+          </div>
+      </div>`;
   th.style.background = "white";
+  th.style.display = "flex";
+  th.style.justifyContent = "space-between";
   updateMapStyles();
   // Search functionality
   document.getElementById("stateinput").addEventListener("keyup", function () {
@@ -1050,7 +1055,7 @@ function handleSelection() {
   if (selectedValue) {
     geo.remove(map);
 
-    fetch("geo.json")
+    fetch("./data/geo.json")
       .then((res) => res.json())
       .then((geoJson) => {
         ftrs;
@@ -1281,67 +1286,104 @@ item.cName
 row.append(card);
 }
 
-function updatePaginationControls(
-  totalRows,
-  class_name,
-  second_class_name,
-  numberOfRows
-) {
-  const numPages = Math.ceil(totalRows / numberOfRows);
+function updatePaginationControls(totalRows, class_name, second_class_name) {
+  const numPages = Math.ceil(totalRows / rowsPerPage);
+  console.log(numPages);
   const paginationControls = document.getElementById(class_name);
   paginationControls.innerHTML = ""; // Clear previous pagination controls
-  paginationControls.display="flex";
+
+  // Create and add the previous button
   const prevButton = document.createElement("button");
   prevButton.innerHTML = `&lt; Previous`;
+  prevButton.classList.add("flex-fill");
+  prevButton.className = "pagination-button";
   prevButton.addEventListener("click", function () {
     if (class_name == "pagination-controls") {
       if (currentPage > 1) {
         currentPage--;
         displayPage(currentPage, second_class_name);
+        setActiveButton(currentPage, class_name);
       }
     } else {
       if (currentPageCandidates > 1) {
         currentPageCandidates--;
         displayPage(currentPageCandidates, second_class_name);
+        setActiveButton(currentPageCandidates, class_name);
       }
     }
   });
-  paginationControls.appendChild(prevButton);
-  let numeberdiv=document.createElement("div");
+
+  // Create a container for the number buttons
+  const numberDiv = document.createElement("div");
+  numberDiv.className = "number-div";
+numberDiv.classList.add("flex-fill");
+prevButton.classList.add("col-auto"); // Adjust column width for the "Previous" button
   for (let i = 1; i <= numPages; i++) {
     const button = document.createElement("button");
     button.textContent = i;
+    button.className = "newbuttons";
+    if (i === 1) button.classList.add("active");
     button.addEventListener("click", function () {
       if (class_name == "pagination-controls") {
         currentPage = i;
         displayPage(currentPage, second_class_name);
+        setActiveButton(currentPage, class_name);
       } else {
         currentPageCandidates = i;
         displayPage(currentPageCandidates, second_class_name);
+        setActiveButton(currentPageCandidates, class_name);
       }
     });
-    button.className = "newbuttons";
-    numeberdiv.appendChild(button);
+    numberDiv.appendChild(button);
   }
-  paginationControls.appendChild(numeberdiv);
 
+  // Add the previous button, numberDiv, and next button to the paginationControls
+  
+
+
+// Adjust button alignment for smaller screens
+prevButton.classList.add("text-center");
+
+  paginationControls.appendChild(prevButton);
+  paginationControls.appendChild(numberDiv);
+
+  // Create and add the next button
   const nextButton = document.createElement("button");
   nextButton.innerHTML = `Next &gt;`;
+  nextButton.className = "pagination-button";
   nextButton.addEventListener("click", function () {
     if (class_name == "pagination-controls") {
       if (currentPage < numPages) {
         currentPage++;
         displayPage(currentPage, second_class_name);
+        setActiveButton(currentPage, class_name);
       }
     } else {
       if (currentPageCandidates < numPages) {
         currentPageCandidates++;
         displayPage(currentPageCandidates, second_class_name);
+        setActiveButton(currentPageCandidates, class_name);
       }
     }
   });
+  nextButton.classList.add("col-auto"); // Adjust column width for the "Previous" button
+  nextButton.classList.add("text-center");
   paginationControls.appendChild(nextButton);
+
+  // Ensure the pagination controls are displayed as flex
+  paginationControls.style.display = "flex";
 }
+nextButton.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent default action
+  // Your existing code for handling the "Next" button click
+});
+function setActiveButton(page, class_name) {
+  const paginationControls = document.getElementById(class_name);
+  const buttons = paginationControls.querySelectorAll(".newbuttons");
+  buttons.forEach(button => button.classList.remove("active")); // Remove active class from all buttons
+  buttons[page - 1].classList.add("active"); // Add active class to the current page button
+}
+
 
 function displayPage(page, class_name) {
   const rows = document.querySelectorAll(class_name);
@@ -1427,9 +1469,9 @@ function render_state_table(feature, state) {
       td1.innerHTML = `${candid}<br><img src="${sym[party_name]}"><span>${party_name}</span>`;
         }
       td1.style.background="#F6FEF9";
-      tr.appendChild(td1);
-      td1.classList.add("td1");
       td1.style.color="#344054";
+      td1.style.paddingLeft="24px";
+      td1.classList.add("td1");
       tr.appendChild(td1);
    
 
@@ -1445,14 +1487,19 @@ function render_state_table(feature, state) {
       td2.classList.add("td2");
       td2.style.fontFamily="Roboto";
       td2.style.fontWeight="600";
-      td2.style.fontSize="0.875rem";
+      td2.style.color="#344054";
       td2.style.background="#FFFAFA";
       td2.style.paddingLeft="1.5rem";
       tr.appendChild(td2);
 
       const td3 = document.createElement("td");
-      td3.innerHTML = `${(votes - votes2).toLocaleString()}<br>`;
+      td3.innerHTML = `${(votes - votes2).toLocaleString()}`;
+     
       td3.style.background="#FAF9FB";
+      td3.style.textAlign="center";
+      td3.style.paddingTop="20px";
+      td3.style.justifyContent="center";
+      td3.style.alignItems="center";
       td3.classList.add("td3");
       tr.appendChild(td3);
       
@@ -1492,63 +1539,55 @@ function render_state_table(feature, state) {
 
   // Update the heading with the count of candidates
   const th = document.getElementById("theading");
-  th.innerHTML = `<span  class="flex-fill"id="constituency-name">${state}</span><div class="flex-fill">${count} Constituencies</div>`;
+  th.innerHTML = `<span id="constituency-name">${state}</span><div style="font-size:10px;">${count}&nbsp;Constituencies</div>`;
   let input = document.getElementById("stateinput");
   if (!input) {
     input = document.createElement("input");
     input.className = "form-control";
-    input.className="flex-fill";
     input.id = "stateinput";
     input.type = "text";
     input.placeholder = "Search";
+    input.style.outline="none";
   }
   th.appendChild(input);
-  const divv=document.createElement("div");
+  const numPages = Math.ceil(count / rowsPerPage);
+  const divv=document.createElement("span");
+  divv.classList.add("divv");
   const prevButton1 = document.createElement("button");
-  prevButton1.classList.add("flex-fill");
-  prevButton1.innerHTML = `&lt;`;
+  prevButton1.style.border="none";
+  prevButton1.innerHTML = `<img src="./images/imgs/left_bt.svg">`;
   prevButton1.addEventListener("click", function () {
-    if (class_name == "pagination-controls") {
+      console.log("pressed");
       if (currentPage > 1) {
         currentPage--;
-        displayPage(currentPage, second_class_name);
+        displayPage(currentPage, "#table-body tr");
+        setActiveButton(currentPage, "pagination-controls");
       }
-    } else {
-      if (currentPageCandidates > 1) {
-        currentPageCandidates--;
-        displayPage(currentPageCandidates, second_class_name);
-      }
-    }
+    
   });
-  th.appendChild(prevButton1);
+  divv.appendChild(prevButton1);
   const nextButton1 = document.createElement("button");
-  nextButton1.classList.add("flex-fill");
-  nextButton1.innerHTML = `&gt;`;
+  nextButton1.style.border="none";
+  nextButton1.innerHTML = `<img src="./images/imgs/right_bt.svg">`;
   nextButton1.addEventListener("click", function () {
-    if (class_name == "pagination-controls") {
       if (currentPage < numPages) {
         currentPage++;
-        displayPage(currentPage, second_class_name);
+        displayPage(currentPage, "#table-body tr");
+        setActiveButton(currentPage, "pagination-controls");
       }
-    } else {
-      if (currentPageCandidates < numPages) {
-        currentPageCandidates++;
-        displayPage(currentPageCandidates, second_class_name);
-      }
-    }
   });
-  th.appendChild(nextButton1);
+  divv.appendChild(nextButton1);
+  th.appendChild(divv);
   th.style.display = "flex";
   th.style.background = "white";
-  divv.style.display="flex";
-  
+  console.log(count);
 
   // Hide pagination controls if the number of candidates is less than or equal to 36
   const paginationControls = document.getElementById("pagination-controls");
   if (count <= rowsPerPage) {
     paginationControls.style.display = "none";
   } else {
-    paginationControls.style.display = "block";
+    paginationControls.style.display = "flex";
   }
 
   // Initialize pagination only if needed
@@ -1982,8 +2021,7 @@ function render_table(code, page) {
     ct++;
   }
   const paginationControls = document.getElementById(
-    "pagination-controls-candidates"
-  );
+    "pagination-controls-candidates");
   if (candi_len > pageSize) {
     updatePaginationControls(
       candi_len,
@@ -1992,7 +2030,7 @@ function render_table(code, page) {
     );
     currentPageCandidates = 1;
     displayPage(currentPageCandidates, ".candidateBody tr");
-    paginationControls.style.display = "block";
+    paginationControls.style.display = "flex";
   } else {
     paginationControls.innerHTML = "";
     paginationControls.style.display = "none";
@@ -2003,7 +2041,7 @@ function render_table(code, page) {
   // Update theading2 with input
 
   const th = document.getElementById("theading2");
-  th.innerHTML = `<span id="constituency-name">${candi[0].constituencyName}</span><div>${ct} candidates</div>`;
+  th.innerHTML = `<span id="constituency-name">${candi[0].constituencyName}</span><div>${ct}&nbsp;candidates</div>`;
   let input = document.getElementById("candidateinput");
   if (!input) {
     input = document.createElement("input");
@@ -2045,7 +2083,7 @@ function state_map(value, text) {
 
   if (value) {
     geo.remove(map);
-    fetch("geo.json")
+    fetch("./data/geo.json")
       .then((res) => res.json())
       .then((geoJson) => {
         for (con in ftrs) {
@@ -2245,7 +2283,7 @@ function resetstatebread() {
   document.querySelector("#Constituency-res").style.display = "block";
   console.log(breadcrumbState.textContent);
   render_state_carousel(breadcrumbState.textContent);
-  fetch("geo.json")
+  fetch("./data/geo.json")
     .then((res) => res.json())
     .then((geoJson) => {
       ftrs;
