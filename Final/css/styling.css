@@ -2,7 +2,7 @@
 .breadcrumb {
   background: none;
   padding: 0;
-  margin-bottom: 0;
+  margin-bottom: 10px;
 }
 
 .leaflet-interactive:hover {
@@ -15,19 +15,28 @@
   font-size: 1rem;
 }
 
-.breadcrumb-item+.breadcrumb-item::before {
+.breadcrumb-item + .breadcrumb-item::before {
   content: " > ";
   color: #6c757d;
 }
-
 .breadcrumb-item a {
   text-decoration: none;
-  color: black;
 }
 
 .breadcrumb-item a:hover {
   color: black;
 }
+
+.breadcrumb-item.active a {
+  color: black;
+}
+
+.breadcrumb-item.previous a {
+  color: #667085;
+}
+
+/* Set color for the second breadcrumb item when the third item is active */
+
 
 body {
   margin-top: 10px;
@@ -1065,5 +1074,28 @@ gap: 8px;
   line-height: 23.44px;
   letter-spacing: 0.04em;
   text-align: left;
+}
+/* new buttons */
+.party_name
+{
+  display: flex;
+  align-items: center;
+}
+.winner_2019{
+  background:#EAECF0;
+  width:300px;
+  height:fit-content;
+  border-radius: 8px;
+}
+.winner_2019 img
+{
+  margin-top: 5px;
+  height: 16px;
+  width: 16px;
 
+}
+.winner_img
+{
+  display: flex;
+  justify-content: space-between;
 }
