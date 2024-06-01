@@ -20,6 +20,7 @@
       referrerpolicy="no-referrer"
     />
     <script src="./leaflet/index.js"></script>
+    <script src="./js/disclaimer.js"></script>
     <script src="./js/index.js"></script>
     <link rel="stylesheet" href="./css/styles.css" />
     <link rel="stylesheet" href="./css/styling.css" />
@@ -99,7 +100,7 @@
       </div>
     </nav>
     <!-- Common Header -->
-    <div class="body-main-content" style="display: block">
+    <div class="body-main-content main-content blur" style="display: block">
       <header class="header">
         <div class="container">
           <div class="row"></div>
@@ -193,6 +194,29 @@
     <script src="./js/script.js"></script>
     <script src="./js/disclaimer.js"></script>
     <script src="./js/navbar.js"></script>
+    <div class="consent" id="consent">
+      <p class="consentText">Data on this website is being manually added from ECI website and may be delayed and is
+         error prone. <br> Information provided is for educational purposes only and should not be considered as
+         official election results. Please exercise caution. <br><a class="disclaimerLink" href="./disclaimer.html">Read
+         Complete Disclaimer.</a>
+      </p>
+      <div class="decisionButtons">
+         <button id="rejectConsent">Reject</button>
+         <button id="acceptConsent">Agree</button>
+      </div>
+   </div>
+   <div id="rejectConfirmation">
+      <div class="confirmationCard">
+        <img class="alertTriangle" src="./images/imgs/alert-triangle.svg" alt="">
+         <p class="consentHeading">Are you sure you want to reject?</p>
+         <p style="margin-right: 1rem;" class="consentDescription">You can't access the webpage unless you agree to the disclaimer.</p>
+         <a href="./disclaimer.html" class="consentDisclaimer">Read Complete Disclaimer</a>
+         <div class="buttonContainer">
+            <button class="declineButton" id="cancelRejectModal">Cancel</button>
+            <button class="acceptButton" id="confirmRejectModal">Confirm</button>
+         </div>
+      </div>
+   </div>
     <footer class="footer">
       <div class="footerText">
         <p style="margin-bottom: 0">
