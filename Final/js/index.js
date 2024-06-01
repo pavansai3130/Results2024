@@ -1226,9 +1226,9 @@ document.getElementById("see-more-btn").addEventListener("click", function () {
 
 function renderCandidateCards(item, row) {
   const allianceImages = {
-    NDA: "imgs/NDA  (1)png",
-    INDIA: "imgs/NDA (3).png",
-    OTH: "imgs/NDA (2).png",
+    "NDA": "./images/imgs/NDA  (1).png",
+    "INDIA": "./images/imgs/NDA  (2).png",
+    "OTH": "./images/imgs/NDA  (3).png"
   };
   const imageUrl = item.perimg || allianceImages[item.alnce];
 
@@ -1621,24 +1621,22 @@ function render_state_table(feature, state) {
   });
   const selectElement = document.getElementById("state-select");
   const text = selectElement.options[selectElement.selectedIndex].text;
-
-  if (text) {
-    document
-      .getElementById("see-more-btn")
-      .addEventListener("click", function () {
-        window.location.href = "./cardsPage.html" + "?text=" + "all";
-      });
+  if (text!=="Select State") {
+    displayCardsForState(text);
+  } else if (state) {
+    displayCardsForState(state);
+  }
+  
+  function displayCardsForState(stateName) {
     const rootElement = document.getElementById("root");
     rootElement.innerHTML = "";
     console.log("here are", candidates);
-    const filteredCandidates = candidates.filter(
-      (candidate) => candidate.state === text
-    );
-    console.log("filtered candidates are : ", filteredCandidates);
-
-    let cardRowsNeeded = Math.ceil(count / 3);
+    const filteredCandidates = candidates.filter(candidate => candidate.state === stateName); 
+    console.log('filtered candidates are : ' , filteredCandidates);
+  
+    let cardRowsNeeded = Math.ceil(count/3);
     if (cardRowsNeeded > 5) {
-      cardRowsNeeded = 4;
+      cardRowsNeeded = 5;
     }
     for (let i = 0; i < cardRowsNeeded; i++) {
       const row = document.createElement("div");
