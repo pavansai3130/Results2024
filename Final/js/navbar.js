@@ -20,8 +20,9 @@ function toggleMenu() {
   const twoBody = document.querySelector(".table-main-two");
   const btnBody = document.querySelector(".select-main-btn");
   const mapBody = document.querySelector(".select-main-map");
-  const footer = document.querySelector(".footer");
+  const footerI = document.querySelector(".footer");
   const navHeader = document.getElementById("navHeader");
+  footerI.style.visibility = "hidden";
 
   navBorder.style.border = "none";
   navLinks.classList.toggle("show");
@@ -34,7 +35,7 @@ function toggleMenu() {
     btnBody.style.display = "none";
     mapBody.style.display = "none";
     navHeader.style.border = "none";
-    footer.classList.add("hideFooter");
+    footerI.classList.add("hideFooter");
   } else {
     mainBody.style.display = "block";
     slideBody.style.display = "block";
@@ -43,7 +44,7 @@ function toggleMenu() {
     btnBody.style.display = "block";
     mapBody.style.display = "block";
     navHeader.style.borderBottom = "1px solid rgba(0, 0, 0, 0.1)";
-    footer.classList.remove("hideFooter");
+    footerI.classList.remove("hideFooter");
   }
 }
 
