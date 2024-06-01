@@ -6,7 +6,7 @@
       <meta name="indianElectionResult2024" content="HTML, CSS, JavaScript">
       <meta name="2024 Indian Election Result Visualisation" content="Detailed visualisation of 2024 Indian election with interactive graphs and tables">
       <title>India General Election 2024</title>
-      <link rel="icon" type="image/x-icon" href="./imgs/Favion results2024.svg">
+      <link rel="icon" type="image/x-icon" href="./images/imgs/Favion results2024.svg">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -15,24 +15,55 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
          integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
          crossorigin="anonymous" referrerpolicy="no-referrer" />
-         <script src="./lib/d3.v4.min.js" charset="utf-8"></script>
-         <script src="./lib/d3-parliament.min.js"></script>
-      <script src="leaflet/index.js"></script>
-      <script src="./disclaimer.js"></script>
+      <script src="./lib/d3.v4.min.js" charset="utf-8"></script>
+      <script src="./lib/d3-parliament.min.js"></script>
+      <script src="./js/leaflet/index.js"></script>
+      <script src="./js/disclaimer.js"></script>
 
-      <script src="index.js"></script>
-      <!-- <script src="./disclaimer.js"></script> -->
+      <script src="./js/index.js"></script>
       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <script src="./js/disclaimer.js"></script>
+      <script src="./js/statusTable.js"></script>
+      <script src="./js/marginTable.js"></script>
+   <link rel="stylesheet" href="./css/styles.css">
+      <link rel="stylesheet" href="./css/cards.css">
+      <link rel="stylesheet" href="./css/styling.css">
+   <script type="text/javascript">
+      // Load google charts
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      
+      // Draw the chart and set the chart values
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+        ['Task', 'Hours per Day'],
+        ['INC', 8],
+        ['TDP', 2],
+        ['BJP', 2],
+      ]);
+      var data2 = google.visualization.arrayToDataTable([
+        ['Task', 'Hours per Day'],
+        ['INC', 8],
+        ['TDP', 2],
+        ['BJP', 2],
+      ]);
+      
+        // Optional; add a title and set the width and height of the chart
+        var options = {'title':'Seats', 'width':'fit-content', 'height':'fir-content','legend':"none","margin":"none"};
+        var options2={'title':'VoteShare', 'width':'fit-content', 'height':'fir-content','legend':"none","margin":"none"};
 
-      <script src="./disclaimer.js"></script>
-      <script src="./statusTable.js"></script>
-      <script src="./marginTable.js"></script>
-   <link rel="stylesheet" href="styles.css">
-      <link rel="stylesheet" href="cards.css">
-      <link rel="stylesheet" href="styling.css">
-      <link rel="stylesheet" href="./disclaimer.css">
+      
+        // Display the chart inside the <div> element with id="piechart"
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+        var chart2= new google.visualization.PieChart(document.getElementById('piechart2'));
+        chart2.draw(data2,options2);
+      }
+      </script>
+      
+      <link rel="stylesheet" href="./css/disclaimer.css">
       <link rel="stylesheet" href="leaflet/index.css" />
-      <link rel="stylesheet" href="navbarStyles.css">
+      <link rel="stylesheet" href="./css/navbarStyles.css">
    <link rel="stylesheet" href="./bighfights_css/swiper-bundle.min.css">
    <link rel="stylesheet" href="./bighfights_css/bighfights_carousel.css">
    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
@@ -49,8 +80,8 @@
    <body>
       <nav class="navbarHead blur" id="navHeader">
       <div class="headerlogo">
-        <a href="index.html"
-          ><img src="imgs/RESULTS2024LOGO.png" alt="Logo"
+        <a href="./index.html"
+          ><img src="./images/imgs/RESULTS2024LOGO.png" alt="Logo"
         /></a>
       </div>
       <div class="navigations">
@@ -59,7 +90,7 @@
         </span>
         <div id="mobile-nav-content">
           <ul id="nav-links">
-            <li><a href="index.html?year=2019" class="links">2019 Results</a></li>
+            <li><a href="./index.html?year=2019" class="links">2019 Results</a></li>
             <li
               id="hoverable"
               onmouseenter="showTooltip()"
@@ -71,7 +102,7 @@
               <i id="upIcons" class="fa-solid fa-chevron-up"></i>
               <ul class="tooltip" id="tooltip">
                 <li id="celebrities">
-                  <a href="celebCards.html">Celebrities</a>
+                  <a href="./celebCards.html">Celebrities</a>
                 </li>
                 <li id="popular">
                   <a href="cardsPage.html">Popular Candidates</a>
@@ -80,7 +111,7 @@
             </li>
             <div class="hiding" id="mobile-tooltip">
               <li>
-                <a href="celebCards.html" class="links" id="celebrities2"
+                <a href="./celebCards.html" class="links" id="celebrities2"
                   >Celebrities</a
                 >
               </li>
@@ -90,9 +121,9 @@
                 >
               </li>
             </div>
-            <li><a href="index.html" class="links">'24 vs '19</a></li>
+            <li><a href="./index.html" class="links">'24 vs '19</a></li>
             <li>
-              <a href="bigfights_viewall.html" class="links">Big fights</a>
+              <a href="./bigfights_viewall.html" class="links">Big fights</a>
             </li>
             <div class="a2a_kit a2a_kit_size_26 a2a_default_style socialMedia">
               <a class="a2a_button_facebook"></a>
@@ -103,9 +134,9 @@
             </div>
           </ul>
           <ul id="mobile-links">
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="volunteers.html">Volunteers</a></li>
-            <li><a href="disclaimer.html">Disclaimer</a></li>
+            <li><a href="./about.html">About Us</a></li>
+            <li><a href="./volunteers.html">Volunteers</a></li>
+            <li><a href="./disclaimer.html">Disclaimer</a></li>
           </ul>
         </div>
       </div>
@@ -401,20 +432,18 @@
                      style="display: none;">
                      <table id="constTable" class="table  table-bordered" style="margin-top: 0rem;margin-bottom: 0rem;">
                         <div id="theading" class="d-flex" style="display: flex; align-items: center; ">
-                           <span  id="constituency-name"></span>
-                           <input class="form-control" id="stateinput" type="text" placeholder="Search">
                         </div>
                         
                         <thead class="thead">
                            <tr>
-                              <th class="col-1 col-lg-3 align-middle sticky" style="background:#EAECF0; color: #101828;">Constituency
+                              <th class="col-1 col-lg-3 align-middle sticky" style="background:#EAECF0; color: #101828; font-weight: 400;">Constituency
                               </th>
                               <th class="col-1 col-lg-3 align-middle"
-                                 style="background: #12B76A; text-align: center; color: white; border: none;">Leading/Won</th>
+                                 style="background: #12B76A; text-align: center; color: white; ">Leading/Won</th>
                               <th class="col-1 col-lg-3 align-middle"
-                                 style="background: #F96343; text-align: center;color: white;border: none; "> Trailing/Lost
+                                 style="background: #F96343; text-align: center;color: white;"> Trailing/Lost
                               </th>
-                              <th class="col-1 col-lg-3 align-middle" style=" text-align: center;background:#EAECF0; color: #101828;">Margin</th>
+                              <th class="col-1 col-lg-3 align-middle" style=" text-align: center;background:#EAECF0; color: #101828; font-weight: 400;">Margin</th>
                            </tr>
                         </thead>
                         <tbody id="table-body">
@@ -434,7 +463,7 @@
                         </div>
                         <thead class="thead">
                            <tr>
-                              <th style="background:#F9FAFB; color: #101828;">Candidate</th>
+                              <th style="background:#F9FAFB; color: #101828; position: sticky; left: 0;">Candidate</th>
                               <th style="background: #F9FAFB; text-align: center; color: 101828;">Party</th>
                               <th style="background: #F9FAFB; text-align: center;color: 101828; ">Votes</th>
                               <th style="background:#F9FAFB; color: #101828;">Margin</th>
@@ -488,7 +517,7 @@
                   <!-- <div ></div> -->
                </div>
                <div class="hands_div">
-                  <img class="hands" src="./imgs2/hands.png" alt="">
+                  <img class="hands" src="./images/imgs2/hands.png" alt="">
                </div>
             </div>
             <div class="slide-content">
@@ -562,27 +591,27 @@
                 </thead>
                 <tbody>
                   <tr class="richestOne">
-                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Naveen Jindal <br><span><img src="./imgs/BJP.jpg" alt="">BJP</span></td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Naveen Jindal <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
                     <td>Kurukshetra</td>
                     <td>1241+ Cr</td>
                 </tr>
                 <tr class="richestTwo">
-                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Santrupt Mishra <br><span><img src="./imgs/BJD.png" alt="">BJD</span></td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Santrupt Mishra <br><span><img src="./images/imgs/BJD.png" alt="">BJD</span></td>
                     <td>Cuttack</td>
                     <td>482+ Cr</td>
                 </tr>
                 <tr class="richestThree">
-                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Sushil Gupta <br><span><img src="./imgs/AAP.png" alt="">AAP</span></td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Sushil Gupta <br><span><img src="./images/imgs/AAP.png" alt="">AAP</span></td>
                     <td>Kurukshetra</td>
                     <td>169+ Cr</td>
                 </tr>
                 <tr class="richestFour">
-                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Naina Singh Chautala <br><span><img src="./imgs/JJP.png" alt="">JJP</span></td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Naina Singh Chautala <br><span><img src="./images/imgs/JJP.png" alt="">JJP</span></td>
                     <td>Hisar</td>
                     <td>139+ Cr</td>
                 </tr>
                 <tr class="richestFive">
-                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Rao Inderjit Singh <br><span><img src="./imgs/BJP.jpg" alt="">BJP</span></td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Rao Inderjit Singh <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
                     <td>Gurugram</td>
                     <td>121+ Cr</td>
                 </tr>
@@ -609,7 +638,7 @@
                 </thead>
                 <tbody>
                   <tr class="poorestOne">
-                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Master Randir Singh <br><span><img src="./imgs/independent.svg" alt="">IND</span></td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Master Randir Singh <br><span><img src="./images/imgs/independent.svg" alt="">IND</span></td>
                     <td>Rohtak</td>
                     <td>2</td>
                   </tr>
@@ -629,7 +658,7 @@
                     <td>2000</td>
                   </tr>
                   <tr class="poorestFive">
-                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Dillip Kumar Baral <br><span><img src="./imgs/independent.svg" alt="">IND</span></td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Dillip Kumar Baral <br><span><img src="./images/imgs/independent.svg" alt="">IND</span></td>
                     <td>Puri</td>
                     <td>4032</td>
                   </tr>
@@ -655,7 +684,7 @@
       </div>
       <div id="rejectConfirmation">
          <div class="confirmationCard">
-            <img class="alertTriangle" src="./imgs/alert-triangle.svg" alt="">
+            <img class="alertTriangle" src="./images/imgs/alert-triangle.svg" alt="">
             <p class="consentHeading">Are you sure you want to reject consent?</p>
             <p class="consentDescription">You can't access the webpage unless you accept the consent.</p>
             <a href="./disclaimer.html" class="consentDisclaimer">Read Complete Disclaimer</a>
@@ -668,11 +697,11 @@
       </div>
       <footer class="footer">
          <div class="footerText">
-            <p>Crafted with <img src="./imgs/heart.svg" style="width: 1.2rem;" alt="heart"> by Gradious</p>
-            <p><img style="width: 6.8rem;margin-bottom:0.2rem;" src="./imgs/RESULTS2024LOGOcropped.png" alt=""> is a crowdsourced initiative for visualizing the 2024 Indian Parliamentary election results.
+            <p>Crafted with <img src="./images/imgs/heart.svg" style="width: 1.2rem;" alt="heart"> by Gradious</p>
+            <p><img style="width: 6.8rem;margin-bottom:0.2rem;" src="./images/imgs/RESULTS2024LOGOcropped.png" alt=""> is a crowdsourced initiative for visualizing the 2024 Indian Parliamentary election results.
                It is not a source of data.
             </p>
-            <p style="margin: 2rem 0 0 0;" class="builtBy">Built by <img style="width:6rem;margin-bottom:0.2rem;" src="./imgs/Gradious Logo.svg" alt=""></p>
+            <p style="margin: 2rem 0 0 0;" class="builtBy">Built by <img style="width:6rem;margin-bottom:0.2rem;" src="./images/imgs/Gradious Logo.svg" alt=""></p>
          </div>
          <div class="footerLinks">
             <a href="./about.html">About Us</a>
@@ -700,13 +729,13 @@
       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-      <script src="./script.js"></script>
-      <script src="./paths.js"></script>
-      <script src="./leaflet/index.js"></script>
-      <script src="./index.js"></script>
-      <script src="./cards.js"></script>
-      <script src="./disclaimer.js"></script>
-      <script src="./navbar.js"></script>
+      <script src="./js/script.js"></script>
+      <script src="./js/paths.js"></script>
+      <!--script src="./leaflet/index.js"></script>
+      <script src="./js/index.js"></script-->
+      <script src="./js/cards.js"></script>
+      <!--script src="./js/disclaimer.js"></script-->
+      <script src="./js/navbar.js"></script>
       <script src="./bigfights_script/swiper-bundle.min.js"></script>
    </body>
 </html>
