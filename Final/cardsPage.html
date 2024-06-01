@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="./css/cardsPage.css" />
     <link rel="stylesheet" href="./css/disclaimer.css" />
     <link rel="stylesheet" href="./css/navbarStyles.css" />
+    <script src="./js/disclaimer.js"></script>
   </head>
 
   <body>
@@ -87,7 +88,7 @@
         </div>
       </div>
     </nav>
-    <div class="container-fluid body-main-content" style="display: block">
+    <div class="container-fluid body-main-content main-content blur" style="display: block">
       <div class="pathfromhome">
         <a href="index.html">Home</a>
         <i class="fa-solid fa-chevron-right"></i>
@@ -164,6 +165,29 @@
         />
       </div>
     </div>
+    <div class="consent" id="consent">
+      <p class="consentText">Data on this website is being manually added from ECI website and may be delayed and is
+         error prone. <br> Information provided is for educational purposes only and should not be considered as
+         official election results. Please exercise caution. <br><a class="disclaimerLink" href="./disclaimer.html">Read
+         Complete Disclaimer.</a>
+      </p>
+      <div class="decisionButtons">
+         <button id="rejectConsent">Reject</button>
+         <button id="acceptConsent">Agree</button>
+      </div>
+   </div>
+   <div id="rejectConfirmation">
+      <div class="confirmationCard">
+        <img class="alertTriangle" src="./images/imgs/alert-triangle.svg" alt="">
+         <p class="consentHeading">Are you sure you want to reject?</p>
+         <p style="margin-right: 1rem;" class="consentDescription">You can't access the webpage unless you agree to the disclaimer.</p>
+         <a href="./disclaimer.html" class="consentDisclaimer">Read Complete Disclaimer</a>
+         <div class="buttonContainer">
+            <button class="declineButton" id="cancelRejectModal">Cancel</button>
+            <button class="acceptButton" id="confirmRejectModal">Confirm</button>
+         </div>
+      </div>
+   </div>
     <footer class="footer">
       <div class="footerText">
          <p style="margin-bottom: 0;">Crafted with <img src="./images/imgs/heart.svg" style="width: 1.2rem;" alt="heart"> by Gradious</p>
@@ -192,5 +216,6 @@
    </footer>
     <script src="./js/cardsPage.js"></script>
     <script src="./js/navbar.js"></script>
+    <script src="./js/disclaimer.js"></script>
   </body>
 </html>
