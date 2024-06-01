@@ -1060,7 +1060,7 @@ function handleSelection() {
   const selectElement = document.getElementById("state-select");
   const selectedValue = selectElement.value;
   const text = selectElement.options[selectElement.selectedIndex].text;
-  // alert(text);
+  
   if (selectedValue === "reset") {
     resetMap();
     return;
@@ -1855,8 +1855,10 @@ function showdatatable(
                 <div class="winner-name">${data_2019[id][0].candidateName}</div>
                 <div class="winner-votes">${data_2019[id][0].votes}</div>
             </div>
+            <div class="party"><img src="${sym[party1]}" class="party-logo">${party1}</div>
+            <div class="margin1">Margin - ${mvotes}</div>
         </div>
-        <div id="checkdetails" onclick="render_table('${id}',1)">Check Full Results <span id="gt">&gt</span></div>`;
+        <div id="checkdetails" onclick="render_table('${id}',1)">Check Full Results <span id="gt1">&gt</span></div>`;
   div.innerHTML = "";
   div.innerHTML += htmlCode;
   div.style.display = "block";
@@ -2611,3 +2613,27 @@ function render_whole_carousel() {
       );
     });
 }
+
+function viewingstate(stateId){
+  var m = document.getElementById('india-map');
+  if(m){
+    m.scrollIntoView({ behavior: 'smooth' });
+  }
+  var mainbar = document.getElementById('map');
+  if(mainbar){
+    mainbar.scrollIntoView({ behavior: 'smooth' });
+  }
+  var dropdown = document.getElementById('state-select');
+  if (dropdown) {
+      for (var i = 0; i < dropdown.options.length; i++) {
+          var option = dropdown.options[i];
+          console.log(option.dataset.st_code +" "+stateId+" "+option.dataset.st_code === stateId);
+          if (option.dataset.st_code == stateId) {
+              dropdown.selectedIndex = i;
+              break;
+          }
+      }
+  }
+  handleSelection();
+}
+
