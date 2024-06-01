@@ -110,7 +110,7 @@ let state_codes = {
   Haryana: 6,
   "Jammu and Kashmir": 1,
   "Jammu & Kashmir": 1,
-  "Delhi":7,
+  Delhi: 7,
   "NCT OF Delhi": 7,
   "Dadra and Nagar Haveli": 26,
   "West Bengal": 19,
@@ -1141,6 +1141,7 @@ $(document).ready(async function () {
     // console.log(data);
     document.getElementById("disclaimer2019").style.display = "block";
   }
+
   // console.log(allianceJson);
   // Function to render India map with statewise colors
   function renderIndiaMap() {
@@ -1299,10 +1300,28 @@ $(document).ready(async function () {
     //   "btn btn-light border border-5";
     // document.getElementById("stateRow").textContent = "State";
     // document.getElementById("stateButton").className += " active";
+    if (getParameterByName("year") === "2019") {
+      stateDataJson = stateDataJson2019;
+      allianceJson = allianceJson2019;
+      // console.log(data_2019);
+      data = data_2019;
+      // console.log("datsis");
+      // console.log(data);
+      document.getElementById("disclaimer2019").style.display = "block";
+    }
     renderAllianceResults();
   });
 
   document.getElementById("nextButton").addEventListener("click", function () {
+    if (getParameterByName("year") === "2019") {
+      stateDataJson = stateDataJson2019;
+      allianceJson = allianceJson2019;
+      // console.log(data_2019);
+      data = data_2019;
+      // console.log("datsis");
+      // console.log(data);
+      document.getElementById("disclaimer2019").style.display = "block";
+    }
     // document.getElementById("stateRow").textContent = "Union Territory";
     // document.getElementById("stateButton").className =
     //   "btn btn-light border border-5";
