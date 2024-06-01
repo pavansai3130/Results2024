@@ -208,7 +208,12 @@ document.addEventListener('DOMContentLoaded', function () {
             const row = document.createElement('tr');
       
             const nameCell = document.createElement('td');
-            nameCell.innerHTML = `${candidate.cand_name}<br><img src="${sym2[candidate.party_id]}"><span>${candidate.party_id}</span>`;
+            if(sym2[candidate.party_id]){
+                nameCell.innerHTML = `${candidate.cand_name}<br><img src="${sym2[candidate.party_id]}"><span>${candidate.party_id}</span>`;
+            }
+            else{
+                nameCell.innerHTML = `${candidate.cand_name}<br><img src="${sym2["extra"]}"><span>${candidate.party_id}</span>`;
+            }
             nameCell.style.textAlign = 'left';
             nameCell.style.paddingLeft = '1.4rem';
             nameCell.classList.add('sticky');
