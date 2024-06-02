@@ -534,7 +534,6 @@ body {
   font-weight: 600;
 }
 .awaiting p{
-  /* background-color: #DC6803; */
   border-radius: 2rem;
   width: 8rem;
   height: 2.4rem;
@@ -542,7 +541,7 @@ body {
   padding: 0.4rem;
   font-size: 1rem;
   font-weight: 600;
-  margin:0 0 1.4rem 1rem;
+  margin:1.4rem 0 1.4rem 1rem;
 }
 .lost, .won, .leading, .trailing, .awaiting{
   display: flex;
@@ -551,6 +550,22 @@ body {
   border-width: 0 !important;
 }
 
+.awaiting-results-height{
+  height: 50vh;
+}
+.awaiting-results p{
+  text-wrap: nowrap;
+  width: 100% !important;
+  color: #344054;
+  font-weight: 700;
+  font-size: 50px;
+}
+.awaiting-results{
+  display: flex;
+  align-items: center !important;
+  text-align: center;
+  background-color: #D9D9D9F2;
+}
 .notContesting{
   margin-left: 52%;
   color: #667085;
