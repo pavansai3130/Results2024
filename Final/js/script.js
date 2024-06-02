@@ -9,23 +9,22 @@ const initialView = [23, 82.5];
 const initialZoom = 4.8;
 let state_value = 36;
 let sym = {
-
   extra: "./images/imgs/notknown.svg",
 
-  UPPL:"./images/img/UPPL.svg",
- SDF:"./images/img/SDF.svg",
-  SHS:"./images/img/SHS.svg",
-  JNKC:"./images/img/JNKC.svg",
-  JJP:"./images/img/JJP.svg",
-  INLD:"./images/img/INLD.svg",
-  BPF:"./images/img/BPF.svg",
-  INLD:"./images/img/INLD.svg",
-  AAP:"./images/imgs/AAP.svg",
-  PDP:"./images/img/PDP.svg",
-  ADMK:"./images/img/ADMK.svg",
-  AGP:"./images/img/AGP.svg",
-  AIFB:"./images/img/AIFB.svg",
-  extra:"./images/imgs/notknown.svg",
+  UPPL: "./images/img/UPPL.svg",
+  SDF: "./images/img/SDF.svg",
+  SHS: "./images/img/SHS.svg",
+  JNKC: "./images/img/JNKC.svg",
+  JJP: "./images/img/JJP.svg",
+  INLD: "./images/img/INLD.svg",
+  BPF: "./images/img/BPF.svg",
+  INLD: "./images/img/INLD.svg",
+  AAP: "./images/imgs/AAP.svg",
+  PDP: "./images/img/PDP.svg",
+  ADMK: "./images/img/ADMK.svg",
+  AGP: "./images/img/AGP.svg",
+  AIFB: "./images/img/AIFB.svg",
+  extra: "./images/imgs/notknown.svg",
   IND: "./images/imgs/IND.svg",
   BJP: "./images/imgs/BJP.svg",
   INC: "./images/imgs/INC.svg",
@@ -910,16 +909,19 @@ let names = {
   othersColor: "#EAECF0",
 };
 let temp = 1;
-async function fetchJSON2(file1, file2) {
+async function fetchJSON2(file1, file2, file3) {
   // data_2019 = {};
   try {
     const response1 = await fetch(file1);
     const response2 = await fetch(file2); // Fetch the JSON file
+    const response3 = await fetch(file3);
     if (!response1.ok || !response2.ok) {
       throw new Error(`HTTP error! Status: ${response1.status}`);
     }
     data_201 = await response1.json();
     stateAlliance = await response2.json();
+    logos = await response3.json();
+    logos = logos["images_key"];
     // console.log("JSON data fetched and stored globally:", data_201);
     function format2(data2024) {
       for (let state in data2024) {
@@ -963,7 +965,11 @@ async function fetchGeoJSON(file) {
     // Initialize the map and add the GeoJSON layer
     // console.log(L);
 
-    map = L.map("map", { attributionControl: false, zoomSnap: 0.2,minZoom:5});
+    map = L.map("map", {
+      attributionControl: false,
+      zoomSnap: 0.2,
+      minZoom: 5,
+    });
 
     geo = L.geoJSON(geoJson, {
       onEachFeature: (feature, layer) => {
@@ -1045,7 +1051,7 @@ async function fetchGeoJSON(file) {
     var filteredFeatures = geoJson.features.filter(
       (feature) => feature.properties.st_code == state_value
     );
-    var filteredGeoJson = { ...geoJson, features: filteredFeatures};
+    var filteredGeoJson = { ...geoJson, features: filteredFeatures };
     geo2 = L.geoJSON(filteredGeoJson, {
       onEachFeature: (feature, layer) => {
         //   layer.on('mouseover', function(event) {
@@ -1098,7 +1104,7 @@ async function fetchJSON() {
       for (let state in data2024) {
         for (let const_name in data2024[state]) {
           const candidates = [];
-          candidates.push({"rsDecl": data2024[state][const_name]["rsDecl"]});
+          candidates.push({ rsDecl: data2024[state][const_name]["rsDecl"] });
           for (let item of data2024[state][const_name]["candidates"]) {
             const candidate = {
               candidateId: item.cId,
@@ -1143,21 +1149,23 @@ async function fetchJSON() {
 $(document).ready(async function () {
   await fetchJSON();
   await fetchJSON2(
-    "./data/election2019.json",
-    "./data/stateAllianceCount.json"
+    "../data/election2019.json",
+    "../data/stateAllianceCount.json",
+    "../data/bigfights.json"
   );
   await fetchGeoJSON("./data/geo.json");
   let intervalId = setInterval(async () => {
     await fetchJSON();
     // handleStateClick(lastClickedState);
     // console.log(stateDataJson);
-  }, 10000);
+  }, 300000);
   // console.log(data);
 
-  console.log(stateAlliance);
+  console.log(stateDataJson);
   stateDataJson2019 = data_201[0];
   allianceJson2019 = data_201[1];
   console.log(allianceJson);
+  console.log(logos);
   if (getParameterByName("year") === "2019") {
     stateDataJson = stateDataJson2019;
     allianceJson = allianceJson2019;
@@ -1251,18 +1259,20 @@ $(document).ready(async function () {
 
         if (stateCount <= 20) {
           const cells = newRow.getElementsByTagName("td");
-          cells[0].innerHTML = `<img id="stateLogo" src='${sym[state]}'>${state}`;
+          cells[0].innerHTML = `<img id="stateLogo" src='${
+            logos[state.toLowerCase()]
+          }'>${state}`;
 
           let value = nda - NDA;
           cells[1].innerHTML = `${nda}<span class=${
             value < 0 ? "negative" : "positive"
           }> (${value})</span>`;
           value = india - INDIA;
-          cells[2].innerHTML = `${nda}<span class=${
+          cells[2].innerHTML = `${india}<span class=${
             value < 0 ? "negative" : "positive"
           }> (${value})</span>`;
           value = others - OTH;
-          cells[3].innerHTML = `${nda}<span class=${
+          cells[3].innerHTML = `${others}<span class=${
             value < 0 ? "negative" : "positive"
           }> (${value})</span>`;
 
@@ -1335,24 +1345,7 @@ $(document).ready(async function () {
     });
   });
 
-  document.getElementById("prevButton").addEventListener("click", function () {
-    // document.getElementById("nextButton").className =
-    //   "btn btn-light border border-5";
-    // document.getElementById("stateRow").textContent = "State";
-    // document.getElementById("stateButton").className += " active";
-    if (getParameterByName("year") === "2019") {
-      stateDataJson = stateDataJson2019;
-      allianceJson = allianceJson2019;
-      // console.log(data_2019);
-      data = data_2019;
-      // console.log("datsis");
-      // console.log(data);
-      document.getElementById("disclaimer2019").style.display = "block";
-    }
-    renderAllianceResults();
-  });
-
-  document.getElementById("nextButton").addEventListener("click", function () {
+  loadNext = function () {
     if (getParameterByName("year") === "2019") {
       stateDataJson = stateDataJson2019;
       allianceJson = allianceJson2019;
@@ -1385,26 +1378,33 @@ $(document).ready(async function () {
       newRow.removeAttribute("id");
       newRow.style.display = "";
       const cells = newRow.getElementsByTagName("td");
-      cells[0].innerHTML = `<img id="stateLogo" src='${stateMaps[state]}'>${state}`;
+      cells[0].innerHTML = `<img id="stateLogo" src='${
+        logos[state.toLowerCase()]
+      }'>${state}`;
       for (const consti in stateDataJson[state]) {
-        const leadingCandidate = stateDataJson[state][consti]["candidates"][0];
-        if (leadingCandidate.alnce === "NDA") nda++;
-        else if (leadingCandidate.alnce === "OTH") others++;
-        else india++;
+        if (stateDataJson[state][consti]["candidates"][0]["vts"] != 0) {
+          const leadingCandidate =
+            stateDataJson[state][consti]["candidates"][0];
+          if (leadingCandidate.alnce === "NDA") nda++;
+          else if (leadingCandidate.alnce === "OTH") others++;
+          else india++;
+        }
       }
 
-      cells[0].innerHTML = `<img id="stateLogo" src='${sym[state]}'>${state}`;
+      cells[0].innerHTML = `<img id="stateLogo" src='${
+        logos[state.toLowerCase()]
+      }'>${state}`;
 
       let value = nda - NDA;
       cells[1].innerHTML = `${nda}<span class=${
         value < 0 ? "negative" : "positive"
       }> (${value})</span>`;
       value = india - INDIA;
-      cells[2].innerHTML = `${nda}<span class=${
+      cells[2].innerHTML = `${india}<span class=${
         value < 0 ? "negative" : "positive"
       }> (${value})</span>`;
       value = others - OTH;
-      cells[3].innerHTML = `${nda}<span class=${
+      cells[3].innerHTML = `${others}<span class=${
         value < 0 ? "negative" : "positive"
       }> (${value})</span>`;
 
@@ -1452,7 +1452,27 @@ $(document).ready(async function () {
     //     tbody.appendChild(newRow);
     //   }
     // }
-  });
+  };
+  loadPrev = function () {
+    // document.getElementById("nextButton").className =
+    //   "btn btn-light border border-5";
+    // document.getElementById("stateRow").textContent = "State";
+    // document.getElementById("stateButton").className += " active";
+    if (getParameterByName("year") === "2019") {
+      stateDataJson = stateDataJson2019;
+      allianceJson = allianceJson2019;
+      // console.log(data_2019);
+      data = data_2019;
+      // console.log("datsis");
+      // console.log(data);
+      document.getElementById("disclaimer2019").style.display = "block";
+    }
+    renderAllianceResults();
+  };
+
+  document.getElementById("prevButton").addEventListener("click", loadPrev);
+
+  document.getElementById("nextButton").addEventListener("click", loadNext);
 
   // -----------------Accordion population---------------------------------------------
   // Function to handle click event on state in India map
@@ -1642,7 +1662,7 @@ $(document).ready(async function () {
   // const ctx = document.getElementById("myChart").getContext("2d");
   // new Chart(ctx, config);
 
-  google.charts.load('current', {packages:['corechart']});
+  google.charts.load("current", { packages: ["corechart"] });
   google.charts.setOnLoadCallback(drawMultSeries);
   // backgroundColor: linear-gradient(90deg, #87CEEB 0%, #3AAFDE 100%)
   function drawMultSeries() {
@@ -1660,11 +1680,11 @@ $(document).ready(async function () {
 
     console.log("names[bars[0].color]", names[bars[0].color]);
 
-    let resultsAwaited=false;
-    if(bars[0].value==0 && bars[1].value==0 && bars[2].value==0){
-      resultsAwaited=true;
+    let resultsAwaited = false;
+    if (bars[0].value == 0 && bars[1].value == 0 && bars[2].value == 0) {
+      resultsAwaited = true;
     }
-    let resultAwaitedText='Result Awaited!'
+    let resultAwaitedText = "Result Awaited!";
 
     var data = google.visualization.arrayToDataTable([
       [
@@ -1679,11 +1699,11 @@ $(document).ready(async function () {
       [
         "2024",
         bars[0].value,
-        `${resultsAwaited?'':bars[0].value}`,
+        `${resultsAwaited ? "" : bars[0].value}`,
         bars[1].value,
-        `${resultsAwaited?resultAwaitedText:bars[1].value}`,
+        `${resultsAwaited ? resultAwaitedText : bars[1].value}`,
         bars[2].value,
-        `${resultsAwaited?'':bars[2].value}`,
+        `${resultsAwaited ? "" : bars[2].value}`,
       ],
       [
         "2019",
@@ -1696,21 +1716,19 @@ $(document).ready(async function () {
       ],
     ]);
 
-    let bw="80%";
-      if(window.innerWidth<800){
-        console.log("width<<<<",window.innerWidth);
-         bw="60%"
-      }
+    let bw = "80%";
+    if (window.innerWidth < 800) {
+      console.log("width<<<<", window.innerWidth);
+      bw = "60%";
+    }
 
     var options = {
-  
       chartArea: { width: "70%" },
       hAxis: {
         title: "",
         minValue: 0,
         gridlines: { count: 1 }, // Display only one gridline
         textPosition: "none",
-       
       },
       vAxis: {
         textStyle: {
@@ -1746,9 +1764,9 @@ $(document).ready(async function () {
         alwaysOutside: true,
         textAlign: "end",
         stem: {
-          color: 'none',
-          length: 8  // This removes the connecting lines
-        }
+          color: "none",
+          length: 8, // This removes the connecting lines
+        },
       },
       animation: {
         startup: true,
@@ -1756,7 +1774,7 @@ $(document).ready(async function () {
         easing: "out",
       },
       // bars: 'horizontal', // Required for Material Bar Charts.
-      bar: { groupWidth: bw }
+      bar: { groupWidth: bw },
     };
 
     var chart = new google.visualization.BarChart(
@@ -1765,20 +1783,19 @@ $(document).ready(async function () {
     // var chart = new google.charts.Bar(document.getElementById("myChart"))
 
     function drawChart() {
-      console.log("width>>>>>>>>>",window.innerWidth);
-      let ww=0.45;
-      if(window.innerWidth<800){
-         ww=0.8
+      console.log("width>>>>>>>>>", window.innerWidth);
+      let ww = 0.45;
+      if (window.innerWidth < 800) {
+        ww = 0.8;
       }
       var chartWidth = window.innerWidth * ww;
       var chartHeight = window.innerHeight * 0.6;
 
       document.getElementById("myChart").style.width = chartWidth + "px";
       document.getElementById("myChart").style.height = chartHeight + "px";
-     
-    
+
       //chart.draw(data, google.charts.Bar.convertOptions(options));
-      chart.draw(data,options)
+      chart.draw(data, options);
     }
 
     window.addEventListener("resize", drawChart);
@@ -1880,6 +1897,35 @@ $(document).ready(async function () {
   // chart.render();
 
   // ------------------------------------------------------------------------------------------------
+  document
+    .getElementById("mainTable")
+    .addEventListener("click", function (event) {
+      // Check if the clicked element is a <td> with the class "clickable"
+      if (
+        event.target &&
+        event.target.tagName === "TD" &&
+        event.target.id == "stateName"
+      ) {
+        // Extract the text content of the clicked <td> as a string
+
+        handleSelection(event.target.textContent.trim());
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+  var tdElements = document.querySelectorAll("#stateName");
+
+  // Loop through each <td> element and attach a click event listener
+  tdElements.forEach(function (tdElement) {
+    tdElement.addEventListener("click", function () {
+      // Extract the text content of the clicked <td>
+      console.log(`stateCLicked`);
+
+      var stateName = this.textContent.trim();
+      console.log(stateName);
+      handleSelection(stateName);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
 });
 function toggleEntries() {
   const toggleButtons = document.querySelectorAll(".toggleButton");
@@ -1961,117 +2007,263 @@ function populateCarousel() {
   populateTable("india", "indiaCarousel");
   populateTable("others", "othersCarousel");
   // newTable
-  newpopulateTable("nda","ndaContent")
-  newpopulateTable("india","indiaContent")
-  newpopulateTable("others","othersContent")
+  newpopulateTable("nda", "ndaContent");
+  newpopulateTable("india", "indiaContent");
+  newpopulateTable("others", "othersContent");
 }
 function populateTable(alliance, carouselId) {
+  // alliancePatries = {
+  //   nda: {},
+  //   india: {},
+  //   others: {},
+  // };
+  console.log(alliancePatries);
   let carousel = document.getElementById(carouselId);
   let tbody1 = carousel.querySelector("#tbody1");
   let tbody2 = carousel.querySelector("#tbody2");
   tbody1.innerHTML = "";
   tbody2.innerHTML = "";
-
-  // let count = 1;
-  let totalCount = 1; // Total count of rows added
-  for (const party in alliancePatries[alliance]) {
-    const tr = document.createElement("tr");
-    tr.className = " ";
-    const td1 = document.createElement("td");
-    td1.innerHTML = `<img id="stateLogo" src='${
-      sym[party] ? sym[party] : sym["extra"]
-    }'>${party}`;
-    const td2 = document.createElement("td");
-    td2.textContent = alliancePatries[alliance][party];
-
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    if (totalCount <= 10) {
-      if (totalCount % 2 === 1) {
-        tbody1.appendChild(tr);
-        totalCount += 1;
-      } else {
-        tbody2.appendChild(tr);
-        totalCount += 1;
-      }
+  console.log(Object.keys(alliancePatries[alliance]).length);
+  if (Object.keys(alliancePatries[alliance]).length === 0) {
+    if (alliance === "nda") {
+      tbody1.innerHTML = `<tr>
+        <td>BJP</td>
+        <td>0</td>
+     </tr>
+     <tr>
+        <td>SS</td>
+        <td>0</td>
+     </tr>   
+     <tr>
+        <td>JD(s)</td>
+        <td>0</td>
+     </tr>`;
+      tbody2.innerHTML = `
+     <tr>
+        <td>TDP</td>
+        <td>0</td>
+     </tr>
+     <tr>
+     <td>NCP</td>
+     <td>0</td>
+  </tr>
+     `;
+    } else if (alliance === "india") {
+      tbody1.innerHTML = `<tr>
+        <td>INC</td>
+        <td>0</td>
+     </tr>
+    
+     <tr>
+        <td>AITC</td>
+        <td>0</td>
+     </tr>
+     
+     <tr>
+        <td>SS(UBT</td>
+        <td>0</td>
+     </tr>`;
+      tbody2.innerHTML = `
+      <tr>
+        <td>SP</td>
+        <td>0</td>
+     </tr>
+     <tr>
+        <td>DMK</td>
+        <td>0</td>
+     </tr>
+     
+     `;
     } else {
-      // Hide one row in tbody1 and one row in tbody2 alternatively
-      if (totalCount % 2 === 1) {
-        // console.log("enter");
-        tr.className = "hiding";
-        tbody1.appendChild(tr);
-        totalCount += 1;
-      } else {
-        tr.className = "hiding";
-        tbody2.appendChild(tr);
-        totalCount += 1;
-      }
+      tbody1.innerHTML = `<tr>
+        <td>BRS</td>
+        <td>0</td>
+     </tr>
+    
+     <tr>
+        <td>BSP</td>
+        <td>0</td>
+     </tr>
+     
+     <tr>
+        <td>SAD(UBT</td>
+        <td>0</td>
+     </tr>`;
+      tbody2.innerHTML = `
+     <tr>
+     <td>YSRCP</td>
+     <td>0</td>
+  </tr>
+  <tr>
+  <td>BJD</td>
+  <td>0</td>
+</tr>`;
     }
-    const toggleButtons = document.querySelectorAll(".toggleButton");
-    if (totalCount > 10) {
-      toggleButtons.forEach((toggleButton) => {
-        toggleButton.classList.remove("hidden");
-      });
-      // toggleButton.classList.remove("hidden");
-    } else {
-      toggleButtons.forEach((toggleButton) => {
-        toggleButton.classList.add("hidden");
-      });
+  } else {
+    // let count = 1;
+    let totalCount = 1; // Total count of rows added
+    for (const party in alliancePatries[alliance]) {
+      const tr = document.createElement("tr");
+      tr.className = " ";
+      const td1 = document.createElement("td");
+      td1.innerHTML = `<img id="stateLogo" src='${
+        sym[party] ? sym[party] : sym["extra"]
+      }'>${party}`;
+      const td2 = document.createElement("td");
+      td2.textContent = alliancePatries[alliance][party];
+
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      if (totalCount <= 10) {
+        if (totalCount % 2 === 1) {
+          tbody1.appendChild(tr);
+          totalCount += 1;
+        } else {
+          tbody2.appendChild(tr);
+          totalCount += 1;
+        }
+      } else {
+        // Hide one row in tbody1 and one row in tbody2 alternatively
+        if (totalCount % 2 === 1) {
+          // console.log("enter");
+          tr.className = "hiding";
+          tbody1.appendChild(tr);
+          totalCount += 1;
+        } else {
+          tr.className = "hiding";
+          tbody2.appendChild(tr);
+          totalCount += 1;
+        }
+      }
+      const toggleButtons = document.querySelectorAll(".toggleButton");
+      if (totalCount > 10) {
+        toggleButtons.forEach((toggleButton) => {
+          toggleButton.classList.remove("hidden");
+        });
+        // toggleButton.classList.remove("hidden");
+      } else {
+        toggleButtons.forEach((toggleButton) => {
+          toggleButton.classList.add("hidden");
+        });
+      }
     }
   }
 
   // Set the height of the parent div to the maximum width
 }
 
-
 /* NEW TABLE  */
 
-
 async function newpopulateTable(alliance, carouselId) {
-
   let carousel = document.getElementById(carouselId);
   let tbody1 = carousel.querySelector("#tbody1");
   tbody1.innerHTML = "";
+  if (Object.keys(alliancePatries[alliance]).length === 0) {
+    if (alliance === "nda") {
+      tbody1.innerHTML = `<tr>
+        <td>BJP</td>
+        <td>0</td>
+     </tr>
+     <tr>
+     <td>TDP</td>
+     <td>0</td>
+  </tr>
+     <tr>
+        <td>SS</td>
+        <td>0</td>
+     </tr>   
+     <tr>
+     <td>NCP</td>
+     <td>0</td>
+  </tr>
+     <tr>
+        <td>JD(s)</td>
+        <td>0</td>
+     </tr>`;
+    } else if (alliance === "india") {
+      tbody1.innerHTML = `<tr>
+        <td>INC</td>
+        <td>0</td>
+     </tr>
+     <tr>
+     <td>SP</td>
+     <td>0</td>
+  </tr>
+     <tr>
+        <td>AITC</td>
+        <td>0</td>
+     </tr>
+     <tr>
+        <td>DMK</td>
+        <td>0</td>
+     </tr>
+     
+     <tr>
+        <td>SS(UBT</td>
+        <td>0</td>
+     </tr>`;
+    } else {
+      tbody1.innerHTML = `<tr>
+        <td>BRS</td>
+        <td>0</td>
+     </tr>
+     <tr>
+     <td>YSRCP</td>
+     <td>0</td>
+  </tr>  
+     <tr>
+        <td>BSP</td>
+        <td>0</td>
+     </tr>
+     <tr>
+  <td>BJD</td>
+  <td>0</td>
+</tr>
+     <tr>
+        <td>SAD(UBT</td>
+        <td>0</td>
+     </tr>`;
+    }
+  } else {
+    let totalCount = 1; // Total count of rows added
+    for (const party in alliancePatries[alliance]) {
+      const tr = document.createElement("tr");
+      tr.className = " ";
+      const td1 = document.createElement("td");
+      td1.innerHTML = `<img id="stateLogo" src='${
+        sym[party] ? sym[party] : sym["extra"]
+      }'>${party}`;
+      const td2 = document.createElement("td");
+      td2.textContent = alliancePatries[alliance][party];
 
-  // let count = 1;
-  let totalCount = 1; // Total count of rows added
-  for (const party in alliancePatries[alliance]) {
-    const tr = document.createElement("tr");
-    tr.className = " ";
-    const td1 = document.createElement("td");
-    td1.innerHTML = `<img id="stateLogo" src='${
-      sym[party] ? sym[party] : sym["extra"]
-    }'>${party}`;
-    const td2 = document.createElement("td");
-    td2.textContent = alliancePatries[alliance][party];
-
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    if (totalCount <= 5) {
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      if (totalCount <= 5) {
         tbody1.appendChild(tr);
         totalCount += 1;
-    } else {
-      // Hide one row in tbody1 and one row in tbody2 alternatively
+      } else {
+        // Hide one row in tbody1 and one row in tbody2 alternatively
         // console.log("enter");
         tr.className = "hiding";
         tbody1.appendChild(tr);
         totalCount += 1;
-    }
-    const toggleButtons = document.querySelectorAll(".toggleButton");
-    if (totalCount > 5) {
-      toggleButtons.forEach((toggleButton) => {
-        toggleButton.classList.remove("hidden");
-      });
-      // toggleButton.classList.remove("hidden");
-    } else {
-      toggleButtons.forEach((toggleButton) => {
-        toggleButton.classList.add("hidden");
-      });
+      }
+      const toggleButtons = document.querySelectorAll(".toggleButton");
+      if (totalCount > 5) {
+        toggleButtons.forEach((toggleButton) => {
+          toggleButton.classList.remove("hidden");
+        });
+        // toggleButton.classList.remove("hidden");
+      } else {
+        toggleButtons.forEach((toggleButton) => {
+          toggleButton.classList.add("hidden");
+        });
+      }
     }
   }
 
+  // let count = 1;
 }
-
 
 function updateBar(values) {
   const total = values.reduce((acc, val) => acc + val, 0);
@@ -2249,8 +2441,11 @@ function creatediv(state) {
         if (partynames[i] !== undefined && partyseats[i] !== undefined) {
           htmlcode += `<div class="barbox">
                                 <span id="barlabel${i}">${partynames[i]}</span>
-                                <div class="br${i + 1} inbar" id="id${i}" style="background:${partyColors[partynames[i]]}">${partyseats[i]
-                                }</div> </div>`;
+                                <div class="br${
+                                  i + 1
+                                } inbar" id="id${i}" style="background:${
+            partyColors[partynames[i]]
+          }">${partyseats[i]}</div> </div>`;
         }
       }
       htmlcode += `</div>
@@ -2276,7 +2471,7 @@ function creatediv(state) {
     });
 }
 function showmap(state) {
-  document.getElementById("state-select").value=state_codes[state];
+  document.getElementById("state-select").value = state_codes[state];
   render_state_carousel(state);
   let state_naming = document.getElementById("st_con_heading");
   state_naming.innerHTML = `${state}`;
@@ -2303,6 +2498,8 @@ document.getElementById("see-more-btn").addEventListener("click", function () {
   window.location.href = "cardsPage.html?state=" + encodeURIComponent(state);
 });
 let renderAllianceResults;
+let loadNext;
+let loadPrev;
 
 async function fetchTop10() {
   try {
@@ -2412,27 +2609,35 @@ function render_state_carousel(state) {
       state.toLowerCase() in party_img_json
         ? party_img_json[state.toLowerCase()]
         : "./imgs2/madhya_pradesh.jpg";
-    if(votes1 == 0 && votes2 == 0) {
+    if (votes1 == 0 && votes2 == 0) {
       votes1 = "Awaited";
       votes2 = "Awaited";
-    }else {
-      votes1 = new Intl.NumberFormat('en-IN').format(votes1);
-      votes2 = new Intl.NumberFormat('en-IN').format(votes2)
+    } else {
+      votes1 = new Intl.NumberFormat("en-IN").format(votes1);
+      votes2 = new Intl.NumberFormat("en-IN").format(votes2);
     }
     return `
       <div class="card swiper-slide">
-          <span class="state_name">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
+          <span class="state_name">${toTitleCase(
+            const_name
+          )} <span class="state_party_slot">(${toTitleCase(
+      state
+    )})</span></span>
           <div class="cand_desc1">
               <span class="img_container">
                   <img class="party_symbol" src=${party_path1} alt="">
                   <img class="cand_img1" src="${candidateImg1}" alt="">
               </span>
               <div class="desc_container">
-                  <div class="cand_name1">${toTitleCase(cand_name1)} <span class="state_party_slot">(${toTitleCase(partySymbol1)})</span></div>
+                  <div class="cand_name1">${toTitleCase(
+                    cand_name1
+                  )} <span class="state_party_slot">(${toTitleCase(
+      partySymbol1
+    )})</span></div>
                   <span class="lead_bar">
           <span style="width:${bar_length1}%;" class="leadbar"> </span>
           <span style="color:black;margin:3px">
-          ${votes1}</span>
+          ${new Intl.NumberFormat("en-IN").format(votes1)}</span>
           </span>
               </div>
           </div>
@@ -2442,7 +2647,9 @@ function render_state_carousel(state) {
                   <img class="cand_img1" src="${candidateImg2}" alt="">
               </span>
               <div class="desc_container">
-                  <div class="cand_name1">${toTitleCase(cand_name2)} <span class="state_party_slot">(${partySymbol2})</span></div>
+                  <div class="cand_name1">${toTitleCase(
+                    cand_name2
+                  )} <span class="state_party_slot">(${partySymbol2})</span></div>
                   <span class="trail_bar">
           <span style="width:${bar_length2}%;" class="trailbar"></span>
             <span style="color:black;margin:3px">${votes2}</span>
@@ -2465,135 +2672,146 @@ function render_state_carousel(state) {
     })
     .then((data) => {
       fetch("../data/overallpopular.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok " + response.statusText);
-        }
-        return response.json();
-      })
-      .then((imgjson) => {
-        party_img_json = data["images_key"];
-        candidates_data = data["candidate_details"][state];
-  
-        // Clear previous content and destroy previous Swiper instance if it exists
-        if (swiper) {
-          swiper.destroy(true, true);
-        }
-        swiperContainer.innerHTML = "";
-        for (const_name in candidates_data) {
-          for (let bigf = 0; bigf < candidates_data[const_name].length; bigf++) {
-            let votes1 = 0, votes2 = 0;
-            let tot_vts = 0;
-            stateDataJson[state][const_name.toLowerCase()]["candidates"].forEach((candidate) => {
-              if (candidate["cId"] == candidates_data[const_name][0]["id1"])
-                votes1 = candidate["vts"];
-              if (candidate["cId"] == candidates_data[const_name][0]["id2"])
-                votes2 = candidate["vts"];
-              tot_vts += candidate["vts"];
-            });
-            let prty1, prty2, cd1_votes, cd2_votes, name1, name2;
-            let cid1, cid2;
-            if (votes1 > votes2) {
-              cid1 = candidates_data[const_name][bigf]["id1"];
-              cid2 = candidates_data[const_name][bigf]["id2"];
-              prty1 = candidates_data[const_name][bigf]["party1"];
-              prty2 = candidates_data[const_name][bigf]["party2"];
-              cd1_votes = votes1;
-              cd2_votes = votes2;
-              name1 = candidates_data[const_name][bigf]["name1"];
-              name2 = candidates_data[const_name][bigf]["name2"];
-            } else {
-              cid2 = candidates_data[const_name][bigf]["id1"];
-              cid1 = candidates_data[const_name][bigf]["id2"];
-              prty2 = candidates_data[const_name][bigf]["party1"];
-              prty1 = candidates_data[const_name][bigf]["party2"];
-              cd2_votes = votes1;
-              cd1_votes = votes2;
-              name2 = candidates_data[const_name][bigf]["name1"];
-              name1 = candidates_data[const_name][bigf]["name2"];
-            }
-            let img1 = (cid1 in imgjson) ? 
-      `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png` :
-      `./images/partylogo/Unknown.svg`;
-      let img2 = (cid2 in imgjson) ? 
-      `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png` :
-      `./images/partylogo/Unknown.svg`;
-            let bar_length1 = (parseInt(cd1_votes) / parseInt(tot_vts)) * 100;
-            let bar_length2 = (parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
-            const slideMarkup = createSlide(
-              const_name,
-              state,
-              prty1,
-              prty2,
-              img1,
-              img2,
-              name1,
-              name2,
-              cd1_votes,
-              cd2_votes,
-              bar_length1,
-              bar_length2
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(
+              "Network response was not ok " + response.statusText
             );
-            swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
           }
-        }
-        // candidates_data.forEach(data => {
-        //   const slideMarkup = createSlide(data["const_name"], data["state"], data["cand_party1"], data["cand_party2"], data["candidateImg1"], data["candidateImg2"], data["cand_name1"], data["cand_name2"], data["votes1"], data["votes2"]);
-        //   swiperContainer.insertAdjacentHTML('beforeend', slideMarkup);
-        // });
-  
-        swiper = new Swiper(".slide-content", {
-          slidesPerView: 3,
-          spaceBetween: 40,
-          loop: true,
-          centerSlide: true,
-          fade: true,
-          grabCursor: true,
-          pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-            dynamicBullets: true,
-          },
-          navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-          },
-          breakpoints: {
-            0: {
-              slidesPerView: 1,
-            },
-            600: {
-              slidesPerView: 2,
-            },
-            950: {
-              slidesPerView: 3,
-            },
-            1600: {
-              slidesPerView: 4,
+          return response.json();
+        })
+        .then((imgjson) => {
+          party_img_json = data["images_key"];
+          candidates_data = data["candidate_details"][state];
+
+          // Clear previous content and destroy previous Swiper instance if it exists
+          if (swiper) {
+            swiper.destroy(true, true);
+          }
+          swiperContainer.innerHTML = "";
+          for (const_name in candidates_data) {
+            for (
+              let bigf = 0;
+              bigf < candidates_data[const_name].length;
+              bigf++
+            ) {
+              let votes1 = 0,
+                votes2 = 0;
+              let tot_vts = 0;
+              stateDataJson[state][const_name.toLowerCase()][
+                "candidates"
+              ].forEach((candidate) => {
+                if (candidate["cId"] == candidates_data[const_name][0]["id1"])
+                  votes1 = candidate["vts"];
+                if (candidate["cId"] == candidates_data[const_name][0]["id2"])
+                  votes2 = candidate["vts"];
+                tot_vts += candidate["vts"];
+              });
+              let prty1, prty2, cd1_votes, cd2_votes, name1, name2;
+              let cid1, cid2;
+              if (votes1 > votes2) {
+                cid1 = candidates_data[const_name][bigf]["id1"];
+                cid2 = candidates_data[const_name][bigf]["id2"];
+                prty1 = candidates_data[const_name][bigf]["party1"];
+                prty2 = candidates_data[const_name][bigf]["party2"];
+                cd1_votes = votes1;
+                cd2_votes = votes2;
+                name1 = candidates_data[const_name][bigf]["name1"];
+                name2 = candidates_data[const_name][bigf]["name2"];
+              } else {
+                cid2 = candidates_data[const_name][bigf]["id1"];
+                cid1 = candidates_data[const_name][bigf]["id2"];
+                prty2 = candidates_data[const_name][bigf]["party1"];
+                prty1 = candidates_data[const_name][bigf]["party2"];
+                cd2_votes = votes1;
+                cd1_votes = votes2;
+                name2 = candidates_data[const_name][bigf]["name1"];
+                name1 = candidates_data[const_name][bigf]["name2"];
+              }
+              let img1 =
+                cid1 in imgjson
+                  ? `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png`
+                  : `./images/partylogo/Unknown.svg`;
+              let img2 =
+                cid2 in imgjson
+                  ? `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png`
+                  : `./images/partylogo/Unknown.svg`;
+              let bar_length1 = (parseInt(cd1_votes) / parseInt(tot_vts)) * 100;
+              let bar_length2 = (parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
+              const slideMarkup = createSlide(
+                const_name,
+                state,
+                prty1,
+                prty2,
+                img1,
+                img2,
+                name1,
+                name2,
+                cd1_votes,
+                cd2_votes,
+                bar_length1,
+                bar_length2
+              );
+              swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
             }
-          },
-          autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-          },
-          speed: 1300,
+          }
+          // candidates_data.forEach(data => {
+          //   const slideMarkup = createSlide(data["const_name"], data["state"], data["cand_party1"], data["cand_party2"], data["candidateImg1"], data["candidateImg2"], data["cand_name1"], data["cand_name2"], data["votes1"], data["votes2"]);
+          //   swiperContainer.insertAdjacentHTML('beforeend', slideMarkup);
+          // });
+
+          swiper = new Swiper(".slide-content", {
+            slidesPerView: 3,
+            spaceBetween: 40,
+            loop: true,
+            centerSlide: true,
+            fade: true,
+            grabCursor: true,
+            pagination: {
+              el: ".swiper-pagination",
+              clickable: true,
+              dynamicBullets: true,
+            },
+            navigation: {
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            },
+            breakpoints: {
+              0: {
+                slidesPerView: 1,
+              },
+              600: {
+                slidesPerView: 2,
+              },
+              950: {
+                slidesPerView: 3,
+              },
+              1600: {
+                slidesPerView: 4,
+              },
+            },
+            autoplay: {
+              delay: 3000,
+              disableOnInteraction: false,
+            },
+            speed: 1300,
+          });
+
+          swiperContainer.addEventListener("mouseenter", function () {
+            swiper.autoplay.stop();
+          });
+
+          swiperContainer.addEventListener("mouseleave", function () {
+            swiper.autoplay.start();
+          });
         });
-  
-        swiperContainer.addEventListener("mouseenter", function () {
-          swiper.autoplay.stop();
-        });
-  
-        swiperContainer.addEventListener("mouseleave", function () {
-          swiper.autoplay.start();
-        });
-      })
-      })
-      .catch((error) => {
-        console.error(
-          "There has been a problem with your fetch operation:",
-          error
-        );
-      })
+    })
+    .catch((error) => {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
+    })
     .catch((error) => {
       console.error(
         "There has been a problem with your fetch operation:",
@@ -2610,7 +2828,10 @@ function getParameterByName(name, url = window.location.href) {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 function toTitleCase(name) {
-  return name.split(' ').map(word => {
-    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-  }).join(' ');
+  return name
+    .split(" ")
+    .map((word) => {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join(" ");
 }

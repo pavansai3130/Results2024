@@ -128,7 +128,7 @@
                   <nav aria-label="breadcrumb">
                      <ol class="breadcrumb">
                         <li class="breadcrumb-item" id="breadcrumb-india" style="display: none;"><a href="#"
-                              onclick="resetBreadcrumb()">India</a></li>
+                           onclick="resetBreadcrumb()">India</a></li>
                         <li class="breadcrumb-item" id="breadcrumb-state" style="display: none;"></a></li>
                         <li class="breadcrumb-item active" id="breadcrumb-constituency" style="display: none;"
                            aria-current="page"></li>
@@ -190,7 +190,7 @@
                   <div id="map" style="width: 100%; height:100vh;display: block;"></div>
                   <div id="containertool"></div>
                </div>
-               <div class="col-12 col-md-6 order-md-2 order-1">
+               <div class="col-12 col-md-6 order-md-2 order-2">
                   <p id="st_con_heading" style="font-size: 24px; margin-top: 24px;"></p>
                   <div style="display: flex;">
                      <div id="piechart" style="height: 300px; width: 300px; display:none"></div>
@@ -256,6 +256,8 @@
                                           </tr>
                                        </thead>
                                        <tbody id="tbody1">
+                                          
+
                                        </tbody>
                                     </table>
                                  </div>
@@ -365,7 +367,7 @@
                            </button> -->
                      </div>
 
-                     <!-- NEW -->
+         <!-- NEW -->
                      <div class="non-carousel-content d-block d-md-none">
                         <div id="ndaContent" class="col-6 col-sm-4">
                            <div>NDA
@@ -441,121 +443,115 @@
 
                   </div>
                   <div id="newcards" style="display: none;" class="row">
+                     </div>
                   </div>
                </div>
             </div>
-         </div>
-         <div class="row row2 mt-3 mx-lg-5 g-6 mx-sm-2">
-            <div class="col-12 col-md-6" id="mainContainer" style="width: 642px;">
-               <div id="stateTabeleContainer" class="table-responsive-sm rounded-3 "
-                  style="margin-top: 0.9375rem; box-shadow: 0px 1px 3px 0px rgba(16, 24, 40, 0.1);">
-                  <div class="d-flex justify-content-end">
-                     <!-- <input class="form-control order-2" id="stateSearch" type="text" placeholder="Search"> -->
-                     <form class="search-container order-2">
-                        <input class="form-control " type="text" id="stateSearch" placeholder="Search">
-                        <a href="#"><img class="search-icon"
+            <div class="row row2 mt-3 mx-lg-5 g-6 mx-sm-2">
+               <div class="col-12 col-md-6" id="mainContainer" style="width: 642px;">
+                  <div id="stateTabeleContainer" class="table-responsive-sm rounded-3 " style="margin-top: 0.9375rem; box-shadow: 0px 1px 3px 0px rgba(16, 24, 40, 0.1);" >
+                     <div class="d-flex justify-content-end">
+                        <!-- <input class="form-control order-2" id="stateSearch" type="text" placeholder="Search"> -->
+                        <form class="search-container order-2">
+                           <input class="form-control " type="text" id="stateSearch" placeholder="Search">
+                           <a href="#"><img class="search-icon"
                               src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"></a>
-                     </form>
-                  </div>
-                  <table id="mainTable" class="table table-bordered rounded-2 mt-2" id="stateTable">
-                     <thead>
-                        <tr>
-                           <th class="col-3 col-lg-4 align-middle" id="stateRow" scope="col">State</th>
-                           <th class="col-3 col-lg-2 align-middle" id="NDA" scope="col">NDA</th>
-                           <th class="col-3 col-lg-2 align-middle" id="INDIA" scope="col">I.N.D.I.A</th>
-                           <th class="col-3 col-lg-2 align-middle" id="Others" scope="col">Others</th>
-                        </tr>
-                     </thead>
-                     <tr id="referenceRow">
-                        <td id="stateName"></td>
-                        <td id="NDASeats">nda<span class="positive">()</span></td>
-                        <td id="INDIASeats"><span class="positive">()</span></td>
-                        <td id="OthersSeats"></td>
-                     </tr>
-                     <tbody id="allianceBody">
-                     </tbody>
-                  </table>
-                  <div id="statePagination" class="d-flex justify-content-between">
-                     <button id="prevButton" type="button" class="btn border rounded-3 px-3 ml-4 mb-2">
-                        < Previous</button>
-                           <button id="nextButton" type="button" class="btn border rounded-3 px-3 mr-4 mb-2">Next
-                              ></button>
-                  </div>
-               </div>
-               <!-- ----------------State Table------------------------------------ -->
-               <!-- Constitunecy Table -->
-               <div id="Constituency-res" style="margin-top: 0.9375rem;" class="table-responsive-sm"
-                  style="display: none;">
-                  <table id="constTable" class="table  table-bordered" style="margin-top: 0rem;margin-bottom: 0rem;">
-                     <div id="theading" class="d-flex" style="display: flex; align-items: center; ">
+                        </form>
                      </div>
-
-                     <thead class="thead">
-                        <tr>
-                           <th class="col-1 col-lg-3 align-middle sticky"
-                              style="background:#EAECF0; color: #101828; font-weight: 400;">Constituency
-                           </th>
-                           <th class="col-1 col-lg-3 align-middle"
-                              style="background: #12B76A; text-align: center; color: white; ">Leading/Won</th>
-                           <th class="col-1 col-lg-3 align-middle"
-                              style="background: #F96343; text-align: center;color: white;"> Trailing/Lost
-                           </th>
-                           <th class="col-1 col-lg-3 align-middle"
-                              style=" text-align: center;background:#EAECF0; color: #101828; font-weight: 400;">Margin
-                           </th>
+                     <table id="mainTable" class="table table-bordered rounded-2 mt-2"
+                         id="stateTable">
+                        <thead>
+                           <tr>
+                              <th class="col-3 col-lg-4 align-middle" id="stateRow" scope="col">State</th>
+                              <th class="col-3 col-lg-2 align-middle" id="NDA" scope="col">NDA</th>
+                              <th class="col-3 col-lg-2 align-middle" id="INDIA" scope="col">I.N.D.I.A</th>
+                              <th class="col-3 col-lg-2 align-middle" id="Others" scope="col">Others</th>
+                           </tr>
+                        </thead>
+                        <tr id="referenceRow">
+                           <td id="stateName"></td>
+                           <td id="NDASeats">nda<span class="positive">()</span></td>
+                           <td id="INDIASeats"><span class="positive">()</span></td>
+                           <td id="OthersSeats"></td>
                         </tr>
-                     </thead>
-                     <tbody id="table-body">
-                        <!-- Dynamic rows will be inserted here -->
-                     </tbody>
-                  </table>
-                  <div id="pagination-controls"
-                     style="display: flex; justify-content: space-between; margin-top: 0rem;">
-                     <!-- Pagination buttons will be inserted here -->
-                  </div>
-               </div>
-               <!-- table2 pavan -->
-               <div class="table-responsive-sm" id="Candidate-res" style="margin-top: 0.9375rem; display: none;">
-                  <table class="table table-bordered" style="margin-top: 0rem; margin-bottom: 0rem;">
-                     <div id="theading2" style="display: flex;align-items: center; ">
-                        <span id="constituency-name"></span>
-                        <input class="form-control" id="candidateinput" type="text" placeholder="Search">
+                        <tbody id="allianceBody">
+                        </tbody>
+                     </table>
+                     <div id="statePagination" class="d-flex justify-content-between">
+                        <button id="prevButton" type="button" class="btn border rounded-3 px-3 ml-4 mb-2">< Previous</button>
+                        <button id="nextButton" type="button" class="btn border rounded-3 px-3 mr-4 mb-2">Next ></button>
                      </div>
-                     <thead class="thead">
-                        <tr>
-                           <th style="background:#F9FAFB; color: #101828; position: sticky; left: 0;">Candidate</th>
-                           <th style="background: #F9FAFB; text-align: center; color: 101828;">Party</th>
-                           <th style="background: #F9FAFB; text-align: center;color: 101828; ">Votes</th>
-                           <th style="background:#F9FAFB; color: #101828;">Margin</th>
-                           <th style="background:#F9FAFB; color: #101828;">Margin</th>
-                           <th style="background:#F9FAFB; color: #101828;">2019Votes</th>
-                        </tr>
-                     </thead>
-                     <tbody class="candidateBody">
-                        <!-- Dynamic rows will be inserted here -->
-                     </tbody>
-                  </table>
-                  <div id="pagination-controls-candidates"
-                     style="display: flex; justify-content: space-between; margin-top: 0rem;">
-                     <!-- Pagination buttons will be inserted here -->
                   </div>
-               </div>
-            </div>
-            <!-- HARI CONTAINER----------------------------------------------------- -->
-            <div class="col-12 col-md-6" id="cardsContainer">
-               <div class="root">
-                  <div class="cardsHeader">
-                     <h2>Popular Candidates</h2>
-                     <button id="see-more-btn" class="button">(View All)</button>
-                  </div>
-                  <div class="container-fluid" id="cardsID" style="padding: 0;">
-                     <div id="root">
-                        <!-- Rows with cards will be added here -->
+                  <!-- ----------------State Table------------------------------------ -->
+                  <!-- Constitunecy Table -->
+                  <div id="Constituency-res" style="margin-top: 0.9375rem;" class="table-responsive-sm"
+                     style="display: none;">
+                     <table id="constTable" class="table  table-bordered" style="margin-top: 0rem;margin-bottom: 0rem;">
+                        <div id="theading" class="d-flex" style="display: flex; align-items: center; ">
+                        </div>
+                        
+                        <thead class="thead">
+                           <tr>
+                              <th class="col-1 col-lg-3 align-middle sticky" style="background:#EAECF0; color: #101828; font-weight: 400;">Constituency
+                              </th>
+                              <th class="col-1 col-lg-3 align-middle"
+                                 style="background: #12B76A; text-align: center; color: white; ">Leading/Won</th>
+                              <th class="col-1 col-lg-3 align-middle"
+                                 style="background: #F96343; text-align: center;color: white;"> Trailing/Lost
+                              </th>
+                              <th class="col-1 col-lg-3 align-middle" style=" text-align: center;background:#EAECF0; color: #101828; font-weight: 400;">Margin</th>
+                           </tr>
+                        </thead>
+                        <tbody id="table-body">
+                           <!-- Dynamic rows will be inserted here -->
+                        </tbody>
+                     </table>
+                     <div id="pagination-controls" style="display: flex; justify-content: space-between; margin-top: 0rem;">
+                        <!-- Pagination buttons will be inserted here -->
                      </div>
-                     <!-- End of the root -->
+                  </div>
+                  <!-- table2 pavan -->
+                  <div class="table-responsive-sm" id="Candidate-res" style="margin-top: 0.9375rem; display: none;">
+                     <table class="table table-bordered" style="margin-top: 0rem; margin-bottom: 0rem;">
+                        <div id="theading2" style="display: flex;align-items: center; ">
+                           <span id="constituency-name"></span>
+                           <input class="form-control" id="candidateinput" type="text" placeholder="Search">
+                        </div>
+                        <thead class="thead">
+                           <tr>
+                              <th style="background:#F9FAFB; color: #101828; position: sticky; left: 0;">Candidate</th>
+                              <th style="background: #F9FAFB; text-align: center; color: 101828;">Party</th>
+                              <th style="background: #F9FAFB; text-align: center;color: 101828; ">Votes</th>
+                              <th style="background:#F9FAFB; color: #101828;">Margin</th>
+                              <th style="background:#F9FAFB; color: #101828;">Margin</th>
+                              <th style="background:#F9FAFB; color: #101828;">2019Votes</th>
+                           </tr>
+                        </thead>
+                        <tbody class="candidateBody">
+                           <!-- Dynamic rows will be inserted here -->
+                        </tbody>
+                     </table>
+                     <div id="pagination-controls-candidates"
+                        style="display: flex; justify-content: space-between; margin-top: 0rem;">
+                        <!-- Pagination buttons will be inserted here -->
+                     </div>
                   </div>
                </div>
-            </div>
+               <!-- HARI CONTAINER----------------------------------------------------- -->
+               <div class="col-12 col-md-6" id="cardsContainer" >
+                  <div class="root">
+                     <div class="cardsHeader">
+                        <h2>Popular Candidates</h2>
+                        <button id="see-more-btn" class="button">(View All)</button>
+                     </div>
+                     <div class="container-fluid" id="cardsID" style="padding: 0;">
+                        <div id="root">
+                          <!-- Rows with cards will be added here -->
+                        </div>
+                        <!-- End of the root -->
+                      </div>
+                  </div>
+               </div>
 
 
          </div>

@@ -50,15 +50,18 @@
 //     console.error("Error occurred:", error);
 //   }
 // })();
+let handleSelection;
 /*-------------------------Hari Js---*/
 fetchCandidateData().then(() => {
   // Now candidatesData is populated and you can use it in your code
 });
 let candidatesData = [];
 async function fetchCandidateData() {
-  const response = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
+  const response = await fetch(
+    "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
+  );
   const data = await response.json();
-  candidatesData = data[0];  // Store the 1st index in the global variable
+  candidatesData = data[0]; // Store the 1st index in the global variable
 }
 
 let currentPage = 1;
@@ -715,7 +718,7 @@ document.addEventListener("DOMContentLoaded", function () {
     breadcrumbConstituency.style.display = "none";
   });
   document.getElementById("consti-bt").addEventListener("click", function () {
-    state_table_pressed=0;
+    state_table_pressed = 0;
     document.getElementById("Constituency-res").style.display = "none";
     console.log("display is none");
     document.getElementById("breadcrumb-india").style.display = "block";
@@ -766,20 +769,20 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function resetBreadcrumb() {
-  document.getElementById("state-select").value="default";
-  document.getElementById("myChart").style.display="block";
-  document.getElementById("chartsContainer").style.display="block";
-  document.getElementById("carouselContainer").style.display="block";
-  document.getElementById("st_con_heading").style.display="none";
-  document.getElementById("newcards").style.display="none";
+  document.getElementById("state-select").value = "default";
+  document.getElementById("myChart").style.display = "block";
+  document.getElementById("chartsContainer").style.display = "block";
+  document.getElementById("carouselContainer").style.display = "block";
+  document.getElementById("st_con_heading").style.display = "none";
+  document.getElementById("newcards").style.display = "none";
   document.getElementById("containertool2").style.display = "none";
   document.getElementById("containertool").style.display = "none";
   document.querySelector(".bt_grp").style.display = "block";
   document.getElementById("piechart").style.display = "none";
-  document.querySelector(".bt_grp").style.display="block";
-  document.getElementById('piechart').style.display="none";
-  document.getElementById('piechart2').style.display="none";
-  document.getElementById('piechart3').style.display="none";
+  document.querySelector(".bt_grp").style.display = "block";
+  document.getElementById("piechart").style.display = "none";
+  document.getElementById("piechart2").style.display = "none";
+  document.getElementById("piechart3").style.display = "none";
   updateBar(Object.values(allianceJson));
   renderAllianceResults();
   const breadcrumbState = document.getElementById("breadcrumb-state");
@@ -805,7 +808,7 @@ function resetBreadcrumb() {
     document.getElementById("stateTabeleContainer").style.display = "block";
     document.getElementById("Candidate-res").style.display = "none";
   }
-  document.getElementById("root").innerHTML="";
+  document.getElementById("root").innerHTML = "";
   fetchTop10();
 }
 
@@ -819,7 +822,7 @@ const zooming = {
   22: [21, 83, 6],
   26: [20.2, 73.3, 6],
   25: [20.5, 72, 7],
-  7: [28.67, 77.2,7],
+  7: [28.67, 77.2, 7],
   30: [15.4, 74.3, 8],
   24: [23, 72.2, 6],
   6: [29.3, 76.6, 7],
@@ -867,7 +870,7 @@ function render_whole_table() {
   tb.innerHTML = "";
 
   let count = 0;
-  console.log("The data is :",data);
+  console.log("The data is :", data);
   // Create all rows first
   for (let i of ftrs) {
     if (i.pc_id == null) continue;
@@ -1069,10 +1072,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   await fetchMoreCards();
 });
 
-function handleSelection() {
-  
+handleSelection = function (input) {
+  console.log(input);
+  console.log(state_codes[input]);
   document.querySelector(".bt_grp").style.display = "none";
-  document.getElementById("myChart").style.display="none";
+  document.getElementById("myChart").style.display = "none";
 
   document.getElementById("containertool").style.display = "none";
   // console.log(geo2);
@@ -1081,15 +1085,17 @@ function handleSelection() {
   document.getElementById("Candidate-res").style.display = "block";
   document.getElementById("india-map").style.display = "none";
   document.getElementById("map").style.display = "block";
-  document.getElementById('piechart3').style.display="none";
+  document.getElementById("piechart3").style.display = "none";
 
   const selectElement = document.getElementById("state-select");
-  const selectedValue = selectElement.value;
+  const selectedValue =
+    input !== undefined ? `${state_codes[input]}` : selectElement.value;
+  console.log(selectedValue);
   const text = selectElement.options[selectElement.selectedIndex].text;
-  let state_naming=document.getElementById("st_con_heading");
-  state_naming.innerHTML=`${text}`;
-  state_naming.style.marginBottom="40px";
-  document.getElementById("st_con_heading").style.display="block";
+  let state_naming = document.getElementById("st_con_heading");
+  state_naming.innerHTML = `${text}`;
+  state_naming.style.marginBottom = "40px";
+  document.getElementById("st_con_heading").style.display = "block";
   if (selectedValue === "reset") {
     resetMap();
     return;
@@ -1165,7 +1171,7 @@ function handleSelection() {
         }
 
         var filteredFeatures = geoJson.features.filter(
-          (feature) => feature.properties.st_code == selectElement.value
+          (feature) => feature.properties.st_code == selectedValue
         );
         var filteredGeoJson = { ...geoJson, features: filteredFeatures };
         geo2 = L.geoJSON(filteredGeoJson, {
@@ -1225,14 +1231,14 @@ function handleSelection() {
             text
           );
         }
-       
+
         handleStateClick(text);
         map.setView(
           [zooming[selectedValue][0], zooming[selectedValue][1]],
           zooming[selectedValue][2]
         );
         geo2.addTo(map);
-       
+
         updateMapBounds2();
         map.on("resize", delayedBoundsUpdate2);
 
@@ -1249,18 +1255,19 @@ function handleSelection() {
       .catch((e) => console.error(e));
   }
   render_state_carousel(text);
-}
+};
 
 function renderCandidateCards(item, row) {
-  
   const allianceImages = {
-    "NDA": "./images/imgs/NDA.png",
-    "INDIA": "./images/imgs/INDA.png",
-    "OTH": "./images/imgs/OTH.png"
+    NDA: "./images/imgs/NDA.png",
+    INDIA: "./images/imgs/INDA.png",
+    OTH: "./images/imgs/OTH.png",
   };
   // console.log(item.c')
   // alert(item.cId);
-  const imageUrl = `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${item.cId}.png` || allianceImages[item.alnce];
+  const imageUrl =
+    `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${item.cId}.png` ||
+    allianceImages[item.alnce];
 
   const constituency = item.constituency
     .split(" ")
@@ -1275,32 +1282,35 @@ function renderCandidateCards(item, row) {
   let nameColor;
   let MarginColor;
 
-
   if (item.alnce === "NDA") {
     bgColor = "linear-gradient(56deg, #FFF8DC,#FFE4BF)";
     arrColor = "linear-gradient(90deg, #EC8E30,#A65E17)";
     nameColor = "#FF9933";
     nameClass = "gradient-text-nda";
-    MarginColor="#ffed4a"
+    MarginColor = "#ffed4a";
   } else if (item.alnce === "INDIA") {
     nameColor = "#19AAED";
     nameClass = "gradient-text-inda";
-    MarginColor="#FFFFFF"
+    MarginColor = "#FFFFFF";
   } else if (item.alnce === "OTH") {
     nameClass = "gradient-text-oth";
     bgColor = "linear-gradient(56deg, #F5F5F5,#E0E0E0)";
     arrColor = "linear-gradient(90deg, #6F9088,#42615A)";
     nameColor = "#0c6b4b";
-    MarginColor="#FFFFFF"
+    MarginColor = "#FFFFFF";
   }
   card.style.background = bgColor;
   let position = 1;
   let voteDifference = 0;
-  let rsDecl = 1;  // Default value
+  let rsDecl = 1; // Default value
 
-  if (candidatesData[item.state] && candidatesData[item.state][item.constituency]) {
-    const constituencyData = candidatesData[item.state][item.constituency].candidates;
-    rsDecl = candidatesData[item.state][item.constituency].rsDecl;  // Get the rsDecl value
+  if (
+    candidatesData[item.state] &&
+    candidatesData[item.state][item.constituency]
+  ) {
+    const constituencyData =
+      candidatesData[item.state][item.constituency].candidates;
+    rsDecl = candidatesData[item.state][item.constituency].rsDecl; // Get the rsDecl value
     for (let i = 0; i < constituencyData.length; i++) {
       if (constituencyData[i].cId === item.cId) {
         position = i + 1;
@@ -1318,41 +1328,38 @@ function renderCandidateCards(item, row) {
   let ribbonColor;
   if (rsDecl === 1) {
     ribbonText = position === 1 ? "Won" : "Lost";
-    ribbonColor = position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+    ribbonColor =
+      position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
   } else {
     // ribbonText = "In Progress";
 
     ribbonText = position === 1 ? "Leading" : "Trailing";
-    ribbonColor = position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+    ribbonColor =
+      position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
   }
-  let leadTrailText = rsDecl === 1 ? "Margin" : (position === 1 ? "Leading by" : "Trailing by");
-  const Votes = new Intl.NumberFormat('en-IN').format(item.vts);
-  let VoteDiff = new Intl.NumberFormat('en-IN').format(voteDifference);
-  if(item.vts===0){
+  let leadTrailText =
+    rsDecl === 1 ? "Margin" : position === 1 ? "Leading by" : "Trailing by";
+  const Votes = new Intl.NumberFormat("en-IN").format(item.vts);
+  let VoteDiff = new Intl.NumberFormat("en-IN").format(voteDifference);
+  if (item.vts === 0) {
     ribbonText = "Awaited";
-    leadTrailText ="Results Awaited";
-    ribbonColor="grey";
-    VoteDiff=""
+    leadTrailText = "Results Awaited";
+    ribbonColor = "grey";
+    VoteDiff = "";
   }
 
   card.innerHTML = `
   <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
   <div class="temp custom-temp">
       <div class="card-body w-100">
-          <h3 class="card-title custom-card-title ${nameClass} ">${
-    item.cName
-  }</h3>
+          <h3 class="card-title custom-card-title ${nameClass} ">${item.cName}</h3>
           <div class="subheaders cd-flex align-items-center custom-subheaders" style="display:flex" > 
               <div class="logo"><img class="custom-img" src="./images/partylogo/${item.prty}.svg" alt=""></div>
               <h6 style="font-weight: bold;">${item.prty}</h6>
           </div>
-          <p class="card-text custom-card-text">${constituency} (${
-            item.state
-          })</p>
+          <p class="card-text custom-card-text">${constituency} (${item.state})</p>
           <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
-              <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
-                Votes
-              }
+              <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${Votes}
           </p>
       </div>
       <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
@@ -1479,7 +1486,7 @@ function displayPage(page, class_name) {
 }
 
 function render_state_table(feature, state) {
-  console.log("req data",data);
+  console.log("req data", data);
   state_table_pressed = 1;
   let count = 0;
   const tb = document.getElementById("table-body");
@@ -1600,7 +1607,7 @@ function render_state_table(feature, state) {
     }
   }
   console.log("afhkhbfz");
-  console.log(alliancePatries,feature);
+  console.log(alliancePatries, feature);
   const sortObjectByValuesDesc = (obj) =>
     Object.fromEntries(Object.entries(obj).sort(([, a], [, b]) => b - a));
 
@@ -1610,9 +1617,9 @@ function render_state_table(feature, state) {
   alliancePatries.others = sortObjectByValuesDesc(alliancePatries.others);
   document.getElementById("piechart").style.display = "block";
   drawpiechart(alliancePatries);
-  document.getElementById('piechart').style.display="block";
-  document.getElementById('piechart2').style.display="block";
-  drawpiechart(alliancePatries,feature);
+  document.getElementById("piechart").style.display = "block";
+  document.getElementById("piechart2").style.display = "block";
+  drawpiechart(alliancePatries, feature);
   populateCarousel();
 
   // Update the heading with the count of candidates
@@ -1696,7 +1703,7 @@ function render_state_table(feature, state) {
   });
   const selectElement = document.getElementById("state-select");
   const text = selectElement.options[selectElement.selectedIndex].text;
-  if (text!=="Select State") {
+  if (text !== "Select State") {
     displayCardsForState(text);
   } else if (state) {
     displayCardsForState(state);
@@ -1705,10 +1712,12 @@ function render_state_table(feature, state) {
     const rootElement = document.getElementById("root");
     rootElement.innerHTML = "";
     console.log("here are", candidates);
-    const filteredCandidates = candidates.filter(candidate => candidate.state === stateName); 
-    console.log('filtered candidates are : ' , filteredCandidates);
-  
-    let cardRowsNeeded = Math.ceil(count/3);
+    const filteredCandidates = candidates.filter(
+      (candidate) => candidate.state === stateName
+    );
+    console.log("filtered candidates are : ", filteredCandidates);
+
+    let cardRowsNeeded = Math.ceil(count / 3);
     if (cardRowsNeeded > 5) {
       cardRowsNeeded = 5;
     }
@@ -1725,41 +1734,42 @@ function render_state_table(feature, state) {
     }
   }
 }
-function drawpiechart(allainceparties,feature) {
+function drawpiechart(allainceparties, feature) {
   // Load google charts
-  google.charts.load('current', {'packages':['corechart']});
- 
-  let req_feature=feature;
-  let partyVotes={};
-  var totalvotes1=0;
-  for(c in req_feature)
-    {
-      for(actual_data in data[req_feature[c].pc_id]){
-        if(actual_data!=0)
-          {
-            totalvotes1+=data[req_feature[c].pc_id][actual_data]["votes"];
-            if(!Object.keys(partyVotes).includes(data[req_feature[c].pc_id][actual_data]["party"]))
-              {
-                partyVotes[data[req_feature[c].pc_id][actual_data]["party"]] = data[req_feature[c].pc_id][actual_data]["votes"];
-              }
-              else{
-                partyVotes[data[req_feature[c].pc_id][actual_data]["party"]] += data[req_feature[c].pc_id][actual_data]["votes"];
-              }
-          }
+  google.charts.load("current", { packages: ["corechart"] });
+
+  let req_feature = feature;
+  let partyVotes = {};
+  var totalvotes1 = 0;
+  for (c in req_feature) {
+    for (actual_data in data[req_feature[c].pc_id]) {
+      if (actual_data != 0) {
+        totalvotes1 += data[req_feature[c].pc_id][actual_data]["votes"];
+        if (
+          !Object.keys(partyVotes).includes(
+            data[req_feature[c].pc_id][actual_data]["party"]
+          )
+        ) {
+          partyVotes[data[req_feature[c].pc_id][actual_data]["party"]] =
+            data[req_feature[c].pc_id][actual_data]["votes"];
+        } else {
+          partyVotes[data[req_feature[c].pc_id][actual_data]["party"]] +=
+            data[req_feature[c].pc_id][actual_data]["votes"];
+        }
       }
-      
     }
-    console.log(partyVotes);
-    google.charts.setOnLoadCallback(drawChart);
+  }
+  console.log(partyVotes);
+  google.charts.setOnLoadCallback(drawChart);
 
   // Draw the chart and set the chart values
   function drawChart() {
     // Assuming alliancePatries is structured like this:
     var alliancePatries = allainceparties;
-    
+
     // Initialize the data array with headers
     var data = [["party", "votes"]];
-    var data2 =[["party","share"]];
+    var data2 = [["party", "share"]];
     // Function to populate the data array from alliancePatries
     function populateData() {
       for (var alliance in alliancePatries) {
@@ -1770,14 +1780,11 @@ function drawpiechart(allainceparties,feature) {
         }
       }
     }
-    for(let party in partyVotes)
-      {
-        console.log("the data#######",totalvotes1);
-        data2.push([party,(parseInt(partyVotes[party])/(totalvotes1))*100]);
-        
-      }
+    for (let party in partyVotes) {
+      console.log("the data#######", totalvotes1);
+      data2.push([party, (parseInt(partyVotes[party]) / totalvotes1) * 100]);
+    }
 
-    
     // Populate the data array
     populateData();
     var totalVotes = 0;
@@ -1787,7 +1794,7 @@ function drawpiechart(allainceparties,feature) {
 
     // Create the chart data table
     var chartData = google.visualization.arrayToDataTable(data);
-    var chartData2=google.visualization.arrayToDataTable(data2);
+    var chartData2 = google.visualization.arrayToDataTable(data2);
     var formatter = new google.visualization.NumberFormat({
       pattern: "#",
     });
@@ -1796,24 +1803,22 @@ function drawpiechart(allainceparties,feature) {
     var colors = data.slice(1).map(function (row) {
       return partyColors[row[0]] || "#D3D3D3";
     });
-    var color2=data2.slice(1).map(function(row)
-    {
+    var color2 = data2.slice(1).map(function (row) {
       return partyColors[row[0]] || "#D3D3D3";
     });
 
     var legendFontSize = window.innerWidth < 600 ? 8 : 12;
     // Optional; add a title and set the width and height of the chart
     var options = {
-
       title: "Votes Distribution",
       width: "fit-content",
       height: "fit-content",
-      legend: { 
-        position: 'bottom', 
+      legend: {
+        position: "bottom",
         textStyle: { fontSize: legendFontSize },
-        formatter: function(value, index, label) {
-          return label + ': ' + data[index + 1][1];
-        }
+        formatter: function (value, index, label) {
+          return label + ": " + data[index + 1][1];
+        },
       }, // Show legend
       pieSliceText: "value", // Display data value in slice
       tooltip: { trigger: "none" }, // Disable tooltip on hover
@@ -1823,16 +1828,15 @@ function drawpiechart(allainceparties,feature) {
       colors: colors, // Assign colors based on partyColors
     };
     var options2 = {
-
       title: "Vote Share",
       width: "fit-content",
       height: "fit-content",
-      legend: { 
-        position: 'bottom', 
+      legend: {
+        position: "bottom",
         textStyle: { fontSize: legendFontSize },
-        formatter: function(value, index, label) {
-          return label + ': ' + data[index + 1][1];
-        }
+        formatter: function (value, index, label) {
+          return label + ": " + data[index + 1][1];
+        },
       }, // Show legend
       pieSliceText: "value", // Display data value in slice
       tooltip: { trigger: "none" }, // Disable tooltip on hover
@@ -1850,8 +1854,6 @@ function drawpiechart(allainceparties,feature) {
     );
     chart.draw(chartData, options);
     chart2.draw(chartData2, options2);
-  
-
   }
 }
 
@@ -1952,7 +1954,7 @@ function closedata() {
   // if(!stateis_pressed)
   //   {
   document.getElementById("Constituency-res").style.display = "none";
-  document.getElementById("Constituency-res").style.display="none";
+  document.getElementById("Constituency-res").style.display = "none";
   document.getElementById("containertool").style.display = "none";
   // document.getElementById("stateTabeleContainer").style.display = "block";
   // document
@@ -1964,18 +1966,17 @@ function closedata() {
   }
   document.getElementById("Candidate-res").style.display = "none";
 }
-function render_table(code, page,constiti1,st) {
-
-  document.getElementById("chartsContainer").style.display="none";
-  document.getElementById("carouselContainer").style.display="none";
-  document.getElementById('piechart').style.display="none";
-  document.getElementById('piechart2').style.display="none";
-  document.getElementById('piechart3').style.display="block";
-  let state_naming=document.getElementById("st_con_heading");
-  state_naming.innerHTML=`${constiti1}&nbsp(${st})`;
-  state_naming.style.marginBottom="40px";
-  document.getElementById("st_con_heading").style.display="block";
-  document.getElementById("newcards").style.display="flex";
+function render_table(code, page, constiti1, st) {
+  document.getElementById("chartsContainer").style.display = "none";
+  document.getElementById("carouselContainer").style.display = "none";
+  document.getElementById("piechart").style.display = "none";
+  document.getElementById("piechart2").style.display = "none";
+  document.getElementById("piechart3").style.display = "block";
+  let state_naming = document.getElementById("st_con_heading");
+  state_naming.innerHTML = `${constiti1}&nbsp(${st})`;
+  state_naming.style.marginBottom = "40px";
+  document.getElementById("st_con_heading").style.display = "block";
+  document.getElementById("newcards").style.display = "flex";
   // var opentable = document.getElementById('Candidate-res');
   // if(opentable){
   //   opentable.scrollIntoView({ behavior: 'smooth' });
@@ -1984,7 +1985,7 @@ function render_table(code, page,constiti1,st) {
     breadcrumbState.style.display = "inline";
   }
   breadcrumbConstituency.style.display = "inline";
-  breadcrumbConstituency.style.color="block";
+  breadcrumbConstituency.style.color = "block";
   const tbody = document.querySelector(".candidateBody");
   tbody.innerHTML = "";
   let ct = 0;
@@ -2022,17 +2023,19 @@ function render_table(code, page,constiti1,st) {
   const pageSize = 10; // Number of rows per page
   const candi = data[code];
   const candi_len = candi.length;
-  const first_candi_card=candi[1];
-  const second_candi_card=candi[2];
-  document.getElementById('newcards').innerHTML=" ";
-  createCard(first_candi_card,document.getElementById('newcards'));
-  createCard(second_candi_card,document.getElementById('newcards'));
+  const first_candi_card = candi[1];
+  const second_candi_card = candi[2];
+  document.getElementById("newcards").innerHTML = " ";
+  createCard(first_candi_card, document.getElementById("newcards"));
+  createCard(second_candi_card, document.getElementById("newcards"));
   // Calculate start and end indices for the current page
-  let winner_2019=document.createElement("div");
-  winner_2019.innerHTML=`<h2 style="margin-top:20px;"> 2019 Winner</h2>
+  let winner_2019 = document.createElement("div");
+  winner_2019.innerHTML = `<h2 style="margin-top:20px;"> 2019 Winner</h2>
   <div class="winner_2019" style="padding:10px;"> 
   <span>${data_2019[code][1].candidateName}</span>
-  <div class="winner_img"><div><img src="${sym[data_2019[code][1].party]}">${data_2019[code][1].party} </div>${(data[code][1].votes.toLocaleString())} &nbspVotes
+  <div class="winner_img"><div><img src="${sym[data_2019[code][1].party]}">${
+    data_2019[code][1].party
+  } </div>${data[code][1].votes.toLocaleString()} &nbspVotes
   </div>
   </div>`;
   document.getElementById("newcards").appendChild(winner_2019);
@@ -2196,58 +2199,51 @@ function render_table(code, page,constiti1,st) {
         $(this).toggle(match);
       });
     });
-    drawpiechart2(code)
+  drawpiechart2(code);
 }
 
-function drawpiechart2(con)
-{
+function drawpiechart2(con) {
   console.log(con);
-  google.charts.load('current', {'packages':['corechart']});
-  let req_feature=data[con];
-  console.log("abcd",req_feature);
-  var totalvotes2=0;
-  let partyVotes={};
-  for(actual_data in req_feature)
-    {
-        console.log("data isss###",actual_data);
-        if(actual_data!=0)
-          {
-            totalvotes2+=data[con][actual_data]["votes"];
-            if(!Object.keys(partyVotes).includes(data[con][actual_data]["party"]))
-              {
-                partyVotes[data[con][actual_data]["party"]] = data[con][actual_data]["votes"];
-              }
-              else{
-                partyVotes[data[con][actual_data]["party"]] += data[con][actual_data]["votes"];
-              }
-          }
-      
-      
+  google.charts.load("current", { packages: ["corechart"] });
+  let req_feature = data[con];
+  console.log("abcd", req_feature);
+  var totalvotes2 = 0;
+  let partyVotes = {};
+  for (actual_data in req_feature) {
+    console.log("data isss###", actual_data);
+    if (actual_data != 0) {
+      totalvotes2 += data[con][actual_data]["votes"];
+      if (!Object.keys(partyVotes).includes(data[con][actual_data]["party"])) {
+        partyVotes[data[con][actual_data]["party"]] =
+          data[con][actual_data]["votes"];
+      } else {
+        partyVotes[data[con][actual_data]["party"]] +=
+          data[con][actual_data]["votes"];
+      }
     }
-    console.log(partyVotes);
-    google.charts.setOnLoadCallback(drawChart);
+  }
+  console.log(partyVotes);
+  google.charts.setOnLoadCallback(drawChart);
 
   // Draw the chart and set the chart values
   function drawChart() {
     // Assuming alliancePatries is structured like this:
-    
+
     // Initialize the data array with headers
-    var data2 =[["party","share"]];
+    var data2 = [["party", "share"]];
     // Function to populate the data array from alliancePatries
 
-    for(let party in partyVotes)
-      {
-        console.log("the data#######",totalvotes2);
-        data2.push([party,(parseInt(partyVotes[party])/(totalvotes2))*100]);
-        
-      }
+    for (let party in partyVotes) {
+      console.log("the data#######", totalvotes2);
+      data2.push([party, (parseInt(partyVotes[party]) / totalvotes2) * 100]);
+    }
 
     var totalVotes = 0;
     data2.slice(1).forEach(function (row) {
       totalVotes += row[1];
     });
 
-    var chartData3=google.visualization.arrayToDataTable(data2);
+    var chartData3 = google.visualization.arrayToDataTable(data2);
     var formatter = new google.visualization.NumberFormat({
       pattern: "#",
     });
@@ -2262,12 +2258,12 @@ function drawpiechart2(con)
       title: "Votes Share",
       width: "fit-content",
       height: "fit-content",
-      legend: { 
-        position: 'bottom', 
+      legend: {
+        position: "bottom",
         textStyle: { fontSize: legendFontSize },
-        formatter: function(value, index, label) {
-          return label + ': ' + chartData3.getValue(index, 1).toFixed(2) + '%';
-        }
+        formatter: function (value, index, label) {
+          return label + ": " + chartData3.getValue(index, 1).toFixed(2) + "%";
+        },
       }, // Show legend
       pieSliceText: "value", // Display data value in slice
       tooltip: { trigger: "none" }, // Disable tooltip on hover
@@ -2452,7 +2448,7 @@ function state_map(value, text) {
         geo.remove(map);
         map.setView([zooming[value][0], zooming[value][1]], zooming[value][2]);
         geo2.addTo(map);
-  
+
         updateMapBounds2();
         map.on("resize", delayedBoundsUpdate2);
 
@@ -2488,18 +2484,18 @@ function resetMap() {
 function resetstatebread() {
   geo.remove(map);
   console.log("mad");
-  document.getElementById("chartsContainer").style.display="block";
-  document.getElementById("carouselContainer").style.display="block";  
-  document.getElementById('piechart').style.display="block";
-  document.getElementById('piechart2').style.display="block";
-  document.getElementById('piechart3').style.display="none";
-  document.getElementById("newcards").style.display="none";
+  document.getElementById("chartsContainer").style.display = "block";
+  document.getElementById("carouselContainer").style.display = "block";
+  document.getElementById("piechart").style.display = "block";
+  document.getElementById("piechart2").style.display = "block";
+  document.getElementById("piechart3").style.display = "none";
+  document.getElementById("newcards").style.display = "none";
   document.getElementById("stateTabeleContainer").style.display = "none";
   document.getElementById("containertool").style.display = "none";
-  let state_naming=document.getElementById("st_con_heading");
-  state_naming.innerHTML=`${breadcrumbState.innerHTML}`;
-  state_naming.style.marginBottom="40px";
-  document.getElementById("st_con_heading").style.display="block";
+  let state_naming = document.getElementById("st_con_heading");
+  state_naming.innerHTML = `${breadcrumbState.innerHTML}`;
+  state_naming.style.marginBottom = "40px";
+  document.getElementById("st_con_heading").style.display = "block";
   breadcrumbConstituency.style.display = "none";
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";
@@ -2635,7 +2631,7 @@ function resetstatebread() {
           text
         );
       }
-    
+
       geo.remove(map);
       console.log(pressed);
       handleStateClick(breadcrumbState.textContent);
@@ -2670,16 +2666,16 @@ function resetstatebread_option() {
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";
   document.getElementById("containertool").style.display = "none";
-  document.getElementById("chartsContainer").style.display="block";
-  document.getElementById("carouselContainer").style.display="block";  
-  document.getElementById("newcards").style.display="none";
-  document.getElementById('piechart').style.display="block";
-  document.getElementById('piechart2').style.display="block";
-  document.getElementById('piechart3').style.display="none";
-  let state_naming=document.getElementById("st_con_heading");
-  state_naming.innerHTML=`${breadcrumbState.innerHTML}`;
-  state_naming.style.marginBottom="40px";
-  document.getElementById("st_con_heading").style.display="block";
+  document.getElementById("chartsContainer").style.display = "block";
+  document.getElementById("carouselContainer").style.display = "block";
+  document.getElementById("newcards").style.display = "none";
+  document.getElementById("piechart").style.display = "block";
+  document.getElementById("piechart2").style.display = "block";
+  document.getElementById("piechart3").style.display = "none";
+  let state_naming = document.getElementById("st_con_heading");
+  state_naming.innerHTML = `${breadcrumbState.innerHTML}`;
+  state_naming.style.marginBottom = "40px";
+  document.getElementById("st_con_heading").style.display = "block";
 }
 function resetstatebread2() {
   render2();
@@ -2687,16 +2683,16 @@ function resetstatebread2() {
   breadcrumbConstituency.style.display = "none";
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";
-  document.getElementById("chartsContainer").style.display="block";
-  document.getElementById("carouselContainer").style.display="block";  
-  document.getElementById("newcards").style.display="none";
-  document.getElementById('piechart').style.display="block";
-  document.getElementById('piechart2').style.display="block";
-  document.getElementById('piechart3').style.display="none";
-  let state_naming=document.getElementById("st_con_heading");
-  state_naming.innerHTML=`${breadcrumbState.innerHTML})`;
-  state_naming.style.marginBottom="40px";
-  document.getElementById("st_con_heading").style.display="block";
+  document.getElementById("chartsContainer").style.display = "block";
+  document.getElementById("carouselContainer").style.display = "block";
+  document.getElementById("newcards").style.display = "none";
+  document.getElementById("piechart").style.display = "block";
+  document.getElementById("piechart2").style.display = "block";
+  document.getElementById("piechart3").style.display = "none";
+  let state_naming = document.getElementById("st_con_heading");
+  state_naming.innerHTML = `${breadcrumbState.innerHTML})`;
+  state_naming.style.marginBottom = "40px";
+  document.getElementById("st_con_heading").style.display = "block";
 }
 
 var swiper;
@@ -2713,24 +2709,30 @@ function render_whole_carousel() {
         throw new Error("Network response was not ok " + response.statusText);
       }
       return response.json();
-    }).then((data2024) => {
+    })
+    .then((data2024) => {
       fetch("../data/partyicon-candimg.json")
         .then((response) => {
           if (!response.ok) {
-            throw new Error("Network response was not ok " + response.statusText);
+            throw new Error(
+              "Network response was not ok " + response.statusText
+            );
           }
           return response.json();
         })
-        .then((data)=>{
+        .then((data) => {
           fetch("./data/overallpopular.json")
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Network response was not ok " + response.statusText);
-            }
-            return response.json();
-          }).then((imgjson) => {
-            render_whole_carousel_fun(data2024, data, imgjson)
-          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(
+                  "Network response was not ok " + response.statusText
+                );
+              }
+              return response.json();
+            })
+            .then((imgjson) => {
+              render_whole_carousel_fun(data2024, data, imgjson);
+            });
         })
         .catch((error) => {
           console.error(
@@ -2739,123 +2741,130 @@ function render_whole_carousel() {
           );
         });
     });
-
-
 }
 
 function render_whole_carousel_fun(data2024, data, imgjson) {
   let swiperContainer = document.getElementById("slider_div");
   let party_img_json, candidates_data;
-    party_img_json = data["images_key"];
-    candidates_data = data["candidate_details"];
+  party_img_json = data["images_key"];
+  candidates_data = data["candidate_details"];
 
-    // Clear previous content and destroy previous Swiper instance if it exists
-    if (swiper) {
-      swiper.destroy(true, true);
+  // Clear previous content and destroy previous Swiper instance if it exists
+  if (swiper) {
+    swiper.destroy(true, true);
+  }
+  swiperContainer.innerHTML = "";
+
+  candidates_data.forEach((data) => {
+    let cd1_votes = 0,
+      cd2_votes = 0,
+      tot_vts = 0;
+    let cid1, cid2;
+    // console.log(data2024[0]["Andhra Pradesh"]);
+    data2024[0][data["state"]][data["const_name"].toLowerCase()][
+      "candidates"
+    ].forEach((candidate) => {
+      // console.log("id" + candidate["cId"]);
+      if (candidate["cId"] == data["id1"]) cd1_votes = candidate["vts"];
+      if (candidate["cId"] == data["id2"]) cd2_votes = candidate["vts"];
+      tot_vts += candidate["vts"];
+    });
+    // console.log(votes1 + " " + votes2);
+    let prty1, prty2, name1, name2, votes1, votes2;
+    if (cd1_votes > cd2_votes) {
+      cid1 = data["id1"];
+      cid2 = data["id2"];
+      prty2 = data["cand_party2"];
+      prty1 = data["cand_party1"];
+      name2 = data["cand_name2"];
+      name1 = data["cand_name1"];
+      votes2 = cd2_votes;
+      votes1 = cd1_votes;
+    } else {
+      cid2 = data["id1"];
+      cid1 = data["id2"];
+      prty1 = data["cand_party2"];
+      prty2 = data["cand_party1"];
+      name1 = data["cand_name2"];
+      name2 = data["cand_name1"];
+      votes1 = cd2_votes;
+      votes2 = cd1_votes;
     }
-    swiperContainer.innerHTML = "";
-
-    candidates_data.forEach((data) => {
-      let cd1_votes = 0, cd2_votes = 0, tot_vts = 0;
-      let cid1, cid2;
-      // console.log(data2024[0]["Andhra Pradesh"]);
-      data2024[0][data["state"]][data["const_name"].toLowerCase()]["candidates"].forEach((candidate) => {
-        // console.log("id" + candidate["cId"]);
-        if (candidate["cId"] == data["id1"])
-          cd1_votes = candidate["vts"];
-        if (candidate["cId"] == data["id2"])
-          cd2_votes = candidate["vts"];
-        tot_vts += candidate["vts"];
-      });
-      // console.log(votes1 + " " + votes2);
-      let prty1, prty2, name1, name2, votes1, votes2;
-      if(cd1_votes > cd2_votes) {
-        cid1 = data["id1"];
-        cid2 = data["id2"];
-        prty2 = data["cand_party2"];
-        prty1 = data["cand_party1"];
-        name2 = data["cand_name2"];
-        name1 = data["cand_name1"];
-        votes2 = cd2_votes;
-        votes1 = cd1_votes;
-      }else {
-        cid2 = data["id1"];
-        cid1 = data["id2"];
-        prty1 = data["cand_party2"];
-        prty2 = data["cand_party1"];
-        name1 = data["cand_name2"];
-        name2 = data["cand_name1"];
-        votes1 = cd2_votes;
-        votes2 = cd1_votes;
+    let img1 =
+      cid1 in imgjson
+        ? `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png`
+        : `./images/other/partylogo/Unknown.svg`;
+    let img2 =
+      cid2 in imgjson
+        ? `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png`
+        : `./images/other/partylogo/Unknown.svg`;
+    let bar_length1 = (parseInt(votes1) / parseInt(tot_vts)) * 100;
+    let bar_length2 = (parseInt(votes2) / parseInt(tot_vts)) * 100;
+    const slideMarkup = createSlide(
+      data["const_name"],
+      data["state"],
+      prty1,
+      prty2,
+      img1,
+      img2,
+      name1,
+      name2,
+      votes1,
+      votes2,
+      bar_length1,
+      bar_length2
+    );
+    function createSlide(
+      const_name,
+      state,
+      partySymbol1,
+      partySymbol2,
+      candidateImg1,
+      candidateImg2,
+      cand_name1,
+      cand_name2,
+      votes1,
+      votes2,
+      bar_length1,
+      bar_length2
+    ) {
+      let party_path1 =
+        partySymbol1 in party_img_json
+          ? party_img_json[partySymbol1]
+          : party_img_json["default"];
+      let party_path2 =
+        partySymbol2 in party_img_json
+          ? party_img_json[partySymbol2]
+          : party_img_json["default"];
+      let state_img =
+        state.toLowerCase() in party_img_json
+          ? party_img_json[state.toLowerCase()]
+          : "./imgs2/madhya_pradesh.jpg";
+      if (votes1 == 0 && votes2 == 0) {
+        votes1 = "Awaited";
+        votes2 = "Awaited";
+      } else {
+        votes1 = new Intl.NumberFormat("en-IN").format(votes1);
+        votes2 = new Intl.NumberFormat("en-IN").format(votes2);
       }
-      let img1 = (cid1 in imgjson) ? 
-      `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png` :
-      `./images/other/partylogo/Unknown.svg`;
-      let img2 = (cid2 in imgjson) ? 
-      `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png` :
-      `./images/other/partylogo/Unknown.svg`;
-      let bar_length1 = (parseInt(votes1) / parseInt(tot_vts)) * 100;
-      let bar_length2 = (parseInt(votes2) / parseInt(tot_vts)) * 100;
-      const slideMarkup = createSlide(
-        data["const_name"],
-        data["state"],
-        prty1,
-        prty2,
-        img1,
-        img2,
-        name1,
-        name2,
-        votes1,
-        votes2,
-        bar_length1,
-        bar_length2
-      );
-      function createSlide(
-        const_name,
-        state,
-        partySymbol1,
-        partySymbol2,
-        candidateImg1,
-        candidateImg2,
-        cand_name1,
-        cand_name2,
-        votes1,
-        votes2,
-        bar_length1,
-        bar_length2
-      ) {
-        let party_path1 =
-          partySymbol1 in party_img_json
-            ? party_img_json[partySymbol1]
-            : party_img_json["default"];
-        let party_path2 =
-          partySymbol2 in party_img_json
-            ? party_img_json[partySymbol2]
-            : party_img_json["default"];
-        let state_img =
-          state.toLowerCase() in party_img_json
-            ? party_img_json[state.toLowerCase()]
-            : "./imgs2/madhya_pradesh.jpg";
-            if(votes1 == 0 && votes2 == 0) {
-              votes1 = "Awaited";
-              votes2 = "Awaited";
-            }else {
-              votes1 = new Intl.NumberFormat('en-IN').format(votes1);
-              votes2 = new Intl.NumberFormat('en-IN').format(votes2)
-            }
-        return `
+      return `
         <div class="card swiper-slide">
-            <span class="state_name">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
+            <span class="state_name">${toTitleCase(
+              const_name
+            )} <span class="state_party_slot">(${toTitleCase(
+        state
+      )})</span></span>
             <div class="cand_desc1">
                 <span class="img_container">
                     <img class="party_symbol" src=${party_path1} alt="">
                     <img class="cand_img1" src="${candidateImg1}" alt="">
                 </span>
                 <div class="desc_container">
-                    <div class="cand_name1">${toTitleCase(cand_name1)} <span class="state_party_slot">(${partySymbol1})</span></div>
+                    <div class="cand_name1">${toTitleCase(
+                      cand_name1
+                    )} <span class="state_party_slot">(${partySymbol1})</span></div>
                     <span class="lead_bar">
-              <span style="width:${bar_length1
-                }%;" class="leadbar"> </span><span style="color:black;margin:3px">
+              <span style="width:${bar_length1}%;" class="leadbar"> </span><span style="color:black;margin:3px">
               ${votes1}</span>
               </span>
                 </div>
@@ -2866,10 +2875,11 @@ function render_whole_carousel_fun(data2024, data, imgjson) {
                     <img class="cand_img1" src="${candidateImg2}" alt="">
                 </span>
                 <div class="desc_container">
-                    <div class="cand_name1">${toTitleCase(cand_name2)} <span class="state_party_slot">(${partySymbol2})</span></div>
+                    <div class="cand_name1">${toTitleCase(
+                      cand_name2
+                    )} <span class="state_party_slot">(${partySymbol2})</span></div>
                     <span class="trail_bar">
-              <span style="width:${bar_length2
-                }%;" class="trailbar"></span><span style="color:black;margin:3px">${votes2}</span>
+              <span style="width:${bar_length2}%;" class="trailbar"></span><span style="color:black;margin:3px">${votes2}</span>
               </span>
                 </div>
             </div>
@@ -2878,89 +2888,98 @@ function render_whole_carousel_fun(data2024, data, imgjson) {
             </div>
         </div>
         `;
-      }
-      swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
-    });
+    }
+    swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
+  });
 
-    swiper = new Swiper(".slide-content", {
-      slidesPerView: 3,
-      spaceBetween: 50,
-      loop: true,
-      centerSlide: true,
-      fade: true,
-      grabCursor: true,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-        dynamicBullets: true,
+  swiper = new Swiper(".slide-content", {
+    slidesPerView: 3,
+    spaceBetween: 50,
+    loop: true,
+    centerSlide: true,
+    fade: true,
+    grabCursor: true,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+      dynamicBullets: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+      0: {
+        slidesPerView: 1,
       },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
+      600: {
+        slidesPerView: 2,
       },
-      breakpoints: {
-        0: {
-          slidesPerView: 1,
-        },
-        600: {
-          slidesPerView: 2,
-        },
-        950: {
-          slidesPerView: 3,
-        },
-        1600: {
-          slidesPerView: 4,
-        }
+      950: {
+        slidesPerView: 3,
       },
-      autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
+      1600: {
+        slidesPerView: 4,
       },
-      speed: 1300,
-    });
+    },
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+    speed: 1300,
+  });
 
-    swiperContainer.addEventListener("mouseenter", function () {
-      swiper.autoplay.stop();
-    });
+  swiperContainer.addEventListener("mouseenter", function () {
+    swiper.autoplay.stop();
+  });
 
-    swiperContainer.addEventListener("mouseleave", function () {
-      swiper.autoplay.start();
-    });
+  swiperContainer.addEventListener("mouseleave", function () {
+    swiper.autoplay.start();
+  });
 }
 function toTitleCase(name) {
-  return name.split(' ').map(word => {
-    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-  }).join(' ');
+  return name
+    .split(" ")
+    .map((word) => {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join(" ");
 }
 function viewingstate(stateId) {
-  var m = document.getElementById('india-map');
-  if(m){
-    m.scrollIntoView({ behavior: 'smooth' });
+  var m = document.getElementById("india-map");
+  if (m) {
+    m.scrollIntoView({ behavior: "smooth" });
   }
-  var mainbar = document.getElementById('map');
-  if(mainbar){
-    mainbar.scrollIntoView({ behavior: 'smooth' });
+  var mainbar = document.getElementById("map");
+  if (mainbar) {
+    mainbar.scrollIntoView({ behavior: "smooth" });
   }
-  var dropdown = document.getElementById('state-select');
+  var dropdown = document.getElementById("state-select");
   if (dropdown) {
-      for (var i = 0; i < dropdown.options.length; i++) {
-          var option = dropdown.options[i];
-          console.log(option.dataset.st_code +" "+stateId+" "+option.dataset.st_code === stateId);
-          if (option.dataset.st_code == stateId) {
-              dropdown.selectedIndex = i;
-              break;
-          }
+    for (var i = 0; i < dropdown.options.length; i++) {
+      var option = dropdown.options[i];
+      console.log(
+        option.dataset.st_code +
+          " " +
+          stateId +
+          " " +
+          option.dataset.st_code ===
+          stateId
+      );
+      if (option.dataset.st_code == stateId) {
+        dropdown.selectedIndex = i;
+        break;
       }
+    }
   }
   handleSelection();
 }
 
-
-function createCard(item,id) {
+function createCard(item, id) {
   const allianceImages = {
-    "NDA": "./images/imgs/NDA  (1).png",
-    "INDIA": "./images/imgs/NDA  (2).png",
-    "OTH": "./images/imgs/NDA  (3).png"
+    NDA: "./images/imgs/NDA  (1).png",
+    INDIA: "./images/imgs/NDA  (2).png",
+    OTH: "./images/imgs/NDA  (3).png",
   };
   const imageUrl = item.perimg || allianceImages[item.alliance];
 
@@ -2985,28 +3004,27 @@ function createCard(item,id) {
     nameColor = "#0c6b4b";
   }
 
-
   card.style.background = bgColor;
 
   const ribbonText = item.lead ? "Leading" : "Trailing";
-  const ribbonColor = item.lead ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+  const ribbonColor = item.lead
+    ? "rgba(34, 177, 76, 255)"
+    : "rgba(240, 68, 56, 255)";
 
   card.innerHTML = `
   <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
   <div class="temp custom-temp">
       <div class="card-body w-100">
           <h3 class="card-title custom-card-title" style="color:${nameColor}">${
-item.candidateName
-}</h3>
+    item.candidateName
+  }</h3>
           <div class="subheaders cd-flex align-items-center custom-subheaders" style="display:flex">
               <div class="logo"><img class="custom-img" src="${
                 sym[item.party]
               }" alt=""></div>
               <h6 style="font-weight: bold;">${item.party}</h6>
           </div>
-          <p class="card-text custom-card-text">${
-            item.constituencyName
-          }</p>
+          <p class="card-text custom-card-text">${item.constituencyName}</p>
           <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
               <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
                 item.votes
@@ -3017,9 +3035,7 @@ item.candidateName
           <p class="card-text mb-1 custom-iribbon-text">${
             item.lead ? "Leading by" : "Trailing by"
           }</p>
-          <p class="card-text custom-iribbon-text-votes">${
-            item.lead2votes
-          }</p>
+          <p class="card-text custom-iribbon-text-votes">${item.lead2votes}</p>
       </div>
   </div>
   <div class="person-image d-flex custom-person-image">
