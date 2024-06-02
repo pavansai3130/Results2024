@@ -68,8 +68,8 @@ function represent_All_fun(data2024) {
                 votes2 = candidate["vts"];
               tot_vts += candidate["vts"];
             });
-            votes1 = 5000000;
-            votes2 = 5000000;
+            // votes1 = 5000000;
+            // votes2 = 5000000;
             if (votes1 > votes2) {
               prty1 = obj["party1"];
               prty2 = obj["party2"];
@@ -97,7 +97,6 @@ function represent_All_fun(data2024) {
               state.toLowerCase() in party_img_json
                 ? party_img_json[state.toLowerCase()]
                 : "./images/imgs2/madhya_pradesh.png";
-            tot_vts = 10000000;
             let bar_length1 = (parseInt(cd1_votes) / parseInt(tot_vts)) * 100;
             let bar_length2 = (parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
             temp_data.push(toTitleCase(obj["name1"]));
