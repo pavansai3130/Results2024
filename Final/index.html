@@ -124,68 +124,70 @@
           <div class="container-fluid ">
          <!-- Page 1: Landing Page -->
          <div class="container-fluid landing-page p-0 ">
+            <nav aria-label="breadcrumb" class=" mx-lg-5 g-6 mx-sm-2">
+               <ol class="breadcrumb">
+                  <li class="breadcrumb-item" id="breadcrumb-india" style="display: block;"><a href="#"
+                     onclick="resetBreadcrumb()">India</a></li>
+                     <li class="breadcrumb-item" id="breadcrumb-state" style="display: none;"></a></li>
+                     <li class="breadcrumb-item active" id="breadcrumb-constituency" style="display: none;"
+                     aria-current="page"></li>
+                  </ol>
+               </nav>
+               <div class="row w-sm-100   mx-lg-5 g-6 mx-sm-2" id="selection">                      
+                  <div class="col d-flex justify-content-start order-2 ">
+                     <div class="" style="width: 120px;">
+                        <select class=" " id="state-select" onchange="handleSelection()">
+                           <option value="default" selected>Select State</option>
+                           <!-- <option value="reset">Reset</option> -->
+                           <option data-st_code="35" value="35">Andaman and Nicobar Islands</option>
+                           <option data-st_code="37" value="37">Andhra Pradesh</option>
+                           <option data-st_code="12" value="12">Arunachal Pradesh</option>
+                           <option data-st_code="18" value="18">Assam</option>
+                           <option data-st_code="10" value="10">Bihar</option>
+                           <option data-st_code="4" value="4">Chandigarh</option>
+                           <option data-st_code="22" value="22">Chhattisgarh</option>
+                           <option data-st_code="26" value="26">Dadra and Nagar Haveli</option>
+                           <option data-st_code="25" value="25">Daman and Diu</option>
+                           <option data-st_code="7" value="7">Delhi</option>
+                           <option data-st_code="30" value="30">Goa</option>
+                           <option data-st_code="24" value="24">Gujarat</option>
+                           <option data-st_code="6" value="6">Haryana</option>
+                           <option data-st_code="2" value="2">Himachal Pradesh</option>
+                           <option data-st_code="1" value="1">Jammu and Kashmir</option>
+                           <option data-st_code="20" value="20">Jharkhand</option>
+                           <option data-st_code="29" value="29">Karnataka</option>
+                           <option data-st_code="32" value="32">Kerala</option>
+                           <option data-st_code="31" value="31">Lakshadweep</option>
+                           <option data-st_code="23" value="23">Madhya Pradesh</option>
+                           <option data-st_code="27" value="27">Maharashtra</option>
+                           <option data-st_code="14" value="14">Manipur</option>
+                           <option data-st_code="17" value="17">Meghalaya</option>
+                           <option data-st_code="15" value="15">Mizoram</option>
+                           <option data-st_code="13" value="13">Nagaland</option>
+                           <option data-st_code="21" value="21">Odisha</option>
+                           <option data-st_code="34" value="34">Puducherry</option>
+                           <option data-st_code="3" value="3">Punjab</option>
+                           <option data-st_code="8" value="8">Rajasthan</option>
+                           <option data-st_code="11" value="11">Sikkim</option>
+                           <option data-st_code="33" value="33">Tamil Nadu</option>
+                           <option data-st_code="36" value="36">Telangana</option>
+                           <option data-st_code="16" value="16">Tripura</option>
+                           <option data-st_code="9" value="9">Uttar Pradesh</option>
+                           <option data-st_code="5" value="5">Uttarakhand</option>
+                           <option data-st_code="19" value="19">West Bengal</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col order-1">
+                     <div class="bt_grp">
+                        <button type="button" id="state-bt">States</button>
+                        <button type="button" id="consti-bt">Constituency</button>
+                     </div>
+                  </div>
+               </div>
             <div class="row row1 mt-4 mx-lg-5 g-6 mx-sm-2 mb-4 ">
                <div class="col-12 col-md-6 order-md-1 order-2">
-                  <nav aria-label="breadcrumb">
-                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item" id="breadcrumb-india" style="display: block;"><a href="#"
-                           onclick="resetBreadcrumb()">India</a></li>
-                        <li class="breadcrumb-item" id="breadcrumb-state" style="display: none;"></a></li>
-                        <li class="breadcrumb-item active" id="breadcrumb-constituency" style="display: none;"
-                           aria-current="page"></li>
-                     </ol>
-                  </nav>
                   <div class="row ">
-                     <div class="col d-flex justify-content-start order-2 ">
-                        <div class="" style="width: 120px;">
-                           <select class=" " id="state-select" onchange="handleSelection()">
-                              <option value="default" selected>Select State</option>
-                              <!-- <option value="reset">Reset</option> -->
-                              <option data-st_code="35" value="35">Andaman and Nicobar Islands</option>
-                              <option data-st_code="37" value="37">Andhra Pradesh</option>
-                              <option data-st_code="12" value="12">Arunachal Pradesh</option>
-                              <option data-st_code="18" value="18">Assam</option>
-                              <option data-st_code="10" value="10">Bihar</option>
-                              <option data-st_code="4" value="4">Chandigarh</option>
-                              <option data-st_code="22" value="22">Chhattisgarh</option>
-                              <option data-st_code="26" value="26">Dadra and Nagar Haveli</option>
-                              <option data-st_code="25" value="25">Daman and Diu</option>
-                              <option data-st_code="7" value="7">Delhi</option>
-                              <option data-st_code="30" value="30">Goa</option>
-                              <option data-st_code="24" value="24">Gujarat</option>
-                              <option data-st_code="6" value="6">Haryana</option>
-                              <option data-st_code="2" value="2">Himachal Pradesh</option>
-                              <option data-st_code="1" value="1">Jammu and Kashmir</option>
-                              <option data-st_code="20" value="20">Jharkhand</option>
-                              <option data-st_code="29" value="29">Karnataka</option>
-                              <option data-st_code="32" value="32">Kerala</option>
-                              <option data-st_code="31" value="31">Lakshadweep</option>
-                              <option data-st_code="23" value="23">Madhya Pradesh</option>
-                              <option data-st_code="27" value="27">Maharashtra</option>
-                              <option data-st_code="14" value="14">Manipur</option>
-                              <option data-st_code="17" value="17">Meghalaya</option>
-                              <option data-st_code="15" value="15">Mizoram</option>
-                              <option data-st_code="13" value="13">Nagaland</option>
-                              <option data-st_code="21" value="21">Odisha</option>
-                              <option data-st_code="34" value="34">Puducherry</option>
-                              <option data-st_code="3" value="3">Punjab</option>
-                              <option data-st_code="8" value="8">Rajasthan</option>
-                              <option data-st_code="11" value="11">Sikkim</option>
-                              <option data-st_code="33" value="33">Tamil Nadu</option>
-                              <option data-st_code="36" value="36">Telangana</option>
-                              <option data-st_code="16" value="16">Tripura</option>
-                              <option data-st_code="9" value="9">Uttar Pradesh</option>
-                              <option data-st_code="5" value="5">Uttarakhand</option>
-                              <option data-st_code="19" value="19">West Bengal</option>
-                           </select>
-                        </div>
-                     </div>
-                     <div class="col order-1">
-                        <div class="bt_grp">
-                           <button type="button" id="state-bt">States</button>
-                           <button type="button" id="consti-bt">Constituency</button>
-                        </div>
-                     </div>
                   </div>
                   <div id="india-map"></div>
                   <div id="map" style="width: 100%; height:100vh;display: block;"></div>
