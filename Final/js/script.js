@@ -1143,10 +1143,10 @@ async function fetchJSON() {
 $(document).ready(async function () {
   await fetchJSON();
   await fetchJSON2(
-    "../data/election2019.json",
-    "../data/stateAllianceCount.json"
+    "./data/election2019.json",
+    "./data/stateAllianceCount.json"
   );
-  await fetchGeoJSON("../data/geo.json");
+  await fetchGeoJSON("./data/geo.json");
   let intervalId = setInterval(async () => {
     await fetchJSON();
     // handleStateClick(lastClickedState);
@@ -1639,8 +1639,165 @@ $(document).ready(async function () {
   };
 
   // Render the chart
-  const ctx = document.getElementById("myChart").getContext("2d");
-  new Chart(ctx, config);
+  // const ctx = document.getElementById("myChart").getContext("2d");
+  // new Chart(ctx, config);
+
+  google.charts.load("current", { packages: ["bar"] });
+  google.charts.setOnLoadCallback(drawMultSeries);
+  // backgroundColor: linear-gradient(90deg, #87CEEB 0%, #3AAFDE 100%)
+  function drawMultSeries() {
+    let names2019 = {
+      NDA: 357,
+      "I.N.D.I.A": 103,
+      Others: 83,
+    };
+
+    let colors2019 = {
+      NDA: "#FAA958",
+      "I.N.D.I.A": "#9dd5ec",
+      Others: "#d9d9d9",
+    };
+
+    console.log("names[bars[0].color]", names[bars[0].color]);
+
+    let resultsAwaited=false;
+    if(bars[0].value==0 && bars[1].value==0 && bars[2].value==0){
+      resultsAwaited=true;
+    }
+    let resultAwaitedText='Result Awaited!'
+
+    var data = google.visualization.arrayToDataTable([
+      [
+        "Year",
+        names[bars[0].color],
+        { role: "annotation" },
+        names[bars[1].color],
+        { role: "annotation" },
+        names[bars[2].color],
+        { role: "annotation" },
+      ],
+      [
+        "2024",
+        bars[0].value,
+        `${resultsAwaited?resultAwaitedText:bars[0].value}`,
+        bars[1].value,
+        `${resultsAwaited?resultAwaitedText:bars[1].value}`,
+        bars[2].value,
+        `${resultsAwaited?resultAwaitedText:bars[2].value}`,
+      ],
+      [
+        "2019",
+        names2019[names[bars[0].color]],
+        `${names2019[names[bars[0].color]]}`,
+        names2019[names[bars[1].color]],
+        `${names2019[names[bars[1].color]]}`,
+        names2019[names[bars[2].color]],
+        `${names2019[names[bars[2].color]]}`,
+      ],
+    ]);
+
+    let bw="80%";
+      if(window.innerWidth<800){
+        console.log("width<<<<",window.innerWidth);
+         bw="60%"
+      }
+
+    var options = {
+      // title: 'Election Results Comparison',
+      chartArea: { width: "70%" },
+      hAxis: {
+        title: "",
+        minValue: 0,
+        gridlines: { count: 1 }, // Display only one gridline
+        textPosition: "none",
+        viewWindow: {
+          min: [7, 30, 0],
+          max: [17, 30, 0]
+        }
+      },
+      vAxis: {
+        textStyle: {
+          fontSize: "12px",
+          fontWeight: 500,
+          lineHeight: "14px",
+          textAlign: "left",
+          color: "#000000",
+          auraColor: "#00000",
+          fontFamily: "Roboto",
+        },
+      },
+      colors: [bars[0].color, bars[1].color, bars[2].color],
+      legend: {
+        position: "top",
+        titleTextStyle: {
+          fontSize: "16px",
+          fontWeight: "bold",
+          color: "red",
+          fontFamily: "Arial",
+        },
+      },
+      // annotations: {
+      //   textStyle: {
+      //     fontSize: "12px",
+      //     fontWeight: 500,
+      //     lineHeight: "14px",
+      //     textAlign: "left",
+      //     color: "#000000",
+      //     auraColor: "none",
+      //     fontFamily: "Roboto",
+      //   },
+      //   alwaysOutside: true,
+      //   textAlign: "end",
+      // },
+      animation: {
+        startup: true,
+        duration: 1000,
+        easing: "out",
+      },
+      bar: { groupWidth: bw }
+    };
+
+    var chart = new google.visualization.BarChart(
+      document.getElementById("myChart")
+    );
+
+    function drawChart() {
+      console.log("width>>>>>>>>>",window.innerWidth);
+      let ww=0.45;
+      if(window.innerWidth<800){
+         ww=0.8
+      }
+      var chartWidth = window.innerWidth * ww;
+      var chartHeight = window.innerHeight * 0.6;
+
+      document.getElementById("myChart").style.width = chartWidth + "px";
+      document.getElementById("myChart").style.height = chartHeight + "px";
+      options.annotations= {
+        textStyle: {
+          fontSize: "12px",
+          fontWeight: 500,
+          lineHeight: "14px",
+          textAlign: "left",
+          color: "#000000",
+          auraColor: "none",
+          fontFamily: "Roboto",
+        },
+        alwaysOutside: true,
+        textAlign: "end",
+        stem: {
+          color: 'none',
+          length: 8  // This removes the connecting lines
+        }
+
+      },
+    
+      chart.draw(data, options);
+    }
+
+    window.addEventListener("resize", drawChart);
+
+    drawChart();
+  }
 
   // ----------------------------------------------------
   // var options = {
