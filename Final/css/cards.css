@@ -3,14 +3,39 @@
   font-weight: bold;
   color: #fff;
 }
-  
+.gradient-text-nda {
+  font-size: bold;
+  background: linear-gradient(90deg, #ff8d00, #ff4600);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+.gradient-text-inda {
+  font-size: bold;
+  background: linear-gradient(90deg, #0084c6, #0084c6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+.gradient-text-oth {
+  font-size: bold;
+  background: linear-gradient(90deg, #646e81, #181b20);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+
 .ribbon {
   --f: .5em;
   position: absolute;
   top: 0;
   right: 0;
   line-height: 1.8;
-  padding-inline: 1lh;
+  padding-inline: 1.5lh;
   padding-bottom: var(--f);
   border-image: conic-gradient(#0008 0 0) 51%/var(--f);
   clip-path: polygon(100% calc(100% - var(--f)), 100% 100%, calc(100% - var(--f)) calc(100% - var(--f)), var(--f) calc(100% - var(--f)), 0 100%, 0 calc(100% - var(--f)), 999px calc(100% - var(--f) - 999px), calc(100% - 999px) calc(100% - var(--f) - 999px));
@@ -24,7 +49,7 @@
 }
 
 .custom-img {
-  width: 16px;
+  width: 21px;
 }
 
 .iribbon {
@@ -49,7 +74,7 @@
   border-radius: 10px;
   padding: 0;
   margin: 0.725rem;
-  max-height: 172px;
+  /* max-height: 172px; */
   max-width: 300px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -85,7 +110,7 @@
 }
 
 .custom-subheaders {
-  gap: 15px;
+  gap: 8px;
   align-items: center;
 }
 
@@ -170,5 +195,8 @@ p{
 #see-more-page .custom-container {
   width: calc(30% - 16px); /* Adjust as needed based on margins and gutters */
 }
-
+#candID{
+  height: 130px;
+  width: 100px;
+}
 /* Adjust the margins and paddings to ensure proper spacing */
