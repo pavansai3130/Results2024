@@ -914,6 +914,7 @@ async function fetchJSON2(file) {
               party: item.prty,
               alliance: item.alnce,
               votes: item.vts,
+              state: state
             };
             candidates.push(candidate);
           }

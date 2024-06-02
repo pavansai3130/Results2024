@@ -1215,6 +1215,7 @@ if(document.getElementById("see-more-btn")){
 function getProfilePic(candId, alnce){
   const allianceImages = {
     "NDA": "./images/imgs/NDA  (1).png",
+    "UPA": "./images/imgs/NDA  (2).png",
     "INDIA": "./images/imgs/NDA  (2).png",
     "OTH": "./images/imgs/NDA  (3).png"
   };
@@ -2685,7 +2686,7 @@ function viewingstate(stateId){
 }
 
 function createCard(item,id) {
-  const imageUrl = getProfilePic(item.cId, item.alnce);
+  const imageUrl = getProfilePic(item.candidateId || item.cId, item.alliance || item.alnce);
 
   const card = document.createElement("div");
   card.className = "position-relative custom-container";
@@ -2700,7 +2701,7 @@ function createCard(item,id) {
     bgColor = "linear-gradient(56deg, #FFF8DC,#FFE4BF)";
     arrColor = "linear-gradient(90deg, #EC8E30,#A65E17)";
     nameColor = "#FF9933";
-  } else if (item.alliance === "INDIA") {
+  } else if (item.alliance === "UPA" || item.alliance === "INDIA") {
     nameColor = "#19AAED";
   } else if (item.alliance === "OTH") {
     bgColor = "linear-gradient(56deg, #F5F5F5,#E0E0E0)";
@@ -2710,9 +2711,10 @@ function createCard(item,id) {
 
 
   card.style.background = bgColor;
-
-  const ribbonText = item.lead ? "Leading" : "Trailing";
-  const ribbonColor = item.lead ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+  const ribbonText = (results2019 && results2019[0][item.state][item.constituencyName].candidates[0].cName == item.candidateName) ? "Won" : "Lost";
+  const ribbonColor = (ribbonText === "Won") ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+  /*const ribbonText = item.lead ? "Leading" : "Trailing";
+  const ribbonColor = item.lead ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";*/
 
   card.innerHTML = `
   <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
@@ -2736,7 +2738,7 @@ item.candidateName
               }
           </p>
       </div>
-      <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
+      <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor};display:none!important;">
           <p class="card-text mb-1 custom-iribbon-text">${
             item.lead ? "Leading by" : "Trailing by"
           }</p>
