@@ -893,6 +893,19 @@ let names = {
   othersColor: "#EAECF0",
 };
 let temp = 1;
+var results2019;
+  //Fetching election result 2019
+  fetch("./data/election2019.json")
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok " + response.statusText);
+    }
+    return response.json();
+  })
+  .then((result) => {
+    results2019 = result;
+  });
+
 async function fetchJSON2(file) {
   // data_2019 = {};
   try {
@@ -2032,11 +2045,12 @@ document.getElementById("see-more-btn").addEventListener("click", function () {
 let renderAllianceResults;
 
 async function fetchTop10() {
-  try {
-    const candidateResponse = await fetch(
+  //try {
+    /*const candidateResponse = await fetch(
       "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
     );
-    const candidateData = await candidateResponse.json();
+    const candidateData = await candidateResponse.json();*/
+    const candidateData = results2019;
     // console.log("Candidate Data:", candidateData);
 
     function getCandidateDetails(candidateId) {
@@ -2065,7 +2079,7 @@ async function fetchTop10() {
       return null;
     }
 
-    let top10Cand = [
+    /*let top10Cand = [
       "cand260",
       "cand1597",
       "cand5189",
@@ -2076,8 +2090,9 @@ async function fetchTop10() {
       "cand4630",
       "cand6978",
       "cand2051"
-    ];
+    ];*/
 
+    let top10Cand = ["cnd6375","cnd2343","cnd1926","cnd1182","cnd6257","cnd5853","cnd7634","cnd6568","cnd5881", "cnd2841"];
     for (let i = 0; i < top10Cand.length; i += 2) {
       const row = document.createElement("div");
       row.className = "row raw justify-content-between";
@@ -2098,12 +2113,11 @@ async function fetchTop10() {
         }
       }
     }
-  } catch (error) {
+  /*} catch (error) {
     console.error("Error fetching or processing data:", error);
-  }
+  }*/
 }
-
-fetchTop10();
+setTimeout(fetchTop10, 1000);
 
 function render_state_carousel(state) {
   let heading = document.getElementById("big_fights_heading");

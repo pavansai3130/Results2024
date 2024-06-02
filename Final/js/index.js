@@ -8,7 +8,6 @@ let state_button_pressed = 1;
 var pictureMapping, results2019;
 let s3PicUrl = "https://results2024.s3.ap-south-1.amazonaws.com/candpics/";
 let top10Cand = [
-  "cand260",
   "cand1597",
   "cand5189",
   "cand3140",
@@ -1282,11 +1281,11 @@ function renderCandidateCards(item, row) {
               }
           </p>
       </div>
-      <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor};">
-          <p class="card-text mb-1 custom-iribbon-text" style="display:none;">${
+      <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor};visibility:hidden;">
+          <p class="card-text mb-1 custom-iribbon-text">${
             item.lead ? "Leading by" : "Trailing by"
           }</p>
-          <p class="card-text custom-iribbon-text-votes" style="display:none;">${item.lead2votes}</p>
+          <p class="card-text custom-iribbon-text-votes">${item.lead2votes}</p>
       </div>
   </div>
   <div class="person-image d-flex custom-person-image">
@@ -2716,6 +2715,7 @@ function createCard(item,id) {
   /*const ribbonText = item.lead ? "Leading" : "Trailing";
   const ribbonColor = item.lead ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";*/
 
+  const voteMargin = (results2019[0][item.state][item.constituencyName].candidates[0].vts - results2019[0][item.state][item.constituencyName].candidates[1].vts);
   card.innerHTML = `
   <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
   <div class="temp custom-temp">
@@ -2738,12 +2738,12 @@ item.candidateName
               }
           </p>
       </div>
-      <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor};display:none!important;">
+      <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor};">
           <p class="card-text mb-1 custom-iribbon-text">${
-            item.lead ? "Leading by" : "Trailing by"
-          }</p>
+            ribbonText
+          } by</p>
           <p class="card-text custom-iribbon-text-votes">${
-            item.lead2votes
+            voteMargin
           }</p>
       </div>
   </div>
