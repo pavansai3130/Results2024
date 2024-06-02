@@ -318,7 +318,8 @@ a {
   background: rgba(255, 255, 255, 1);
   ;
   border-bottom: 1px solid rgba(208, 213, 221, 1);
-  width: 50%;
+  /* width: 50%; */
+  width: 60%;
   /* text-align: center; */
 }
 
@@ -1083,4 +1084,106 @@ button:focus{
 button:active{
   outline: none;
   /* border: none; */
+}
+
+/* Media query for hide table */
+/* @media (max-width: 767px) {
+  #carouselExampleIndicators {
+      display: block !important;
+  }
+  .non-carousel-content {
+      display: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  #carouselExampleIndicators {
+      display: none !important;
+  }
+  .non-carousel-content {
+      display: block !important;
+      display: flex !important;
+  }
+} */
+
+#ndaContent{
+  /* max-width: 180px; */
+  padding: 14px 16px 12px 16px;
+  border-top: 8px solid #FF9933;
+  border-radius: 8px 0 0 0;
+}
+#indiaContent{
+  /* max-width: 180px; */
+  padding: 14px 16px 12px 16px;
+  border-top: 8px solid #B9E6FE;
+}
+#othersContent{
+  /* max-width: 180px; */
+  padding: 14px 0 12px 16px;
+  border-top: 8px solid #B7B7B7;
+  border-radius: 0 8px 0 0;
+}
+
+.non-carousel-content {
+  /* display: flex !important; */
+  align-items: flex-start;
+  /* justify-content: space-around; */
+  box-shadow: 0px 2px 4px -2px #1018280F,0px 4px 8px -2px #1018281A;
+  border-radius: 8px;
+}
+
+.seperateline {
+  width: 1px;
+  height: 180px;
+  background-color: #D0D5DD;
+  margin: 25px 0 0 0;
+}
+
+.totaldetails{
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0 0 0;
+}
+.resultdesc{
+  display: flex;
+}
+
+.resultdesc>div{
+  font-size: 10px;
+  color: #667085;
+}
+
+.leaddescdiv{
+  margin: 0 0 0 10px;
+}
+
+/* Media query for hide table */
+/* Show carousel below 576px */
+@media (max-width: 575px) {
+  #carouselExampleIndicators {
+      display: block !important;
+  }
+  .non-carousel-content {
+      display: none !important;
+  }
+}
+
+/* Show carousel between 768px and 1200px */
+@media (min-width: 768px) and (max-width: 1200px) {
+  #carouselExampleIndicators {
+      display: block !important;
+  }
+  .non-carousel-content {
+      display: none !important;
+  }
+}
+
+/* Show non-carousel content below 768px and above 1200px */
+@media (max-width: 767px), (min-width: 1201px) {
+  #carouselExampleIndicators {
+      display: none !important;
+  }
+  .non-carousel-content {
+      display: flex !important;
+  }
 }
