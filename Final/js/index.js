@@ -1305,9 +1305,7 @@ function renderCandidateCards(item, row) {
     item.cName
   }</h3>
           <div class="subheaders cd-flex align-items-center custom-subheaders" style="display:flex" > 
-              <div class="logo"><img class="custom-img" src="${
-                item.logoimg
-              }" alt=""></div>
+              <div class="logo"><img class="custom-img" src="./images/partylogo/${item.prty}.svg" alt=""></div>
               <h6 style="font-weight: bold;">${item.prty}</h6>
           </div>
           <p class="card-text custom-card-text">${constituency} (${
