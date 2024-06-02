@@ -26,45 +26,11 @@
       <script src="./js/index.js"></script>
       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
       <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-      <script src="./js/disclaimer.js"></script>
       <script src="./js/statusTable.js"></script>
       <script src="./js/marginTable.js"></script>
    <link rel="stylesheet" href="./css/styles.css">
       <link rel="stylesheet" href="./css/cards.css">
-      <link rel="stylesheet" href="./css/styling.css">
-   <script type="text/javascript">
-      // Load google charts
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-      
-      // Draw the chart and set the chart values
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-        ['Task', 'Hours per Day'],
-        ['INC', 8],
-        ['TDP', 2],
-        ['BJP', 2],
-      ]);
-      var data2 = google.visualization.arrayToDataTable([
-        ['Task', 'Hours per Day'],
-        ['INC', 8],
-        ['TDP', 2],
-        ['BJP', 2],
-      ]);
-      
-        // Optional; add a title and set the width and height of the chart
-        var options = {'title':'Seats', 'width':'fit-content', 'height':'fir-content','legend':"none","margin":"none"};
-        var options2={'title':'VoteShare', 'width':'fit-content', 'height':'fir-content','legend':"none","margin":"none"};
-
-      
-        // Display the chart inside the <div> element with id="piechart"
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-        chart.draw(data, options);
-        var chart2= new google.visualization.PieChart(document.getElementById('piechart2'));
-        chart2.draw(data2,options2);
-      }
-      </script>
-      
+      <link rel="stylesheet" href="./css/styling.css">      
       <link rel="stylesheet" href="./css/disclaimer.css">
       <link rel="stylesheet" href="leaflet/index.css" />
       <link rel="stylesheet" href="./css/navbarStyles.css">
@@ -105,23 +71,23 @@
               <i id="downIcons" class="fa-solid fa-chevron-down"></i>
               <i id="upIcons" class="fa-solid fa-chevron-up"></i>
               <ul class="tooltip" id="tooltip">
+                 <li id="popular">
+                   <a href="cardsPage.html">Popular Candidates</a>
+                 </li>
                 <li id="celebrities">
                   <a href="./celebCards.html">Celebrities</a>
-                </li>
-                <li id="popular">
-                  <a href="cardsPage.html">Popular Candidates</a>
                 </li>
               </ul>
             </li>
             <div class="hiding" id="mobile-tooltip">
+               <li>
+                 <a href="cardsPage.html" class="links" id="popular2"
+                   >Popular Candidates</a
+                 >
+               </li>
               <li>
                 <a href="./celebCards.html" class="links" id="celebrities2"
                   >Celebrities</a
-                >
-              </li>
-              <li>
-                <a href="cardsPage.html" class="links" id="popular2"
-                  >Popular Candidates</a
                 >
               </li>
             </div>
@@ -154,8 +120,8 @@
          </div>
       </header>
       <!-- Main Content -->
-      <div class="body-main-content" style="display: block;">
-          <div class="container-fluid main-content blur">
+      <div class="body-main-content main-content blur" style="display: block;">
+          <div class="container-fluid ">
          <!-- Page 1: Landing Page -->
          <div class="container-fluid landing-page p-0 ">
             <div class="row row1 mt-4 mx-lg-5 g-6 mx-sm-2 ">
@@ -173,7 +139,7 @@
                      <div class="col d-flex justify-content-start order-2 ">
                         <div class="" style="width: 120px;">
                            <select class=" " id="state-select" onchange="handleSelection()">
-                              <option selcted>Select State</option>
+                              <option value="default" selected>Select State</option>
                               <!-- <option value="reset">Reset</option> -->
                               <option data-st_code="35" value="35">Andaman and Nicobar Islands</option>
                               <option data-st_code="37" value="37">Andhra Pradesh</option>
@@ -226,8 +192,12 @@
                   <div id="containertool"></div>
                </div>
                <div class="col-12 col-md-6 order-md-2 order-1">
-                  <p id="st_con_heading" style="font-size: 24px;"></p>
-                  <div id="piechart" style="display:none" ></div>
+                  <p id="st_con_heading" style="font-size: 24px; margin-top: 24px;"></p>
+                  <div style="display: flex;">
+                  <div id="piechart" style="height: 300px; width: 300px; display:none" ></div>
+                  <div id="piechart2" style="height: 300px; width: 300px; display:none" ></div>
+                  <div id="piechart3" style="height: 300px; width: 300px; display:none"></div>
+               </div>
                   <div id="chartsContainer">
                      <!-- <div id="square-container"></div> -->
                      <div class="p-2" id="chartContainer">
@@ -599,29 +569,29 @@
                 </thead>
                 <tbody>
                   <tr class="richestOne">
-                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Naveen Jindal <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
-                    <td>Kurukshetra</td>
-                    <td>1241+ Cr</td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Chandra Sekhar Pemmasani <br><span><img src="./images/imgs/TDP.webp" alt="">TDP</span></td>
+                    <td>Guntur</td>
+                    <td>5706+ Cr</td>
                 </tr>
                 <tr class="richestTwo">
-                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Santrupt Mishra <br><span><img src="./images/imgs/BJD.png" alt="">BJD</span></td>
-                    <td>Cuttack</td>
-                    <td>482+ Cr</td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Konda Vishweshwar Reddy <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
+                    <td>Chevella</td>
+                    <td>4568+ Cr</td>
                 </tr>
                 <tr class="richestThree">
-                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Sushil Gupta <br><span><img src="./images/imgs/notknown.svg" alt="">AAP</span></td>
-                    <td>Kurukshetra</td>
-                    <td>169+ Cr</td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Pallavi Shrinivas Dempo <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
+                    <td>South Goa</td>
+                    <td>1361+ Cr</td>
                 </tr>
                 <tr class="richestFour">
-                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Naina Singh Chautala <br><span><img src="./images/imgs/notknown.svg" alt="">JJP</span></td>
-                    <td>Hisar</td>
-                    <td>139+ Cr</td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Naveen Jindal <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
+                    <td>Kurukshetra</td>
+                    <td>1230+ Cr</td>
                 </tr>
                 <tr class="richestFive">
-                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Rao Inderjit Singh <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Nakul Kamalnath <br><span><img src="./images/imgs/INC.png" alt="">INC</span></td>
                     <td>Gurugram</td>
-                    <td>121+ Cr</td>
+                    <td>716+ Cr</td>
                 </tr>
                 </tbody>
               </table>
@@ -639,42 +609,182 @@
                   <tr>
                     <th class="sticky" style="text-align: left;margin-left:0.4rem;">Candidate Name</th>
                     <th>Constituency</th>
-                    <th style="line-height: 1rem;">Asset <br><span>(in Rs)</span></th>
+                    <th style="line-height: 1rem;">Total Votes 2019<br><span>(Margin)</span></th>
                     <th style="line-height: 1rem;">Total Votes <br><span>(Margin)</span></th>
                     <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr class="poorestOne">
-                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Master Randir Singh <br><span><img src="./images/imgs/IND.svg" alt="">IND</span></td>
-                    <td>Rohtak</td>
-                    <td>2</td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">C R Patil <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
+                    <td>Navsari</td>
+                    <td>972739 <br><span>689668</span></td>
                   </tr>
                   <tr class="poorestTwo">
-                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Ram Kumar Yadav <br><span><img src="./images/imgs/notknown.svg" alt="">SUCI (C)</span></td>
-                    <td>Pratapgarh</td>
-                    <td>1686</td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Krishan Pal <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
+                    <td>Faridabad</td>
+                    <td>913222<br><span>638239</span></td>
                   </tr>
                   <tr class="poorestThree">
-                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Khilkhilakar <br><span><img src="./images/imgs/notknown.svg" alt="">BSSSSP</span></td>
-                    <td>North West Delhi (SC)</td>
-                    <td>2000</td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Chandra Prakash Joshi <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
+                    <td>Chittorgarh</td>
+                    <td>982942<br><span>576247</span></td>
                   </tr>
                   <tr class="poorestFour">
-                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Nand Ram Bagri <br><span><img src="./images/imgs/notknown.svg" alt="">VPI</span></td>
-                    <td>North West Delhi (SC)</td>
-                    <td>2000</td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Amit Anilchandra Shah<br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
+                    <td>Gandhinagar</td>
+                    <td>894624 <br><span>557014</span></td>
                   </tr>
                   <tr class="poorestFive">
-                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Dillip Kumar Baral <br><span><img src="./images/imgs/IND.svg" alt="">IND</span></td>
-                    <td>Puri</td>
-                    <td>4032</td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Hans Raj Hans<br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
+                    <td>Faridkot(2024) <br>North West Delhi(2019)</td>
+                    <td>848663 <br><span>553897</span></td>
                   </tr>
                 </tbody>
               </table>
               
             </div>
           </div>
+          <p class="notContesting">Sanjay Bhatia, Subhash Chandra Baheria, Ranjanben Bhatt & Parvesh Sahib Singh Verma contested in 2019 but are not contesting in 2024 election. Their names have not been included.</p>
+          <!-- rajendar part -->
+          <div id="selectmapbtn">Select State</div>
+          <div class="selectmap">
+             <!-- Generate 35 grid items with images and labels -->
+             <div class="grid-item1" onclick="viewingstate(37)">
+               <img id="myg" src="./images/imgs2/andhra_pradesh.png">
+               <p id="myp">Andhra Pradesh</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(12)">
+               <img id="myg" src="./images/imgs2/arunachal_pradesh.png">
+               <p id="myp">Arunachal Pradesh</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(18)">
+               <img  id="myg" src="./images/imgs2/assam.png">
+               <p id="myp">Assam</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(10)">
+               <img  id="myg" src="./images//imgs2/bihar.png">
+               <p id="myp">Bihar</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(22)">
+               <img id="myg" src="./images/imgs2/chhattisgarh.png">
+               <p id="myp">Chhattisgarh</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(7)">
+               <img id="myg" src="./images/imgs2/nct_of_delhi.png">
+               <p id="myp">Delhi</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(24)">
+               <img id="myg" src="./images/imgs2/gujarat.png">
+               <p id="myp">Gujarat</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(30)">
+               <img id="myg" src="./images/imgs2/goa.png">
+               <p id="myp">Goa</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(6)">
+               <img id="myg" src="./images/imgs2/haryana.png">
+               <p id="myp">Haryana</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(2)">
+               <img id="myg" src="./images/imgs2/himachal_pradesh.png">
+               <p id="myp">Himachal_pradesh</p>
+             </div>
+            <div class="grid-item1" onclick="viewingstate(1)">
+               <img id="myg" src="./images/imgs2/jammu_and_kashmir.png">
+               <p id="myp">Jammu and Kashmir</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(20)">
+               <img id="myg" src="./images/imgs2/jharkhand.png">
+               <p id="myp">Jharkhand</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(29)">
+               <img id="myg" src="./images/imgs2/karnataka.png">
+               <p id="myp">Karnataka</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(32)">
+               <img id="myg" src="./images/imgs2/kerala.png">
+               <p id="myp">Kerala</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(31)">
+               <img id="myg" src="./images/imgs2/lakshadweep.png">
+               <p id="myp">Lakshadweep</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(23)">
+               <img id="myg" src="./images/imgs2/madhya_pradesh.png">
+               <p id="myp">Madya_pradesh</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(27)">
+               <img id="myg" src="./images/imgs2/maharashtra.png">
+               <p id="myp">Maharashtra</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(14)">
+               <img id="myg" src="./images/imgs2/manipur.png">
+               <p id="myp">Manipur</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(17)">
+               <img id="myg" src="./images/imgs2/meghalaya.png">
+               <p id="myp">Meghalaya</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(15)">
+               <img id="myg" src="./images/imgs2/mizoram.png">
+               <p id="myp">Mizoram</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(13)">
+               <img id="myg" src="./images/imgs2/nagaland.png">
+               <p id="myp">Nagaland</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(21)">
+               <img id="myg" src="./images/imgs2/odisha.png">
+               <p id="myp">Odisha</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(3)">
+               <img id="myg" src="./images/imgs2/punjab.png">
+               <p id="myp">Punjab</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(8)">
+               <img id="myg" src="./images/imgs2/rajasthan.png">
+               <p id="myp">Rajasthan</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(11)">
+               <img id="myg" src="./images/imgs2/sikkim.png">
+               <p id="myp">Sikkim</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(33)">
+               <img id="myg" src="./images/imgs2/tamil_nadu.png">
+               <p id="myp">Tamil Nadu</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(36)">
+               <img id="myg" src="./images/imgs2/telangana.png">
+               <p id="myp">Telangana</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(16)">
+               <img id="myg" src="./images/imgs2/tripura.png">
+               <p id="myp">Tripura</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(19)">
+               <img id="myg" src="./images/imgs2/west_bengal.png">
+               <p id="myp">West bengal</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(9)">
+               <img id="myg" src="./images/imgs2/uttar_pradesh.png">
+               <p id="myp">Uttarpradesh</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(5)">
+               <img id="myg" src="./images/imgs2/uttarakhand.png">
+               <p id="myp">Uttarakhand</p>
+             </div>
+             <div class="grid-item1" onclick="viewingstate(5)">
+                <img id="myg" src="./images/imgs2/Daman_and_Diu.png">
+                <p id="myp">Daman_and_Diu</p>
+              </div>
+              <div class="grid-item1" onclick="viewingstate(5)">
+                <img id="myg" src="./images/imgs2/Dadra_&_Nagar_Haveli.png">
+                <p id="myp">Dagra & Nagar Haveli</p>
+              </div>
+           </div>
+
+         </div>
       </div>
       <!-- Common Footer -->
       <div class="consent" id="consent">
@@ -742,7 +852,6 @@
       <script src="./leaflet/index.js"></script>
      <!-- <script src="./js/index.js"></script-->
       <script src="./js/cards.js"></script>
-      <script src="./js/disclaimer.js"></script>
       <script src="./js/navbar.js"></script>
       <script src="./bigfights_script/swiper-bundle.min.js"></script>
 

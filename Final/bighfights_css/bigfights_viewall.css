@@ -209,10 +209,10 @@ body {
     border-radius: 0px 0px 8px 8px;
 }
 .search_list {
-    font-family: 'Roboto';
+    Font: 'Inter';
     background-color: white;
     list-style-type: none;
-    padding: 0.7vw 0.5vw;
+    padding: 1vw;
     font-size: small;
     font-weight: 500;
     word-wrap: break-word;
@@ -223,10 +223,11 @@ body {
 }
 
 .search_list_heading {
-    font-family: 'Roboto';
+    /* font-family: 'Roboto'; */
+    Font: 'Inter';
     background-color: white;
     list-style-type: none;
-    padding: 0.8vw 0.5vw;
+    padding: 1vw;
     word-wrap: break-word;
     font-weight: 550;
     font-size: medium;

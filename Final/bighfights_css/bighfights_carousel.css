@@ -56,6 +56,8 @@
     position: absolute;
     right: 20%;
     bottom: 0%;
+    height: 100%;
+    width:100px;
     height: 80px;
 }
 
@@ -91,12 +93,13 @@
 .heading_state {
     font-family: 'Roboto';
     font-size: 32px;
-    font-weight: 600;   
+    font-weight: 500;   
 }
 
 .card {
     position: relative;
     height: 180px;
+    /* max-width: 600px; */
     /* min-width: 300px; */
     padding: 6rem 2rem;
     background: linear-gradient(180deg, #FFFFFF 0%, #F7F7F7 100%);
@@ -161,7 +164,7 @@
 .cand_name1 {
     font-family: 'Roboto';
     font-size: 0.7rem;
-    margin: 40px 10px 25px 10px;
+    margin: 60px 10px 25px 10px;
     display: inline-block;
     min-width: 60px;
     font-weight: 600;
@@ -186,37 +189,50 @@
 
 .lead_bar {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 70%;
-    height: 15%;
-    text-align: center;
-    vertical-align: middle;
-    background-color: rgb(72, 72, 242);
     position: absolute;
-    top: 60px;
-    left: 10px;
+    width: 190px;
+    top: 52px;
+    left: 2px;
+    align-items: center;
     padding: 5px 10px;
     font-size: 70%;
     color: white;
     box-sizing: content-box;
 }
 
-.trail_bar {
-    display: flex;
+.leadbar {
+    display: inline-block;
     justify-content: center;
     align-items: center;
-    width: 50%;
-    height: 15%;
+    /* width: 70%; */
+    height: 25px;
     text-align: center;
-    background-color: rgb(238, 105, 61);
+    vertical-align: middle;
+    background: linear-gradient(90deg, #5DB455 0%, #517F4D 100%);
+}
+
+.trail_bar {
+    display: flex;
     position: absolute;
-    bottom: 1px;
-    left: 10px;
+    /* justify-content: center; */
+    align-items: center;
+    width: 190px;
+    /* height: 15px; */
+    position: absolute;
+    bottom: -5px;
+    left: 5px;
+    /* margin-top: 10px; */
     padding: 5px 5px;
     font-size: 70%;
-    color: white;
     box-sizing: content-box;
+}
+
+.trailbar {
+    display: inline-block;
+    justify-content: center;
+    height: 25px;
+    text-align: center;
+    background: linear-gradient(90deg, #EB6161 0%, #EA1C1C 100%);
 }
 
 .desc_container {
@@ -302,7 +318,8 @@
     }
 
     .hands {
-        height: 100%;
+        height: 50px;
+        width: 60px;
     }
     .state_name,
     .state_party_slot {
@@ -311,7 +328,7 @@
     .heading_state {
         font-family: 'Roboto';
         font-size: 15px;
-        font-weight: 600;   
+        font-weight: 500;   
     }
 }
 
@@ -339,9 +356,13 @@
         height: 100%;
         margin-top: 12%;
     }
+    .hands {
+        height: 50px;
+        width: 60px;
+    }
     .heading_state {
         font-size: 15px;
-        font-weight: 600;   
+        font-weight: 500;   
     }
     .state_name,
     .state_party_slot {
@@ -376,7 +397,8 @@
     }
     .heading_state {
         font-size: 20px;
-        font-weight: 600;   
+        font-weight: 500;
+        line-height: 20.5px;  
     }
 }
 

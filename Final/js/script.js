@@ -1,184 +1,41 @@
 // JavaScript code for handling page functionality
 // Ensure you have included JQuery library before this script
-const comparedata2019 = {
-    "Andaman and Nicobar Islands": {
-      "INC": 1
-    },
-    "Andhra Pradesh": {
-      "YSRCP": 22,
-      "TDP": 3
-    },
-    "Arunachal Pradesh": {
-      "BJP": 2
-    },
-    "Assam": {
-      "INC": 3,
-      "BJP": 9,
-      "AIUDF": 1,
-      "IND": 1
-    },
-    "Bihar": {
-      "BJP": 17,
-      "JD(U)": 16,
-      "LJP": 6,
-      "INC": 1
-    },
-    "Chandigarh": {
-      "BJP": 1
-    },
-    "Chhattisgarh": {
-      "INC": 2,
-      "BJP": 9
-    },
-    "Dadra and Nagar Haveli": {
-      "IND": 1,
-      "BJP": 1
-    },
-    "Goa": {
-      "BJP": 1,
-      "INC": 1
-    },
-    "Gujarat": {
-      "BJP": 26
-    },
-    "Haryana": {
-      "BJP": 10
-    },
-    "Himachal Pradesh": {
-      "BJP": 4
-    },
-    "Jammu and Kashmir": {
-      "JKNC": 3,
-      "BJP": 3
-    },
-    "Jharkhand": {
-      "BJP": 11,
-      "AJSUP": 1,
-      "JMM": 1,
-      "INC": 1
-    },
-    "Karnataka": {
-      "BJP": 25,
-      "INC": 1,
-      "JD(S)": 1,
-      "IND": 1
-    },
-    "Kerala": {
-      "CPIM": 1,
-      "INC": 15,
-      "RSP": 1,
-      "KEC(M)": 1,
-      "IUML": 2
-    },
-    "Lakshadweep": {
-      "NCP(SP)": 1
-    },
-    "Madhya Pradesh": {
-      "BJP": 28,
-      "INC": 1
-    },
-    "Maharashtra": {
-      "BJP": 23,
-      "IND": 1,
-      "AIMIM": 1,
-      "NCP(SP)": 3,
-      "SHS": 13,
-      "INC": 1,
-      "SHS(UBT)": 5,
-      "NCP": 1
-    },
-    "Manipur": {
-      "BJP": 1,
-      "NPF": 1
-    },
-    "Meghalaya": {
-      "INC": 1,
-      "NPEP": 1
-    },
-    "Mizoram": {
-      "MNF": 1
-    },
-    "Nagaland": {
-      "NDPP": 1
-    },
-    "NCT OF Delhi": {
-      "BJP": 7
-    },
-    "Odisha": {
-      "BJD": 12,
-      "BJP": 8,
-      "INC": 1
-    },
-    "Puducherry": {
-      "INC": 1
-    },
-    "Punjab": {
-      "INC": 8,
-      "SAD": 2,
-      "BJP": 2,
-      "AAP": 1
-    },
-    "Rajasthan": {
-      "BJP": 24,
-      "RLP": 1
-    },
-    "Sikkim": {
-      "SKM": 1
-    },
-    "Tamil Nadu": {
-      "DMK": 24,
-      "INC": 8,
-      "VCK": 1,
-      "CPIM": 2,
-      "CPI": 2,
-      "IUML": 1,
-      "ADMK": 1
-    },
-    "Telangana": {
-      "BJP": 4,
-      "INC": 3,
-      "TRS": 9,
-      "AIMIM": 1
-    },
-    "Tripura": {
-      "BJP": 2
-    },
-    "Uttar Pradesh": {
-      "BJP": 62,
-      "BSP": 10,
-      "SP": 5,
-      "ADAL": 2,
-      "INC": 1
-    },
-    "Uttarakhand": {
-      "BJP": 5
-    },
-    "West Bengal": {
-      "BJP": 18,
-      "AITC": 22,
-      "INC": 2
-    }
-  }
-// console.log("State-Parties: "+comparedata2019);
+
 // JSON object containing party colors
 let data_201;
 let data_2019 = {};
 let bars;
 const initialView = [23, 82.5];
-const initialZoom = 5;
+const initialZoom = 4.8;
 let state_value = 36;
 let sym = {
+
   extra: "./images/imgs/notknown.svg",
+
+  UPPL:"./images/img/UPPL.svg",
+ SDF:"./images/img/SDF.svg",
+  SHS:"./images/img/SHS.svg",
+  JNKC:"./images/img/JNKC.svg",
+  JJP:"./images/img/JJP.svg",
+  INLD:"./images/img/INLD.svg",
+  BPF:"./images/img/BPF.svg",
+  INLD:"./images/img/INLD.svg",
+  AAP:"./images/imgs/AAP.svg",
+  PDP:"./images/img/PDP.svg",
+  ADMK:"./images/img/ADMK.svg",
+  AGP:"./images/img/AGP.svg",
+  AIFB:"./images/img/AIFB.svg",
+  extra:"./images/imgs/notknown.svg",
   IND: "./images/imgs/IND.svg",
   BJP: "./images/imgs/BJP.svg",
   INC: "./images/imgs/INC.svg",
-  DMK: "./images/imgs/DMK.webp",
-  YSRCP: "./images/imgs/YSRCP.jpeg",
+  DMK: "./images/imgs/DMK.svg",
+  YSRCP: "./images/imgs/YSRCP.svg",
   AITC: "./images/imgs/AITC.png",
   SHS: "./images/imgs/SHS.png",
   "JD(U)": "./images/imgs/JD(U).png",
-  BJD: "./images/imgs/BJD.png",
-  BSP: "./images/imgs/BSP.jpg",
+  BJD: "./images/imgs/BJD.svg",
+  BSP: "./images/imgs/BSP.svg",
   TRS: "./images/imgs/TRS.jpg",
   BRS: "./images/imgs/BRS.svg",
   LJP: "./images/imgs/LJP.jpg",
@@ -187,14 +44,14 @@ let sym = {
   TDP: "./images/imgs/TDP.webp",
   JKN: "./images/imgs/JKN.webp",
   IUML: "./images/imgs/IUML.jpg",
-  CPIM: "./images/imgs/CPIM.png",
+  CPIM: "./images/imgs/CPI M.svg",
   AIMIM: "./images/imgs/AIMIM.png",
-  SAD: "./images/imgs/SAD.webp",
-  CPI: "./images/imgs/CPI.webp",
+  SAD: "./images/imgs/SAD.svg",
+  CPI: "./images/imgs/CPI.svg",
   ADAL: "./images/imgs/ADAL.webp",
-  AIUDF: "./images/imgs/AIUDF.png",
+  AIUDF: "./images/imgs/AIUDF.svg",
   JMM: "./images/imgs/JMM.png",
-  AJSUP: "./images/imgs/AJSUP.jpg",
+  AJSUP: "./images/imgs/AJSUP.svg",
   "JD(S)": "./images/imgs/JD(S).jpg",
   "KEC(M)": "./images/imgs/KEC(M).webp",
   "Andaman & Nicobar Islands": "./images/imgs/Andaman_&_Nicobar_Islands.jpg",
@@ -1105,11 +962,9 @@ async function fetchGeoJSON(file) {
       );
     // Initialize the map and add the GeoJSON layer
     // console.log(L);
-    map = L.map("map", {
-      attributionControl: false,
-      zoomSnap: 0.2,
-      minZoom: 5,
-    });
+
+    map = L.map("map", { attributionControl: false, zoomSnap: 0.2,minZoom:5});
+
     geo = L.geoJSON(geoJson, {
       onEachFeature: (feature, layer) => {
         layer.on("click", function (event) {
@@ -1143,8 +998,8 @@ async function fetchGeoJSON(file) {
             feature.properties.pc_id
           );
           var map = document.getElementById("map").getBoundingClientRect();
-          // console.log("map the ", map);
-          // console.log("event map the ", event);
+          console.log("map the ", map);
+          console.log("event map the ", event);
           var clickY = event.layerPoint.y - map.top;
           var mapHeight = map.height;
           var isAboveHalf = clickY < mapHeight / 2;
@@ -1190,7 +1045,7 @@ async function fetchGeoJSON(file) {
     var filteredFeatures = geoJson.features.filter(
       (feature) => feature.properties.st_code == state_value
     );
-    var filteredGeoJson = { ...geoJson, features: filteredFeatures };
+    var filteredGeoJson = { ...geoJson, features: filteredFeatures};
     geo2 = L.geoJSON(filteredGeoJson, {
       onEachFeature: (feature, layer) => {
         //   layer.on('mouseover', function(event) {
@@ -1202,7 +1057,7 @@ async function fetchGeoJSON(file) {
         // });
 
         layer.on("click", function (event) {
-          // console.log("change");
+          console.log("change");
           // document.querySelector("#Constituency-res").style.display =
           //   "none";
           // document.querySelector("#Candidate-res").style.display = "block";
@@ -1218,7 +1073,7 @@ async function fetchGeoJSON(file) {
   }
 }
 async function fetchJSON() {
-  // console.log(`called ${temp++}`);
+  console.log(`called ${temp++}`);
   try {
     const url = "https://results2024.s3.ap-south-1.amazonaws.com/results.json";
     const response = await fetch(url, {
@@ -1243,6 +1098,7 @@ async function fetchJSON() {
       for (let state in data2024) {
         for (let const_name in data2024[state]) {
           const candidates = [];
+          candidates.push({"rsDecl": data2024[state][const_name]["rsDecl"]});
           for (let item of data2024[state][const_name]["candidates"]) {
             const candidate = {
               candidateId: item.cId,
@@ -1301,7 +1157,7 @@ $(document).ready(async function () {
   console.log(stateAlliance);
   stateDataJson2019 = data_201[0];
   allianceJson2019 = data_201[1];
-  // console.log(allianceJson);
+  console.log(allianceJson);
   if (getParameterByName("year") === "2019") {
     stateDataJson = stateDataJson2019;
     allianceJson = allianceJson2019;
@@ -1887,7 +1743,7 @@ function toggleEntries() {
   toggleButtons.forEach((toggleButton) => {
     toggleButton.addEventListener("click", toggleEntries);
     if (toggleButton.textContent === "Show All") {
-      // console.log("enter");
+      console.log("enter");
       const hiddenRows = document.querySelectorAll("tbody tr.hiding");
       hiddenRows.forEach((row) => {
         // console.log(row.className);
@@ -2095,7 +1951,7 @@ function updateBar(values) {
 // Example usage: updating the bar with specific values
 // ------------Search in state table-------------------------------
 function handleStateClick(state) {
-  // console.log("india");
+  console.log("india");
   document.getElementById("breadcrumb-india").style.display = "block";
   let nda = 0,
     india = 0,
@@ -2110,7 +1966,7 @@ function handleStateClick(state) {
   for (const consti in stateDataJson[state]) {
     const leadingCandidate = stateDataJson[state][consti]["candidates"][0];
     4;
-    // console.log(leadingCandidate);
+    console.log(leadingCandidate);
     if (leadingCandidate.alnce === "NDA") nda++;
     else if (leadingCandidate.alnce === "OTH") others++;
     else india++;
@@ -2133,24 +1989,23 @@ function half(event) {
   }
 }
 // console.log(stateDataJson);
-
-
 function creatediv(state) {
-  // fetch("../data/election2019.json")
-  //   .then((response) => {
-  //     if (!response.ok) {
-  //       throw new Error("Network response was not ok " + response.statusText);
-  //     }
-  //     return response.json();
-  //   })
-  //   .then((stateDataJson) => {
+  fetch("./data/election2019.json")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok " + response.statusText);
+      }
+      return response.json();
+    })
+    .then((stateDataJson) => {
       var obj = {};
       var partynames = [];
       var partyseats = [];
-      var constituencyData = stateDataJson[state];
-      // console.log(constituencyData);
+      var constituencyData = stateDataJson[0][state];
       for (let const_name in constituencyData) {
-        let party_name = stateDataJson[state][const_name]["candidates"][0]["prty"];
+        let party_name =
+          stateDataJson[0][state][const_name]["candidates"][0]["prty"];
+
         if (party_name in obj) {
           obj[party_name] += 1;
         } else obj[party_name] = 1;
@@ -2176,14 +2031,13 @@ function creatediv(state) {
       if (partynames) {
         for (let i = 0; i < partynames.length && i < 5; i++) {
           if (partynames[i] !== undefined) {
-            let previousSeats = comparedata2019[state] && comparedata2019[state][partynames[i]] ? comparedata2019[state][partynames[i]] : 0;
-            // alert(previousSeats);
-            let seatDifference = obj[partynames[i]] - previousSeats;
-            let seatDifferenceText = seatDifference >= 0 ? `(+${seatDifference})` : `(${seatDifference})`;
-            let seatDifferenceColor = seatDifference >= 0 ? "green" : "red";
             htmlcode += `<tr>
-                          <td class="tdData"><img class="party-icon" src="${sym[partynames[i]]}">${partynames[i]}</td>
-                          <td class="tdData" id="wlright">${obj[partynames[i]]} <span style="color:${seatDifferenceColor};">${seatDifferenceText}</span></td></tr>`;
+                                  <td class="tdData"><img class="party-icon" src="${
+                                    sym[partynames[i]]
+                                  }"> ${partynames[i]}</td>
+                                  <td class="tdData" id="wlright">${
+                                    obj[partynames[i]]
+                                  }</td></tr>`;
           }
         }
       }
@@ -2196,9 +2050,8 @@ function creatediv(state) {
         if (partynames[i] !== undefined && partyseats[i] !== undefined) {
           htmlcode += `<div class="barbox">
                                 <span id="barlabel${i}">${partynames[i]}</span>
-                              <div class="br${i + 1} inbar" id="id${i}">${
-            partyseats[i]
-          }</div> </div>`;
+                                <div class="br${i + 1} inbar" id="id${i}" style="background:${partyColors[partynames[i]]}">${partyseats[i]
+                                }</div> </div>`;
         }
       }
       htmlcode += `</div>
@@ -2220,11 +2073,11 @@ function creatediv(state) {
           document.getElementById("barlabel0").style.marginLeft = "-5.8rem";
           document.getElementById("barlabel1").style.marginLeft = "-4.8rem";
         }, 0);
-      }    
+      }
+    });
 }
-
-
 function showmap(state) {
+  document.getElementById("state-select").value=state_codes[state];
   render_state_carousel(state);
   let state_naming = document.getElementById("st_con_heading");
   state_naming.innerHTML = `${state}`;
@@ -2344,7 +2197,9 @@ function render_state_carousel(state) {
     cand_name1,
     cand_name2,
     votes1,
-    votes2
+    votes2,
+    bar_length1,
+    bar_length2
   ) {
     let party_path1 =
       partySymbol1 in party_img_json
@@ -2357,24 +2212,22 @@ function render_state_carousel(state) {
     let state_img =
       state.toLowerCase() in party_img_json
         ? party_img_json[state.toLowerCase()]
-        : "./images/imgs2/madhya_pradesh.jpg";
+        : "./imgs2/madhya_pradesh.jpg";
     return `
       <div class="card swiper-slide">
-          <span class="state_name">${toTitleCase(
-            const_name
-          )} <span class="state_party_slot">(${toTitleCase(
-      state
-    )})</span></span>
+          <span class="state_name">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
           <div class="cand_desc1">
               <span class="img_container">
                   <img class="party_symbol" src=${party_path1} alt="">
                   <img class="cand_img1" src="${candidateImg1}" alt="">
               </span>
               <div class="desc_container">
-                  <div class="cand_name1">${toTitleCase(
-                    cand_name1
-                  )} <span class="state_party_slot">(${partySymbol1})</span></div>
-                  <span class="lead_bar">${votes1}</span>
+                  <div class="cand_name1">${toTitleCase(cand_name1)} <span class="state_party_slot">(${toTitleCase(partySymbol1)})</span></div>
+                  <span class="lead_bar">
+          <span style="width:${bar_length1}%;" class="leadbar"> </span>
+          <span style="color:black;margin:3px">
+          ${new Intl.NumberFormat('en-IN').format(votes1)}</span>
+          </span>
               </div>
           </div>
           <div class="cand_desc2">
@@ -2383,10 +2236,11 @@ function render_state_carousel(state) {
                   <img class="cand_img1" src="${candidateImg2}" alt="">
               </span>
               <div class="desc_container">
-                  <div class="cand_name1">${toTitleCase(
-                    cand_name2
-                  )} <span class="state_party_slot">(${partySymbol2})</span></div>
-                  <span class="trail_bar" >${votes2}</span>
+                  <div class="cand_name1">${toTitleCase(cand_name2)} <span class="state_party_slot">(${partySymbol2})</span></div>
+                  <span class="trail_bar">
+          <span style="width:${bar_length2}%;" class="trailbar"></span>
+            <span style="color:black;margin:3px">${new Intl.NumberFormat('en-IN').format(votes2)}</span>
+          </span>
               </div>
           </div>
           <div class="map_container">
@@ -2397,7 +2251,7 @@ function render_state_carousel(state) {
       `;
   }
 
-  fetch("./data/bigfights.json")
+  fetch("../data/bigfights.json")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);
@@ -2406,32 +2260,55 @@ function render_state_carousel(state) {
     })
     .then((data) => {
       party_img_json = data["images_key"];
-      candidates_data = data["candidate_details"][state.toLowerCase()];
+      candidates_data = data["candidate_details"][state];
 
       // Clear previous content and destroy previous Swiper instance if it exists
       if (swiper) {
         swiper.destroy(true, true);
       }
       swiperContainer.innerHTML = "";
-      // console.log(candidates_data);
-      // function toTitleCase(name) {
-      //   return name.split(' ').map(word => {
-      //     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-      //   }).join(' ');
-      // }
       for (const_name in candidates_data) {
         for (let bigf = 0; bigf < candidates_data[const_name].length; bigf++) {
+          let votes1 = 0, votes2 = 0;
+          let tot_vts = 0;
+          stateDataJson[state][const_name.toLowerCase()]["candidates"].forEach((candidate) => {
+            if (candidate["cId"] == candidates_data[const_name][0]["id1"])
+              votes1 = candidate["vts"];
+            if (candidate["cId"] == candidates_data[const_name][0]["id2"])
+              votes2 = candidate["vts"];
+            tot_vts += candidate["vts"];
+          });
+          let prty1, prty2, cd1_votes, cd2_votes, name1, name2;
+          if (votes1 > votes2) {
+            prty1 = candidates_data[const_name][bigf]["party1"];
+            prty2 = candidates_data[const_name][bigf]["party2"];
+            cd1_votes = votes1;
+            cd2_votes = votes2;
+            name1 = candidates_data[const_name][bigf]["name1"];
+            name2 = candidates_data[const_name][bigf]["name2"];
+          } else {
+            prty2 = candidates_data[const_name][bigf]["party1"];
+            prty1 = candidates_data[const_name][bigf]["party2"];
+            cd2_votes = votes1;
+            cd1_votes = votes2;
+            name2 = candidates_data[const_name][bigf]["name1"];
+            name1 = candidates_data[const_name][bigf]["name2"];
+          }
+          let bar_length1 = (parseInt(cd1_votes) / parseInt(tot_vts)) * 100;
+          let bar_length2 = (parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
           const slideMarkup = createSlide(
             const_name,
             state,
-            candidates_data[const_name][bigf]["party1"],
-            candidates_data[const_name][bigf]["party2"],
-            "./images/imgs2/rahul.png",
-            "./images/imgs2/smriti_irani.png",
-            candidates_data[const_name][bigf]["name1"],
-            candidates_data[const_name][bigf]["name2"],
-            "100000",
-            "50000"
+            prty1,
+            prty2,
+            "../images/imgs2/rahul.png",
+            "../images/imgs2/smriti_irani.png",
+            name1,
+            name2,
+            cd1_votes,
+            cd2_votes,
+            bar_length1,
+            bar_length2
           );
           swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
         }
@@ -2467,6 +2344,9 @@ function render_state_carousel(state) {
           950: {
             slidesPerView: 3,
           },
+          1600: {
+            slidesPerView: 4,
+          }
         },
         autoplay: {
           delay: 3000,
@@ -2499,10 +2379,7 @@ function getParameterByName(name, url = window.location.href) {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 function toTitleCase(name) {
-  return name
-    .split(" ")
-    .map((word) => {
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    })
-    .join(" ");
+  return name.split(' ').map(word => {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }).join(' ');
 }

@@ -5,7 +5,6 @@ async function fetchCandidateData() {
   const response = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
   const data = await response.json();
   candidatesData = data[0]; 
-  
 }
 
 // Fetch more cards and populate them
@@ -108,17 +107,25 @@ console.log(imageUrl);
   let bgColor;
   let arrColor;
   let nameColor;
+  let nameClass = "";
+  let MarginColor;
 
   if (item.alnce === "NDA") {
     bgColor = "linear-gradient(56deg, #FFF8DC,#FFE4BF)";
     arrColor = "linear-gradient(90deg, #EC8E30,#A65E17)";
+    nameClass = "gradient-text-nda";
     nameColor = "#FF9933";
+    MarginColor="#ffed4a"
   } else if (item.alnce === "INDIA") {
     nameColor = "#19AAED";
+    nameClass = "gradient-text-inda";
+    MarginColor="#ffffff"
   } else if (item.alnce === "OTH") {
+    nameClass = "gradient-text-oth";
     bgColor = "linear-gradient(56deg, #F5F5F5,#E0E0E0)";
     arrColor = "linear-gradient(90deg, #6F9088,#42615A)";
     nameColor = "#0c6b4b";
+    MarginColor="#ffffff"
   }
 
   card.style.background = bgColor;
@@ -150,15 +157,17 @@ console.log(imageUrl);
     ribbonText = position === 1 ? "Won" : "Lost";
     ribbonColor = position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
   } else {
-    ribbonText = "In Progress";
-    ribbonColor = "grey";
+    ribbonText = position === 1 ? "Leading" : "Trailing";
+    ribbonColor = position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
   }
   const leadTrailText = rsDecl === 1 ? "Margin" : (position === 1 ? "Leading by" : "Trailing by");
+  const Votes = new Intl.NumberFormat('en-IN').format(item.vts);
+  const VoteDiff = new Intl.NumberFormat('en-IN').format(voteDifference);
   card.innerHTML = `
   <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
   <div class="temp custom-temp">
       <div class="card-body w-100">
-          <h3 class="card-title custom-card-title" style="color:${nameColor}">${
+          <h3 class="card-title custom-card-title ${nameClass}">${
     item.cName
   }</h3>
           <div class="subheaders cd-flex align-items-center custom-subheaders" style="display:flex" > 
@@ -168,17 +177,17 @@ console.log(imageUrl);
           <p class="card-text custom-card-text">${item.constituency}(${item.state})</p>
           <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
               <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
-                item.vts
+                Votes
               }
           </p>
       </div>
       <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
       <p class="card-text mb-1 custom-iribbon-text">${leadTrailText}</p>
-      <p class="card-text custom-iribbon-text-votes">${voteDifference}</p>
+      <p class="card-text custom-iribbon-text-votes" style="color:${MarginColor}">${VoteDiff}</p>
   </div>
   </div>
   <div class="person-image d-flex custom-person-image">
-      <img class="person-img wid" src="${imageUrl}" alt="Person Image">
+      <img class="person-img wid"  id="candID" src="${imageUrl}" alt="Person Image">
   </div>
   `;
 
