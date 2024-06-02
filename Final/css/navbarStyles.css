@@ -174,7 +174,11 @@ body {
 }
 
 .hideFooter {
-  display: none;
+  visibility: hidden;
+}
+
+.footerI {
+  visibility: visible;
 }
 
 /* Mobile Styles */
