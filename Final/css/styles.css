@@ -1159,11 +1159,11 @@ button:active{
 
 /* Media query for hide table */
 /* Show carousel below 576px */
-@media (max-width: 575px) {
+@media  (max-width: 575px) {
   #carouselExampleIndicators {
       display: block !important;
   }
-  .non-carousel-content {
+  .non-carousel-content, .totaldetails {
       display: none !important;
   }
 }
@@ -1173,17 +1173,17 @@ button:active{
   #carouselExampleIndicators {
       display: block !important;
   }
-  .non-carousel-content {
+  .non-carousel-content , .totaldetails{
       display: none !important;
   }
 }
 
 /* Show non-carousel content below 768px and above 1200px */
-@media (max-width: 767px), (min-width: 1201px) {
+@media (min-width:576px) and  (max-width: 767px), (min-width: 1201px) {
   #carouselExampleIndicators {
       display: none !important;
   }
-  .non-carousel-content {
+  .non-carousel-content, .totaldetails {
       display: flex !important;
   }
 }
@@ -1191,5 +1191,5 @@ button:active{
 @media screen and (min-width: 768px) {
         #selection {
          width: 50%;
-        }
-      }
+  }
+}

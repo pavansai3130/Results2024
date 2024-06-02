@@ -1161,7 +1161,7 @@ $(document).ready(async function () {
   }, 300000);
   // console.log(data);
 
-  console.log(stateAlliance);
+  console.log(stateDataJson);
   stateDataJson2019 = data_201[0];
   allianceJson2019 = data_201[1];
   console.log(allianceJson);
@@ -1382,10 +1382,13 @@ $(document).ready(async function () {
         logos[state.toLowerCase()]
       }'>${state}`;
       for (const consti in stateDataJson[state]) {
-        const leadingCandidate = stateDataJson[state][consti]["candidates"][0];
-        if (leadingCandidate.alnce === "NDA") nda++;
-        else if (leadingCandidate.alnce === "OTH") others++;
-        else india++;
+        if (stateDataJson[state][consti]["candidates"][0]["vts"] != 0) {
+          const leadingCandidate =
+            stateDataJson[state][consti]["candidates"][0];
+          if (leadingCandidate.alnce === "NDA") nda++;
+          else if (leadingCandidate.alnce === "OTH") others++;
+          else india++;
+        }
       }
 
       cells[0].innerHTML = `<img id="stateLogo" src='${
@@ -1397,11 +1400,11 @@ $(document).ready(async function () {
         value < 0 ? "negative" : "positive"
       }> (${value})</span>`;
       value = india - INDIA;
-      cells[2].innerHTML = `${nda}<span class=${
+      cells[2].innerHTML = `${india}<span class=${
         value < 0 ? "negative" : "positive"
       }> (${value})</span>`;
       value = others - OTH;
-      cells[3].innerHTML = `${nda}<span class=${
+      cells[3].innerHTML = `${others}<span class=${
         value < 0 ? "negative" : "positive"
       }> (${value})</span>`;
 
@@ -2009,57 +2012,140 @@ function populateCarousel() {
   newpopulateTable("others", "othersContent");
 }
 function populateTable(alliance, carouselId) {
+  // alliancePatries = {
+  //   nda: {},
+  //   india: {},
+  //   others: {},
+  // };
+  console.log(alliancePatries);
   let carousel = document.getElementById(carouselId);
   let tbody1 = carousel.querySelector("#tbody1");
   let tbody2 = carousel.querySelector("#tbody2");
   tbody1.innerHTML = "";
   tbody2.innerHTML = "";
-
-  // let count = 1;
-  let totalCount = 1; // Total count of rows added
-  for (const party in alliancePatries[alliance]) {
-    const tr = document.createElement("tr");
-    tr.className = " ";
-    const td1 = document.createElement("td");
-    td1.innerHTML = `<img id="stateLogo" src='${
-      sym[party] ? sym[party] : sym["extra"]
-    }'>${party}`;
-    const td2 = document.createElement("td");
-    td2.textContent = alliancePatries[alliance][party];
-
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    if (totalCount <= 10) {
-      if (totalCount % 2 === 1) {
-        tbody1.appendChild(tr);
-        totalCount += 1;
-      } else {
-        tbody2.appendChild(tr);
-        totalCount += 1;
-      }
+  console.log(Object.keys(alliancePatries[alliance]).length);
+  if (Object.keys(alliancePatries[alliance]).length === 0) {
+    if (alliance === "nda") {
+      tbody1.innerHTML = `<tr>
+        <td>BJP</td>
+        <td>0</td>
+     </tr>
+     <tr>
+        <td>SS</td>
+        <td>0</td>
+     </tr>   
+     <tr>
+        <td>JD(s)</td>
+        <td>0</td>
+     </tr>`;
+      tbody2.innerHTML = `
+     <tr>
+        <td>TDP</td>
+        <td>0</td>
+     </tr>
+     <tr>
+     <td>NCP</td>
+     <td>0</td>
+  </tr>
+     `;
+    } else if (alliance === "india") {
+      tbody1.innerHTML = `<tr>
+        <td>INC</td>
+        <td>0</td>
+     </tr>
+    
+     <tr>
+        <td>AITC</td>
+        <td>0</td>
+     </tr>
+     
+     <tr>
+        <td>SS(UBT</td>
+        <td>0</td>
+     </tr>`;
+      tbody2.innerHTML = `
+      <tr>
+        <td>SP</td>
+        <td>0</td>
+     </tr>
+     <tr>
+        <td>DMK</td>
+        <td>0</td>
+     </tr>
+     
+     `;
     } else {
-      // Hide one row in tbody1 and one row in tbody2 alternatively
-      if (totalCount % 2 === 1) {
-        // console.log("enter");
-        tr.className = "hiding";
-        tbody1.appendChild(tr);
-        totalCount += 1;
-      } else {
-        tr.className = "hiding";
-        tbody2.appendChild(tr);
-        totalCount += 1;
-      }
+      tbody1.innerHTML = `<tr>
+        <td>BRS</td>
+        <td>0</td>
+     </tr>
+    
+     <tr>
+        <td>BSP</td>
+        <td>0</td>
+     </tr>
+     
+     <tr>
+        <td>SAD(UBT</td>
+        <td>0</td>
+     </tr>`;
+      tbody2.innerHTML = `
+     <tr>
+     <td>YSRCP</td>
+     <td>0</td>
+  </tr>
+  <tr>
+  <td>BJD</td>
+  <td>0</td>
+</tr>`;
     }
-    const toggleButtons = document.querySelectorAll(".toggleButton");
-    if (totalCount > 10) {
-      toggleButtons.forEach((toggleButton) => {
-        toggleButton.classList.remove("hidden");
-      });
-      // toggleButton.classList.remove("hidden");
-    } else {
-      toggleButtons.forEach((toggleButton) => {
-        toggleButton.classList.add("hidden");
-      });
+  } else {
+    // let count = 1;
+    let totalCount = 1; // Total count of rows added
+    for (const party in alliancePatries[alliance]) {
+      const tr = document.createElement("tr");
+      tr.className = " ";
+      const td1 = document.createElement("td");
+      td1.innerHTML = `<img id="stateLogo" src='${
+        sym[party] ? sym[party] : sym["extra"]
+      }'>${party}`;
+      const td2 = document.createElement("td");
+      td2.textContent = alliancePatries[alliance][party];
+
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      if (totalCount <= 10) {
+        if (totalCount % 2 === 1) {
+          tbody1.appendChild(tr);
+          totalCount += 1;
+        } else {
+          tbody2.appendChild(tr);
+          totalCount += 1;
+        }
+      } else {
+        // Hide one row in tbody1 and one row in tbody2 alternatively
+        if (totalCount % 2 === 1) {
+          // console.log("enter");
+          tr.className = "hiding";
+          tbody1.appendChild(tr);
+          totalCount += 1;
+        } else {
+          tr.className = "hiding";
+          tbody2.appendChild(tr);
+          totalCount += 1;
+        }
+      }
+      const toggleButtons = document.querySelectorAll(".toggleButton");
+      if (totalCount > 10) {
+        toggleButtons.forEach((toggleButton) => {
+          toggleButton.classList.remove("hidden");
+        });
+        // toggleButton.classList.remove("hidden");
+      } else {
+        toggleButtons.forEach((toggleButton) => {
+          toggleButton.classList.add("hidden");
+        });
+      }
     }
   }
 
@@ -2072,43 +2158,111 @@ async function newpopulateTable(alliance, carouselId) {
   let carousel = document.getElementById(carouselId);
   let tbody1 = carousel.querySelector("#tbody1");
   tbody1.innerHTML = "";
-
-  // let count = 1;
-  let totalCount = 1; // Total count of rows added
-  for (const party in alliancePatries[alliance]) {
-    const tr = document.createElement("tr");
-    tr.className = " ";
-    const td1 = document.createElement("td");
-    td1.innerHTML = `<img id="stateLogo" src='${
-      sym[party] ? sym[party] : sym["extra"]
-    }'>${party}`;
-    const td2 = document.createElement("td");
-    td2.textContent = alliancePatries[alliance][party];
-
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    if (totalCount <= 5) {
-      tbody1.appendChild(tr);
-      totalCount += 1;
+  if (Object.keys(alliancePatries[alliance]).length === 0) {
+    if (alliance === "nda") {
+      tbody1.innerHTML = `<tr>
+        <td>BJP</td>
+        <td>0</td>
+     </tr>
+     <tr>
+     <td>TDP</td>
+     <td>0</td>
+  </tr>
+     <tr>
+        <td>SS</td>
+        <td>0</td>
+     </tr>   
+     <tr>
+     <td>NCP</td>
+     <td>0</td>
+  </tr>
+     <tr>
+        <td>JD(s)</td>
+        <td>0</td>
+     </tr>`;
+    } else if (alliance === "india") {
+      tbody1.innerHTML = `<tr>
+        <td>INC</td>
+        <td>0</td>
+     </tr>
+     <tr>
+     <td>SP</td>
+     <td>0</td>
+  </tr>
+     <tr>
+        <td>AITC</td>
+        <td>0</td>
+     </tr>
+     <tr>
+        <td>DMK</td>
+        <td>0</td>
+     </tr>
+     
+     <tr>
+        <td>SS(UBT</td>
+        <td>0</td>
+     </tr>`;
     } else {
-      // Hide one row in tbody1 and one row in tbody2 alternatively
-      // console.log("enter");
-      tr.className = "hiding";
-      tbody1.appendChild(tr);
-      totalCount += 1;
+      tbody1.innerHTML = `<tr>
+        <td>BRS</td>
+        <td>0</td>
+     </tr>
+     <tr>
+     <td>YSRCP</td>
+     <td>0</td>
+  </tr>  
+     <tr>
+        <td>BSP</td>
+        <td>0</td>
+     </tr>
+     <tr>
+  <td>BJD</td>
+  <td>0</td>
+</tr>
+     <tr>
+        <td>SAD(UBT</td>
+        <td>0</td>
+     </tr>`;
     }
-    const toggleButtons = document.querySelectorAll(".toggleButton");
-    if (totalCount > 5) {
-      toggleButtons.forEach((toggleButton) => {
-        toggleButton.classList.remove("hidden");
-      });
-      // toggleButton.classList.remove("hidden");
-    } else {
-      toggleButtons.forEach((toggleButton) => {
-        toggleButton.classList.add("hidden");
-      });
+  } else {
+    let totalCount = 1; // Total count of rows added
+    for (const party in alliancePatries[alliance]) {
+      const tr = document.createElement("tr");
+      tr.className = " ";
+      const td1 = document.createElement("td");
+      td1.innerHTML = `<img id="stateLogo" src='${
+        sym[party] ? sym[party] : sym["extra"]
+      }'>${party}`;
+      const td2 = document.createElement("td");
+      td2.textContent = alliancePatries[alliance][party];
+
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      if (totalCount <= 5) {
+        tbody1.appendChild(tr);
+        totalCount += 1;
+      } else {
+        // Hide one row in tbody1 and one row in tbody2 alternatively
+        // console.log("enter");
+        tr.className = "hiding";
+        tbody1.appendChild(tr);
+        totalCount += 1;
+      }
+      const toggleButtons = document.querySelectorAll(".toggleButton");
+      if (totalCount > 5) {
+        toggleButtons.forEach((toggleButton) => {
+          toggleButton.classList.remove("hidden");
+        });
+        // toggleButton.classList.remove("hidden");
+      } else {
+        toggleButtons.forEach((toggleButton) => {
+          toggleButton.classList.add("hidden");
+        });
+      }
     }
   }
+
+  // let count = 1;
 }
 
 function updateBar(values) {
@@ -2483,7 +2637,7 @@ function render_state_carousel(state) {
                   <span class="lead_bar">
           <span style="width:${bar_length1}%;" class="leadbar"> </span>
           <span style="color:black;margin:3px">
-          ${votes1}</span>
+          ${new Intl.NumberFormat("en-IN").format(votes1)}</span>
           </span>
               </div>
           </div>
