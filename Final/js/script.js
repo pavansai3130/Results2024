@@ -2268,6 +2268,13 @@ function render_state_carousel(state) {
       state.toLowerCase() in party_img_json
         ? party_img_json[state.toLowerCase()]
         : "./imgs2/madhya_pradesh.jpg";
+    if(votes1 == 0 && votes2 == 0) {
+      votes1 = "Awaited";
+      votes2 = "Awaited";
+    }else {
+      votes1 = new Intl.NumberFormat('en-IN').format(votes1);
+      votes2 = new Intl.NumberFormat('en-IN').format(votes2)
+    }
     return `
       <div class="card swiper-slide">
           <span class="state_name">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
@@ -2281,7 +2288,7 @@ function render_state_carousel(state) {
                   <span class="lead_bar">
           <span style="width:${bar_length1}%;" class="leadbar"> </span>
           <span style="color:black;margin:3px">
-          ${new Intl.NumberFormat('en-IN').format(votes1)}</span>
+          ${votes1}</span>
           </span>
               </div>
           </div>
@@ -2294,14 +2301,13 @@ function render_state_carousel(state) {
                   <div class="cand_name1">${toTitleCase(cand_name2)} <span class="state_party_slot">(${partySymbol2})</span></div>
                   <span class="trail_bar">
           <span style="width:${bar_length2}%;" class="trailbar"></span>
-            <span style="color:black;margin:3px">${new Intl.NumberFormat('en-IN').format(votes2)}</span>
+            <span style="color:black;margin:3px">${votes2}</span>
           </span>
               </div>
           </div>
           <div class="map_container">
-              <img class="img_map" src="${state_img}" alt="">
+          <!--   <img class="img_map" src="${state_img}" alt=""> -->
           </div>
-          <span class="last_update">Last Updated : 12:10 pm</span>
       </div>
       `;
   }
@@ -2314,110 +2320,136 @@ function render_state_carousel(state) {
       return response.json();
     })
     .then((data) => {
-      party_img_json = data["images_key"];
-      candidates_data = data["candidate_details"][state];
-
-      // Clear previous content and destroy previous Swiper instance if it exists
-      if (swiper) {
-        swiper.destroy(true, true);
-      }
-      swiperContainer.innerHTML = "";
-      for (const_name in candidates_data) {
-        for (let bigf = 0; bigf < candidates_data[const_name].length; bigf++) {
-          let votes1 = 0, votes2 = 0;
-          let tot_vts = 0;
-          stateDataJson[state][const_name.toLowerCase()]["candidates"].forEach((candidate) => {
-            if (candidate["cId"] == candidates_data[const_name][0]["id1"])
-              votes1 = candidate["vts"];
-            if (candidate["cId"] == candidates_data[const_name][0]["id2"])
-              votes2 = candidate["vts"];
-            tot_vts += candidate["vts"];
-          });
-          let prty1, prty2, cd1_votes, cd2_votes, name1, name2;
-          if (votes1 > votes2) {
-            prty1 = candidates_data[const_name][bigf]["party1"];
-            prty2 = candidates_data[const_name][bigf]["party2"];
-            cd1_votes = votes1;
-            cd2_votes = votes2;
-            name1 = candidates_data[const_name][bigf]["name1"];
-            name2 = candidates_data[const_name][bigf]["name2"];
-          } else {
-            prty2 = candidates_data[const_name][bigf]["party1"];
-            prty1 = candidates_data[const_name][bigf]["party2"];
-            cd2_votes = votes1;
-            cd1_votes = votes2;
-            name2 = candidates_data[const_name][bigf]["name1"];
-            name1 = candidates_data[const_name][bigf]["name2"];
-          }
-          let bar_length1 = (parseInt(cd1_votes) / parseInt(tot_vts)) * 100;
-          let bar_length2 = (parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
-          const slideMarkup = createSlide(
-            const_name,
-            state,
-            prty1,
-            prty2,
-            "../images/imgs2/rahul.png",
-            "../images/imgs2/smriti_irani.png",
-            name1,
-            name2,
-            cd1_votes,
-            cd2_votes,
-            bar_length1,
-            bar_length2
-          );
-          swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
+      fetch("../data/overallpopular.json")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok " + response.statusText);
         }
-      }
-      // candidates_data.forEach(data => {
-      //   const slideMarkup = createSlide(data["const_name"], data["state"], data["cand_party1"], data["cand_party2"], data["candidateImg1"], data["candidateImg2"], data["cand_name1"], data["cand_name2"], data["votes1"], data["votes2"]);
-      //   swiperContainer.insertAdjacentHTML('beforeend', slideMarkup);
-      // });
-
-      swiper = new Swiper(".slide-content", {
-        slidesPerView: 3,
-        spaceBetween: 40,
-        loop: true,
-        centerSlide: true,
-        fade: true,
-        grabCursor: true,
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-          dynamicBullets: true,
-        },
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-        breakpoints: {
-          0: {
-            slidesPerView: 1,
-          },
-          600: {
-            slidesPerView: 2,
-          },
-          950: {
-            slidesPerView: 3,
-          },
-          1600: {
-            slidesPerView: 4,
+        return response.json();
+      })
+      .then((imgjson) => {
+        party_img_json = data["images_key"];
+        candidates_data = data["candidate_details"][state];
+  
+        // Clear previous content and destroy previous Swiper instance if it exists
+        if (swiper) {
+          swiper.destroy(true, true);
+        }
+        swiperContainer.innerHTML = "";
+        for (const_name in candidates_data) {
+          for (let bigf = 0; bigf < candidates_data[const_name].length; bigf++) {
+            let votes1 = 0, votes2 = 0;
+            let tot_vts = 0;
+            stateDataJson[state][const_name.toLowerCase()]["candidates"].forEach((candidate) => {
+              if (candidate["cId"] == candidates_data[const_name][0]["id1"])
+                votes1 = candidate["vts"];
+              if (candidate["cId"] == candidates_data[const_name][0]["id2"])
+                votes2 = candidate["vts"];
+              tot_vts += candidate["vts"];
+            });
+            let prty1, prty2, cd1_votes, cd2_votes, name1, name2;
+            let cid1, cid2;
+            if (votes1 > votes2) {
+              cid1 = candidates_data[const_name][bigf]["id1"];
+              cid2 = candidates_data[const_name][bigf]["id2"];
+              prty1 = candidates_data[const_name][bigf]["party1"];
+              prty2 = candidates_data[const_name][bigf]["party2"];
+              cd1_votes = votes1;
+              cd2_votes = votes2;
+              name1 = candidates_data[const_name][bigf]["name1"];
+              name2 = candidates_data[const_name][bigf]["name2"];
+            } else {
+              cid2 = candidates_data[const_name][bigf]["id1"];
+              cid1 = candidates_data[const_name][bigf]["id2"];
+              prty2 = candidates_data[const_name][bigf]["party1"];
+              prty1 = candidates_data[const_name][bigf]["party2"];
+              cd2_votes = votes1;
+              cd1_votes = votes2;
+              name2 = candidates_data[const_name][bigf]["name1"];
+              name1 = candidates_data[const_name][bigf]["name2"];
+            }
+            let img1 = (cid1 in imgjson) ? 
+      `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png` :
+      `./images/partylogo/Unknown.svg`;
+      let img2 = (cid2 in imgjson) ? 
+      `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png` :
+      `./images/partylogo/Unknown.svg`;
+            let bar_length1 = (parseInt(cd1_votes) / parseInt(tot_vts)) * 100;
+            let bar_length2 = (parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
+            const slideMarkup = createSlide(
+              const_name,
+              state,
+              prty1,
+              prty2,
+              img1,
+              img2,
+              name1,
+              name2,
+              cd1_votes,
+              cd2_votes,
+              bar_length1,
+              bar_length2
+            );
+            swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
           }
-        },
-        autoplay: {
-          delay: 3000,
-          disableOnInteraction: false,
-        },
-        speed: 1300,
-      });
-
-      swiperContainer.addEventListener("mouseenter", function () {
-        swiper.autoplay.stop();
-      });
-
-      swiperContainer.addEventListener("mouseleave", function () {
-        swiper.autoplay.start();
-      });
-    })
+        }
+        // candidates_data.forEach(data => {
+        //   const slideMarkup = createSlide(data["const_name"], data["state"], data["cand_party1"], data["cand_party2"], data["candidateImg1"], data["candidateImg2"], data["cand_name1"], data["cand_name2"], data["votes1"], data["votes2"]);
+        //   swiperContainer.insertAdjacentHTML('beforeend', slideMarkup);
+        // });
+  
+        swiper = new Swiper(".slide-content", {
+          slidesPerView: 3,
+          spaceBetween: 40,
+          loop: true,
+          centerSlide: true,
+          fade: true,
+          grabCursor: true,
+          pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+            dynamicBullets: true,
+          },
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
+          breakpoints: {
+            0: {
+              slidesPerView: 1,
+            },
+            600: {
+              slidesPerView: 2,
+            },
+            950: {
+              slidesPerView: 3,
+            },
+            1600: {
+              slidesPerView: 4,
+            }
+          },
+          autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+          },
+          speed: 1300,
+        });
+  
+        swiperContainer.addEventListener("mouseenter", function () {
+          swiper.autoplay.stop();
+        });
+  
+        swiperContainer.addEventListener("mouseleave", function () {
+          swiper.autoplay.start();
+        });
+      })
+      })
+      .catch((error) => {
+        console.error(
+          "There has been a problem with your fetch operation:",
+          error
+        );
+      })
     .catch((error) => {
       console.error(
         "There has been a problem with your fetch operation:",

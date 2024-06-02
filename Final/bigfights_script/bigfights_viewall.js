@@ -30,11 +30,18 @@ function represent_All() {
       }
       return response.json();
     }).then((data2024) => {
-      data2024
-      represent_All_fun(data2024[0]);
+      fetch("./data/overallpopular.json")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok " + response.statusText);
+        }
+        return response.json();
+      }).then((imgjson) => {
+      represent_All_fun(data2024[0], imgjson);
+      });
     });
 }
-function represent_All_fun(data2024) {
+function represent_All_fun(data2024, imgjson) {
   let state_tag = document.getElementById("state_tag");
   state_tag.style.display = "none";
   main_div.innerHTML = "";
@@ -60,7 +67,7 @@ function represent_All_fun(data2024) {
             let card_div = document.createElement("div");
             card_div.setAttribute("class", "card");
             let votes1, votes2, prty1, prty2, name1, name2, cd1_votes, cd2_votes;
-            let tot_vts = 0;
+            let tot_vts = 0, cid1, cid2;
             data2024[state][const_name.toLowerCase()]["candidates"].forEach((candidate) => {
               if (candidate["cId"] == obj["id1"])
                 votes1 = candidate["vts"];
@@ -68,9 +75,9 @@ function represent_All_fun(data2024) {
                 votes2 = candidate["vts"];
               tot_vts += candidate["vts"];
             });
-            // votes1 = 5000000;
-            // votes2 = 5000000;
             if (votes1 > votes2) {
+              cid1 = obj["id1"];
+              cid2 = obj["id2"];
               prty1 = obj["party1"];
               prty2 = obj["party2"];
               cd1_votes = votes1;
@@ -78,6 +85,8 @@ function represent_All_fun(data2024) {
               name1 = obj["name1"];
               name2 = obj["name2"];
             } else {
+              cid2 = obj["id1"];
+              cid1 = obj["id2"];
               prty2 = obj["party1"];
               prty1 = obj["party2"];
               cd2_votes = votes1;
@@ -101,11 +110,24 @@ function represent_All_fun(data2024) {
             let bar_length2 = (parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
             temp_data.push(toTitleCase(obj["name1"]));
             temp_data.push(toTitleCase(obj["name2"]));
+            let img1 = (cid1 in imgjson) ? 
+            `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png` :
+            `./images/other/partylogo/Unknown.svg`;
+            let img2 = (cid2 in imgjson) ? 
+            `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png` :
+            `./images/other/partylogo/Unknown.svg`;
+            if(cd1_votes == 0 && cd2_votes == 0) {
+              cd1_votes = "Awaited";
+              cd2_votes = "Awaited";
+            }else {
+              cd1_votes = new Intl.NumberFormat('en-IN').format(cd1_votes);
+              cd2_votes = new Intl.NumberFormat('en-IN').format(cd2_votes);
+            }
             let html_data = `<span class="state_name" data-state="${toTitleCase(state)}" data-const="${toTitleCase(const_name)}">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
       <div class="cand_desc1">
           <span class="img_container">
               <img class="party_symbol" src="${party_path1}" alt="">
-              <img class="cand_img1" src="./images/imgs2/rahul.png" alt="">
+              <img class="cand_img1" src=${img1} alt="">
           </span>
           <div class="desc_container">
               <div class="cand_name1 render_name1" data-candname="${toTitleCase(name1)
@@ -114,14 +136,14 @@ function represent_All_fun(data2024) {
               <span class="lead_bar">
               <span style="width:${bar_length1
               }%;" class="leadbar"> </span><span style="color:black;margin:3px">
-              ${new Intl.NumberFormat('en-IN').format(cd1_votes)}</span>
+              ${cd1_votes}</span>
               </span>
           </div>
       </div>
       <div class="cand_desc2">
           <span class="img_container">
               <img class="party_symbol" src=${party_path2} alt="">
-              <img class="cand_img1" src="./images/imgs2/smriti_irani.png" alt="">
+              <img class="cand_img1" src=${img2} alt="">
           </span>
           <div class="desc_container">
               <div class="cand_name1 render_name2" data-candname="${toTitleCase(name2)
@@ -129,14 +151,13 @@ function represent_All_fun(data2024) {
               })</span></div>
             <span class="trail_bar">
               <span style="width:${bar_length2
-              }%;" class="trailbar"></span><span style="color:black;margin:3px">${new Intl.NumberFormat('en-IN').format(cd2_votes)}</span>
+              }%;" class="trailbar"></span><span style="color:black;margin:3px">${cd2_votes}</span>
               </span>
           </div>
       </div>
       <div class="map_container">
-          <img class="img_map" src=${state_img} alt="">
-      </div>
-      <span class="last_update">Last Updated : 12:10 pm</span>`;
+      <!-- <img class="img_map" src=${state_img} alt=""> -->
+      </div>`;
             card_div.innerHTML = html_data;
             main_div.appendChild(card_div);
           }
@@ -160,11 +181,18 @@ function represent_state(state) {
       }
       return response.json();
     }).then((data2024) => {
-      data2024
-      represent_state_fun(data2024[0], state);
+      fetch("./data/overallpopular.json")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok " + response.statusText);
+        }
+        return response.json();
+      }).then((imgjson) => {
+      represent_state_fun(data2024[0], state, imgjson);
+      });
     });
 }
-function represent_state_fun(data2024, state) {
+function represent_state_fun(data2024, state, imgjson) {
   main_div.innerHTML = "";
   let state_tag = document.getElementById("state_tag");
   state_tag.style.display = "block";
@@ -199,7 +227,7 @@ function represent_state_fun(data2024, state) {
           let card_div = document.createElement("div");
           card_div.setAttribute("class", "card");
           let votes1, votes2, prty1, prty2, name1, name2, cd1_votes, cd2_votes;
-          let tot_vts = 0;
+          let tot_vts = 0, cid1, cid2;
           data2024[state][const_name.toLowerCase()]["candidates"].forEach((candidate) => {
             if (candidate["cId"] == obj["id1"])
               votes1 = candidate["vts"];
@@ -208,6 +236,8 @@ function represent_state_fun(data2024, state) {
             tot_vts += candidate["vts"];
           });
           if (votes1 > votes2) {
+            cid1 = obj["id1"]; 
+            cid2 = obj["id2"]; 
             prty1 = obj["party1"];
             prty2 = obj["party2"];
             cd1_votes = votes1;
@@ -215,6 +245,8 @@ function represent_state_fun(data2024, state) {
             name1 = obj["name1"];
             name2 = obj["name2"];
           } else {
+            cid2 = obj["id1"]; 
+            cid1 = obj["id2"]; 
             prty2 = obj["party1"];
             prty1 = obj["party2"];
             cd2_votes = votes1;
@@ -236,13 +268,26 @@ function represent_state_fun(data2024, state) {
               : "./images/imgs2/madhya_pradesh.png";
           temp_data.push(toTitleCase(obj["name1"]));
           temp_data.push(toTitleCase(obj["name2"]));
+          let img1 = (cid1 in imgjson) ? 
+            `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png` :
+            `./images/other/partylogo/Unknown.svg`;
+            let img2 = (cid2 in imgjson) ? 
+            `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png` :
+            `./images/other/partylogo/Unknown.svg`;
           let bar_length1 = (parseInt(cd1_votes) / parseInt(tot_vts)) * 100;
           let bar_length2 =(parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
+          if(cd1_votes == 0 && cd2_votes == 0) {
+            cd1_votes = "Awaited";
+            cd2_votes = "Awaited";
+          }else {
+            cd1_votes = new Intl.NumberFormat('en-IN').format(cd1_votes);
+            cd2_votes = new Intl.NumberFormat('en-IN').format(cd2_votes);
+          }
           let html_data = `<span class="state_name" data-state="${state}" data-const="${const_name}">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
           <div class="cand_desc1">
               <span class="img_container">
                   <img class="party_symbol" src="${party_path1}" alt="">
-                  <img class="cand_img1" src="./images/imgs2/rahul.png" alt="">
+                  <img class="cand_img1" src=${img1} alt="">
               </span>
               <div class="desc_container">
                   <div class="cand_name1 render_name1" data-candname="${toTitleCase(name1)
@@ -251,14 +296,14 @@ function represent_state_fun(data2024, state) {
           <span class="lead_bar">
           <span style="width:${bar_length1
             }%;" class="leadbar"> </span><span style="color:black;margin:3px">
-          ${new Intl.NumberFormat('en-IN').format(cd1_votes)}</span>
+          ${cd1_votes}</span>
           </span>
               </div>
           </div>
           <div class="cand_desc2">
               <span class="img_container">
                   <img class="party_symbol" src=${party_path2} alt="">
-                  <img class="cand_img1" src="./images/imgs2/smriti_irani.png" alt="">
+                  <img class="cand_img1" src=${img2} alt="">
               </span>
               <div class="desc_container">
                   <div class="cand_name1 render_name2" data-candname="${toTitleCase(name2)
@@ -266,14 +311,13 @@ function represent_state_fun(data2024, state) {
             })</span></div>
           <span class="trail_bar">
           <span style="width:${bar_length2
-            }%;" class="trailbar"></span><span style="color:black;margin:3px">${new Intl.NumberFormat('en-IN').format(cd2_votes)}</span>
+            }%;" class="trailbar"></span><span style="color:black;margin:3px">${cd2_votes}</span>
           </span>
               </div>
           </div>
           <div class="map_container">
-              <img class="img_map" src=${state_img} alt="">
-          </div>
-          <span class="last_update">Last Updated : 12:10 pm</span>`;
+            <!--  <img class="img_map" src=${state_img} alt=""> -->
+          </div>`;
           card_div.innerHTML = html_data;
           main_div.appendChild(card_div);
         }
