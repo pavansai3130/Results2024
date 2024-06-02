@@ -5,10 +5,7 @@ async function fetchCandidateData() {
   const response = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
   const data = await response.json();
   candidatesData = data[0]; 
-   // Store the 1st index in the global variable
-   console.log("---------------------------------------aaska",candidatesData);
-//    alert(candidatesData[item.state])
-// alert(candidatesData[item.state][lowerCaseConstituency])
+  
 }
 
 // Fetch more cards and populate them
@@ -147,7 +144,7 @@ function createCard(item) {
               }" alt=""></div>
               <h6 style="font-weight: bold;">${item.prty}</h6>
           </div>
-          <p class="card-text custom-card-text">${item.place});</p>
+          <p class="card-text custom-card-text">${item.constituency}(${item.state})</p>
           <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
               <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
                 item.vts
@@ -193,8 +190,12 @@ async function displayCardsForState(stateName) {
             if (candidates) {
               const candidate = candidates.find(candidate => candidate.cId === candidateId);
               if (candidate) {
-                candidate.place = `${constituency.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')} (${state})`; 
-                return candidate;
+                candidate.state = state;
+              candidate.constituency = constituency
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
+              return candidate;
               }
             } else {
               console.error('Candidates array is undefined for', state, constituency);  // Add log to debug

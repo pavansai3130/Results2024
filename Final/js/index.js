@@ -59,7 +59,6 @@ async function fetchCandidateData() {
   const response = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
   const data = await response.json();
   candidatesData = data[0];  // Store the 1st index in the global variable
-  console.log("-------------------------------------",candidatesData)
 }
 
 let currentPage = 1;
