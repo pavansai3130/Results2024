@@ -1816,6 +1816,10 @@ function populateCarousel() {
   populateTable("nda", "ndaCarousel");
   populateTable("india", "indiaCarousel");
   populateTable("others", "othersCarousel");
+  // newTable
+  newpopulateTable("nda","ndaContent")
+  newpopulateTable("india","indiaContent")
+  newpopulateTable("others","othersContent")
 }
 function populateTable(alliance, carouselId) {
   let carousel = document.getElementById(carouselId);
@@ -1874,6 +1878,57 @@ function populateTable(alliance, carouselId) {
 
   // Set the height of the parent div to the maximum width
 }
+
+
+/* NEW TABLE  */
+
+
+async function newpopulateTable(alliance, carouselId) {
+
+  let carousel = document.getElementById(carouselId);
+  let tbody1 = carousel.querySelector("#tbody1");
+  tbody1.innerHTML = "";
+
+  // let count = 1;
+  let totalCount = 1; // Total count of rows added
+  for (const party in alliancePatries[alliance]) {
+    const tr = document.createElement("tr");
+    tr.className = " ";
+    const td1 = document.createElement("td");
+    td1.innerHTML = `<img id="stateLogo" src='${
+      sym[party] ? sym[party] : sym["extra"]
+    }'>${party}`;
+    const td2 = document.createElement("td");
+    td2.textContent = alliancePatries[alliance][party];
+
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    if (totalCount <= 5) {
+        tbody1.appendChild(tr);
+        totalCount += 1;
+    } else {
+      // Hide one row in tbody1 and one row in tbody2 alternatively
+        // console.log("enter");
+        tr.className = "hiding";
+        tbody1.appendChild(tr);
+        totalCount += 1;
+    }
+    const toggleButtons = document.querySelectorAll(".toggleButton");
+    if (totalCount > 5) {
+      toggleButtons.forEach((toggleButton) => {
+        toggleButton.classList.remove("hidden");
+      });
+      // toggleButton.classList.remove("hidden");
+    } else {
+      toggleButtons.forEach((toggleButton) => {
+        toggleButton.classList.add("hidden");
+      });
+    }
+  }
+
+}
+
+
 function updateBar(values) {
   const total = values.reduce((acc, val) => acc + val, 0);
   /*  const barContainer = document.getElementById("bar-container");
