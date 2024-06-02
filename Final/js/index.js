@@ -2702,6 +2702,130 @@ function render_whole_carousel() {
   document
     .getElementById("view_all")
     .setAttribute("href", "./bigfights_viewall.html" + "?state=" + "all");
+  fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok " + response.statusText);
+      }
+      return response.json();
+    }).then((data2024) => {
+      fetch("../data/partyicon-candimg.json")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok " + response.statusText);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          party_img_json = data["images_key"];
+          candidates_data = data["candidate_details"];
+
+          // Clear previous content and destroy previous Swiper instance if it exists
+          if (swiper) {
+            swiper.destroy(true, true);
+          }
+          swiperContainer.innerHTML = "";
+
+          candidates_data.forEach((data) => {
+            let cd1_votes = 0, cd2_votes = 0, tot_vts = 0;
+            // console.log(data2024[0]["Andhra Pradesh"]);
+            data2024[0][data["state"]][data["const_name"].toLowerCase()]["candidates"].forEach((candidate) => {
+              // console.log("id" + candidate["cId"]);
+              if (candidate["cId"] == data["id1"])
+                cd1_votes = candidate["vts"];
+              if (candidate["cId"] == data["id2"])
+                cd2_votes = candidate["vts"];
+              tot_vts += candidate["vts"];
+            });
+            // console.log(votes1 + " " + votes2);
+            let prty1, prty2, name1, name2, votes1, votes2;
+            if(cd1_votes > cd2_votes) {
+              prty2 = data["cand_party2"];
+              prty1 = data["cand_party1"];
+              name2 = data["cand_name2"];
+              name1 = data["cand_name1"];
+              votes2 = cd2_votes;
+              votes1 = cd1_votes;
+            }else {
+              prty1 = data["cand_party2"];
+              prty2 = data["cand_party1"];
+              name1 = data["cand_name2"];
+              name2 = data["cand_name1"];
+              votes1 = cd2_votes;
+              votes2 = cd1_votes;
+            }
+            let bar_length1 = (parseInt(votes1) / parseInt(tot_vts)) * 100;
+            let bar_length2 = (parseInt(votes2) / parseInt(tot_vts)) * 100;
+            const slideMarkup = createSlide(
+              data["const_name"],
+              data["state"],
+              prty1,
+              prty2,
+              data["candidateImg1"],
+              data["candidateImg2"],
+              name1,
+              name2,
+              votes1,
+              votes2,
+              bar_length1,
+              bar_length2
+            );
+            swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
+          });
+
+          swiper = new Swiper(".slide-content", {
+            slidesPerView: 3,
+            spaceBetween: 40,
+            loop: true,
+            centerSlide: true,
+            fade: true,
+            grabCursor: true,
+            pagination: {
+              el: ".swiper-pagination",
+              clickable: true,
+              dynamicBullets: true,
+            },
+            navigation: {
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            },
+            breakpoints: {
+              0: {
+                slidesPerView: 1,
+              },
+              600: {
+                slidesPerView: 2,
+              },
+              950: {
+                slidesPerView: 3,
+              },
+              1600: {
+                slidesPerView: 4,
+              }
+            },
+            autoplay: {
+              delay: 3000,
+              disableOnInteraction: false,
+            },
+            speed: 1300,
+          });
+
+          swiperContainer.addEventListener("mouseenter", function () {
+            swiper.autoplay.stop();
+          });
+
+          swiperContainer.addEventListener("mouseleave", function () {
+            swiper.autoplay.start();
+          });
+        })
+        .catch((error) => {
+          console.error(
+            "There has been a problem with your fetch operation:",
+            error
+          );
+        });
+    });
+
   function createSlide(
     const_name,
     state,
@@ -2712,7 +2836,9 @@ function render_whole_carousel() {
     cand_name1,
     cand_name2,
     votes1,
-    votes2
+    votes2,
+    bar_length1,
+    bar_length2
   ) {
     let party_path1 =
       partySymbol1 in party_img_json
@@ -2728,15 +2854,19 @@ function render_whole_carousel() {
         : "./imgs2/madhya_pradesh.jpg";
     return `
     <div class="card swiper-slide">
-        <span class="state_name">${const_name} <span class="state_party_slot">(${state})</span></span>
+        <span class="state_name">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
         <div class="cand_desc1">
             <span class="img_container">
                 <img class="party_symbol" src=${party_path1} alt="">
                 <img class="cand_img1" src="${candidateImg1}" alt="">
             </span>
             <div class="desc_container">
-                <div class="cand_name1">${cand_name1} <span class="state_party_slot">(${partySymbol1})</span></div>
-                <span class="lead_bar">${votes1}</span>
+                <div class="cand_name1">${toTitleCase(cand_name1)} <span class="state_party_slot">(${partySymbol1})</span></div>
+                <span class="lead_bar">
+          <span style="width:${bar_length1
+            }%;" class="leadbar"> </span><span style="color:black;margin:3px">
+          ${new Intl.NumberFormat('en-IN').format(votes1)}</span>
+          </span>
             </div>
         </div>
         <div class="cand_desc2">
@@ -2745,8 +2875,11 @@ function render_whole_carousel() {
                 <img class="cand_img1" src="${candidateImg2}" alt="">
             </span>
             <div class="desc_container">
-                <div class="cand_name1">${cand_name2} <span class="state_party_slot">(${partySymbol2})</span></div>
-                <span class="trail_bar" >${votes2}</span>
+                <div class="cand_name1">${toTitleCase(cand_name2)} <span class="state_party_slot">(${partySymbol2})</span></div>
+                <span class="trail_bar">
+          <span style="width:${bar_length2
+            }%;" class="trailbar"></span><span style="color:black;margin:3px">${new Intl.NumberFormat('en-IN').format(votes2)}</span>
+          </span>
             </div>
         </div>
         <div class="map_container">
@@ -2756,92 +2889,13 @@ function render_whole_carousel() {
     </div>
     `;
   }
-
-  fetch("./data/partyicon-candimg.json")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok " + response.statusText);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      party_img_json = data["images_key"];
-      candidates_data = data["candidate_details"];
-
-      // Clear previous content and destroy previous Swiper instance if it exists
-      if (swiper) {
-        swiper.destroy(true, true);
-      }
-      swiperContainer.innerHTML = "";
-
-      candidates_data.forEach((data) => {
-        const slideMarkup = createSlide(
-          data["const_name"],
-          data["state"],
-          data["cand_party1"],
-          data["cand_party2"],
-          data["candidateImg1"],
-          data["candidateImg2"],
-          data["cand_name1"],
-          data["cand_name2"],
-          data["votes1"],
-          data["votes2"]
-        );
-        swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
-      });
-
-      swiper = new Swiper(".slide-content", {
-        slidesPerView: 3,
-        spaceBetween: 40,
-        loop: true,
-        centerSlide: true,
-        fade: true,
-        grabCursor: true,
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-          dynamicBullets: true,
-        },
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-        breakpoints: {
-          0: {
-            slidesPerView: 1,
-          },
-          600: {
-            slidesPerView: 2,
-          },
-          950: {
-            slidesPerView: 3,
-          },
-        },
-        autoplay: {
-          delay: 3000,
-          disableOnInteraction: false,
-        },
-        speed: 1300,
-      });
-
-      swiperContainer.addEventListener("mouseenter", function () {
-        swiper.autoplay.stop();
-      });
-
-      swiperContainer.addEventListener("mouseleave", function () {
-        swiper.autoplay.start();
-      });
-    })
-    .catch((error) => {
-      console.error(
-        "There has been a problem with your fetch operation:",
-        error
-      );
-    });
 }
-
-
-function viewingstate(stateId){
+function toTitleCase(name) {
+  return name.split(' ').map(word => {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }).join(' ');
+}
+function viewingstate(stateId) {
   var m = document.getElementById('india-map');
   if(m){
     m.scrollIntoView({ behavior: 'smooth' });
