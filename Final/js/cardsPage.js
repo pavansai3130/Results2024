@@ -53,10 +53,10 @@ async function fetchMoreCards1() {
     // Loop through each state and constituency
     Object.keys(stateData).forEach((state) => {
       Object.keys(stateData[state]).forEach((constituency) => {
-        stateData[state][constituency].forEach((candidateId) => {
+        stateData[state][constituency].forEach(async (candidateId) => {  // Make this function async
           const candidateDetails = getCandidateDetails(candidateId);
           if (candidateDetails) {
-            const card = createCard(candidateDetails);
+            const card = await createCard(candidateDetails);  // Wait for the Promise to resolve
             moreCardsRoot.appendChild(card);
           } else {
             console.error("Candidate details not found for ID:", candidateId);
@@ -69,13 +69,37 @@ async function fetchMoreCards1() {
   }
 }
 
-function createCard(item) {
+async function createCard(item) {
+  async function fetchCandidateValue(item) {
+    const response = await fetch('./data/overallpopular.json');
+    const data = await response.json();
+    console.log(data);
+    const candidate = data[item.cId];
+  
+    
+    if (candidate) {
+      // alert(candidate);
+      // alert(candidate.value);
+      return candidate;
+    } else {
+      console.error('Candidate not found for ID:', item.cId);
+      return null;
+    }
+  }
+
   const allianceImages = {
     "NDA": "./images/imgs/NDA.png",
     "INDIA": "./images/imgs/INDA.png",
     "OTH": "./images/imgs/OTH.png"
   };
-  const imageUrl = item.perimg || allianceImages[item.alnce];
+  const candidateValue = await fetchCandidateValue(item);
+  
+const imageUrl = `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${candidateValue}.png` || allianceImages[item.alnce];
+console.log(imageUrl);
+
+  
+
+  // const imageUrl = item.perimg || allianceImages[item.alnce];
 
 
   const card = document.createElement("div");
@@ -191,11 +215,11 @@ async function displayCardsForState(stateName) {
               const candidate = candidates.find(candidate => candidate.cId === candidateId);
               if (candidate) {
                 candidate.state = state;
-              candidate.constituency = constituency
-                .split(' ')
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-                .join(' ');
-              return candidate;
+                candidate.constituency = constituency
+                  .split(' ')
+                  .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                  .join(' ');
+                return candidate;
               }
             } else {
               console.error('Candidates array is undefined for', state, constituency);  // Add log to debug
@@ -208,17 +232,19 @@ async function displayCardsForState(stateName) {
 
     // Loop through each state and constituency
     if (stateData[stateName]) {  // Only process the specified state
-      Object.keys(stateData[stateName]).forEach(constituency => {
-        stateData[stateName][constituency].forEach(candidateId => {
+      for (const constituency of Object.keys(stateData[stateName])) {
+        for (const candidateId of stateData[stateName][constituency]) {
           const candidateDetails = getCandidateDetails(candidateId);
+          
           if (candidateDetails) {
-            const card = createCard(candidateDetails);
+            
+            const card = await createCard(candidateDetails);  // Wait for the card to be created
             moreCardsRoot.appendChild(card);
           } else {
             console.error('Candidate details not found for ID:', candidateId);
           }
-        });
-      });
+        }
+      }
     } else {
       console.error('Specified state not found in state data:', stateName);
     }
@@ -226,6 +252,7 @@ async function displayCardsForState(stateName) {
     console.error("Error fetching or processing data:", error);
   }
 }
+
 
 function performSearch() {
   const searchInput = document
