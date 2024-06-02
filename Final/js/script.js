@@ -1166,15 +1166,6 @@ $(document).ready(async function () {
   allianceJson2019 = data_201[1];
   console.log(allianceJson);
   console.log(logos);
-  if (getParameterByName("year") === "2019") {
-    stateDataJson = stateDataJson2019;
-    allianceJson = allianceJson2019;
-    // console.log(data_2019);
-    data = data_2019;
-    // console.log("datsis");
-    // console.log(data);
-    document.getElementById("disclaimer2019").style.display = "block";
-  }
 
   console.log(allianceJson);
   // Function to render India map with statewise colors
@@ -1346,15 +1337,6 @@ $(document).ready(async function () {
   });
 
   loadNext = function () {
-    if (getParameterByName("year") === "2019") {
-      stateDataJson = stateDataJson2019;
-      allianceJson = allianceJson2019;
-      // console.log(data_2019);
-      data = data_2019;
-      // console.log("datsis");
-      // console.log(data);
-      document.getElementById("disclaimer2019").style.display = "block";
-    }
     // document.getElementById("stateRow").textContent = "Union Territory";
     // document.getElementById("stateButton").className =
     //   "btn btn-light border border-5";
@@ -1458,15 +1440,7 @@ $(document).ready(async function () {
     //   "btn btn-light border border-5";
     // document.getElementById("stateRow").textContent = "State";
     // document.getElementById("stateButton").className += " active";
-    if (getParameterByName("year") === "2019") {
-      stateDataJson = stateDataJson2019;
-      allianceJson = allianceJson2019;
-      // console.log(data_2019);
-      data = data_2019;
-      // console.log("datsis");
-      // console.log(data);
-      document.getElementById("disclaimer2019").style.display = "block";
-    }
+
     renderAllianceResults();
   };
 
