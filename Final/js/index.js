@@ -715,9 +715,11 @@ document.addEventListener("DOMContentLoaded", function () {
     breadcrumbConstituency.style.display = "none";
   });
   document.getElementById("consti-bt").addEventListener("click", function () {
+    state_table_pressed=0;
     document.getElementById("Constituency-res").style.display = "none";
     console.log("display is none");
     document.getElementById("breadcrumb-india").style.display = "block";
+    document.getElementById("breadcrumb-india").style.color = "block";
     state_button_pressed = 0;
     document.getElementById("india-map").style.display = "none";
     document.getElementById("map").style.display = "block";
@@ -765,10 +767,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function resetBreadcrumb() {
   document.getElementById("state-select").value="default";
+  document.getElementById("myChart").style.display="block";
+  document.getElementById("chartsContainer").style.display="block";
+  document.getElementById("carouselContainer").style.display="block";
+  document.getElementById("st_con_heading").style.display="none";
+  document.getElementById("newcards").style.display="none";
   document.getElementById("containertool2").style.display = "none";
   document.getElementById("containertool").style.display = "none";
   document.querySelector(".bt_grp").style.display = "block";
   document.getElementById("piechart").style.display = "none";
+  document.querySelector(".bt_grp").style.display="block";
+  document.getElementById('piechart').style.display="none";
+  document.getElementById('piechart2').style.display="none";
+  document.getElementById('piechart3').style.display="none";
   updateBar(Object.values(allianceJson));
   renderAllianceResults();
   const breadcrumbState = document.getElementById("breadcrumb-state");
@@ -808,7 +819,7 @@ const zooming = {
   22: [21, 83, 6],
   26: [20.2, 73.3, 6],
   25: [20.5, 72, 7],
-  7: [28.67, 77.2, 8],
+  7: [28.67, 77.2,7],
   30: [15.4, 74.3, 8],
   24: [23, 72.2, 6],
   6: [29.3, 76.6, 7],
@@ -833,7 +844,7 @@ const zooming = {
   36: [18, 79.5, 6],
   16: [23.8, 92],
   9: [27, 81, 6],
-  5: [30, 79.4, 7],
+  5: [30, 79.4, 8],
   19: [24.5, 88, 6],
 };
 function updateMapBounds() {
@@ -856,7 +867,7 @@ function render_whole_table() {
   tb.innerHTML = "";
 
   let count = 0;
-  console.log(data);
+  console.log("The data is :",data);
   // Create all rows first
   for (let i of ftrs) {
     if (i.pc_id == null) continue;
@@ -882,8 +893,7 @@ function render_whole_table() {
     let win;
     // console.log("this is");
     console.log(i.pc_id);
-
-    const firstCandidateKey = data[i.pc_id][0];
+    const firstCandidateKey = data[i.pc_id][1];
     if (!firstCandidateKey) {
       votes = 0;
       party_name = "INDEPENDENT";
@@ -891,16 +901,16 @@ function render_whole_table() {
     } else {
       win = firstCandidateKey.party;
       id = i.pc_id;
-      name = data[i.pc_id][0].constituencyName;
-      candid = data[i.pc_id][0].candidateName;
+      name = data[i.pc_id][1].constituencyName;
+      candid = data[i.pc_id][1].candidateName;
       // console.log(data[i.pc_id][0]);
       // console.log(data[i.pc_id][1]);
-      votes = data[i.pc_id][0].votes;
-      party_name = data[i.pc_id][0].party;
-      if (data[i.pc_id][1] !== undefined) {
-        candid2 = data[i.pc_id][1].candidateName;
-        votes2 = data[i.pc_id][1].votes;
-        party_2 = data[i.pc_id][1].party;
+      votes = data[i.pc_id][1].votes;
+      party_name = data[i.pc_id][1].party;
+      if (data[i.pc_id][2] !== undefined) {
+        candid2 = data[i.pc_id][2].candidateName;
+        votes2 = data[i.pc_id][2].votes;
+        party_2 = data[i.pc_id][2].party;
       }
     }
 
@@ -913,7 +923,7 @@ function render_whole_table() {
     tr.appendChild(td);
 
     const td1 = document.createElement("td");
-    td1.innerHTML = `${candid}<br><img src="${sym[party_name]}"><span>${party_name}</span>`;
+    td1.innerHTML = `${candid}<br><div class="party_name"><img src="${sym[party_name]}"><span>${party_name}</span></div>`;
     td1.classList.add("td1");
     tr.appendChild(td1);
 
@@ -1060,7 +1070,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function handleSelection() {
+  
   document.querySelector(".bt_grp").style.display = "none";
+  document.getElementById("myChart").style.display="none";
 
   document.getElementById("containertool").style.display = "none";
   // console.log(geo2);
@@ -1069,11 +1081,15 @@ function handleSelection() {
   document.getElementById("Candidate-res").style.display = "block";
   document.getElementById("india-map").style.display = "none";
   document.getElementById("map").style.display = "block";
+  document.getElementById('piechart3').style.display="none";
 
   const selectElement = document.getElementById("state-select");
   const selectedValue = selectElement.value;
   const text = selectElement.options[selectElement.selectedIndex].text;
-  
+  let state_naming=document.getElementById("st_con_heading");
+  state_naming.innerHTML=`${text}`;
+  state_naming.style.marginBottom="40px";
+  document.getElementById("st_con_heading").style.display="block";
   if (selectedValue === "reset") {
     resetMap();
     return;
@@ -1102,13 +1118,13 @@ function handleSelection() {
               breadcrumbConstituency.textContent = feature.properties.pc_name;
               // breadcrumbConstituency.style.display = "inline";
               const candidate_1 =
-                data[feature.properties.pc_id][0]["candidateName"];
-              const candidate_2 =
                 data[feature.properties.pc_id][1]["candidateName"];
-              const party_name_1 = data[feature.properties.pc_id][0]["party"];
-              const party_name_2 = data[feature.properties.pc_id][1]["party"];
-              const votes_1 = data[feature.properties.pc_id][0]["votes"];
-              const votes_2 = data[feature.properties.pc_id][1]["votes"];
+              const candidate_2 =
+                data[feature.properties.pc_id][2]["candidateName"];
+              const party_name_1 = data[feature.properties.pc_id][1]["party"];
+              const party_name_2 = data[feature.properties.pc_id][2]["party"];
+              const votes_1 = data[feature.properties.pc_id][1]["votes"];
+              const votes_2 = data[feature.properties.pc_id][2]["votes"];
               const margin = votes_1 - votes_2;
               showdatatable(
                 feature.properties.st_name,
@@ -1162,13 +1178,13 @@ function handleSelection() {
               breadcrumbConstituency.textContent = feature.properties.pc_name;
               //breadcrumbConstituency.style.display = "inline";
               const candidate_1 =
-                data[feature.properties.pc_id][0]["candidateName"];
-              const candidate_2 =
                 data[feature.properties.pc_id][1]["candidateName"];
-              const party_name_1 = data[feature.properties.pc_id][0]["party"];
-              const party_name_2 = data[feature.properties.pc_id][1]["party"];
-              const votes_1 = data[feature.properties.pc_id][0]["votes"];
-              const votes_2 = data[feature.properties.pc_id][1]["votes"];
+              const candidate_2 =
+                data[feature.properties.pc_id][2]["candidateName"];
+              const party_name_1 = data[feature.properties.pc_id][1]["party"];
+              const party_name_2 = data[feature.properties.pc_id][2]["party"];
+              const votes_1 = data[feature.properties.pc_id][1]["votes"];
+              const votes_2 = data[feature.properties.pc_id][2]["votes"];
               const margin = votes_1 - votes_2;
               showdatatable(
                 feature.properties.st_name,
@@ -1209,12 +1225,14 @@ function handleSelection() {
             text
           );
         }
+       
+        handleStateClick(text);
         map.setView(
           [zooming[selectedValue][0], zooming[selectedValue][1]],
           zooming[selectedValue][2]
         );
-        handleStateClick(text);
         geo2.addTo(map);
+       
         updateMapBounds2();
         map.on("resize", delayedBoundsUpdate2);
 
@@ -1454,6 +1472,7 @@ function displayPage(page, class_name) {
 }
 
 function render_state_table(feature, state) {
+  console.log("req data",data);
   state_table_pressed = 1;
   let count = 0;
   const tb = document.getElementById("table-body");
@@ -1486,7 +1505,7 @@ function render_state_table(feature, state) {
       let votes2 = 0;
 
       let win;
-      const firstCandidateKey = data[i.pc_id][0];
+      const firstCandidateKey = data[i.pc_id][1];
       if (!firstCandidateKey) {
         votes = 0;
         party_name = "INDEPENDENT";
@@ -1494,14 +1513,16 @@ function render_state_table(feature, state) {
       } else {
         win = firstCandidateKey.party;
         id = i.pc_id;
-        name = data[i.pc_id][0].constituencyName;
-        candid = data[i.pc_id][0].candidateName;
-        votes = data[i.pc_id][0].votes;
-        party_name = data[i.pc_id][0].party;
-        if (data[i.pc_id][1] !== undefined) {
-          candid2 = data[i.pc_id][1].candidateName;
-          votes2 = data[i.pc_id][1].votes;
-          party_2 = data[i.pc_id][1].party;
+        name = data[i.pc_id][1].constituencyName;
+        candid = data[i.pc_id][1].candidateName;
+        // console.log(data[i.pc_id][0]);
+        // console.log(data[i.pc_id][1]);
+        votes = data[i.pc_id][1].votes;
+        party_name = data[i.pc_id][1].party;
+        if (data[i.pc_id][2] !== undefined) {
+          candid2 = data[i.pc_id][2].candidateName;
+          votes2 = data[i.pc_id][2].votes;
+          party_2 = data[i.pc_id][2].party;
         }
       }
       if (!partyColors[win]) tr.dataset.pccolor = "#D3D3D3";
@@ -1514,6 +1535,7 @@ function render_state_table(feature, state) {
       td.classList.add("td");
       tr.appendChild(td);
       const td1 = document.createElement("td");
+      console.log(data[i.pc_id][0].rsDecl);
       if (!sym[party_name]) {
         console.log(candid);
         td1.innerHTML = `${candid}<br><img src="${sym["extra"]}"><span>${party_name}</span>`;
@@ -1571,7 +1593,7 @@ function render_state_table(feature, state) {
     }
   }
   console.log("afhkhbfz");
-  console.log(alliancePatries);
+  console.log(alliancePatries,feature);
   const sortObjectByValuesDesc = (obj) =>
     Object.fromEntries(Object.entries(obj).sort(([, a], [, b]) => b - a));
 
@@ -1581,6 +1603,9 @@ function render_state_table(feature, state) {
   alliancePatries.others = sortObjectByValuesDesc(alliancePatries.others);
   document.getElementById("piechart").style.display = "block";
   drawpiechart(alliancePatries);
+  document.getElementById('piechart').style.display="block";
+  document.getElementById('piechart2').style.display="block";
+  drawpiechart(alliancePatries,feature);
   populateCarousel();
 
   // Update the heading with the count of candidates
@@ -1693,29 +1718,59 @@ function render_state_table(feature, state) {
     }
   }
 }
-
-function drawpiechart(allainceparties) {
+function drawpiechart(allainceparties,feature) {
   // Load google charts
-  google.charts.load("current", { packages: ["corechart"] });
-  google.charts.setOnLoadCallback(drawChart);
+  google.charts.load('current', {'packages':['corechart']});
+ 
+  let req_feature=feature;
+  let partyVotes={};
+  var totalvotes1=0;
+  for(c in req_feature)
+    {
+      for(actual_data in data[req_feature[c].pc_id]){
+        if(actual_data!=0)
+          {
+            totalvotes1+=data[req_feature[c].pc_id][actual_data]["votes"];
+            if(!Object.keys(partyVotes).includes(data[req_feature[c].pc_id][actual_data]["party"]))
+              {
+                partyVotes[data[req_feature[c].pc_id][actual_data]["party"]] = data[req_feature[c].pc_id][actual_data]["votes"];
+              }
+              else{
+                partyVotes[data[req_feature[c].pc_id][actual_data]["party"]] += data[req_feature[c].pc_id][actual_data]["votes"];
+              }
+          }
+      }
+      
+    }
+    console.log(partyVotes);
+    google.charts.setOnLoadCallback(drawChart);
 
   // Draw the chart and set the chart values
   function drawChart() {
     // Assuming alliancePatries is structured like this:
     var alliancePatries = allainceparties;
-
+    
     // Initialize the data array with headers
     var data = [["party", "votes"]];
-
+    var data2 =[["party","share"]];
     // Function to populate the data array from alliancePatries
     function populateData() {
       for (var alliance in alliancePatries) {
         for (var party in alliancePatries[alliance]) {
-          data.push([party, alliancePatries[alliance][party]]);
+          if (party.toLowerCase() !== "nota") {
+            data.push([party, alliancePatries[alliance][party]]);
+          }
         }
       }
     }
+    for(let party in partyVotes)
+      {
+        console.log("the data#######",totalvotes1);
+        data2.push([party,(parseInt(partyVotes[party])/(totalvotes1))*100]);
+        
+      }
 
+    
     // Populate the data array
     populateData();
     var totalVotes = 0;
@@ -1725,78 +1780,34 @@ function drawpiechart(allainceparties) {
 
     // Create the chart data table
     var chartData = google.visualization.arrayToDataTable(data);
+    var chartData2=google.visualization.arrayToDataTable(data2);
     var formatter = new google.visualization.NumberFormat({
       pattern: "#",
     });
     formatter.format(chartData, 1);
+    formatter.format(chartData2, 1);
     var colors = data.slice(1).map(function (row) {
-      return partyColors[row[0]] || "#808080";
+      return partyColors[row[0]] || "#D3D3D3";
     });
+    var color2=data2.slice(1).map(function(row)
+    {
+      return partyColors[row[0]] || "#D3D3D3";
+    });
+
+    var legendFontSize = window.innerWidth < 600 ? 8 : 12;
     // Optional; add a title and set the width and height of the chart
     var options = {
+
       title: "Votes Distribution",
       width: "fit-content",
       height: "fit-content",
-      legend: "none", // Hide legend
-      pieSliceText: "value", // Display data value in slice
-      tooltip: { trigger: "none" }, // Disable tooltip on hover
-      pieSliceBorderColor: "transparent", // Hide pie slice borders
-      pieSliceTextStyle: { color: "black" }, // Style for pie slice labels
-      chartArea: { left: 10, top: 20, width: "100%", height: "80%" }, // Adjust chart area
-      colors: colors, // Assign colors based on partyColors
-    };
-    // Display the chart inside the <div> element with id="piechart"
-    var chart = new google.visualization.PieChart(
-      document.getElementById("piechart")
-    );
-    chart.draw(chartData, options);
-  }
-}
-
-function drawpiechart(allainceparties) {
-  // Load google charts
-  google.charts.load("current", { packages: ["corechart"] });
-  google.charts.setOnLoadCallback(drawChart);
-
-  // Draw the chart and set the chart values
-  function drawChart() {
-    // Assuming alliancePatries is structured like this:
-    var alliancePatries = allainceparties;
-
-    // Initialize the data array with headers
-    var data = [["party", "votes"]];
-
-    // Function to populate the data array from alliancePatries
-    function populateData() {
-      for (var alliance in alliancePatries) {
-        for (var party in alliancePatries[alliance]) {
-          data.push([party, alliancePatries[alliance][party]]);
+      legend: { 
+        position: 'bottom', 
+        textStyle: { fontSize: legendFontSize },
+        formatter: function(value, index, label) {
+          return label + ': ' + data[index + 1][1];
         }
-      }
-    }
-
-    // Populate the data array
-    populateData();
-    var totalVotes = 0;
-    data.slice(1).forEach(function (row) {
-      totalVotes += row[1];
-    });
-
-    // Create the chart data table
-    var chartData = google.visualization.arrayToDataTable(data);
-    var formatter = new google.visualization.NumberFormat({
-      pattern: "#",
-    });
-    formatter.format(chartData, 1);
-    var colors = data.slice(1).map(function (row) {
-      return partyColors[row[0]] || "#808080";
-    });
-    // Optional; add a title and set the width and height of the chart
-    var options = {
-      title: "Votes Distribution",
-      width: "fit-content",
-      height: "fit-content",
-      legend: "none", // Hide legend
+      }, // Show legend
       pieSliceText: "value", // Display data value in slice
       tooltip: { trigger: "none" }, // Disable tooltip on hover
       pieSliceBorderColor: "transparent", // Hide pie slice borders
@@ -1804,11 +1815,36 @@ function drawpiechart(allainceparties) {
       chartArea: { left: 10, top: 20, width: "100%", height: "80%" }, // Adjust chart area
       colors: colors, // Assign colors based on partyColors
     };
+    var options2 = {
+
+      title: "Vote Share",
+      width: "fit-content",
+      height: "fit-content",
+      legend: { 
+        position: 'bottom', 
+        textStyle: { fontSize: legendFontSize },
+        formatter: function(value, index, label) {
+          return label + ': ' + data[index + 1][1];
+        }
+      }, // Show legend
+      pieSliceText: "value", // Display data value in slice
+      tooltip: { trigger: "none" }, // Disable tooltip on hover
+      pieSliceBorderColor: "transparent", // Hide pie slice borders
+      pieSliceTextStyle: { color: "black" }, // Style for pie slice labels
+      chartArea: { left: 10, top: 20, width: "100%", height: "80%" }, // Adjust chart area
+      colors: color2, // Assign colors based on partyColors
+    };
     // Display the chart inside the <div> element with id="piechart"
     var chart = new google.visualization.PieChart(
       document.getElementById("piechart")
     );
+    var chart2 = new google.visualization.PieChart(
+      document.getElementById("piechart2")
+    );
     chart.draw(chartData, options);
+    chart2.draw(chartData2, options2);
+  
+
   }
 }
 
@@ -1894,13 +1930,13 @@ function showdatatable(
                 <div class="vote-title">Votes</div>
             </span>
             <div class="winner-info">
-                <div class="winner-name">${data_2019[id][0].candidateName}</div>
-                <div class="winner-votes">${data_2019[id][0].votes}</div>
+                <div class="winner-name">${data_2019[id][1].candidateName}</div>
+                <div class="winner-votes">${data_2019[id][1].votes}</div>
             </div>
             <div class="party"><img src="${sym[party1]}" class="party-logo">${party1}</div>
             <div class="margin1">Margin - ${mvotes}</div>
         </div>
-        <div id="checkdetails" onclick="render_table('${id}',1)">Check Full Results <span id="gt1">&gt</span></div>`;
+        <div id="checkdetails" onclick="render_table('${id}',1,'${con1}','${state}')">Check Full Results <span id="gt1">&gt</span></div>`;
   div.innerHTML = "";
   div.innerHTML += htmlCode;
   div.style.display = "block";
@@ -1909,6 +1945,7 @@ function closedata() {
   // if(!stateis_pressed)
   //   {
   document.getElementById("Constituency-res").style.display = "none";
+  document.getElementById("Constituency-res").style.display="none";
   document.getElementById("containertool").style.display = "none";
   // document.getElementById("stateTabeleContainer").style.display = "block";
   // document
@@ -1920,11 +1957,27 @@ function closedata() {
   }
   document.getElementById("Candidate-res").style.display = "none";
 }
-function render_table(code, page) {
+function render_table(code, page,constiti1,st) {
+
+  document.getElementById("chartsContainer").style.display="none";
+  document.getElementById("carouselContainer").style.display="none";
+  document.getElementById('piechart').style.display="none";
+  document.getElementById('piechart2').style.display="none";
+  document.getElementById('piechart3').style.display="block";
+  let state_naming=document.getElementById("st_con_heading");
+  state_naming.innerHTML=`${constiti1}&nbsp(${st})`;
+  state_naming.style.marginBottom="40px";
+  document.getElementById("st_con_heading").style.display="block";
+  document.getElementById("newcards").style.display="flex";
+  // var opentable = document.getElementById('Candidate-res');
+  // if(opentable){
+  //   opentable.scrollIntoView({ behavior: 'smooth' });
+  // }
   if (!state_table_pressed) {
     breadcrumbState.style.display = "inline";
   }
   breadcrumbConstituency.style.display = "inline";
+  breadcrumbConstituency.style.color="block";
   const tbody = document.querySelector(".candidateBody");
   tbody.innerHTML = "";
   let ct = 0;
@@ -1962,12 +2015,24 @@ function render_table(code, page) {
   const pageSize = 10; // Number of rows per page
   const candi = data[code];
   const candi_len = candi.length;
-
+  const first_candi_card=candi[1];
+  const second_candi_card=candi[2];
+  document.getElementById('newcards').innerHTML=" ";
+  createCard(first_candi_card,document.getElementById('newcards'));
+  createCard(second_candi_card,document.getElementById('newcards'));
   // Calculate start and end indices for the current page
+  let winner_2019=document.createElement("div");
+  winner_2019.innerHTML=`<h2 style="margin-top:20px;"> 2019 Winner</h2>
+  <div class="winner_2019" style="padding:10px;"> 
+  <span>${data_2019[code][1].candidateName}</span>
+  <div class="winner_img"><div><img src="${sym[data_2019[code][1].party]}">${data_2019[code][1].party} </div>${(data[code][1].votes.toLocaleString())} &nbspVotes
+  </div>
+  </div>`;
+  document.getElementById("newcards").appendChild(winner_2019);
   const startIndex = (page - 1) * pageSize;
   const endIndex = Math.min(startIndex + pageSize, candi.length);
 
-  for (let i = 0; i < candi_len; i++) {
+  for (let i = 1; i < candi_len; i++) {
     const row = document.createElement("tr");
     row.className = "tr";
 
@@ -1993,21 +2058,21 @@ function render_table(code, page) {
     row.appendChild(votes);
 
     const votes2 = document.createElement("td");
-    if (i == 0) {
+    if (i == 1) {
       votes2.textContent = "-";
-    } else if (i > 0) {
-      votes2.textContent = (candi[0].votes - candi[i].votes).toLocaleString();
+    } else if (i > 1) {
+      votes2.textContent = (candi[1].votes - candi[i].votes).toLocaleString();
     }
     votes2.classList.add("tdata3");
     row.appendChild(votes2);
     const margin2 = document.createElement("td");
-    if (i == 0) {
+    if (i == 1) {
       margin2.textContent = "-";
-    } else if (i > 0) {
+    } else if (i > 1) {
       // margin2.textContent =
       margin2.innerHTML = `${(
-        ((candi[0].votes - candi[i].votes) /
-          (candi[0].votes + candi[i].votes)) *
+        ((candi[1].votes - candi[i].votes) /
+          (candi[1].votes + candi[i].votes)) *
         100
       ).toFixed(1)} %`;
     }
@@ -2093,7 +2158,7 @@ function render_table(code, page) {
   // Update theading2 with input
 
   const th = document.getElementById("theading2");
-  th.innerHTML = `<span id="constituency-name">${candi[0].constituencyName}</span><div>${ct}&nbsp;candidates</div>`;
+  th.innerHTML = `<span id="constituency-name">${candi[1].constituencyName}</span><div>${ct}&nbsp;candidates</div>`;
   let input = document.getElementById("candidateinput");
   if (!input) {
     input = document.createElement("input");
@@ -2124,6 +2189,93 @@ function render_table(code, page) {
         $(this).toggle(match);
       });
     });
+    drawpiechart2(code)
+}
+
+function drawpiechart2(con)
+{
+  console.log(con);
+  google.charts.load('current', {'packages':['corechart']});
+  let req_feature=data[con];
+  console.log("abcd",req_feature);
+  var totalvotes2=0;
+  let partyVotes={};
+  for(actual_data in req_feature)
+    {
+        console.log("data isss###",actual_data);
+        if(actual_data!=0)
+          {
+            totalvotes2+=data[con][actual_data]["votes"];
+            if(!Object.keys(partyVotes).includes(data[con][actual_data]["party"]))
+              {
+                partyVotes[data[con][actual_data]["party"]] = data[con][actual_data]["votes"];
+              }
+              else{
+                partyVotes[data[con][actual_data]["party"]] += data[con][actual_data]["votes"];
+              }
+          }
+      
+      
+    }
+    console.log(partyVotes);
+    google.charts.setOnLoadCallback(drawChart);
+
+  // Draw the chart and set the chart values
+  function drawChart() {
+    // Assuming alliancePatries is structured like this:
+    
+    // Initialize the data array with headers
+    var data2 =[["party","share"]];
+    // Function to populate the data array from alliancePatries
+
+    for(let party in partyVotes)
+      {
+        console.log("the data#######",totalvotes2);
+        data2.push([party,(parseInt(partyVotes[party])/(totalvotes2))*100]);
+        
+      }
+
+    var totalVotes = 0;
+    data2.slice(1).forEach(function (row) {
+      totalVotes += row[1];
+    });
+
+    var chartData3=google.visualization.arrayToDataTable(data2);
+    var formatter = new google.visualization.NumberFormat({
+      pattern: "#",
+    });
+    formatter.format(chartData3, 1);
+    var colors = data2.slice(1).map(function (row) {
+      return partyColors[row[0]] || "#808080";
+    });
+
+    var legendFontSize = window.innerWidth < 600 ? 8 : 12;
+    // Optional; add a title and set the width and height of the chart
+    var options = {
+      title: "Votes Share",
+      width: "fit-content",
+      height: "fit-content",
+      legend: { 
+        position: 'bottom', 
+        textStyle: { fontSize: legendFontSize },
+        formatter: function(value, index, label) {
+          return label + ': ' + chartData3.getValue(index, 1).toFixed(2) + '%';
+        }
+      }, // Show legend
+      pieSliceText: "value", // Display data value in slice
+      tooltip: { trigger: "none" }, // Disable tooltip on hover
+      pieSliceBorderColor: "transparent", // Hide pie slice borders
+      pieSliceTextStyle: { color: "black" }, // Style for pie slice labels
+      chartArea: { left: 10, top: 20, width: "100%", height: "80%" }, // Adjust chart area
+      colors: colors, // Assign colors based on partyColors
+    };
+
+    // Display the chart inside the <div> element with id="piechart"
+    var chart3 = new google.visualization.PieChart(
+      document.getElementById("piechart3")
+    );
+    chart3.draw(chartData3, options);
+  }
 }
 
 function state_map(value, text) {
@@ -2135,7 +2287,7 @@ function state_map(value, text) {
 
   if (value) {
     geo.remove(map);
-    fetch("../data/geo.json")
+    fetch("./data/geo.json")
       .then((res) => res.json())
       .then((geoJson) => {
         for (con in ftrs) {
@@ -2157,13 +2309,13 @@ function state_map(value, text) {
               breadcrumbConstituency.textContent = feature.properties.pc_name;
               //breadcrumbConstituency.style.display = "inline";
               const candidate_1 =
-                data[feature.properties.pc_id][0]["candidateName"];
-              const candidate_2 =
                 data[feature.properties.pc_id][1]["candidateName"];
-              const party_name_1 = data[feature.properties.pc_id][0]["party"];
-              const party_name_2 = data[feature.properties.pc_id][1]["party"];
-              const votes_1 = data[feature.properties.pc_id][0]["votes"];
-              const votes_2 = data[feature.properties.pc_id][1]["votes"];
+              const candidate_2 =
+                data[feature.properties.pc_id][2]["candidateName"];
+              const party_name_1 = data[feature.properties.pc_id][1]["party"];
+              const party_name_2 = data[feature.properties.pc_id][2]["party"];
+              const votes_1 = data[feature.properties.pc_id][1]["votes"];
+              const votes_2 = data[feature.properties.pc_id][2]["votes"];
               const margin = votes_1 - votes_2;
               showdatatable(
                 feature.properties.st_name,
@@ -2240,13 +2392,13 @@ function state_map(value, text) {
               // breadcrumbConstituency.style.display = "block";
               breadcrumbConstituency.textContent = feature.properties.pc_name;
               const candidate_1 =
-                data[feature.properties.pc_id][0]["candidateName"];
-              const candidate_2 =
                 data[feature.properties.pc_id][1]["candidateName"];
-              const party_name_1 = data[feature.properties.pc_id][0]["party"];
-              const party_name_2 = data[feature.properties.pc_id][1]["party"];
-              const votes_1 = data[feature.properties.pc_id][0]["votes"];
-              const votes_2 = data[feature.properties.pc_id][1]["votes"];
+              const candidate_2 =
+                data[feature.properties.pc_id][2]["candidateName"];
+              const party_name_1 = data[feature.properties.pc_id][1]["party"];
+              const party_name_2 = data[feature.properties.pc_id][2]["party"];
+              const votes_1 = data[feature.properties.pc_id][1]["votes"];
+              const votes_2 = data[feature.properties.pc_id][2]["votes"];
               const margin = votes_1 - votes_2;
               showdatatable(
                 feature.properties.st_name,
@@ -2290,9 +2442,10 @@ function state_map(value, text) {
             text
           );
         }
-        map.setView([zooming[value][0], zooming[value][1]], zooming[value][2]);
         geo.remove(map);
+        map.setView([zooming[value][0], zooming[value][1]], zooming[value][2]);
         geo2.addTo(map);
+  
         updateMapBounds2();
         map.on("resize", delayedBoundsUpdate2);
 
@@ -2328,14 +2481,24 @@ function resetMap() {
 function resetstatebread() {
   geo.remove(map);
   console.log("mad");
+  document.getElementById("chartsContainer").style.display="block";
+  document.getElementById("carouselContainer").style.display="block";  
+  document.getElementById('piechart').style.display="block";
+  document.getElementById('piechart2').style.display="block";
+  document.getElementById('piechart3').style.display="none";
+  document.getElementById("newcards").style.display="none";
   document.getElementById("stateTabeleContainer").style.display = "none";
   document.getElementById("containertool").style.display = "none";
+  let state_naming=document.getElementById("st_con_heading");
+  state_naming.innerHTML=`${breadcrumbState.innerHTML}`;
+  state_naming.style.marginBottom="40px";
+  document.getElementById("st_con_heading").style.display="block";
   breadcrumbConstituency.style.display = "none";
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";
   console.log(breadcrumbState.textContent);
   render_state_carousel(breadcrumbState.textContent);
-  fetch("../data/geo.json")
+  fetch("./data/geo.json")
     .then((res) => res.json())
     .then((geoJson) => {
       ftrs;
@@ -2355,13 +2518,13 @@ function resetstatebread() {
             breadcrumbConstituency.textContent = feature.properties.pc_name;
             //breadcrumbConstituency.style.display = "inline";
             const candidate_1 =
-              data[feature.properties.pc_id][0]["candidateName"];
-            const candidate_2 =
               data[feature.properties.pc_id][1]["candidateName"];
-            const party_name_1 = data[feature.properties.pc_id][0]["party"];
-            const party_name_2 = data[feature.properties.pc_id][1]["party"];
-            const votes_1 = data[feature.properties.pc_id][0]["votes"];
-            const votes_2 = data[feature.properties.pc_id][1]["votes"];
+            const candidate_2 =
+              data[feature.properties.pc_id][2]["candidateName"];
+            const party_name_1 = data[feature.properties.pc_id][1]["party"];
+            const party_name_2 = data[feature.properties.pc_id][2]["party"];
+            const votes_1 = data[feature.properties.pc_id][1]["votes"];
+            const votes_2 = data[feature.properties.pc_id][2]["votes"];
             const margin = votes_1 - votes_2;
             showdatatable(
               feature.properties.st_name,
@@ -2415,13 +2578,13 @@ function resetstatebread() {
             breadcrumbConstituency.textContent = feature.properties.pc_name;
             //breadcrumbConstituency.style.display = "inline";
             const candidate_1 =
-              data[feature.properties.pc_id][0]["candidateName"];
-            const candidate_2 =
               data[feature.properties.pc_id][1]["candidateName"];
-            const party_name_1 = data[feature.properties.pc_id][0]["party"];
-            const party_name_2 = data[feature.properties.pc_id][1]["party"];
-            const votes_1 = data[feature.properties.pc_id][0]["votes"];
-            const votes_2 = data[feature.properties.pc_id][1]["votes"];
+            const candidate_2 =
+              data[feature.properties.pc_id][2]["candidateName"];
+            const party_name_1 = data[feature.properties.pc_id][1]["party"];
+            const party_name_2 = data[feature.properties.pc_id][2]["party"];
+            const votes_1 = data[feature.properties.pc_id][1]["votes"];
+            const votes_2 = data[feature.properties.pc_id][2]["votes"];
             const margin = votes_1 - votes_2;
             showdatatable(
               feature.properties.st_name,
@@ -2465,6 +2628,10 @@ function resetstatebread() {
           text
         );
       }
+    
+      geo.remove(map);
+      console.log(pressed);
+      handleStateClick(breadcrumbState.textContent);
       map.setView(
         [
           zooming[state_codes[breadcrumbState.textContent]][0],
@@ -2472,9 +2639,6 @@ function resetstatebread() {
         ],
         zooming[state_codes[breadcrumbState.textContent]][2]
       );
-      geo.remove(map);
-      console.log(pressed);
-      handleStateClick(breadcrumbState.textContent);
       geo2.addTo(map);
       render2();
 
@@ -2499,6 +2663,16 @@ function resetstatebread_option() {
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";
   document.getElementById("containertool").style.display = "none";
+  document.getElementById("chartsContainer").style.display="block";
+  document.getElementById("carouselContainer").style.display="block";  
+  document.getElementById("newcards").style.display="none";
+  document.getElementById('piechart').style.display="block";
+  document.getElementById('piechart2').style.display="block";
+  document.getElementById('piechart3').style.display="none";
+  let state_naming=document.getElementById("st_con_heading");
+  state_naming.innerHTML=`${breadcrumbState.innerHTML}`;
+  state_naming.style.marginBottom="40px";
+  document.getElementById("st_con_heading").style.display="block";
 }
 function resetstatebread2() {
   render2();
@@ -2506,6 +2680,16 @@ function resetstatebread2() {
   breadcrumbConstituency.style.display = "none";
   document.querySelector("#Candidate-res").style.display = "none";
   document.querySelector("#Constituency-res").style.display = "block";
+  document.getElementById("chartsContainer").style.display="block";
+  document.getElementById("carouselContainer").style.display="block";  
+  document.getElementById("newcards").style.display="none";
+  document.getElementById('piechart').style.display="block";
+  document.getElementById('piechart2').style.display="block";
+  document.getElementById('piechart3').style.display="none";
+  let state_naming=document.getElementById("st_con_heading");
+  state_naming.innerHTML=`${breadcrumbState.innerHTML})`;
+  state_naming.style.marginBottom="40px";
+  document.getElementById("st_con_heading").style.display="block";
 }
 
 var swiper;
@@ -2573,7 +2757,7 @@ function render_whole_carousel() {
     `;
   }
 
-  fetch("../data/partyicon-candimg.json")
+  fetch("./data/partyicon-candimg.json")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);
@@ -2656,6 +2840,7 @@ function render_whole_carousel() {
     });
 }
 
+
 function viewingstate(stateId){
   var m = document.getElementById('india-map');
   if(m){
@@ -2679,3 +2864,77 @@ function viewingstate(stateId){
   handleSelection();
 }
 
+
+function createCard(item,id) {
+  const allianceImages = {
+    "NDA": "./images/imgs/NDA  (1).png",
+    "INDIA": "./images/imgs/NDA  (2).png",
+    "OTH": "./images/imgs/NDA  (3).png"
+  };
+  const imageUrl = item.perimg || allianceImages[item.alliance];
+
+  const card = document.createElement("div");
+  card.className = "position-relative custom-container";
+
+  // Define default background, arrow colors, and name color
+  let bgColor;
+  let arrColor;
+  let nameColor;
+
+  // Adjust colors based on the alliance field
+  if (item.alliance === "NDA") {
+    bgColor = "linear-gradient(56deg, #FFF8DC,#FFE4BF)";
+    arrColor = "linear-gradient(90deg, #EC8E30,#A65E17)";
+    nameColor = "#FF9933";
+  } else if (item.alliance === "INDIA") {
+    nameColor = "#19AAED";
+  } else if (item.alliance === "OTH") {
+    bgColor = "linear-gradient(56deg, #F5F5F5,#E0E0E0)";
+    arrColor = "linear-gradient(90deg, #6F9088,#42615A)";
+    nameColor = "#0c6b4b";
+  }
+
+
+  card.style.background = bgColor;
+
+  const ribbonText = item.lead ? "Leading" : "Trailing";
+  const ribbonColor = item.lead ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+
+  card.innerHTML = `
+  <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
+  <div class="temp custom-temp">
+      <div class="card-body w-100">
+          <h3 class="card-title custom-card-title" style="color:${nameColor}">${
+item.candidateName
+}</h3>
+          <div class="subheaders cd-flex align-items-center custom-subheaders" style="display:flex">
+              <div class="logo"><img class="custom-img" src="${
+                sym[item.party]
+              }" alt=""></div>
+              <h6 style="font-weight: bold;">${item.party}</h6>
+          </div>
+          <p class="card-text custom-card-text">${
+            item.constituencyName
+          }</p>
+          <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
+              <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
+                item.votes
+              }
+          </p>
+      </div>
+      <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
+          <p class="card-text mb-1 custom-iribbon-text">${
+            item.lead ? "Leading by" : "Trailing by"
+          }</p>
+          <p class="card-text custom-iribbon-text-votes">${
+            item.lead2votes
+          }</p>
+      </div>
+  </div>
+  <div class="person-image d-flex custom-person-image">
+      <img class="person-img wid" src="${imageUrl}" alt="Person Image">
+  </div>
+`;
+
+  id.append(card);
+}

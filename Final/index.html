@@ -31,40 +31,7 @@
       <script src="./js/marginTable.js"></script>
    <link rel="stylesheet" href="./css/styles.css">
       <link rel="stylesheet" href="./css/cards.css">
-      <link rel="stylesheet" href="./css/styling.css">
-   <script type="text/javascript">
-      // Load google charts
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-      
-      // Draw the chart and set the chart values
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-        ['Task', 'Hours per Day'],
-        ['INC', 8],
-        ['TDP', 2],
-        ['BJP', 2],
-      ]);
-      var data2 = google.visualization.arrayToDataTable([
-        ['Task', 'Hours per Day'],
-        ['INC', 8],
-        ['TDP', 2],
-        ['BJP', 2],
-      ]);
-      
-        // Optional; add a title and set the width and height of the chart
-        var options = {'title':'Seats', 'width':'fit-content', 'height':'fir-content','legend':"none","margin":"none"};
-        var options2={'title':'VoteShare', 'width':'fit-content', 'height':'fir-content','legend':"none","margin":"none"};
-
-      
-        // Display the chart inside the <div> element with id="piechart"
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-        chart.draw(data, options);
-        var chart2= new google.visualization.PieChart(document.getElementById('piechart2'));
-        chart2.draw(data2,options2);
-      }
-      </script>
-      
+      <link rel="stylesheet" href="./css/styling.css">      
       <link rel="stylesheet" href="./css/disclaimer.css">
       <link rel="stylesheet" href="leaflet/index.css" />
       <link rel="stylesheet" href="./css/navbarStyles.css">
@@ -226,8 +193,12 @@
                   <div id="containertool"></div>
                </div>
                <div class="col-12 col-md-6 order-md-2 order-1">
-                  <p id="st_con_heading" style="font-size: 24px;"></p>
-                  <div id="piechart" style="display:none" ></div>
+                  <p id="st_con_heading" style="font-size: 24px; margin-top: 24px;"></p>
+                  <div style="display: flex;">
+                  <div id="piechart" style="height: 300px; width: 300px; display:none" ></div>
+                  <div id="piechart2" style="height: 300px; width: 300px; display:none" ></div>
+                  <div id="piechart3" style="height: 300px; width: 300px; display:none"></div>
+               </div>
                   <div id="chartsContainer">
                      <!-- <div id="square-container"></div> -->
                      <div class="p-2" id="chartContainer">
