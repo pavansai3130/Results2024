@@ -975,10 +975,10 @@ a {
 
 /* ------------------Graph landing page---------------------------- */
 
-#myChart {
+/* #myChart {
   width: 100%;
   height: 227px;
-}
+} */
 
 #allianceChart {
   width: 100%;
@@ -987,11 +987,11 @@ a {
   overflow-y: hidden;
   border: 2px solid black;
 }
-
+/* 
 #chartContainer {
-  max-height: 330px;
+  max-height: 330px; 
   overflow-y: hidden;
-}
+} */
 
 #numberOfSeats {
   position: absolute;

@@ -1153,7 +1153,7 @@ $(document).ready(async function () {
     "../data/stateAllianceCount.json",
     "../data/bigfights.json"
   );
-  await fetchGeoJSON("../data/geo.json");
+  await fetchGeoJSON("./data/geo.json");
   let intervalId = setInterval(async () => {
     await fetchJSON();
     // handleStateClick(lastClickedState);
@@ -1656,8 +1656,149 @@ $(document).ready(async function () {
   };
 
   // Render the chart
-  const ctx = document.getElementById("myChart").getContext("2d");
-  new Chart(ctx, config);
+  // const ctx = document.getElementById("myChart").getContext("2d");
+  // new Chart(ctx, config);
+
+  google.charts.load("current", { packages: ["corechart"] });
+  google.charts.setOnLoadCallback(drawMultSeries);
+  // backgroundColor: linear-gradient(90deg, #87CEEB 0%, #3AAFDE 100%)
+  function drawMultSeries() {
+    let names2019 = {
+      NDA: 357,
+      "I.N.D.I.A": 103,
+      Others: 83,
+    };
+
+    let colors2019 = {
+      NDA: "#FAA958",
+      "I.N.D.I.A": "#9dd5ec",
+      Others: "#d9d9d9",
+    };
+
+    console.log("names[bars[0].color]", names[bars[0].color]);
+
+    let resultsAwaited = false;
+    if (bars[0].value == 0 && bars[1].value == 0 && bars[2].value == 0) {
+      resultsAwaited = true;
+    }
+    let resultAwaitedText = "Result Awaited!";
+
+    var data = google.visualization.arrayToDataTable([
+      [
+        "Year",
+        names[bars[0].color],
+        { role: "annotation" },
+        names[bars[1].color],
+        { role: "annotation" },
+        names[bars[2].color],
+        { role: "annotation" },
+      ],
+      [
+        "2024",
+        bars[0].value,
+        `${resultsAwaited ? "" : bars[0].value}`,
+        bars[1].value,
+        `${resultsAwaited ? resultAwaitedText : bars[1].value}`,
+        bars[2].value,
+        `${resultsAwaited ? "" : bars[2].value}`,
+      ],
+      [
+        "2019",
+        names2019[names[bars[0].color]],
+        `${names2019[names[bars[0].color]]}`,
+        names2019[names[bars[1].color]],
+        `${names2019[names[bars[1].color]]}`,
+        names2019[names[bars[2].color]],
+        `${names2019[names[bars[2].color]]}`,
+      ],
+    ]);
+
+    let bw = "80%";
+    if (window.innerWidth < 800) {
+      console.log("width<<<<", window.innerWidth);
+      bw = "60%";
+    }
+
+    var options = {
+      chartArea: { width: "70%" },
+      hAxis: {
+        title: "",
+        minValue: 0,
+        gridlines: { count: 1 }, // Display only one gridline
+        textPosition: "none",
+      },
+      vAxis: {
+        textStyle: {
+          fontSize: "12px",
+          fontWeight: 500,
+          lineHeight: "14px",
+          textAlign: "left",
+          color: "#000000",
+          auraColor: "#00000",
+          fontFamily: "Roboto",
+        },
+      },
+      colors: [bars[0].color, bars[1].color, bars[2].color],
+      legend: {
+        position: "top",
+        titleTextStyle: {
+          fontSize: "16px",
+          fontWeight: "bold",
+          color: "red",
+          fontFamily: "Arial",
+        },
+      },
+      annotations: {
+        textStyle: {
+          fontSize: "12px",
+          fontWeight: 500,
+          lineHeight: "14px",
+          textAlign: "left",
+          color: "#000000",
+          auraColor: "none",
+          fontFamily: "Roboto",
+        },
+        alwaysOutside: true,
+        textAlign: "end",
+        stem: {
+          color: "none",
+          length: 8, // This removes the connecting lines
+        },
+      },
+      animation: {
+        startup: true,
+        duration: 1000,
+        easing: "out",
+      },
+      // bars: 'horizontal', // Required for Material Bar Charts.
+      bar: { groupWidth: bw },
+    };
+
+    var chart = new google.visualization.BarChart(
+      document.getElementById("myChart")
+    );
+    // var chart = new google.charts.Bar(document.getElementById("myChart"))
+
+    function drawChart() {
+      console.log("width>>>>>>>>>", window.innerWidth);
+      let ww = 0.45;
+      if (window.innerWidth < 800) {
+        ww = 0.8;
+      }
+      var chartWidth = window.innerWidth * ww;
+      var chartHeight = window.innerHeight * 0.6;
+
+      document.getElementById("myChart").style.width = chartWidth + "px";
+      document.getElementById("myChart").style.height = chartHeight + "px";
+
+      //chart.draw(data, google.charts.Bar.convertOptions(options));
+      chart.draw(data, options);
+    }
+
+    window.addEventListener("resize", drawChart);
+
+    drawChart();
+  }
 
   // ----------------------------------------------------
   // var options = {
@@ -1863,9 +2004,9 @@ function populateCarousel() {
   populateTable("india", "indiaCarousel");
   populateTable("others", "othersCarousel");
   // newTable
-  newpopulateTable("nda","ndaContent")
-  newpopulateTable("india","indiaContent")
-  newpopulateTable("others","othersContent")
+  newpopulateTable("nda", "ndaContent");
+  newpopulateTable("india", "indiaContent");
+  newpopulateTable("others", "othersContent");
 }
 function populateTable(alliance, carouselId) {
   let carousel = document.getElementById(carouselId);
@@ -1925,12 +2066,9 @@ function populateTable(alliance, carouselId) {
   // Set the height of the parent div to the maximum width
 }
 
-
 /* NEW TABLE  */
 
-
 async function newpopulateTable(alliance, carouselId) {
-
   let carousel = document.getElementById(carouselId);
   let tbody1 = carousel.querySelector("#tbody1");
   tbody1.innerHTML = "";
@@ -1950,14 +2088,14 @@ async function newpopulateTable(alliance, carouselId) {
     tr.appendChild(td1);
     tr.appendChild(td2);
     if (totalCount <= 5) {
-        tbody1.appendChild(tr);
-        totalCount += 1;
+      tbody1.appendChild(tr);
+      totalCount += 1;
     } else {
       // Hide one row in tbody1 and one row in tbody2 alternatively
-        // console.log("enter");
-        tr.className = "hiding";
-        tbody1.appendChild(tr);
-        totalCount += 1;
+      // console.log("enter");
+      tr.className = "hiding";
+      tbody1.appendChild(tr);
+      totalCount += 1;
     }
     const toggleButtons = document.querySelectorAll(".toggleButton");
     if (totalCount > 5) {
@@ -1971,9 +2109,7 @@ async function newpopulateTable(alliance, carouselId) {
       });
     }
   }
-
 }
-
 
 function updateBar(values) {
   const total = values.reduce((acc, val) => acc + val, 0);
@@ -2151,8 +2287,11 @@ function creatediv(state) {
         if (partynames[i] !== undefined && partyseats[i] !== undefined) {
           htmlcode += `<div class="barbox">
                                 <span id="barlabel${i}">${partynames[i]}</span>
-                                <div class="br${i + 1} inbar" id="id${i}" style="background:${partyColors[partynames[i]]}">${partyseats[i]
-                                }</div> </div>`;
+                                <div class="br${
+                                  i + 1
+                                } inbar" id="id${i}" style="background:${
+            partyColors[partynames[i]]
+          }">${partyseats[i]}</div> </div>`;
         }
       }
       htmlcode += `</div>
@@ -2316,20 +2455,35 @@ function render_state_carousel(state) {
       state.toLowerCase() in party_img_json
         ? party_img_json[state.toLowerCase()]
         : "./imgs2/madhya_pradesh.jpg";
+    if (votes1 == 0 && votes2 == 0) {
+      votes1 = "Awaited";
+      votes2 = "Awaited";
+    } else {
+      votes1 = new Intl.NumberFormat("en-IN").format(votes1);
+      votes2 = new Intl.NumberFormat("en-IN").format(votes2);
+    }
     return `
       <div class="card swiper-slide">
-          <span class="state_name">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
+          <span class="state_name">${toTitleCase(
+            const_name
+          )} <span class="state_party_slot">(${toTitleCase(
+      state
+    )})</span></span>
           <div class="cand_desc1">
               <span class="img_container">
                   <img class="party_symbol" src=${party_path1} alt="">
                   <img class="cand_img1" src="${candidateImg1}" alt="">
               </span>
               <div class="desc_container">
-                  <div class="cand_name1">${toTitleCase(cand_name1)} <span class="state_party_slot">(${toTitleCase(partySymbol1)})</span></div>
+                  <div class="cand_name1">${toTitleCase(
+                    cand_name1
+                  )} <span class="state_party_slot">(${toTitleCase(
+      partySymbol1
+    )})</span></div>
                   <span class="lead_bar">
           <span style="width:${bar_length1}%;" class="leadbar"> </span>
           <span style="color:black;margin:3px">
-          ${new Intl.NumberFormat('en-IN').format(votes1)}</span>
+          ${votes1}</span>
           </span>
               </div>
           </div>
@@ -2339,17 +2493,18 @@ function render_state_carousel(state) {
                   <img class="cand_img1" src="${candidateImg2}" alt="">
               </span>
               <div class="desc_container">
-                  <div class="cand_name1">${toTitleCase(cand_name2)} <span class="state_party_slot">(${partySymbol2})</span></div>
+                  <div class="cand_name1">${toTitleCase(
+                    cand_name2
+                  )} <span class="state_party_slot">(${partySymbol2})</span></div>
                   <span class="trail_bar">
           <span style="width:${bar_length2}%;" class="trailbar"></span>
-            <span style="color:black;margin:3px">${new Intl.NumberFormat('en-IN').format(votes2)}</span>
+            <span style="color:black;margin:3px">${votes2}</span>
           </span>
               </div>
           </div>
           <div class="map_container">
-              <img class="img_map" src="${state_img}" alt="">
+          <!--   <img class="img_map" src="${state_img}" alt=""> -->
           </div>
-          <span class="last_update">Last Updated : 12:10 pm</span>
       </div>
       `;
   }
@@ -2362,109 +2517,146 @@ function render_state_carousel(state) {
       return response.json();
     })
     .then((data) => {
-      party_img_json = data["images_key"];
-      candidates_data = data["candidate_details"][state];
-
-      // Clear previous content and destroy previous Swiper instance if it exists
-      if (swiper) {
-        swiper.destroy(true, true);
-      }
-      swiperContainer.innerHTML = "";
-      for (const_name in candidates_data) {
-        for (let bigf = 0; bigf < candidates_data[const_name].length; bigf++) {
-          let votes1 = 0, votes2 = 0;
-          let tot_vts = 0;
-          stateDataJson[state][const_name.toLowerCase()]["candidates"].forEach((candidate) => {
-            if (candidate["cId"] == candidates_data[const_name][0]["id1"])
-              votes1 = candidate["vts"];
-            if (candidate["cId"] == candidates_data[const_name][0]["id2"])
-              votes2 = candidate["vts"];
-            tot_vts += candidate["vts"];
-          });
-          let prty1, prty2, cd1_votes, cd2_votes, name1, name2;
-          if (votes1 > votes2) {
-            prty1 = candidates_data[const_name][bigf]["party1"];
-            prty2 = candidates_data[const_name][bigf]["party2"];
-            cd1_votes = votes1;
-            cd2_votes = votes2;
-            name1 = candidates_data[const_name][bigf]["name1"];
-            name2 = candidates_data[const_name][bigf]["name2"];
-          } else {
-            prty2 = candidates_data[const_name][bigf]["party1"];
-            prty1 = candidates_data[const_name][bigf]["party2"];
-            cd2_votes = votes1;
-            cd1_votes = votes2;
-            name2 = candidates_data[const_name][bigf]["name1"];
-            name1 = candidates_data[const_name][bigf]["name2"];
+      fetch("../data/overallpopular.json")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(
+              "Network response was not ok " + response.statusText
+            );
           }
-          let bar_length1 = (parseInt(cd1_votes) / parseInt(tot_vts)) * 100;
-          let bar_length2 = (parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
-          const slideMarkup = createSlide(
-            const_name,
-            state,
-            prty1,
-            prty2,
-            "../images/imgs2/rahul.png",
-            "../images/imgs2/smriti_irani.png",
-            name1,
-            name2,
-            cd1_votes,
-            cd2_votes,
-            bar_length1,
-            bar_length2
-          );
-          swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
-        }
-      }
-      // candidates_data.forEach(data => {
-      //   const slideMarkup = createSlide(data["const_name"], data["state"], data["cand_party1"], data["cand_party2"], data["candidateImg1"], data["candidateImg2"], data["cand_name1"], data["cand_name2"], data["votes1"], data["votes2"]);
-      //   swiperContainer.insertAdjacentHTML('beforeend', slideMarkup);
-      // });
+          return response.json();
+        })
+        .then((imgjson) => {
+          party_img_json = data["images_key"];
+          candidates_data = data["candidate_details"][state];
 
-      swiper = new Swiper(".slide-content", {
-        slidesPerView: 3,
-        spaceBetween: 40,
-        loop: true,
-        centerSlide: true,
-        fade: true,
-        grabCursor: true,
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-          dynamicBullets: true,
-        },
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-        breakpoints: {
-          0: {
-            slidesPerView: 1,
-          },
-          600: {
-            slidesPerView: 2,
-          },
-          950: {
+          // Clear previous content and destroy previous Swiper instance if it exists
+          if (swiper) {
+            swiper.destroy(true, true);
+          }
+          swiperContainer.innerHTML = "";
+          for (const_name in candidates_data) {
+            for (
+              let bigf = 0;
+              bigf < candidates_data[const_name].length;
+              bigf++
+            ) {
+              let votes1 = 0,
+                votes2 = 0;
+              let tot_vts = 0;
+              stateDataJson[state][const_name.toLowerCase()][
+                "candidates"
+              ].forEach((candidate) => {
+                if (candidate["cId"] == candidates_data[const_name][0]["id1"])
+                  votes1 = candidate["vts"];
+                if (candidate["cId"] == candidates_data[const_name][0]["id2"])
+                  votes2 = candidate["vts"];
+                tot_vts += candidate["vts"];
+              });
+              let prty1, prty2, cd1_votes, cd2_votes, name1, name2;
+              let cid1, cid2;
+              if (votes1 > votes2) {
+                cid1 = candidates_data[const_name][bigf]["id1"];
+                cid2 = candidates_data[const_name][bigf]["id2"];
+                prty1 = candidates_data[const_name][bigf]["party1"];
+                prty2 = candidates_data[const_name][bigf]["party2"];
+                cd1_votes = votes1;
+                cd2_votes = votes2;
+                name1 = candidates_data[const_name][bigf]["name1"];
+                name2 = candidates_data[const_name][bigf]["name2"];
+              } else {
+                cid2 = candidates_data[const_name][bigf]["id1"];
+                cid1 = candidates_data[const_name][bigf]["id2"];
+                prty2 = candidates_data[const_name][bigf]["party1"];
+                prty1 = candidates_data[const_name][bigf]["party2"];
+                cd2_votes = votes1;
+                cd1_votes = votes2;
+                name2 = candidates_data[const_name][bigf]["name1"];
+                name1 = candidates_data[const_name][bigf]["name2"];
+              }
+              let img1 =
+                cid1 in imgjson
+                  ? `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png`
+                  : `./images/partylogo/Unknown.svg`;
+              let img2 =
+                cid2 in imgjson
+                  ? `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png`
+                  : `./images/partylogo/Unknown.svg`;
+              let bar_length1 = (parseInt(cd1_votes) / parseInt(tot_vts)) * 100;
+              let bar_length2 = (parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
+              const slideMarkup = createSlide(
+                const_name,
+                state,
+                prty1,
+                prty2,
+                img1,
+                img2,
+                name1,
+                name2,
+                cd1_votes,
+                cd2_votes,
+                bar_length1,
+                bar_length2
+              );
+              swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
+            }
+          }
+          // candidates_data.forEach(data => {
+          //   const slideMarkup = createSlide(data["const_name"], data["state"], data["cand_party1"], data["cand_party2"], data["candidateImg1"], data["candidateImg2"], data["cand_name1"], data["cand_name2"], data["votes1"], data["votes2"]);
+          //   swiperContainer.insertAdjacentHTML('beforeend', slideMarkup);
+          // });
+
+          swiper = new Swiper(".slide-content", {
             slidesPerView: 3,
-          },
-          1600: {
-            slidesPerView: 4,
-          }
-        },
-        autoplay: {
-          delay: 3000,
-          disableOnInteraction: false,
-        },
-        speed: 1300,
-      });
+            spaceBetween: 40,
+            loop: true,
+            centerSlide: true,
+            fade: true,
+            grabCursor: true,
+            pagination: {
+              el: ".swiper-pagination",
+              clickable: true,
+              dynamicBullets: true,
+            },
+            navigation: {
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            },
+            breakpoints: {
+              0: {
+                slidesPerView: 1,
+              },
+              600: {
+                slidesPerView: 2,
+              },
+              950: {
+                slidesPerView: 3,
+              },
+              1600: {
+                slidesPerView: 4,
+              },
+            },
+            autoplay: {
+              delay: 3000,
+              disableOnInteraction: false,
+            },
+            speed: 1300,
+          });
 
-      swiperContainer.addEventListener("mouseenter", function () {
-        swiper.autoplay.stop();
-      });
+          swiperContainer.addEventListener("mouseenter", function () {
+            swiper.autoplay.stop();
+          });
 
-      swiperContainer.addEventListener("mouseleave", function () {
-        swiper.autoplay.start();
-      });
+          swiperContainer.addEventListener("mouseleave", function () {
+            swiper.autoplay.start();
+          });
+        });
+    })
+    .catch((error) => {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
     })
     .catch((error) => {
       console.error(
@@ -2482,7 +2674,10 @@ function getParameterByName(name, url = window.location.href) {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 function toTitleCase(name) {
-  return name.split(' ').map(word => {
-    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-  }).join(' ');
+  return name
+    .split(" ")
+    .map((word) => {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join(" ");
 }
