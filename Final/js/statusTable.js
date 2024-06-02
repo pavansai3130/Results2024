@@ -11,152 +11,168 @@ document.addEventListener('DOMContentLoaded', function () {
   
   fetchData().then(data => {
     const assets2024 = data;
+
     function getStatus(state, constit, candId){
-      let currIndex = assets2024[0][state][constit].candidates[0].cId;
-      let resStatus = assets2024[0][state][constit].rsDecl;
-      let margin = 0;
+      const constituency = assets2024[0][state][constit];
+      const candidates = constituency.candidates;
+      const resStatus = constituency.rsDecl;
       let candidateVotes = 0;
       let opponentVotes = 0;
-  
-      if(currIndex === candId) {
-          candidateVotes = assets2024[0][state][constit].candidates[0].vts;
-          if (assets2024[0][state][constit].candidates[1]) {
-              opponentVotes = assets2024[0][state][constit].candidates[1].vts;
-              margin = candidateVotes - opponentVotes;
-          }
-          if (resStatus === 1) {
-              return {status: 'Won', margin: margin, votes: candidateVotes};
-          } else {
-              return {status: 'Leading', margin: margin, votes: candidateVotes};
-          }
-      } else {
-          for (const candidate of assets2024[0][state][constit].candidates) {
-              if (candidate.cId === candId) {
-                  candidateVotes = candidate.vts;
-                  break;
-              }
-          }
-          opponentVotes = assets2024[0][state][constit].candidates[0].vts;
-          margin = opponentVotes - candidateVotes;
-          if (resStatus === 1) {
-              return {status: 'Lost', margin: margin, votes: candidateVotes};
-          } else {
-              return {status: 'Trailing', margin: margin, votes: candidateVotes};
-          }
+      let margin = 0;
+
+      let candidateFound = false;
+
+      for (const candidate of candidates) {
+        if (candidate.cId === candId) {
+          candidateVotes = candidate.vts;
+          candidateFound = true;
+          break;
+        }
       }
-  }
-  
-  function updateTable() {
+
+      if (!candidateFound) {
+        return { status: 'awaiting results', margin: 0, votes: 0 };
+      }
+
+      if (candidates[0].cId === candId) {
+        opponentVotes = candidates[1] ? candidates[1].vts : 0;
+        margin = candidateVotes - opponentVotes;
+        if (resStatus === 1) {
+          return { status: 'Won', margin: margin, votes: candidateVotes };
+        } else {
+          return { status: 'Leading', margin: margin, votes: candidateVotes };
+        }
+      } else {
+        opponentVotes = candidates[0].vts;
+        margin = opponentVotes - candidateVotes;
+        if (resStatus === 1) {
+          return { status: 'Lost', margin: margin, votes: candidateVotes };
+        } else {
+          return { status: 'Trailing', margin: margin, votes: candidateVotes };
+        }
+      }
+    }
+
+    function updateTable() {
       const candidates = [
-          {rowClass: 'richestOne', state: 'Haryana', constit: 'kurukshetra', candId: 'cand2082'},
-          {rowClass: 'richestTwo', state: 'Odisha', constit: 'cuttack', candId: 'cand1587'},
-          {rowClass: 'richestThree', state: 'Haryana', constit: 'kurukshetra', candId: 'cand1238'},
-          {rowClass: 'richestFour', state: 'Haryana', constit: 'hisar', candId: 'cand1280'},
-          {rowClass: 'richestFive', state: 'Haryana', constit: 'gurgaon', candId: 'cand1755'}
+        { rowClass: 'richestOne', state: 'Andhra Pradesh', constit: 'guntur', candId: 'cand3231' },
+        { rowClass: 'richestTwo', state: 'Telangana', constit: 'chevella', candId: 'cand3576' },
+        { rowClass: 'richestThree', state: 'Goa', constit: 'south goa', candId: 'cand5007' },
+        { rowClass: 'richestFour', state: 'Haryana', constit: 'kurukshetra', candId: 'cand2082' },
+        { rowClass: 'richestFive', state: 'Madhya Pradesh', constit: 'chhindwara', candId: 'cand8678' }
       ];
-  
+
       candidates.forEach(candidate => {
-          const result = getStatus(candidate.state, candidate.constit, candidate.candId);
-          const row = document.querySelector(`.${candidate.rowClass}`);
-          const statusCell = document.createElement('td');
-          const countCell = document.createElement('td');
-  
+        const result = getStatus(candidate.state, candidate.constit, candidate.candId);
+        const row = document.querySelector(`.${candidate.rowClass}`);
+        const statusCell = document.createElement('td');
+        const countCell = document.createElement('td');
+
+        if (result.status === 'awaiting results') {
+          statusCell.innerHTML = '<p>awaiting results</p>';
+          countCell.innerHTML = '<p>Awaiting results</p>';
+          statusCell.classList.add('awaiting');
+        } else {
           statusCell.innerHTML = `<p>${result.status}</p>`;
-          if(result.status==='Won'){
+          if (result.status === 'Won') {
             statusCell.classList.add('won');
-          }
-          else if(result.status==='Leading'){
+          } else if (result.status === 'Leading') {
             statusCell.classList.add('leading');
-          }
-          else if(result.status==='Lost'){
+          } else if (result.status === 'Lost') {
             statusCell.classList.add('lost');
-          }
-          else{
+          } else {
             statusCell.classList.add('trailing');
           }
           countCell.innerHTML = `${result.votes}<br><span style="color:grey; font-size:0.8rem;"> ${result.margin}</span>`;
-          row.appendChild(countCell);
-          row.appendChild(statusCell);
+        }
+
+        row.appendChild(countCell);
+        row.appendChild(statusCell);
       });
-  }
-  
-  updateTable();
-  
-  
-  // 2nd table 
-  function determineStatus(state, constit, candId) {
-    let currIndex = assets2024[0][state][constit].candidates[0].cId;
-    let resStatus = assets2024[0][state][constit].rsDecl;
-    let margin = 0;
-    let candidateVotes = 0;
-    let opponentVotes = 0;
-  
-    if (currIndex === candId) {
-        candidateVotes = assets2024[0][state][constit].candidates[0].vts;
-        if (assets2024[0][state][constit].candidates[1]) {
-            opponentVotes = assets2024[state][constit].candidates[1].vts;
-            margin = candidateVotes - opponentVotes;
+    }
+
+    updateTable();
+
+    // 2nd table 
+    function determineStatus(state, constit, candId) {
+      const constituency = assets2024[0][state][constit];
+      const candidates = constituency.candidates;
+      const resStatus = constituency.rsDecl;
+      let candidateVotes = 0;
+      let opponentVotes = 0;
+      let margin = 0;
+
+      let candidateFound = false;
+
+      for (const candidate of candidates) {
+        if (candidate.cId === candId) {
+          candidateVotes = candidate.vts;
+          candidateFound = true;
+          break;
         }
+      }
+
+      if (!candidateFound) {
+        return { status: 'awaiting results', margin: 0, votes: 0 };
+      }
+
+      if (candidates[0].cId === candId) {
+        opponentVotes = candidates[1] ? candidates[1].vts : 0;
+        margin = candidateVotes - opponentVotes;
         if (resStatus === 1) {
-            return { status: 'Won', margin: margin, votes: candidateVotes };
+          return { status: 'Won', margin: margin, votes: candidateVotes };
         } else {
-            return { status: 'Leading', margin: margin, votes: candidateVotes };
+          return { status: 'Leading', margin: margin, votes: candidateVotes };
         }
-    } else {
-        for (const candidate of assets2024[0][state][constit].candidates) {
-            if (candidate.cId === candId) {
-                candidateVotes = candidate.vts;
-                break;
-            }
-        }
-        opponentVotes = assets2024[0][state][constit].candidates[0].vts;
+      } else {
+        opponentVotes = candidates[0].vts;
         margin = opponentVotes - candidateVotes;
         if (resStatus === 1) {
-            return { status: 'Lost', margin: margin, votes: candidateVotes };
+          return { status: 'Lost', margin: margin, votes: candidateVotes };
         } else {
-            return { status: 'Trailing', margin: margin, votes: candidateVotes };
+          return { status: 'Trailing', margin: margin, votes: candidateVotes };
         }
+      }
     }
-  }
-  
-  function updateCandidateTable() {
-    const candidates = [
-        { rowClass: 'poorestOne', state: 'Haryana', constit: 'rohtak', candId: 'cand1127' },
-        { rowClass: 'poorestTwo', state: 'Uttar Pradesh', constit: 'pratapgarh', candId: 'cand2319' },
-        { rowClass: 'poorestThree', state: 'NCT OF Delhi', constit: 'north west delhi', candId: 'cand1859' },
-        { rowClass: 'poorestFour', state: 'NCT OF Delhi', constit: 'north west delhi', candId: 'cand1220' },
-        { rowClass: 'poorestFive', state: 'Odisha', constit: 'puri', candId: 'cand1404' }
-    ];
-  
-    candidates.forEach(candidate => {
+
+    function updateCandidateTable() {
+      const candidates = [
+        { rowClass: 'poorestOne', state: 'Gujarat', constit: 'navsari', candId: 'cand4678' },
+        { rowClass: 'poorestTwo', state: 'Haryana', constit: 'faridabad', candId: 'cand1153' },
+        { rowClass: 'poorestThree', state: 'Rajasthan', constit: 'chittorgarh', candId: 'cand7112' },
+        { rowClass: 'poorestFour', state: 'Gujarat', constit: 'gandhinagar', candId: 'cand5189' },
+        { rowClass: 'poorestFive', state: 'Punjab', constit: 'faridkot', candId: 'cand833' }
+      ];
+
+      candidates.forEach(candidate => {
         const result = determineStatus(candidate.state, candidate.constit, candidate.candId);
         const row = document.querySelector(`.${candidate.rowClass}`);
         const statusCell = document.createElement('td');
         const countCell = document.createElement('td');
-  
-        statusCell.innerText = result.status;
-        statusCell.innerHTML = `<p>${result.status}</p>`;
-          if(result.status==='Won'){
+
+        if (result.status === 'awaiting results') {
+          statusCell.innerHTML = '<p>awaiting results</p>';
+          countCell.innerHTML = '<p>awaiting results</p>';
+          statusCell.classList.add('awaiting');
+        } else {
+          statusCell.innerHTML = `<p>${result.status}</p>`;
+          if (result.status === 'Won') {
             statusCell.classList.add('won');
-          }
-          else if(result.status==='Leading'){
+          } else if (result.status === 'Leading') {
             statusCell.classList.add('leading');
-          }
-          else if(result.status==='Lost'){
+          } else if (result.status === 'Lost') {
             statusCell.classList.add('lost');
-          }
-          else{
+          } else {
             statusCell.classList.add('trailing');
           }
           countCell.innerHTML = `${result.votes}<br><span style="color:grey; font-size:0.8rem;"> ${result.margin}</span>`;
+        }
+
         row.appendChild(countCell);
         row.appendChild(statusCell);
-    });
-  }
-  
-  updateCandidateTable();
+      });
+    }
+
+    updateCandidateTable();
   });
-
-
-  
 });
