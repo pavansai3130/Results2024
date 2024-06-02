@@ -817,7 +817,7 @@ input#stateSearch {
 
 #barlabel0 {
   font-family: 'Roboto';
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 400;
   line-height: 9.38px;
   margin-left: -4rem;
@@ -825,7 +825,7 @@ input#stateSearch {
 
 #barlabel1 {
   font-family: 'Roboto';
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 400;
   line-height: 9.38px;
   margin-left: -4.3rem;
@@ -833,10 +833,10 @@ input#stateSearch {
 
 #barlabel2 {
   font-family: 'Roboto';
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 400;
   line-height: 9.38px;
-  margin-left: -18px;
+  margin-left: -16px;
 }
 
 .inbar {

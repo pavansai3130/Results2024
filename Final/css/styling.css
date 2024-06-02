@@ -660,7 +660,7 @@ gap: 8px;
 }
 
 #candidatediv {
-  width: 315px;
+  width: 312px;
   height: 152px;
   padding: 8px 0px 8px 0px;
   gap: 8px;
@@ -729,7 +729,7 @@ gap: 8px;
   line-height: 14.06px;
   text-align: left;
   padding-top: 11.8px;
-  width: 87px;
+  /* width: 87px; */
 }
 
 .margin1 {

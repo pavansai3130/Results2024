@@ -1,6 +1,165 @@
 // JavaScript code for handling page functionality
 // Ensure you have included JQuery library before this script
-
+const comparedata2019 = {
+    "Andaman and Nicobar Islands": {
+      "INC": 1
+    },
+    "Andhra Pradesh": {
+      "YSRCP": 22,
+      "TDP": 3
+    },
+    "Arunachal Pradesh": {
+      "BJP": 2
+    },
+    "Assam": {
+      "INC": 3,
+      "BJP": 9,
+      "AIUDF": 1,
+      "IND": 1
+    },
+    "Bihar": {
+      "BJP": 17,
+      "JD(U)": 16,
+      "LJP": 6,
+      "INC": 1
+    },
+    "Chandigarh": {
+      "BJP": 1
+    },
+    "Chhattisgarh": {
+      "INC": 2,
+      "BJP": 9
+    },
+    "Dadra and Nagar Haveli": {
+      "IND": 1,
+      "BJP": 1
+    },
+    "Goa": {
+      "BJP": 1,
+      "INC": 1
+    },
+    "Gujarat": {
+      "BJP": 26
+    },
+    "Haryana": {
+      "BJP": 10
+    },
+    "Himachal Pradesh": {
+      "BJP": 4
+    },
+    "Jammu and Kashmir": {
+      "JKNC": 3,
+      "BJP": 3
+    },
+    "Jharkhand": {
+      "BJP": 11,
+      "AJSUP": 1,
+      "JMM": 1,
+      "INC": 1
+    },
+    "Karnataka": {
+      "BJP": 25,
+      "INC": 1,
+      "JD(S)": 1,
+      "IND": 1
+    },
+    "Kerala": {
+      "CPIM": 1,
+      "INC": 15,
+      "RSP": 1,
+      "KEC(M)": 1,
+      "IUML": 2
+    },
+    "Lakshadweep": {
+      "NCP(SP)": 1
+    },
+    "Madhya Pradesh": {
+      "BJP": 28,
+      "INC": 1
+    },
+    "Maharashtra": {
+      "BJP": 23,
+      "IND": 1,
+      "AIMIM": 1,
+      "NCP(SP)": 3,
+      "SHS": 13,
+      "INC": 1,
+      "SHS(UBT)": 5,
+      "NCP": 1
+    },
+    "Manipur": {
+      "BJP": 1,
+      "NPF": 1
+    },
+    "Meghalaya": {
+      "INC": 1,
+      "NPEP": 1
+    },
+    "Mizoram": {
+      "MNF": 1
+    },
+    "Nagaland": {
+      "NDPP": 1
+    },
+    "NCT OF Delhi": {
+      "BJP": 7
+    },
+    "Odisha": {
+      "BJD": 12,
+      "BJP": 8,
+      "INC": 1
+    },
+    "Puducherry": {
+      "INC": 1
+    },
+    "Punjab": {
+      "INC": 8,
+      "SAD": 2,
+      "BJP": 2,
+      "AAP": 1
+    },
+    "Rajasthan": {
+      "BJP": 24,
+      "RLP": 1
+    },
+    "Sikkim": {
+      "SKM": 1
+    },
+    "Tamil Nadu": {
+      "DMK": 24,
+      "INC": 8,
+      "VCK": 1,
+      "CPIM": 2,
+      "CPI": 2,
+      "IUML": 1,
+      "ADMK": 1
+    },
+    "Telangana": {
+      "BJP": 4,
+      "INC": 3,
+      "TRS": 9,
+      "AIMIM": 1
+    },
+    "Tripura": {
+      "BJP": 2
+    },
+    "Uttar Pradesh": {
+      "BJP": 62,
+      "BSP": 10,
+      "SP": 5,
+      "ADAL": 2,
+      "INC": 1
+    },
+    "Uttarakhand": {
+      "BJP": 5
+    },
+    "West Bengal": {
+      "BJP": 18,
+      "AITC": 22,
+      "INC": 2
+    }
+  }
+// console.log("State-Parties: "+comparedata2019);
 // JSON object containing party colors
 let data_201;
 let data_2019 = {};
@@ -984,8 +1143,8 @@ async function fetchGeoJSON(file) {
             feature.properties.pc_id
           );
           var map = document.getElementById("map").getBoundingClientRect();
-          console.log("map the ", map);
-          console.log("event map the ", event);
+          // console.log("map the ", map);
+          // console.log("event map the ", event);
           var clickY = event.layerPoint.y - map.top;
           var mapHeight = map.height;
           var isAboveHalf = clickY < mapHeight / 2;
@@ -1043,7 +1202,7 @@ async function fetchGeoJSON(file) {
         // });
 
         layer.on("click", function (event) {
-          console.log("change");
+          // console.log("change");
           // document.querySelector("#Constituency-res").style.display =
           //   "none";
           // document.querySelector("#Candidate-res").style.display = "block";
@@ -1059,7 +1218,7 @@ async function fetchGeoJSON(file) {
   }
 }
 async function fetchJSON() {
-  console.log(`called ${temp++}`);
+  // console.log(`called ${temp++}`);
   try {
     const url = "https://results2024.s3.ap-south-1.amazonaws.com/results.json";
     const response = await fetch(url, {
@@ -1142,7 +1301,7 @@ $(document).ready(async function () {
   console.log(stateAlliance);
   stateDataJson2019 = data_201[0];
   allianceJson2019 = data_201[1];
-  console.log(allianceJson);
+  // console.log(allianceJson);
   if (getParameterByName("year") === "2019") {
     stateDataJson = stateDataJson2019;
     allianceJson = allianceJson2019;
@@ -1728,7 +1887,7 @@ function toggleEntries() {
   toggleButtons.forEach((toggleButton) => {
     toggleButton.addEventListener("click", toggleEntries);
     if (toggleButton.textContent === "Show All") {
-      console.log("enter");
+      // console.log("enter");
       const hiddenRows = document.querySelectorAll("tbody tr.hiding");
       hiddenRows.forEach((row) => {
         // console.log(row.className);
@@ -1936,7 +2095,7 @@ function updateBar(values) {
 // Example usage: updating the bar with specific values
 // ------------Search in state table-------------------------------
 function handleStateClick(state) {
-  console.log("india");
+  // console.log("india");
   document.getElementById("breadcrumb-india").style.display = "block";
   let nda = 0,
     india = 0,
@@ -1951,7 +2110,7 @@ function handleStateClick(state) {
   for (const consti in stateDataJson[state]) {
     const leadingCandidate = stateDataJson[state][consti]["candidates"][0];
     4;
-    console.log(leadingCandidate);
+    // console.log(leadingCandidate);
     if (leadingCandidate.alnce === "NDA") nda++;
     else if (leadingCandidate.alnce === "OTH") others++;
     else india++;
@@ -1974,23 +2133,24 @@ function half(event) {
   }
 }
 // console.log(stateDataJson);
+
+
 function creatediv(state) {
-  fetch("./data/election2019.json")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok " + response.statusText);
-      }
-      return response.json();
-    })
-    .then((stateDataJson) => {
+  // fetch("../data/election2019.json")
+  //   .then((response) => {
+  //     if (!response.ok) {
+  //       throw new Error("Network response was not ok " + response.statusText);
+  //     }
+  //     return response.json();
+  //   })
+  //   .then((stateDataJson) => {
       var obj = {};
       var partynames = [];
       var partyseats = [];
-      var constituencyData = stateDataJson[0][state];
+      var constituencyData = stateDataJson[state];
+      // console.log(constituencyData);
       for (let const_name in constituencyData) {
-        let party_name =
-          stateDataJson[0][state][const_name]["candidates"][0]["prty"];
-
+        let party_name = stateDataJson[state][const_name]["candidates"][0]["prty"];
         if (party_name in obj) {
           obj[party_name] += 1;
         } else obj[party_name] = 1;
@@ -2016,13 +2176,14 @@ function creatediv(state) {
       if (partynames) {
         for (let i = 0; i < partynames.length && i < 5; i++) {
           if (partynames[i] !== undefined) {
+            let previousSeats = comparedata2019[state] && comparedata2019[state][partynames[i]] ? comparedata2019[state][partynames[i]] : 0;
+            // alert(previousSeats);
+            let seatDifference = obj[partynames[i]] - previousSeats;
+            let seatDifferenceText = seatDifference >= 0 ? `(+${seatDifference})` : `(${seatDifference})`;
+            let seatDifferenceColor = seatDifference >= 0 ? "green" : "red";
             htmlcode += `<tr>
-                                  <td class="tdData"><img class="party-icon" src="${
-                                    sym[partynames[i]]
-                                  }"> ${partynames[i]}</td>
-                                  <td class="tdData" id="wlright">${
-                                    obj[partynames[i]]
-                                  }</td></tr>`;
+                          <td class="tdData"><img class="party-icon" src="${sym[partynames[i]]}">${partynames[i]}</td>
+                          <td class="tdData" id="wlright">${obj[partynames[i]]} <span style="color:${seatDifferenceColor};">${seatDifferenceText}</span></td></tr>`;
           }
         }
       }
@@ -2059,9 +2220,10 @@ function creatediv(state) {
           document.getElementById("barlabel0").style.marginLeft = "-5.8rem";
           document.getElementById("barlabel1").style.marginLeft = "-4.8rem";
         }, 0);
-      }
-    });
+      }    
 }
+
+
 function showmap(state) {
   render_state_carousel(state);
   let state_naming = document.getElementById("st_con_heading");
@@ -2251,7 +2413,7 @@ function render_state_carousel(state) {
         swiper.destroy(true, true);
       }
       swiperContainer.innerHTML = "";
-      console.log(candidates_data);
+      // console.log(candidates_data);
       // function toTitleCase(name) {
       //   return name.split(' ').map(word => {
       //     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
