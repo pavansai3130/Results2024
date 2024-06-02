@@ -1,5 +1,16 @@
+let candidatesData = [];
+
+// Fetch candidate data and store it in the global variable
+async function fetchCandidateData() {
+  const response = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
+  const data = await response.json();
+  candidatesData = data[0]; 
+  
+}
+
+// Fetch more cards and populate them
 async function fetchMoreCards1() {
-  document.getElementById("more-cards-root").innerHTML="";
+  document.getElementById("more-cards-root").innerHTML = "";
   try {
     // Fetch the state-constituency-candidate JSON
     const stateResponse = await fetch("../data/popular.json");
@@ -22,33 +33,30 @@ async function fetchMoreCards1() {
         for (let constituency in statesData[state]) {
           const candidates = statesData[state][constituency].candidates;
           if (candidates) {
-            const candidate = candidates.find(
-              (candidate) => candidate.cId === candidateId
-            );
+            const candidate = candidates.find(candidate => candidate.cId === candidateId);
             if (candidate) {
-              candidate.place = `${constituency.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')} (${state})`; 
+              candidate.state = state;
+              candidate.constituency = constituency
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                .join(' ');
               return candidate;
             }
           } else {
-            console.error(
-              "Candidates array is undefined for",
-              state,
-              constituency
-            ); // Add log to debug
+            console.error("Candidates array is undefined for", state, constituency);
           }
         }
       }
       return null;
     }
-    //Getting error below check it
 
     // Loop through each state and constituency
     Object.keys(stateData).forEach((state) => {
       Object.keys(stateData[state]).forEach((constituency) => {
-        stateData[state][constituency].forEach((candidateId) => {
+        stateData[state][constituency].forEach(async (candidateId) => {  // Make this function async
           const candidateDetails = getCandidateDetails(candidateId);
           if (candidateDetails) {
-            const card = createCard(candidateDetails);
+            const card = await createCard(candidateDetails);  // Wait for the Promise to resolve
             moreCardsRoot.appendChild(card);
           } else {
             console.error("Candidate details not found for ID:", candidateId);
@@ -61,23 +69,46 @@ async function fetchMoreCards1() {
   }
 }
 
-function createCard(item) {
-  const allianceImages = {
-    "NDA": "./images/imgs/NDA  (1).png",
-    "INDIA": "./images/imgs/NDA  (2).png",
-    "OTH": "./images/imgs/NDA  (3).png"
-  };
-  const imageUrl = item.perimg || allianceImages[item.alnce];
+async function createCard(item) {
+  async function fetchCandidateValue(item) {
+    const response = await fetch('./data/overallpopular.json');
+    const data = await response.json();
+    console.log(data);
+    const candidate = data[item.cId];
   
+    
+    if (candidate) {
+      // alert(candidate);
+      // alert(candidate.value);
+      return candidate;
+    } else {
+      console.error('Candidate not found for ID:', item.cId);
+      return null;
+    }
+  }
+
+  const allianceImages = {
+    "NDA": "./images/imgs/NDA.png",
+    "INDIA": "./images/imgs/INDA.png",
+    "OTH": "./images/imgs/OTH.png"
+  };
+  const candidateValue = await fetchCandidateValue(item);
+  
+const imageUrl = `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${candidateValue}.png` || allianceImages[item.alnce];
+console.log(imageUrl);
+
+  
+
+  // const imageUrl = item.perimg || allianceImages[item.alnce];
+
+
   const card = document.createElement("div");
   card.className = "position-relative custom-container";
 
-  // Define default background, arrow colors, and name color
   let bgColor;
   let arrColor;
   let nameColor;
 
-  // Adjust colors based on the alliance field
   if (item.alnce === "NDA") {
     bgColor = "linear-gradient(56deg, #FFF8DC,#FFE4BF)";
     arrColor = "linear-gradient(90deg, #EC8E30,#A65E17)";
@@ -91,12 +122,38 @@ function createCard(item) {
   }
 
   card.style.background = bgColor;
+  let position = 1;
+  let voteDifference = 0;
+  let rsDecl = 1;  // Default value
+  const lowerCaseConstituency = item.constituency.toLowerCase();
+  
+  if (candidatesData[item.state] && candidatesData[item.state][lowerCaseConstituency]) {
+    const constituencyData = candidatesData[item.state][lowerCaseConstituency].candidates;
+    rsDecl = candidatesData[item.state][lowerCaseConstituency].rsDecl;  // Get the rsDecl value
+    // alert(rsDecl);
+    for (let i = 0; i < constituencyData.length; i++) {
+      if (constituencyData[i].cId === item.cId) {
+        position = i + 1;
+        if (i === 0 && constituencyData.length > 1) {
+          voteDifference = item.vts - constituencyData[1].vts;
+        } else if (i > 0) {
+          voteDifference = constituencyData[0].vts - item.vts;
+        }
+        break;
+      }
+    }
+  }
 
-  const ribbonText = item.lead ? "Leading" : "Trailing";
-  const ribbonColor = item.lead
-    ? "rgba(34, 177, 76, 255)"
-    : "rgba(240, 68, 56, 255)";
-
+  let ribbonText;
+  let ribbonColor;
+  if (rsDecl === 1) {
+    ribbonText = position === 1 ? "Won" : "Lost";
+    ribbonColor = position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+  } else {
+    ribbonText = "In Progress";
+    ribbonColor = "grey";
+  }
+  const leadTrailText = rsDecl === 1 ? "Margin" : (position === 1 ? "Leading by" : "Trailing by");
   card.innerHTML = `
   <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
   <div class="temp custom-temp">
@@ -105,12 +162,10 @@ function createCard(item) {
     item.cName
   }</h3>
           <div class="subheaders cd-flex align-items-center custom-subheaders" style="display:flex" > 
-              <div class="logo"><img class="custom-img" src="${
-                item.logoimg
-              }" alt=""></div>
+              <div class="logo"><img class="custom-img" src="./images/partylogo/${item.prty}.svg" alt=""></div>
               <h6 style="font-weight: bold;">${item.prty}</h6>
           </div>
-          <p class="card-text custom-card-text">${item.place}</p>
+          <p class="card-text custom-card-text">${item.constituency}(${item.state})</p>
           <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
               <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
                 item.vts
@@ -118,19 +173,18 @@ function createCard(item) {
           </p>
       </div>
       <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
-          <p class="card-text mb-1 custom-iribbon-text">${
-            item.lead ? "Leading by" : "Trailing by"
-          }</p>
-          <p class="card-text custom-iribbon-text-votes">${item.lead2votes}</p>
-      </div>
+      <p class="card-text mb-1 custom-iribbon-text">${leadTrailText}</p>
+      <p class="card-text custom-iribbon-text-votes">${voteDifference}</p>
+  </div>
   </div>
   <div class="person-image d-flex custom-person-image">
       <img class="person-img wid" src="${imageUrl}" alt="Person Image">
   </div>
-`;
+  `;
 
   return card;
 }
+
 
 
 async function displayCardsForState(stateName) {
@@ -157,7 +211,11 @@ async function displayCardsForState(stateName) {
             if (candidates) {
               const candidate = candidates.find(candidate => candidate.cId === candidateId);
               if (candidate) {
-                candidate.place = `${constituency.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')} (${state})`; 
+                candidate.state = state;
+                candidate.constituency = constituency
+                  .split(' ')
+                  .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                  .join(' ');
                 return candidate;
               }
             } else {
@@ -171,17 +229,19 @@ async function displayCardsForState(stateName) {
 
     // Loop through each state and constituency
     if (stateData[stateName]) {  // Only process the specified state
-      Object.keys(stateData[stateName]).forEach(constituency => {
-        stateData[stateName][constituency].forEach(candidateId => {
+      for (const constituency of Object.keys(stateData[stateName])) {
+        for (const candidateId of stateData[stateName][constituency]) {
           const candidateDetails = getCandidateDetails(candidateId);
+          
           if (candidateDetails) {
-            const card = createCard(candidateDetails);
+            
+            const card = await createCard(candidateDetails);  // Wait for the card to be created
             moreCardsRoot.appendChild(card);
           } else {
             console.error('Candidate details not found for ID:', candidateId);
           }
-        });
-      });
+        }
+      }
     } else {
       console.error('Specified state not found in state data:', stateName);
     }
@@ -189,6 +249,7 @@ async function displayCardsForState(stateName) {
     console.error("Error fetching or processing data:", error);
   }
 }
+
 
 function performSearch() {
   const searchInput = document
@@ -224,12 +285,13 @@ function getURLParameter(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
 
-window.onload = function() {
+window.onload = async function() {
+  await fetchCandidateData();  // Ensure data is fetched before proceeding
   const state = getURLParameter('state');
-  if (state!==null) {
+  if (state !== null) {
     displayCardsForState(state);
-    document.getElementById("tempState1").style.display="inline-block";
-    document.getElementById("tempState").innerText=state;
+    document.getElementById("tempState1").style.display = "inline-block";
+    document.getElementById("tempState").innerText = state;
   } else {
     fetchMoreCards1();
   }
@@ -242,4 +304,6 @@ document.getElementById("dropdown").addEventListener("change", () => {
 document.getElementById("delFil").addEventListener("click",()=>{
   fetchMoreCards1();
   document.getElementById("tempState1").style.display="none";
-})
+});
+
+
