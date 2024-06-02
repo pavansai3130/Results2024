@@ -1253,12 +1253,15 @@ function renderCandidateCards(item, row) {
 
   const ribbonText = (results2019 && results2019[0][item.state][item.constituency].candidates[0].cName == item.cName) ? "Won" : "Lost";
   const ribbonColor = (ribbonText === "Won") ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+  const voteMargin = (results2019[0][item.state][item.constituency].candidates[0].vts - results2019[0][item.state][item.constituency].candidates[1].vts);
+  const candParty = results2019[0][item.state][item.constituency].candidates[0].prty;
+  const partyLogo = "./images/imgs2/"+ candParty + ".png";
+
   /*const ribbonText = item.lead ? "Won" : "Lost";
   const ribbonColor = item.lead
     ? "rgba(34, 177, 76, 255)"
     : "rgba(240, 68, 56, 255)";
   */
-
   card.innerHTML = `
   <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
   <div class="temp custom-temp">
@@ -1268,8 +1271,8 @@ function renderCandidateCards(item, row) {
   }</h3>
           <div class="subheaders cd-flex align-items-center custom-subheaders" style="display:flex" >
               <div class="logo"><img class="custom-img" src="${
-                item.logoimg
-              }" alt=""></div>
+                partyLogo
+              }" alt="" style="margin-top:-5px;"></div>
               <h6 style="font-weight: bold;">${item.prty}</h6>
           </div>
           <p class="card-text custom-card-text">${constituency} (${
@@ -1281,11 +1284,9 @@ function renderCandidateCards(item, row) {
               }
           </p>
       </div>
-      <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor};visibility:hidden;">
-          <p class="card-text mb-1 custom-iribbon-text">${
-            item.lead ? "Leading by" : "Trailing by"
-          }</p>
-          <p class="card-text custom-iribbon-text-votes">${item.lead2votes}</p>
+      <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor};">
+          <p class="card-text mb-1 custom-iribbon-text">Margin</p>
+          <p class="card-text custom-iribbon-text-votes">${voteMargin}</p>
       </div>
   </div>
   <div class="person-image d-flex custom-person-image">
