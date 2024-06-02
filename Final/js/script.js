@@ -6,20 +6,36 @@ let data_201;
 let data_2019 = {};
 let bars;
 const initialView = [23, 82.5];
-const initialZoom = 5;
+const initialZoom = 4.8;
 let state_value = 36;
 let sym = {
+
   extra: "./images/imgs/notknown.svg",
+
+  UPPL:"./images/img/UPPL.svg",
+ SDF:"./images/img/SDF.svg",
+  SHS:"./images/img/SHS.svg",
+  JNKC:"./images/img/JNKC.svg",
+  JJP:"./images/img/JJP.svg",
+  INLD:"./images/img/INLD.svg",
+  BPF:"./images/img/BPF.svg",
+  INLD:"./images/img/INLD.svg",
+  AAP:"./images/imgs/AAP.svg",
+  PDP:"./images/img/PDP.svg",
+  ADMK:"./images/img/ADMK.svg",
+  AGP:"./images/img/AGP.svg",
+  AIFB:"./images/img/AIFB.svg",
+  extra:"./images/imgs/notknown.svg",
   IND: "./images/imgs/IND.svg",
   BJP: "./images/imgs/BJP.svg",
   INC: "./images/imgs/INC.svg",
-  DMK: "./images/imgs/DMK.webp",
-  YSRCP: "./images/imgs/YSRCP.jpeg",
+  DMK: "./images/imgs/DMK.svg",
+  YSRCP: "./images/imgs/YSRCP.svg",
   AITC: "./images/imgs/AITC.png",
   SHS: "./images/imgs/SHS.png",
   "JD(U)": "./images/imgs/JD(U).png",
-  BJD: "./images/imgs/BJD.png",
-  BSP: "./images/imgs/BSP.jpg",
+  BJD: "./images/imgs/BJD.svg",
+  BSP: "./images/imgs/BSP.svg",
   TRS: "./images/imgs/TRS.jpg",
   BRS: "./images/imgs/BRS.svg",
   LJP: "./images/imgs/LJP.jpg",
@@ -28,14 +44,14 @@ let sym = {
   TDP: "./images/imgs/TDP.webp",
   JKN: "./images/imgs/JKN.webp",
   IUML: "./images/imgs/IUML.jpg",
-  CPIM: "./images/imgs/CPIM.png",
+  CPIM: "./images/imgs/CPI M.svg",
   AIMIM: "./images/imgs/AIMIM.png",
-  SAD: "./images/imgs/SAD.webp",
-  CPI: "./images/imgs/CPI.webp",
+  SAD: "./images/imgs/SAD.svg",
+  CPI: "./images/imgs/CPI.svg",
   ADAL: "./images/imgs/ADAL.webp",
-  AIUDF: "./images/imgs/AIUDF.png",
+  AIUDF: "./images/imgs/AIUDF.svg",
   JMM: "./images/imgs/JMM.png",
-  AJSUP: "./images/imgs/AJSUP.jpg",
+  AJSUP: "./images/imgs/AJSUP.svg",
   "JD(S)": "./images/imgs/JD(S).jpg",
   "KEC(M)": "./images/imgs/KEC(M).webp",
   "Andaman & Nicobar Islands": "./images/imgs/Andaman_&_Nicobar_Islands.jpg",
@@ -946,11 +962,9 @@ async function fetchGeoJSON(file) {
       );
     // Initialize the map and add the GeoJSON layer
     // console.log(L);
-    map = L.map("map", {
-      attributionControl: false,
-      zoomSnap: 0.2,
-      minZoom: 5,
-    });
+
+    map = L.map("map", { attributionControl: false, zoomSnap: 0.2,minZoom:5});
+
     geo = L.geoJSON(geoJson, {
       onEachFeature: (feature, layer) => {
         layer.on("click", function (event) {
@@ -1031,7 +1045,7 @@ async function fetchGeoJSON(file) {
     var filteredFeatures = geoJson.features.filter(
       (feature) => feature.properties.st_code == state_value
     );
-    var filteredGeoJson = { ...geoJson, features: filteredFeatures };
+    var filteredGeoJson = { ...geoJson, features: filteredFeatures};
     geo2 = L.geoJSON(filteredGeoJson, {
       onEachFeature: (feature, layer) => {
         //   layer.on('mouseover', function(event) {
@@ -1084,6 +1098,7 @@ async function fetchJSON() {
       for (let state in data2024) {
         for (let const_name in data2024[state]) {
           const candidates = [];
+          candidates.push({"rsDecl": data2024[state][const_name]["rsDecl"]});
           for (let item of data2024[state][const_name]["candidates"]) {
             const candidate = {
               candidateId: item.cId,
