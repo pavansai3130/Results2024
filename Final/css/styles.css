@@ -942,11 +942,11 @@ input#stateSearch {
   overflow-y: hidden;
   border: 2px solid black;
 }
-
+/* 
 #chartContainer {
-  /* max-height: 330px; */
-  /* overflow-y: hidden; */
-}
+  max-height: 330px; 
+  overflow-y: hidden;
+} */
 
 #numberOfSeats {
   position: absolute;

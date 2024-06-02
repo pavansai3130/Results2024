@@ -1642,7 +1642,7 @@ $(document).ready(async function () {
   // const ctx = document.getElementById("myChart").getContext("2d");
   // new Chart(ctx, config);
 
-  google.charts.load("current", { packages: ["bar"] });
+  google.charts.load('current', {packages:['corechart']});
   google.charts.setOnLoadCallback(drawMultSeries);
   // backgroundColor: linear-gradient(90deg, #87CEEB 0%, #3AAFDE 100%)
   function drawMultSeries() {
@@ -1679,11 +1679,11 @@ $(document).ready(async function () {
       [
         "2024",
         bars[0].value,
-        `${resultsAwaited?resultAwaitedText:bars[0].value}`,
+        `${resultsAwaited?'':bars[0].value}`,
         bars[1].value,
         `${resultsAwaited?resultAwaitedText:bars[1].value}`,
         bars[2].value,
-        `${resultsAwaited?resultAwaitedText:bars[2].value}`,
+        `${resultsAwaited?'':bars[2].value}`,
       ],
       [
         "2019",
@@ -1703,17 +1703,14 @@ $(document).ready(async function () {
       }
 
     var options = {
-      // title: 'Election Results Comparison',
+  
       chartArea: { width: "70%" },
       hAxis: {
         title: "",
         minValue: 0,
         gridlines: { count: 1 }, // Display only one gridline
         textPosition: "none",
-        viewWindow: {
-          min: [7, 30, 0],
-          max: [17, 30, 0]
-        }
+       
       },
       vAxis: {
         textStyle: {
@@ -1736,43 +1733,7 @@ $(document).ready(async function () {
           fontFamily: "Arial",
         },
       },
-      // annotations: {
-      //   textStyle: {
-      //     fontSize: "12px",
-      //     fontWeight: 500,
-      //     lineHeight: "14px",
-      //     textAlign: "left",
-      //     color: "#000000",
-      //     auraColor: "none",
-      //     fontFamily: "Roboto",
-      //   },
-      //   alwaysOutside: true,
-      //   textAlign: "end",
-      // },
-      animation: {
-        startup: true,
-        duration: 1000,
-        easing: "out",
-      },
-      bar: { groupWidth: bw }
-    };
-
-    var chart = new google.visualization.BarChart(
-      document.getElementById("myChart")
-    );
-
-    function drawChart() {
-      console.log("width>>>>>>>>>",window.innerWidth);
-      let ww=0.45;
-      if(window.innerWidth<800){
-         ww=0.8
-      }
-      var chartWidth = window.innerWidth * ww;
-      var chartHeight = window.innerHeight * 0.6;
-
-      document.getElementById("myChart").style.width = chartWidth + "px";
-      document.getElementById("myChart").style.height = chartHeight + "px";
-      options.annotations= {
+      annotations: {
         textStyle: {
           fontSize: "12px",
           fontWeight: 500,
@@ -1788,10 +1749,36 @@ $(document).ready(async function () {
           color: 'none',
           length: 8  // This removes the connecting lines
         }
-
       },
+      animation: {
+        startup: true,
+        duration: 1000,
+        easing: "out",
+      },
+      // bars: 'horizontal', // Required for Material Bar Charts.
+      bar: { groupWidth: bw }
+    };
+
+    var chart = new google.visualization.BarChart(
+      document.getElementById("myChart")
+    );
+    // var chart = new google.charts.Bar(document.getElementById("myChart"))
+
+    function drawChart() {
+      console.log("width>>>>>>>>>",window.innerWidth);
+      let ww=0.45;
+      if(window.innerWidth<800){
+         ww=0.8
+      }
+      var chartWidth = window.innerWidth * ww;
+      var chartHeight = window.innerHeight * 0.6;
+
+      document.getElementById("myChart").style.width = chartWidth + "px";
+      document.getElementById("myChart").style.height = chartHeight + "px";
+     
     
-      chart.draw(data, options);
+      //chart.draw(data, google.charts.Bar.convertOptions(options));
+      chart.draw(data,options)
     }
 
     window.addEventListener("resize", drawChart);
