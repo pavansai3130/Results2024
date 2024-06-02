@@ -2034,7 +2034,7 @@ function populateTable(alliance, carouselId) {
      </tr>
      
      <tr>
-        <td>SS(UBT</td>
+        <td>SS(UBT)</td>
         <td>0</td>
      </tr>`;
       tbody2.innerHTML = `
@@ -2060,7 +2060,7 @@ function populateTable(alliance, carouselId) {
      </tr>
      
      <tr>
-        <td>SAD(UBT</td>
+        <td>SAD</td>
         <td>0</td>
      </tr>`;
       tbody2.innerHTML = `
@@ -2173,7 +2173,7 @@ async function newpopulateTable(alliance, carouselId) {
      </tr>
      
      <tr>
-        <td>SS(UBT</td>
+        <td>SS(UBT)</td>
         <td>0</td>
      </tr>`;
     } else {
@@ -2194,7 +2194,7 @@ async function newpopulateTable(alliance, carouselId) {
   <td>0</td>
 </tr>
      <tr>
-        <td>SAD(UBT</td>
+        <td>SAD</td>
         <td>0</td>
      </tr>`;
     }
