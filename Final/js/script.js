@@ -2063,6 +2063,7 @@ function creatediv(state) {
     });
 }
 function showmap(state) {
+  document.getElementById("state-select").value=state_codes[state];
   render_state_carousel(state);
   let state_naming = document.getElementById("st_con_heading");
   state_naming.innerHTML = `${state}`;
