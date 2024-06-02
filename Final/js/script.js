@@ -2198,7 +2198,9 @@ function render_state_carousel(state) {
     cand_name1,
     cand_name2,
     votes1,
-    votes2
+    votes2,
+    bar_length1,
+    bar_length2
   ) {
     let party_path1 =
       partySymbol1 in party_img_json
@@ -2211,24 +2213,22 @@ function render_state_carousel(state) {
     let state_img =
       state.toLowerCase() in party_img_json
         ? party_img_json[state.toLowerCase()]
-        : "./images/imgs2/madhya_pradesh.jpg";
+        : "./imgs2/madhya_pradesh.jpg";
     return `
       <div class="card swiper-slide">
-          <span class="state_name">${toTitleCase(
-            const_name
-          )} <span class="state_party_slot">(${toTitleCase(
-      state
-    )})</span></span>
+          <span class="state_name">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
           <div class="cand_desc1">
               <span class="img_container">
                   <img class="party_symbol" src=${party_path1} alt="">
                   <img class="cand_img1" src="${candidateImg1}" alt="">
               </span>
               <div class="desc_container">
-                  <div class="cand_name1">${toTitleCase(
-                    cand_name1
-                  )} <span class="state_party_slot">(${partySymbol1})</span></div>
-                  <span class="lead_bar">${votes1}</span>
+                  <div class="cand_name1">${toTitleCase(cand_name1)} <span class="state_party_slot">(${toTitleCase(partySymbol1)})</span></div>
+                  <span class="lead_bar">
+          <span style="width:${bar_length1}%;" class="leadbar"> </span>
+          <span style="color:black;margin:3px">
+          ${new Intl.NumberFormat('en-IN').format(votes1)}</span>
+          </span>
               </div>
           </div>
           <div class="cand_desc2">
@@ -2237,10 +2237,11 @@ function render_state_carousel(state) {
                   <img class="cand_img1" src="${candidateImg2}" alt="">
               </span>
               <div class="desc_container">
-                  <div class="cand_name1">${toTitleCase(
-                    cand_name2
-                  )} <span class="state_party_slot">(${partySymbol2})</span></div>
-                  <span class="trail_bar" >${votes2}</span>
+                  <div class="cand_name1">${toTitleCase(cand_name2)} <span class="state_party_slot">(${partySymbol2})</span></div>
+                  <span class="trail_bar">
+          <span style="width:${bar_length2}%;" class="trailbar"></span>
+            <span style="color:black;margin:3px">${new Intl.NumberFormat('en-IN').format(votes2)}</span>
+          </span>
               </div>
           </div>
           <div class="map_container">
@@ -2251,7 +2252,7 @@ function render_state_carousel(state) {
       `;
   }
 
-  fetch("./data/bigfights.json")
+  fetch("../data/bigfights.json")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);
@@ -2260,32 +2261,55 @@ function render_state_carousel(state) {
     })
     .then((data) => {
       party_img_json = data["images_key"];
-      candidates_data = data["candidate_details"][state.toLowerCase()];
+      candidates_data = data["candidate_details"][state];
 
       // Clear previous content and destroy previous Swiper instance if it exists
       if (swiper) {
         swiper.destroy(true, true);
       }
       swiperContainer.innerHTML = "";
-      console.log(candidates_data);
-      // function toTitleCase(name) {
-      //   return name.split(' ').map(word => {
-      //     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-      //   }).join(' ');
-      // }
       for (const_name in candidates_data) {
         for (let bigf = 0; bigf < candidates_data[const_name].length; bigf++) {
+          let votes1 = 0, votes2 = 0;
+          let tot_vts = 0;
+          stateDataJson[state][const_name.toLowerCase()]["candidates"].forEach((candidate) => {
+            if (candidate["cId"] == candidates_data[const_name][0]["id1"])
+              votes1 = candidate["vts"];
+            if (candidate["cId"] == candidates_data[const_name][0]["id2"])
+              votes2 = candidate["vts"];
+            tot_vts += candidate["vts"];
+          });
+          let prty1, prty2, cd1_votes, cd2_votes, name1, name2;
+          if (votes1 > votes2) {
+            prty1 = candidates_data[const_name][bigf]["party1"];
+            prty2 = candidates_data[const_name][bigf]["party2"];
+            cd1_votes = votes1;
+            cd2_votes = votes2;
+            name1 = candidates_data[const_name][bigf]["name1"];
+            name2 = candidates_data[const_name][bigf]["name2"];
+          } else {
+            prty2 = candidates_data[const_name][bigf]["party1"];
+            prty1 = candidates_data[const_name][bigf]["party2"];
+            cd2_votes = votes1;
+            cd1_votes = votes2;
+            name2 = candidates_data[const_name][bigf]["name1"];
+            name1 = candidates_data[const_name][bigf]["name2"];
+          }
+          let bar_length1 = (parseInt(cd1_votes) / parseInt(tot_vts)) * 100;
+          let bar_length2 = (parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
           const slideMarkup = createSlide(
             const_name,
             state,
-            candidates_data[const_name][bigf]["party1"],
-            candidates_data[const_name][bigf]["party2"],
-            "./images/imgs2/rahul.png",
-            "./images/imgs2/smriti_irani.png",
-            candidates_data[const_name][bigf]["name1"],
-            candidates_data[const_name][bigf]["name2"],
-            "100000",
-            "50000"
+            prty1,
+            prty2,
+            "../images/imgs2/rahul.png",
+            "../images/imgs2/smriti_irani.png",
+            name1,
+            name2,
+            cd1_votes,
+            cd2_votes,
+            bar_length1,
+            bar_length2
           );
           swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
         }
@@ -2321,6 +2345,9 @@ function render_state_carousel(state) {
           950: {
             slidesPerView: 3,
           },
+          1600: {
+            slidesPerView: 4,
+          }
         },
         autoplay: {
           delay: 3000,
@@ -2353,10 +2380,7 @@ function getParameterByName(name, url = window.location.href) {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 function toTitleCase(name) {
-  return name
-    .split(" ")
-    .map((word) => {
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    })
-    .join(" ");
+  return name.split(' ').map(word => {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }).join(' ');
 }
