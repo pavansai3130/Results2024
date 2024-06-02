@@ -9,23 +9,22 @@ const initialView = [23, 82.5];
 const initialZoom = 4.8;
 let state_value = 36;
 let sym = {
-
   extra: "./images/imgs/notknown.svg",
 
-  UPPL:"./images/img/UPPL.svg",
- SDF:"./images/img/SDF.svg",
-  SHS:"./images/img/SHS.svg",
-  JNKC:"./images/img/JNKC.svg",
-  JJP:"./images/img/JJP.svg",
-  INLD:"./images/img/INLD.svg",
-  BPF:"./images/img/BPF.svg",
-  INLD:"./images/img/INLD.svg",
-  AAP:"./images/imgs/AAP.svg",
-  PDP:"./images/img/PDP.svg",
-  ADMK:"./images/img/ADMK.svg",
-  AGP:"./images/img/AGP.svg",
-  AIFB:"./images/img/AIFB.svg",
-  extra:"./images/imgs/notknown.svg",
+  UPPL: "./images/img/UPPL.svg",
+  SDF: "./images/img/SDF.svg",
+  SHS: "./images/img/SHS.svg",
+  JNKC: "./images/img/JNKC.svg",
+  JJP: "./images/img/JJP.svg",
+  INLD: "./images/img/INLD.svg",
+  BPF: "./images/img/BPF.svg",
+  INLD: "./images/img/INLD.svg",
+  AAP: "./images/imgs/AAP.svg",
+  PDP: "./images/img/PDP.svg",
+  ADMK: "./images/img/ADMK.svg",
+  AGP: "./images/img/AGP.svg",
+  AIFB: "./images/img/AIFB.svg",
+  extra: "./images/imgs/notknown.svg",
   IND: "./images/imgs/IND.svg",
   BJP: "./images/imgs/BJP.svg",
   INC: "./images/imgs/INC.svg",
@@ -910,16 +909,19 @@ let names = {
   othersColor: "#EAECF0",
 };
 let temp = 1;
-async function fetchJSON2(file1, file2) {
+async function fetchJSON2(file1, file2, file3) {
   // data_2019 = {};
   try {
     const response1 = await fetch(file1);
     const response2 = await fetch(file2); // Fetch the JSON file
+    const response3 = await fetch(file3);
     if (!response1.ok || !response2.ok) {
       throw new Error(`HTTP error! Status: ${response1.status}`);
     }
     data_201 = await response1.json();
     stateAlliance = await response2.json();
+    logos = await response3.json();
+    logos = logos["images_key"];
     // console.log("JSON data fetched and stored globally:", data_201);
     function format2(data2024) {
       for (let state in data2024) {
@@ -963,7 +965,11 @@ async function fetchGeoJSON(file) {
     // Initialize the map and add the GeoJSON layer
     // console.log(L);
 
-    map = L.map("map", { attributionControl: false, zoomSnap: 0.2,minZoom:5});
+    map = L.map("map", {
+      attributionControl: false,
+      zoomSnap: 0.2,
+      minZoom: 5,
+    });
 
     geo = L.geoJSON(geoJson, {
       onEachFeature: (feature, layer) => {
@@ -1045,7 +1051,7 @@ async function fetchGeoJSON(file) {
     var filteredFeatures = geoJson.features.filter(
       (feature) => feature.properties.st_code == state_value
     );
-    var filteredGeoJson = { ...geoJson, features: filteredFeatures};
+    var filteredGeoJson = { ...geoJson, features: filteredFeatures };
     geo2 = L.geoJSON(filteredGeoJson, {
       onEachFeature: (feature, layer) => {
         //   layer.on('mouseover', function(event) {
@@ -1098,7 +1104,7 @@ async function fetchJSON() {
       for (let state in data2024) {
         for (let const_name in data2024[state]) {
           const candidates = [];
-          candidates.push({"rsDecl": data2024[state][const_name]["rsDecl"]});
+          candidates.push({ rsDecl: data2024[state][const_name]["rsDecl"] });
           for (let item of data2024[state][const_name]["candidates"]) {
             const candidate = {
               candidateId: item.cId,
@@ -1144,20 +1150,22 @@ $(document).ready(async function () {
   await fetchJSON();
   await fetchJSON2(
     "../data/election2019.json",
-    "../data/stateAllianceCount.json"
+    "../data/stateAllianceCount.json",
+    "../data/bigfights.json"
   );
   await fetchGeoJSON("../data/geo.json");
   let intervalId = setInterval(async () => {
     await fetchJSON();
     // handleStateClick(lastClickedState);
     // console.log(stateDataJson);
-  }, 10000);
+  }, 300000);
   // console.log(data);
 
   console.log(stateAlliance);
   stateDataJson2019 = data_201[0];
   allianceJson2019 = data_201[1];
   console.log(allianceJson);
+  console.log(logos);
   if (getParameterByName("year") === "2019") {
     stateDataJson = stateDataJson2019;
     allianceJson = allianceJson2019;
@@ -1251,18 +1259,20 @@ $(document).ready(async function () {
 
         if (stateCount <= 20) {
           const cells = newRow.getElementsByTagName("td");
-          cells[0].innerHTML = `<img id="stateLogo" src='${sym[state]}'>${state}`;
+          cells[0].innerHTML = `<img id="stateLogo" src='${
+            logos[state.toLowerCase()]
+          }'>${state}`;
 
           let value = nda - NDA;
           cells[1].innerHTML = `${nda}<span class=${
             value < 0 ? "negative" : "positive"
           }> (${value})</span>`;
           value = india - INDIA;
-          cells[2].innerHTML = `${nda}<span class=${
+          cells[2].innerHTML = `${india}<span class=${
             value < 0 ? "negative" : "positive"
           }> (${value})</span>`;
           value = others - OTH;
-          cells[3].innerHTML = `${nda}<span class=${
+          cells[3].innerHTML = `${others}<span class=${
             value < 0 ? "negative" : "positive"
           }> (${value})</span>`;
 
@@ -1335,24 +1345,7 @@ $(document).ready(async function () {
     });
   });
 
-  document.getElementById("prevButton").addEventListener("click", function () {
-    // document.getElementById("nextButton").className =
-    //   "btn btn-light border border-5";
-    // document.getElementById("stateRow").textContent = "State";
-    // document.getElementById("stateButton").className += " active";
-    if (getParameterByName("year") === "2019") {
-      stateDataJson = stateDataJson2019;
-      allianceJson = allianceJson2019;
-      // console.log(data_2019);
-      data = data_2019;
-      // console.log("datsis");
-      // console.log(data);
-      document.getElementById("disclaimer2019").style.display = "block";
-    }
-    renderAllianceResults();
-  });
-
-  document.getElementById("nextButton").addEventListener("click", function () {
+  loadNext = function () {
     if (getParameterByName("year") === "2019") {
       stateDataJson = stateDataJson2019;
       allianceJson = allianceJson2019;
@@ -1385,7 +1378,9 @@ $(document).ready(async function () {
       newRow.removeAttribute("id");
       newRow.style.display = "";
       const cells = newRow.getElementsByTagName("td");
-      cells[0].innerHTML = `<img id="stateLogo" src='${stateMaps[state]}'>${state}`;
+      cells[0].innerHTML = `<img id="stateLogo" src='${
+        logos[state.toLowerCase()]
+      }'>${state}`;
       for (const consti in stateDataJson[state]) {
         const leadingCandidate = stateDataJson[state][consti]["candidates"][0];
         if (leadingCandidate.alnce === "NDA") nda++;
@@ -1393,7 +1388,9 @@ $(document).ready(async function () {
         else india++;
       }
 
-      cells[0].innerHTML = `<img id="stateLogo" src='${sym[state]}'>${state}`;
+      cells[0].innerHTML = `<img id="stateLogo" src='${
+        logos[state.toLowerCase()]
+      }'>${state}`;
 
       let value = nda - NDA;
       cells[1].innerHTML = `${nda}<span class=${
@@ -1452,7 +1449,27 @@ $(document).ready(async function () {
     //     tbody.appendChild(newRow);
     //   }
     // }
-  });
+  };
+  loadPrev = function () {
+    // document.getElementById("nextButton").className =
+    //   "btn btn-light border border-5";
+    // document.getElementById("stateRow").textContent = "State";
+    // document.getElementById("stateButton").className += " active";
+    if (getParameterByName("year") === "2019") {
+      stateDataJson = stateDataJson2019;
+      allianceJson = allianceJson2019;
+      // console.log(data_2019);
+      data = data_2019;
+      // console.log("datsis");
+      // console.log(data);
+      document.getElementById("disclaimer2019").style.display = "block";
+    }
+    renderAllianceResults();
+  };
+
+  document.getElementById("prevButton").addEventListener("click", loadPrev);
+
+  document.getElementById("nextButton").addEventListener("click", loadNext);
 
   // -----------------Accordion population---------------------------------------------
   // Function to handle click event on state in India map
@@ -1736,6 +1753,35 @@ $(document).ready(async function () {
   // chart.render();
 
   // ------------------------------------------------------------------------------------------------
+  document
+    .getElementById("mainTable")
+    .addEventListener("click", function (event) {
+      // Check if the clicked element is a <td> with the class "clickable"
+      if (
+        event.target &&
+        event.target.tagName === "TD" &&
+        event.target.id == "stateName"
+      ) {
+        // Extract the text content of the clicked <td> as a string
+
+        handleSelection(event.target.textContent.trim());
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+  var tdElements = document.querySelectorAll("#stateName");
+
+  // Loop through each <td> element and attach a click event listener
+  tdElements.forEach(function (tdElement) {
+    tdElement.addEventListener("click", function () {
+      // Extract the text content of the clicked <td>
+      console.log(`stateCLicked`);
+
+      var stateName = this.textContent.trim();
+      console.log(stateName);
+      handleSelection(stateName);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
 });
 function toggleEntries() {
   const toggleButtons = document.querySelectorAll(".toggleButton");
@@ -2077,7 +2123,7 @@ function creatediv(state) {
     });
 }
 function showmap(state) {
-  document.getElementById("state-select").value=state_codes[state];
+  document.getElementById("state-select").value = state_codes[state];
   render_state_carousel(state);
   let state_naming = document.getElementById("st_con_heading");
   state_naming.innerHTML = `${state}`;
@@ -2104,6 +2150,8 @@ document.getElementById("see-more-btn").addEventListener("click", function () {
   window.location.href = "cardsPage.html?state=" + encodeURIComponent(state);
 });
 let renderAllianceResults;
+let loadNext;
+let loadPrev;
 
 async function fetchTop10() {
   try {

@@ -10,6 +10,7 @@ body {
   width: 100%;
 }
 
+
 html {
   width: 100%;
 }
@@ -266,6 +267,7 @@ a {
   border: none;
 }
 
+
 .carousel-indicators [data-bs-target] {
   margin-top: 28px;
   background-color: gray;
@@ -279,7 +281,9 @@ a {
 .carousel-item {
   border-radius: 8px;
   padding: 11px 24px;
+  /* width: 50%; */
 }
+
 
 .carousel-item>div:first-of-type {
   /* Your styles here */
@@ -471,6 +475,12 @@ a {
   vertical-align: middle;
 
 }
+#allianceBody #stateName {
+  cursor: pointer;
+}
+#allianceBody #stateName:hover{
+  background-color: #F2F4F7;
+}
 
 /* #stateButton:not(:focus),
 #unionButton:not(:focus),#state-bt:not(:focus),#consti-bt:not(:focus) {
@@ -553,33 +563,35 @@ a {
 .positive {
   color: #027A48;
   ;
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 500;
 }
 
 .negative {
   color: #F04438;
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 500;
-
 }
 
 #NDASeats {
   background-color: #FFF9F5;
   text-align: center;
   border-right: none;
+  font-weight: bold !important;
 }
 
 #INDIASeats {
   background-color: #F5F5FF;
   text-align: center;
   border-left: none;
+  font-weight: bold !important;
 
 }
 
 #OthersSeats {
   background-color: #F9FAFB;
   text-align: center;
+  font-weight: bold !important;
 
 }
 
@@ -608,7 +620,7 @@ a {
 
 }
 
-input#stateSearch {
+#stateSearch {
   margin: 0 auto;
   width: 100%;
   height: 2.1875rem;
@@ -624,6 +636,8 @@ input#stateSearch {
   &:focus {
     /* border: 1px solid #008ABF; */
     transition: 0.35s ease;
+    outline: none !important;
+    border: none !important;
 
     /* color: #008ABF; */
     &::-webkit-input-placeholder {
@@ -642,6 +656,37 @@ input#stateSearch {
     }
   }
 }
+.stateTableChevrons{
+  background-color: transparent;
+  height:35px ;
+  width: 56px;
+  padding: 0;
+  margin-left: 24px;
+}
+.stateTableChevrons button{
+  background-color: transparent;
+  color: black;
+
+  border:none;
+}
+.stateTableChevrons button:hover{
+  background-color: transparent;
+  color: black;
+
+
+}
+.stateTableChevrons button:active{
+  background-color: transparent;
+  color: black;
+  border: 0;
+  outline: none;
+}
+#stateSearch:active {
+  outline: none;
+  border: none;
+}
+
+
 
 .search-icon {
   position: relative;
@@ -1029,4 +1074,13 @@ input#stateSearch {
   border: none;
   color: #1570EF;
   /* border-bottom: 1px solid white; */
+}
+button:focus{
+  outline: none;
+  /* border: none; */
+
+}
+button:active{
+  outline: none;
+  /* border: none; */
 }

@@ -862,11 +862,15 @@ gap: 8px;
   border-radius: 0;
   border-bottom: 1px solid black;
   padding: 0;
+  
 
 }
 
 #state-select option {
-  color: black;
+  /* color: black; */
+  background-color: white;
+  font-size: 14px;
+  padding: 10px 16px;
 }
 
 .above {
