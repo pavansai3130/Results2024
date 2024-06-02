@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
       if (candidates[0].cId === candId) {
         opponentVotes = candidates[1] ? candidates[1].vts : 0;
         margin = candidateVotes - opponentVotes;
+        candidateVotes = new Intl.NumberFormat('en-IN').format(candidateVotes);
+        margin = new Intl.NumberFormat('en-IN').format(margin);
         if (resStatus === 1) {
           return { status: 'Won', margin: margin, votes: candidateVotes };
         } else {
@@ -45,9 +47,14 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         opponentVotes = candidates[0].vts;
         margin = opponentVotes - candidateVotes;
+        candidateVotes = new Intl.NumberFormat('en-IN').format(candidateVotes);
+        margin = new Intl.NumberFormat('en-IN').format(margin);
+        if(candidateVotes-margin===0){
+          return {status:'Awaiting', margin: margin, votes: candidateVotes};
+        }
         if (resStatus === 1) {
           return { status: 'Lost', margin: margin, votes: candidateVotes };
-        } else {
+        } else{
           return { status: 'Trailing', margin: margin, votes: candidateVotes };
         }
       }
@@ -80,7 +87,10 @@ document.addEventListener('DOMContentLoaded', function () {
             statusCell.classList.add('leading');
           } else if (result.status === 'Lost') {
             statusCell.classList.add('lost');
-          } else {
+          } else if(result.status==='Awaiting'){
+            statusCell.classList.add('awaiting');
+          }
+           else {
             statusCell.classList.add('trailing');
           }
           countCell.innerHTML = `${result.votes}<br><span style="color:grey; font-size:0.8rem;"> ${result.margin}</span>`;
@@ -119,6 +129,8 @@ document.addEventListener('DOMContentLoaded', function () {
       if (candidates[0].cId === candId) {
         opponentVotes = candidates[1] ? candidates[1].vts : 0;
         margin = candidateVotes - opponentVotes;
+        candidateVotes = new Intl.NumberFormat('en-IN').format(candidateVotes);
+        margin = new Intl.NumberFormat('en-IN').format(margin);
         if (resStatus === 1) {
           return { status: 'Won', margin: margin, votes: candidateVotes };
         } else {
@@ -127,9 +139,14 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         opponentVotes = candidates[0].vts;
         margin = opponentVotes - candidateVotes;
+        candidateVotes = new Intl.NumberFormat('en-IN').format(candidateVotes);
+        margin = new Intl.NumberFormat('en-IN').format(margin);
+        if(candidateVotes-margin===0){
+          return {status:'Awaiting', margin: margin, votes: candidateVotes};
+        }
         if (resStatus === 1) {
           return { status: 'Lost', margin: margin, votes: candidateVotes };
-        } else {
+        } else{
           return { status: 'Trailing', margin: margin, votes: candidateVotes };
         }
       }
@@ -162,7 +179,10 @@ document.addEventListener('DOMContentLoaded', function () {
             statusCell.classList.add('leading');
           } else if (result.status === 'Lost') {
             statusCell.classList.add('lost');
-          } else {
+          } else if(result.status==='Awaiting'){
+            statusCell.classList.add('awaiting');
+          }
+          else{
             statusCell.classList.add('trailing');
           }
           countCell.innerHTML = `${result.votes}<br><span style="color:grey; font-size:0.8rem;"> ${result.margin}</span>`;
