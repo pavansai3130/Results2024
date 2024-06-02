@@ -1239,7 +1239,9 @@ function renderCandidateCards(item, row) {
     "INDIA": "./images/imgs/INDA.png",
     "OTH": "./images/imgs/OTH.png"
   };
-  const imageUrl = item.perimg || allianceImages[item.alnce];
+  // console.log(item.c')
+  // alert(item.cId);
+  const imageUrl = `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${item.cId}.png` || allianceImages[item.alnce];
 
   const constituency = item.constituency
     .split(" ")
