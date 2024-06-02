@@ -53,10 +53,10 @@
 </head>
 
 <body>
-   <div class="foreGround">
+   <!-- <div class="foreGround">
       <div>Sample Data</div>
       <div>2024 results awaited</div>
-   </div>
+   </div> -->
    <nav class="navbarHead blur" id="navHeader">
       <div class="headerlogo">
          <a href="./index.html"><img src="./images/imgs/RESULTS2024LOGO.png" alt="Logo" /></a>
@@ -110,6 +110,8 @@
          </div>
       </div>
    </nav>
+   <div id="disclaimer2024">You are viewing sample data.
+      2024 Results awaited.</div>
    <!-- Common Header -->
    <header class="header">
       <div class="container">
@@ -587,7 +589,7 @@
          </div>
       </div>
 
-      <div class="tablesDivOne">
+      <div class="tablesDivOne d-none">
          <div class="table-container">
             <div class="table-header sticky">
                <h3>High Margin</h3>
@@ -628,7 +630,7 @@
          </div>
       </div>
 
-      <div class="tablesDivTwo">
+      <div class="tablesDivTwo d-none">
          <div class="table-container">
             <div class="table-header sticky">
                <h3>Richest Candidates</h3>
@@ -768,11 +770,11 @@
 
          </div>
       </div>
-      <p class="notContesting">Sanjay Bhatia, Subhash Chandra Baheria, Ranjanben Bhatt & Parvesh Sahib Singh Verma
+      <p class="notContesting d-none">Sanjay Bhatia, Subhash Chandra Baheria, Ranjanben Bhatt & Parvesh Sahib Singh Verma
          contested in 2019 but are not contesting in 2024 election. Their names have not been included.</p>
       <!-- rajendar part -->
-      <div id="selectmapbtn">Select State</div>
-      <div class="selectmap">
+      <div id="selectmapbtn" class="d-none">Select State</div>
+      <div class="selectmap d-none">
          <!-- Generate 35 grid items with images and labels -->
          <div class="grid-item1" onclick="viewingstate(37)">
             <img id="myg" src="./images/imgs2/andhra_pradesh.png">
