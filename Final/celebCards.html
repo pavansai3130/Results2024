@@ -103,7 +103,7 @@
         <a href="#">Celebrities</a>
       </div>
       <div class="search-bar-container">
-        <h2 id="celebs-section" class="text-center my-4">Celebrities</h2>
+        <h2 id="celebs-section">Celebrities</h2>
         <div class="inputBoxes">
           <div class="input-group mb-3">
             <input
@@ -162,20 +162,13 @@
           </select>
         </div>
       </div>
-
-      <div id="more-celeb-cards-root" class="row g-2">
-        <!-- More celeb cards will be appended here -->
-        <img
-          id="no-results-img"
-          src="https://static.tildacdn.net/tild3432-3335-4337-b130-363866343062/No_results_1.svg"
-          alt="No results"
-          style="display: none; margin-top: 20px; max-width: 100%"
-        />
+      <span id="tempState1"
+        ><span id="tempState"></span
+        ><i id="delFil" class="fa-solid fa-xmark"></i
+      ></span>
+      <div id="more-cards-root" class="row g-2">
+        <!-- More popular cards will be appended here -->
       </div>
-      <!-- Back to Top Button -->
-      <button id="back-to-top-btn" onclick="scrollToTop()">
-        <i class="fa-solid fa-angle-up"></i>
-      </button>
     </div>
     <div class="consent" id="consent">
       <p class="consentText">

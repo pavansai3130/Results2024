@@ -2154,7 +2154,7 @@ async function fetchTop10() {
 
     for (let i = 0; i < top10Cand.length; i += 2) {
       const row = document.createElement("div");
-      row.className = "row raw justify-content-between";
+      row.className = "row raw justify-content-center";
       document.getElementById("root").appendChild(row);
 
       for (let j = 0; j < 2; j++) {

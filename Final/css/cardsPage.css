@@ -1,5 +1,5 @@
 .custom-container {
-    width: 22%;
+    width: 300px;
 }
 body{
 	padding-top:0;
@@ -20,7 +20,7 @@ body{
     }
 }
 #more-cards-root {
-    margin: 0 0 0 1.275rem;
+    margin: 0 0 0 4rem;
     display: flex;
     /* justify-content: center; */
     align-items: center;
@@ -39,9 +39,9 @@ body{
 }
 
 @media (max-width: 570px) {
-    .custom-container {
+    /* .custom-container {
         width: 100%;
-    }
+    } */
 
     .search-bar-container {
         flex-wrap: wrap;
@@ -49,7 +49,7 @@ body{
     }
 }
 
-@media (min-width: 570px) and (max-width: 770px) {
+/* @media (min-width: 570px) and (max-width: 770px) {
     .custom-container {
         width: 40%;
     }
@@ -59,7 +59,7 @@ body{
     .custom-container {
         width: 30%;
     }
-}
+} */
 @media (max-width:870px){
     .search-bar-container{
         flex-direction: column;

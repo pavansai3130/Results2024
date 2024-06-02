@@ -1321,12 +1321,19 @@ function renderCandidateCards(item, row) {
     ribbonColor = position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
   } else {
     // ribbonText = "In Progress";
+
     ribbonText = position === 1 ? "Leading" : "Trailing";
     ribbonColor = position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
   }
-  const leadTrailText = rsDecl === 1 ? "Margin" : (position === 1 ? "Leading by" : "Trailing by");
+  let leadTrailText = rsDecl === 1 ? "Margin" : (position === 1 ? "Leading by" : "Trailing by");
   const Votes = new Intl.NumberFormat('en-IN').format(item.vts);
-  const VoteDiff = new Intl.NumberFormat('en-IN').format(voteDifference);
+  let VoteDiff = new Intl.NumberFormat('en-IN').format(voteDifference);
+  if(item.vts===0){
+    ribbonText = "Awaited";
+    leadTrailText ="Results Awaited";
+    ribbonColor="grey";
+    VoteDiff=""
+  }
 
   card.innerHTML = `
   <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
@@ -1707,7 +1714,7 @@ function render_state_table(feature, state) {
     }
     for (let i = 0; i < cardRowsNeeded; i++) {
       const row = document.createElement("div");
-      row.className = "row raw justify-content-between";
+      row.className = "row raw justify-content-center";
       document.getElementById("root").appendChild(row);
       for (let j = 0; j < 2; j++) {
         const cardIndex = i * 2 + j;
