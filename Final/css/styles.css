@@ -1073,12 +1073,14 @@ a {
   /* display: none;
   background-color: black;
   font-size: 14px;
-  position: fixed;
   /* vertical-align: middle; */
+  display: flex;
+  justify-content: center;
+  position: sticky;
   color: white;
   padding: 10px;
   text-align: center;
-  /* top: 0; */
+  top: 0;
   text-align: center;
   color: white;
   right: 0;
