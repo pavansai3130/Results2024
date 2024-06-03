@@ -37,8 +37,8 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
       integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
       crossorigin="anonymous" referrerpolicy="no-referrer" />
-   <script src="./lib/d3.v4.min.js" charset="utf-8"></script>
-   <script src="./lib/d3-parliament.min.js"></script>
+      <link rel="stylesheet" href="./css/d3-parliament.css">
+   
    <script src="leaflet/index.js"></script>
    <script src="./js/disclaimer.js"></script>
    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JF3DM9WV3B"></script>
@@ -51,6 +51,8 @@
    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
    <script src="./js/statusTable.js"></script>
    <script src="./js/marginTable.js"></script>
+   <script src="./lib/d3.v4.min.js" charset="utf-8"></script>
+   <script src="./lib/d3-parliament.min.js"></script>
    <link rel="stylesheet" href="./css/styles.css">
    <link rel="stylesheet" href="./css/cards.css">
    <link rel="stylesheet" href="./css/styling.css">
@@ -239,7 +241,10 @@
                      <!-- <div id="square-container"></div> -->
                      <div class="p-2" id="chartContainer">
                         <!-- <h1 id="numberOfSeats">543</h1> -->
-                        <div id="myChart"></div>
+                        <div id="myChart">
+                           <svg id="pmap" viewBox="0 0 60 30"></svg>
+                        </div>
+                        
                         <!-- <div id="allianceChart2"></div> -->
                         <!-- <div class="d-flex justify-content-center w-80 " style="height: 227px;">
                            <svg id="allianceChart"  viewBox="1 900 900"></svg>

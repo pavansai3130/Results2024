@@ -1656,190 +1656,276 @@ const tabSize=document.getElementById("mainTable").offsetHeight;
   // const ctx = document.getElementById("myChart").getContext("2d");
   // new Chart(ctx, config);
 
-  google.charts.load("current", { packages: ["corechart"] });
-  google.charts.setOnLoadCallback(drawMultSeries);
-  // backgroundColor: linear-gradient(90deg, #87CEEB 0%, #3AAFDE 100%)
-  function drawMultSeries() {
-    let names2019 = {
-      NDA: 357,
-      "I.N.D.I.A": 103,
-      Others: 83,
-    };
+  let nda_seats = allianceJson.NDA;
+  let india_seats = allianceJson.INDIA;
+  let others_seats = allianceJson.OTH;
+  let na_seats = 543;
+  //if (nda_seats != 0 && india_seats != 0 && others_seats != 0) {
+    na_seats = 543-(nda_seats+india_seats+others_seats);
+  //}
 
-    let colors2019 = {
-      NDA: "#FAA958",
-      "I.N.D.I.A": "#9dd5ec",
-      Others: "#d9d9d9",
-    };
+  console.log("names[bars[0].color]", allianceJson);
 
-    console.log("names[bars[0].color]", names[bars[0].color]);
+  let pmp_data1 = [];
 
-    let resultsAwaited = false;
-    if (bars[0].value == 0 && bars[1].value == 0 && bars[2].value == 0) {
-      resultsAwaited = true;
-    }
-    let resultAwaitedText = "Result Awaited!";
-
-    var data = google.visualization.arrayToDataTable([
-      [
-        "Year",
-        names[bars[0].color],
-        { role: "annotation" },
-        names[bars[1].color],
-        { role: "annotation" },
-        names[bars[2].color],
-        { role: "annotation" },
-      ],
-      [
-        "2024",
-        bars[0].value,
-        `${resultsAwaited ? "" : bars[0].value}`,
-        bars[1].value,
-        `${resultsAwaited ? resultAwaitedText : bars[1].value}`,
-        bars[2].value,
-        `${resultsAwaited ? "" : bars[2].value}`,
-      ],
-      [
-        "2019",
-        names2019[names[bars[0].color]],
-        `${names2019[names[bars[0].color]]}`,
-        names2019[names[bars[1].color]],
-        `${names2019[names[bars[1].color]]}`,
-        names2019[names[bars[2].color]],
-        `${names2019[names[bars[2].color]]}`,
-      ],
-    ]);
-
-    var hiddenData = google.visualization.arrayToDataTable([
-      ['City', 'Baseline', 'Hidden'],
-      ['', 0, 1], // Baseline
-      ['', null, null], // Hidden series to draw the rectangle
-    ]);
-
-    let bw = "80%";
-    if (window.innerWidth < 800) {
-      console.log("width<<<<", window.innerWidth);
-      bw = "50%";
-    }
-
-    var options = {
-      chartArea: {top:35 ,height:"50%",width:"80%"},
-      hAxis: {
-        baselineColor: "#D3D3D3",
-        viewWindowMode:"explicit",
-        title: "",
-        viewWindow:{
-          min:0
-        },
-        minValue: 0,
-        // maxValue:543,
-        gridlines: { color: "transparent", count: 0 },
-        textPosition: "none",
-        // ticks:[]
-      },
-      vAxis: {
-        viewWindowMode:"explicit",
-        textStyle: {
-          fontSize: "12px",
-          fontWeight: 500,
-          lineHeight: "14px",
-          textAlign: "left",
-          color: "#000000",
-          auraColor: "#00000",
-          fontFamily: "Roboto",
-        },
-      },
-
-      colors: [bars[0].color, bars[1].color, bars[2].color],
-      legend: {
-        position: "top",
-        left: "30px",
-        titleTextStyle: {
-          fontSize: "16px",
-          fontWeight: "bold",
-          fontFamily: "Arial",
-        },
-      },
-      annotations: {
-        alwaysOutside: true,
-        textAlign: "end",
-        textStyle: {
-          fontSize: "12px",
-          fontWeight: 500,
-          lineHeight: "14px",
-          textAlign: "left",
-          color: "#000000",
-          auraColor: "none",
-          fontFamily: "Roboto",
-        },
-
-        stem: {
-          color: "none",
-          length: 8,
-        },
-      },
-      animation: {
-        startup: true,
-        duration: 1000,
-        easing: "out",
-      },
-      bars: "horizontal",
-      // height:300
-      // bar: { groupWidth:window.innerWidth<800?"80%" : "60%" },
-    };
-
-    var chart = new google.visualization.BarChart(
-      document.getElementById("myChart")
-    );
-    // var chart = new google.charts.Bar(document.getElementById("myChart"))
-
-    function drawChart() {
-      let ww = 0.45;
-      if (window.innerWidth < 800) {
-        ww = 0.8;
-      }
-
-      var windowWidth = window.innerWidth;
-      var groupWidth;
-
-      if (windowWidth < 600) {
-        groupWidth = "70%";
-      } else if (windowWidth < 800) {
-        groupWidth = "80%";
-      } else {
-        groupWidth = "90%";
-      }
-
-      options.bar = { groupWidth: groupWidth };
-      var chartWidth = window.innerWidth * ww;
-      var chartHeight = window.innerHeight * 0.6;
-
-      document.getElementById("myChart").style.width = chartWidth + "px";
-      document.getElementById("myChart").style.height = chartHeight + "px";
-
-
-      var chartDiv = document.getElementById('myChart');
-      var windowHeight = window.innerHeight;
-      var margin = windowHeight * -0.2;
-      chartDiv.style.marginBottom = margin + 'px';
-      // chart.draw(hiddenData, options);
-      chart.draw(data, options);
-    }
-
-    // google.visualization.events.addListener(chart, 'ready', function () {
-    //   var bars = document.querySelectorAll('#myChart svg g g rect');
-    //   bars.forEach((bar, index) => {
-    //     bar.id = 'bar-' + index;
-    //     bar.style.stroke = '#D3D3D3';
-    //     bar.style.strokeWidth = '2px';
-    //     bar.style.strokeDasharray = '2 2'; // This ensures the border is applied to the left side only
-    //   });
-    // });
-
-    window.addEventListener("resize", drawChart);
-
-    drawChart();
+  if (nda_seats != 0) {
+    pmp_data1.push({
+      id: "nda",
+      legend: "NDA",
+      name: "NDA",
+      seats: nda_seats,
+    });
   }
+  if (india_seats != 0) {
+    pmp_data1.push({
+      id: "upa",
+      legend: "UPA",
+      name: "UPA",
+      seats: india_seats,
+    });
+  }
+
+  if (others_seats != 0) {
+    pmp_data1.push({
+      id: "others",
+      legend: "Others",
+      name: "Others",
+      seats: others_seats,
+    });
+  }
+
+  pmp_data1.push({
+    id: "NA",
+    legend: "NA",
+    name: "NA",
+    seats: na_seats,
+  });
+
+  let pmap_data = [
+    {
+      id: "nda",
+      legend: "NDA",
+      name: "NDA",
+      seats: nda_seats || 1,
+    },
+    {
+      id: "upa",
+      legend: "UPA",
+      name: "UPA",
+      seats: india_seats,
+    },
+    {
+      id: "others",
+      legend: "Others",
+      name: "Others",
+      seats: others_seats,
+    },
+    {
+      id: "NA",
+      legend: "NO_Party",
+      name: "NA",
+      seats: 543,
+    },
+  ];
+
+  var parliament = d3.parliament().width(60).innerRadiusCoef(0.4);
+  parliament.enter.fromCenter(true).smallToBig(true);
+  parliament.exit.toCenter(true).bigToSmall(true);
+
+  var setData = function (d) {
+    d3.select("#pmap").datum(d).call(parliament);
+  };
+  setData(pmp_data1);
+
+
+
+
+
+
+  // google.charts.load("current", { packages: ["corechart"] });
+  // google.charts.setOnLoadCallback(drawMultSeries);
+  // // backgroundColor: linear-gradient(90deg, #87CEEB 0%, #3AAFDE 100%)
+  // function drawMultSeries() {
+  //   let names2019 = {
+  //     NDA: 357,
+  //     "I.N.D.I.A": 103,
+  //     Others: 83,
+  //   };
+
+  //   let colors2019 = {
+  //     NDA: "#FAA958",
+  //     "I.N.D.I.A": "#9dd5ec",
+  //     Others: "#d9d9d9",
+  //   };
+
+  //   console.log("names[bars[0].color]", names[bars[0].color]);
+
+  //   let resultsAwaited = false;
+  //   if (bars[0].value == 0 && bars[1].value == 0 && bars[2].value == 0) {
+  //     resultsAwaited = true;
+  //   }
+  //   let resultAwaitedText = "Result Awaited!";
+
+  //   var data = google.visualization.arrayToDataTable([
+  //     [
+  //       "Year",
+  //       names[bars[0].color],
+  //       { role: "annotation" },
+  //       names[bars[1].color],
+  //       { role: "annotation" },
+  //       names[bars[2].color],
+  //       { role: "annotation" },
+  //     ],
+  //     [
+  //       "2024",
+  //       bars[0].value,
+  //       `${resultsAwaited ? "" : bars[0].value}`,
+  //       bars[1].value,
+  //       `${resultsAwaited ? resultAwaitedText : bars[1].value}`,
+  //       bars[2].value,
+  //       `${resultsAwaited ? "" : bars[2].value}`,
+  //     ],
+  //     [
+  //       "2019",
+  //       names2019[names[bars[0].color]],
+  //       `${names2019[names[bars[0].color]]}`,
+  //       names2019[names[bars[1].color]],
+  //       `${names2019[names[bars[1].color]]}`,
+  //       names2019[names[bars[2].color]],
+  //       `${names2019[names[bars[2].color]]}`,
+  //     ],
+  //   ]);
+
+  //   var hiddenData = google.visualization.arrayToDataTable([
+  //     ['City', 'Baseline', 'Hidden'],
+  //     ['', 0, 1], // Baseline
+  //     ['', null, null], // Hidden series to draw the rectangle
+  //   ]);
+
+  //   let bw = "80%";
+  //   if (window.innerWidth < 800) {
+  //     console.log("width<<<<", window.innerWidth);
+  //     bw = "50%";
+  //   }
+
+  //   var options = {
+  //     chartArea: {top:35 ,height:"50%",width:"80%"},
+  //     hAxis: {
+  //       baselineColor: "#D3D3D3",
+  //       viewWindowMode:"explicit",
+  //       title: "",
+  //       viewWindow:{
+  //         min:0
+  //       },
+  //       minValue: 0,
+  //       // maxValue:543,
+  //       gridlines: { color: "transparent", count: 0 },
+  //       textPosition: "none",
+  //       // ticks:[]
+  //     },
+  //     vAxis: {
+  //       viewWindowMode:"explicit",
+  //       textStyle: {
+  //         fontSize: "12px",
+  //         fontWeight: 500,
+  //         lineHeight: "14px",
+  //         textAlign: "left",
+  //         color: "#000000",
+  //         auraColor: "#00000",
+  //         fontFamily: "Roboto",
+  //       },
+  //     },
+
+  //     colors: [bars[0].color, bars[1].color, bars[2].color],
+  //     legend: {
+  //       position: "top",
+  //       left: "30px",
+  //       titleTextStyle: {
+  //         fontSize: "16px",
+  //         fontWeight: "bold",
+  //         fontFamily: "Arial",
+  //       },
+  //     },
+  //     annotations: {
+  //       alwaysOutside: true,
+  //       textAlign: "end",
+  //       textStyle: {
+  //         fontSize: "12px",
+  //         fontWeight: 500,
+  //         lineHeight: "14px",
+  //         textAlign: "left",
+  //         color: "#000000",
+  //         auraColor: "none",
+  //         fontFamily: "Roboto",
+  //       },
+
+  //       stem: {
+  //         color: "none",
+  //         length: 8,
+  //       },
+  //     },
+  //     animation: {
+  //       startup: true,
+  //       duration: 1000,
+  //       easing: "out",
+  //     },
+  //     bars: "horizontal",
+  //     // height:300
+  //     // bar: { groupWidth:window.innerWidth<800?"80%" : "60%" },
+  //   };
+
+  //   var chart = new google.visualization.BarChart(
+  //     document.getElementById("myChart")
+  //   );
+  //   // var chart = new google.charts.Bar(document.getElementById("myChart"))
+
+  //   function drawChart() {
+  //     let ww = 0.45;
+  //     if (window.innerWidth < 800) {
+  //       ww = 0.8;
+  //     }
+
+  //     var windowWidth = window.innerWidth;
+  //     var groupWidth;
+
+  //     if (windowWidth < 600) {
+  //       groupWidth = "70%";
+  //     } else if (windowWidth < 800) {
+  //       groupWidth = "80%";
+  //     } else {
+  //       groupWidth = "90%";
+  //     }
+
+  //     options.bar = { groupWidth: groupWidth };
+  //     var chartWidth = window.innerWidth * ww;
+  //     var chartHeight = window.innerHeight * 0.6;
+
+  //     document.getElementById("myChart").style.width = chartWidth + "px";
+  //     document.getElementById("myChart").style.height = chartHeight + "px";
+
+
+  //     var chartDiv = document.getElementById('myChart');
+  //     var windowHeight = window.innerHeight;
+  //     var margin = windowHeight * -0.2;
+  //     chartDiv.style.marginBottom = margin + 'px';
+  //     // chart.draw(hiddenData, options);
+  //     chart.draw(data, options);
+  //   }
+
+  //   // google.visualization.events.addListener(chart, 'ready', function () {
+  //   //   var bars = document.querySelectorAll('#myChart svg g g rect');
+  //   //   bars.forEach((bar, index) => {
+  //   //     bar.id = 'bar-' + index;
+  //   //     bar.style.stroke = '#D3D3D3';
+  //   //     bar.style.strokeWidth = '2px';
+  //   //     bar.style.strokeDasharray = '2 2'; // This ensures the border is applied to the left side only
+  //   //   });
+  //   // });
+
+  //   window.addEventListener("resize", drawChart);
+
+  //   drawChart();
+  // }
 
   // ----------------------------------------------------
   // var options = {
