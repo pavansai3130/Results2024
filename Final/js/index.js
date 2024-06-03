@@ -1324,7 +1324,6 @@ function renderCandidateCards(item, row) {
       }
     }
   }
-
   let ribbonText;
   let ribbonColor;
   if (rsDecl === 1) {
@@ -1332,8 +1331,6 @@ function renderCandidateCards(item, row) {
     ribbonColor =
       position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
   } else {
-    // ribbonText = "In Progress";
-
     ribbonText = position === 1 ? "Leading" : "Trailing";
     ribbonColor =
       position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
