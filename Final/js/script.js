@@ -1093,7 +1093,7 @@ async function fetchGeoJSON(file) {
 async function fetchJSON() {
   console.log(`called ${temp++}`);
   try {
-    const url = "https://results2024.s3.ap-south-1.amazonaws.com/results.json";
+    const url = "https://results2024.s3.ap-south-1.amazonaws.com/election2024.json";
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -2131,7 +2131,11 @@ function populateTable(alliance, carouselId,temp) {
       let seatValue = (alliancePatries[alliance][party] !== undefined ? alliancePatries[alliance][party] : 0) - 
       (temp[alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"][party] !== undefined ? temp[alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"][party] : 0);
       let spanValue = `<span class=${seatValue < 0 ? "negative" : "positive"}> (${seatValue > 0 ? "+" +seatValue : seatValue})</span>`
-      console.log("spanValue ", spanValue)
+
+      document.getElementById('ndatitle').innerHTML = `NDA (${allianceJson.NDA})`
+      document.getElementById('indiatitle').innerHTML = `I.N.D.I.A (${allianceJson.INDIA})`
+      document.getElementById('othtitle').innerHTML = `Others (${allianceJson.OTH})`
+
       td2.innerHTML += spanValue
 
       tr.appendChild(td1);
@@ -2311,7 +2315,11 @@ async function newpopulateTable(alliance, carouselId, temp) {
       let seatValue = (alliancePatries[alliance][party] !== undefined ? alliancePatries[alliance][party] : 0) - 
                 (temp[alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"][party] !== undefined ? temp[alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"][party] : 0);
       let spanValue = `<span class=${seatValue < 0 ? "negative" : "positive"}> (${seatValue > 0 ? "+" +seatValue : seatValue})</span>`
-      
+
+      document.getElementById('ndatitle1').innerHTML = `NDA (${allianceJson.NDA})`
+      document.getElementById('indiatitle1').innerHTML = `I.N.D.I.A (${allianceJson.INDIA})`
+      document.getElementById('othtitle1').innerHTML = `Others (${allianceJson.OTH})`
+
       td2.innerHTML += spanValue
       tr.appendChild(td1);
       tr.appendChild(td2);
