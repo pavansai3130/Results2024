@@ -1,27 +1,39 @@
 .slide-container {
     background: linear-gradient(90deg, #FFFEF5 0%, #FFF4EB 45.4%, #FFFEF5 100%);
-    padding: 2rem 2.5rem;
+    padding: 3rem 2.5rem;
     height: fit-content;
-    margin-bottom: 10px;
+    margin: 15px 0px;
     /* margin: 10px 5vw; */
 }
 
 
 .viewall_relative_div {
-    /* position: relative; */
+    position: relative;
     padding-left: 2rem;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .view_all {
+    width: 77px;
+    height: 34px;
     position: absolute;
     right: 0;
-    margin: 0.5rem 1rem;
-    font-family: 'Roboto';
-    font-size: 16px;
+    bottom:-40px;
+    border-radius: 4px;
+    padding: 10px;
+    gap: 10px;
+    border: none;
     font-weight: 500;
-    line-height: 18.75px;
-    text-align: left;
-
+    font-size: 12px;
+    float: right;
+    background-color: #E3E3E3;
+    /* margin-bottom: 1rem; */
+    color: #344054;
+    background: #E3E3E3;
+    /* padding: 10px */
 }
 
 .view_all a {
@@ -58,7 +70,7 @@
     right: 20%;
     bottom: 0%;
     height: 100%;
-    width:100px;
+    width: 100px;
     height: 80px;
 }
 
@@ -94,7 +106,7 @@
 .heading_state {
     font-family: 'Roboto';
     font-size: 32px;
-    font-weight: 500;   
+    font-weight: 500;
 }
 
 .card {
@@ -247,8 +259,8 @@
 .img_map {
     position: absolute;
     bottom: 10px;
-    width: 30%;
-    height: 30%;
+    width: 25%;
+    height: 40%;
     right: 10px;
     background-color: transparent;
 }
@@ -298,6 +310,7 @@
 }
 
 @media (max-width: 400px) {
+
     /* .card {
         min-width: 180px;
     } */
@@ -308,7 +321,7 @@
 
     .img_map {
         width: 12vw;
-        height:7vw;
+        height: 7vw;
         margin-bottom: 3vw;
     }
 
@@ -322,18 +335,21 @@
         height: 50px;
         width: 60px;
     }
+
     .state_name,
     .state_party_slot {
         font-size: 0.5rem;
     }
+
     .heading_state {
         font-family: 'Roboto';
         font-size: 15px;
-        font-weight: 500;   
+        font-weight: 500;
     }
 }
 
 @media ((min-width: 401px) and (max-width: 700px)) {
+
     /* .card {
         min-width: 350px;
     } */
@@ -344,9 +360,10 @@
 
     .img_map {
         width: 12vw;
-        height:7vw;
+        height: 7vw;
         margin-bottom: 3vw;
     }
+
     .big_fights {
         font-size: 15px;
         font-weight: 900;
@@ -357,14 +374,17 @@
         height: 100%;
         margin-top: 12%;
     }
+
     .hands {
         height: 50px;
         width: 60px;
     }
+
     .heading_state {
         font-size: 15px;
-        font-weight: 500;   
+        font-weight: 500;
     }
+
     .state_name,
     .state_party_slot {
         font-size: 0.6rem;
@@ -373,6 +393,7 @@
 }
 
 @media ((min-width: 700px) and (max-width: 1000px)) {
+
     /* .card {
         min-width: 400px;
     } */
@@ -383,7 +404,7 @@
 
     .img_map {
         width: 8vw;
-        height:4vw;
+        height: 6vw;
         margin-bottom: 2vw;
     }
 
@@ -391,15 +412,17 @@
         height: 100%;
         margin-top: 6%;
     }
+
     .big_fights {
         font-size: 20px;
         font-weight: 900;
         line-height: 20.5px;
     }
+
     .heading_state {
         font-size: 20px;
         font-weight: 500;
-        line-height: 20.5px;  
+        line-height: 20.5px;
     }
 }
 
