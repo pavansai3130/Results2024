@@ -1,8 +1,10 @@
 /* breadcrumb */
 .breadcrumb {
   background: none;
+  margin-left: -14px;
   padding: 0;
-  margin-bottom: 10px;
+  margin-top: 0;
+  margin-bottom: 0px;
 }
 
 .leaflet-interactive:hover {
@@ -881,6 +883,13 @@ gap: 8px;
   left: 1rem;
   top: 13rem;
 }
+#st_con_heading
+{
+  font-family: "roboto" !important;
+  font-weight: 550;
+  color: #101828;
+  margin-left: -14px;
+}
 
 @media (min-width:440px) {
   .above {
@@ -1034,7 +1043,7 @@ gap: 8px;
   display: grid;
   /* grid-template-columns: repeat(9, 1fr); */
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 40px;
+  gap: 20px;
   /* width: 100%; */
   /* max-width: 1200px; */
 
@@ -1066,6 +1075,17 @@ gap: 8px;
   font-size: 14px;
   flex-shrink: 0;
 }
+/*@media (min-width:1391px) {
+.selectmap{
+  grid-template-columns: repeat(13,1fr);
+  padding-left: 5px;
+}  
+} 
+@media (min-width: 1300px) and (max-width:1390px) {
+  .selectmap {
+    grid-template-columns: repeat(13, 1fr);
+  }
+}*/
 
 @media (min-width: 1410px) and (max-width: 1490px){
 
@@ -1121,6 +1141,16 @@ padding-bottom: 10px;
   margin-left: 36px !important;
 }
 }
+/*@media (min-width: 1320px) and (max-width:1420px){
+  .selectmap {
+    grid-template-columns: repeat(13, 1fr);
+  }
+}*/
+/*@media (min-width: 1491px){
+    .selectmap {
+      grid-template-columns: repeat(14, 1fr);
+    }
+  }*/
 #selectmapbtn {
   /* margin: 5px 52px; */
   font-family: 'Roboto';

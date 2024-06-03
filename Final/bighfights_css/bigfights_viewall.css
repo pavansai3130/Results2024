@@ -20,6 +20,9 @@ body {
 .searchimg2 {
     margin-left: 10px !important;
 }
+.body-div {
+    background: linear-gradient(90deg, #FFFEF5 0%, #FFF4EB 45.4%, #FFFEF5 100%);
+}
 
 .card {
     border: 1px solid rgb(206, 201, 201);
@@ -195,7 +198,10 @@ body {
 #state_tag {
     background: linear-gradient(90deg, #FFFEF5 0%, #FFF4EB 45.4%, #FFFEF5 100%);
 }
-
+#for_background {
+    background: linear-gradient(90deg, #FFFEF5 0%, #FFF4EB 45.4%, #FFFEF5 100%);
+    padding: 7px;
+}
 #state_tag_name {
     padding: 0px 5px;
     font-size: 12px;
