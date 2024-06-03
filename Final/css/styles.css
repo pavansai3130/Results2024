@@ -269,7 +269,8 @@ a {
 
 
 .carousel-indicators [data-bs-target] {
-  margin-top: 28px;
+  /* margin-top: 28px; */
+  margin-top: 10px;
   background-color: gray;
 }
 
@@ -1195,7 +1196,7 @@ button:active{
   #carouselExampleIndicators {
     display: block !important;
   }
-  .non-carousel-content, .totaldetails {
+  .non-carousel-content {
       display: none !important;
   }
 }
@@ -1205,7 +1206,7 @@ button:active{
   #carouselExampleIndicators {
     display: block !important;
   }
-  .non-carousel-content , .totaldetails{
+  .non-carousel-content{
       display: none !important;
   }
 }
