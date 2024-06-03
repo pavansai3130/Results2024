@@ -4,31 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>India General Election 2024</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+2BAamo4lVK5r+BN3eaqI0iKC5V/pbG2TcgPExl"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+2BAamo4lVK5r+BN3eaqI0iKC5V/pbG2TcgPExl" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="./leaflet/index.js"></script>
     <script src="./js/index.js"></script>
     <script src="leaflet/index.js"></script>
@@ -49,9 +29,7 @@
   <body>
     <nav id="navHeader" class="navbarHead blur">
       <div class="headerlogo">
-        <a href="./index.html"
-          ><img src="./images/imgs/RESULTS2024LOGO.png" alt="Logo"
-        /></a>
+        <a href="./index.html"><img src="./images/imgs/RESULTS2024LOGO.png" alt="Logo"/></a>
       </div>
       <div class="navigations">
         <span id="menu" class="d-lg-none" onclick="toggleMenu()">
@@ -62,12 +40,7 @@
             <li>
               <a href="./index.html?year=2019" class="links">2019 Results</a>
             </li>
-            <li
-              id="hoverable"
-              onmouseenter="showTooltip()"
-              onmouseleave="hideTooltip()"
-              onclick="toggleTooltip()"
-            >
+            <li id="hoverable" onmouseenter="showTooltip()" onmouseleave="hideTooltip()" onclick="toggleTooltip()">
               <a href="/" class="links disabled">Candidates</a>
               <i class="fa-solid fa-chevron-down"></i>
               <i class="fa-solid fa-chevron-up"></i>
@@ -82,20 +55,14 @@
             </li>
             <div class="hiding" id="mobile-tooltip">
               <li>
-                <a href="./cardsPage.html" class="links" id="popular2"
-                  >Popular Candidates</a
-                >
+                <a href="./cardsPage.html" class="links" id="popular2">Popular Candidates</a>
               </li>
               <li>
-                <a href="./celebCards.html" class="links" id="celebrities2"
-                  >Celebrities</a
-                >
+                <a href="./celebCards.html" class="links" id="celebrities2">Celebrities</a>
               </li>
             </div>
             <li><a href="./index.html" class="links">'24 vs '19</a></li>
-            <li>
-              <a href="./bigfights_viewall.html" class="links">Big fights</a>
-            </li>
+            <li><a href="./bigfights_viewall.html" class="links">Big fights</a></li>
             <div class="a2a_kit a2a_kit_size_26 a2a_default_style socialMedia">
               <a class="a2a_button_facebook"></a>
               <a class="a2a_button_twitter"></a>
@@ -121,28 +88,11 @@
       </header>
 
       <div class="mainBody">
-        <img
-          src="./images/imgs/teamPic.jpg"
-          class="img-fluid"
-          alt="Responsive image"
-        />
+        <img src="./images/volunteers/teamPic.jpg" class="img-fluid" alt="Responsive image"/>
         <div class="aboutContainer">
-          <p style="font-size: 3.4rem; font-weight: 400">
-            About
-            <img
-              style="width: 20rem; margin-bottom: 0.4rem"
-              src="./images/imgs/RESULTS2024LOGOcropped.png"
-              alt=""
-            />
-          </p>
+          <p style="font-size: 3.4rem; font-weight: 500">About <img style="width: 20rem; margin-bottom: 0.4rem" src="./images/imgs/RESULTS2024LOGOcropped.png" alt=""/></p>
           <p class="aboutP">
-            <img
-              style="width: 12rem; margin-bottom: 0.2rem"
-              src="./images/imgs/RESULTS2024LOGOcropped.png"
-              alt=""
-            />, is a crowdsourced initiative for visualizing Indian election
-            results!
-          </p>
+            <img style="width: 12rem; margin-bottom: 0.2rem" src="./images/imgs/RESULTS2024LOGOcropped.png" alt=""/>, is a crowdsourced initiative for visualizing Indian election results!</p>
         </div>
 
         <div class="teamMembers">
@@ -153,22 +103,9 @@
             <div class="memberDetails">
               <p class="name">Marakkannu M</p>
               <div class="socials">
-                <a
-                  target="_blank"
-                  href="https://www.linkedin.com/in/marakkannu/"
-                >
-                  <img
-                    src="./images/volunteers/linkedin.svg"
-                    class="img-fluid linkedin"
-                    alt=""
-                  />
-                </a>
+                <a target="_blank" href="https://www.linkedin.com/in/marakkannu/"><img src="./images/volunteers/linkedin.svg" class="img-fluid linkedin" alt=""/></a>
                 <a target="_blank" href="mailto:marakkannu@gradious.com">
-                  <img
-                    src="./images/volunteers/gmail.svg"
-                    class="img-fluid gmail"
-                    alt=""
-                  />
+                  <img src="./images/volunteers/gmail.svg" class="img-fluid gmail" alt=""/>
                 </a>
               </div>
             </div>
@@ -218,7 +155,8 @@
                     class="img-fluid linkedin"
                     alt=""
                   />
-                </a>
+                  <a target="_blank" href="https://www.instagram.com/madhugilada/"><img src="./images/volunteers/instagram.svg" class="img-fluid insta" alt=""/></a>
+                <a target="_blank" href="https://www.facebook.com/madhugilada/"><img src="./images/volunteers/facebook.svg" class="img-fluid facebook" alt=""/></a>
                 <a target="_blank" href="mailto:madhu@gradious.com">
                   <img
                     src="./images/volunteers/gmail.svg"
@@ -289,7 +227,13 @@
             </div>
             <div class="memberDetails">
               <p class="name">Abdul Malik</p>
-              <div class="socials"></div>
+              <div class="socials">
+                <a target="_blank" href="https://www.linkedin.com/in/abdul-malik-6a3970227/"><img src="./images/volunteers/linkedin.svg" class="img-fluid linkedin" alt=""/></a>
+                <a target="_blank" href="mailto:abdul.m@gradious.com">
+                  <img src="./images/volunteers/gmail.svg" class="img-fluid gmail" alt=""/>
+                </a>
+                <a target="_blank" href="https://www.instagram.com/zayn_malik_x_07/"><img src="./images/volunteers/instagram.svg" class="img-fluid insta" alt=""/></a>
+              </div>
             </div>
           </div>
 
@@ -299,7 +243,11 @@
             </div>
             <div class="memberDetails">
               <p class="name">Mathan U</p>
-              <div class="socials"></div>
+              <div class="socials">
+                <a target="_blank" href="www.linkedin.com/in/u-mathan-3414b822a"><img src="./images/volunteers/linkedin.svg" class="img-fluid linkedin" alt=""/></a>
+                <a target="_blank" href="mailto:mathan.u@gradious.com">
+                  <img src="./images/volunteers/gmail.svg" class="img-fluid gmail" alt=""/></a>
+              </div>
             </div>
           </div>
 
@@ -448,16 +396,7 @@
                     alt=""
                   />
                 </a>
-                <a
-                  target="_blank"
-                  href="https://www.facebook.com/profile.php?id=100068384601606"
-                >
-                  <img
-                    src="./images/volunteers/facebook.svg"
-                    class="img-fluid facebook"
-                    alt=""
-                  />
-                </a>
+                <a target="_blank" href="https://www.facebook.com/profile.php?id=100068384601606"><img src="./images/volunteers/facebook.svg" class="img-fluid facebook" alt=""/></a>
                 <a target="_blank" href="https://github.com/hariprasad-03/">
                   <img
                     src="./images/volunteers/github.svg"
@@ -606,7 +545,9 @@
             </div>
             <div class="memberDetails">
               <p class="name">Srikanth Adepu</p>
-              <div class="socials"></div>
+              <div class="socials">
+                <a target="_blank" href="mailto:SRIKANTH.ADEPU@gmail.com"><img src="./images/volunteers/gmail.svg" class="img-fluid gmail" alt=""/></a>
+              </div>
             </div>
           </div>
 
@@ -616,7 +557,11 @@
             </div>
             <div class="memberDetails">
               <p class="name">Sri Sankar Sivakumar</p>
-              <div class="socials"></div>
+              <div class="socials">
+                <a target="_blank" href="mailto:sri26sankar@gmail.com">
+                  <img src="./images/volunteers/gmail.svg" class="img-fluid gmail" alt=""/>
+                </a>
+              </div>
             </div>
           </div>
 
@@ -626,7 +571,9 @@
             </div>
             <div class="memberDetails">
               <p class="name">Anjali Nambrath</p>
-              <div class="socials"></div>
+              <div class="socials">
+                <a target="_blank" href="mailto:anjalivnamrat@gmail.com"><img src="./images/volunteers/gmail.svg" class="img-fluid gmail" alt=""/></a>
+              </div>
             </div>
           </div>
 
@@ -692,13 +639,7 @@
                     alt=""
                   />
                 </a>
-                <a target="_blank" href="mailto:akanksha.k@gradious.com">
-                  <img
-                    src="./images/volunteers/gmail.svg"
-                    class="img-fluid gmail"
-                    alt=""
-                  />
-                </a>
+                <a target="_blank" href="mailto:akanksha.k@gradious.com"><img src="./images/volunteers/gmail.svg" class="img-fluid gmail" alt=""/></a>
                 <a target="_blank" href="https://github.com/akanksha">
                   <img
                     src="./images/volunteers/github.svg"
@@ -727,15 +668,7 @@
             <div class="memberDetails">
               <p class="name">Sarwamangala Gadag</p>
               <div class="socials">
-                <a
-                  target="_blank"
-                  href="https://www.instagram.com/sarwa.1503?igsh=MXBtZHByNXhvcTduaA=="
-                >
-                  <img
-                    src="./images/volunteers/instagram.svg"
-                    class="img-fluid instagram"
-                    alt=""
-                  />
+                <a target="_blank" href="https://www.instagram.com/sarwa.1503?igsh=MXBtZHByNXhvcTduaA=="><img src="./images/volunteers/instagram.svg" class="img-fluid instagram" alt=""/>
                 </a>
                 <a target="_blank" href="mailto:mangala.g@gradious.com">
                   <img
@@ -785,6 +718,9 @@
                     alt=""
                   />
                 </a>
+                <a target="_blank" href="mailto:bindu.s@gradious.com">
+                  <img src="./images/volunteers/gmail.svg" class="img-fluid gmail" alt=""/>
+                </a>
               </div>
             </div>
           </div>
@@ -805,6 +741,9 @@
                     class="img-fluid linkedin"
                     alt=""
                   />
+                </a>
+                <a target="_blank" href="mailto:hema.keerti@gradious.com">
+                  <img src="./images/volunteers/gmail.svg" class="img-fluid gmail" alt=""/>
                 </a>
               </div>
             </div>
@@ -831,6 +770,9 @@
                     alt=""
                   />
                 </a>
+                <a target="_blank" href="mailto:venkat.k@gradious.com">
+                  <img src="./images/volunteers/gmail.svg" class="img-fluid gmail" alt=""/>
+                </a>
               </div>
             </div>
           </div>
@@ -851,6 +793,9 @@
                     class="img-fluid linkedin"
                     alt=""
                   />
+                </a>
+                <a target="_blank" href="mailto:partha.s@gradious.com">
+                  <img src="./images/volunteers/gmail.svg" class="img-fluid gmail" alt=""/>
                 </a>
               </div>
             </div>
@@ -893,6 +838,8 @@
                     class="img-fluid linkedin"
                     alt=""
                   />
+                </a>
+                <a target="_blank" href="https://www.instagram.com/mr_zro_aty2de/?igsh=aW95ZHZ2NndmamR4"><img src="./images/volunteers/instagram.svg" class="img-fluid instagram" alt=""/>
                 </a>
                 <a target="_blank" href="mailto:ajith.a@gradious.com">
                   <img
@@ -937,15 +884,9 @@
             <div class="memberDetails">
               <p class="name">Yogalakshmi K P</p>
               <div class="socials">
-                <a
-                  target="_blank"
-                  href="http://linkedin.com/in/yogalakshmi-k-805b69240"
-                >
-                  <img
-                    src="./images/volunteers/linkedin.svg"
-                    class="img-fluid linkedin"
-                    alt=""
-                  />
+                <a target="_blank" href="http://linkedin.com/in/yogalakshmi-k-805b69240"><img src="./images/volunteers/linkedin.svg" class="img-fluid linkedin" alt=""/></a>
+                <a target="_blank" href="mailto:yogalakshmi.k@gradious.com">
+                  <img src="./images/volunteers/gmail.svg" class="img-fluid gmail" alt=""/>
                 </a>
               </div>
             </div>
@@ -958,6 +899,7 @@
             <div class="memberDetails">
               <p class="name">Swetha ML</p>
               <div class="socials">
+                <a target="_blank" href="https://www.linkedin.com/in/swetha-m-l-b6a72a184"><img src="./images/volunteers/linkedin.svg" class="img-fluid linkedin" alt=""/></a>
                 <a target="_blank" href="mailto:swetha.m@gradious.com">
                   <img
                     src="./images/volunteers/gmail.svg"
@@ -976,24 +918,22 @@
             <div class="memberDetails">
               <p class="name">V. Gouthami</p>
               <div class="socials">
-                <a
-                  target="_blank"
-                  href="https://www.linkedin.com/in/gouthami-pregnapoor-120864189/"
-                >
-                  <img
-                    src="./images/volunteers/linkedin.svg"
-                    class="img-fluid linkedin"
-                    alt=""
-                  />
+                <a target="_blank" href="https://www.linkedin.com/in/gouthami-pregnapoor-120864189/"><img src="./images/volunteers/linkedin.svg" class="img-fluid linkedin" alt=""/>
                 </a>
                 <a target="_blank" href="mailto:gouthami.v@gradious.com">
-                  <img
-                    src="./images/volunteers/gmail.svg"
-                    class="img-fluid gmail"
-                    alt=""
-                  />
+                  <img src="./images/volunteers/gmail.svg" class="img-fluid gmail" alt=""/>
                 </a>
               </div>
+            </div>
+          </div>
+
+          <div class="member">
+            <div class="memberImage">
+              <img src="./images/volunteers/placeholder.jpg" alt="" />
+            </div>
+            <div class="memberDetails">
+              <p class="name">And Many More</p>
+              <div class="socials">
             </div>
           </div>
         </div>

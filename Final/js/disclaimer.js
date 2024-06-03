@@ -8,12 +8,17 @@ document.addEventListener('DOMContentLoaded', function() {
   var cancelRejectModal = document.getElementById('cancelRejectModal');
   var confirmRejectModal = document.getElementById('confirmRejectModal');
 
-  let consentValue = localStorage.getItem('consent');
+    let consentValue = localStorage.getItem('consent');
     if(consentValue==='accepted'){
       consent.style.display = 'none';
       mainContent.classList.remove('blur');
       navbar.classList.remove('blur');
+    } else {
+      setTimeout(function() {
+      consent.style.display = 'flex';
+      }, 2000);
     }
+ 
 
   acceptConsent.addEventListener('click', function() {
     localStorage.setItem('consent', 'accepted');
@@ -31,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   confirmRejectModal.addEventListener('click', function(){
-    // document.body.innerHTML = '';
     localStorage.setItem('consent', 'rejected');
     rejectConfirmation.style.display="none";
   });
