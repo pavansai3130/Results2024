@@ -1989,7 +1989,7 @@ function creatediv(state) {
         if (partynames[i] !== undefined && partyseats[i] !== undefined) {
           htmlcode += `<div class="barbox">
                                 <span id="barlabel${i}">${partynames[i]}</span>
-                              <div class="br${i + 1} inbar" id="id${i}">${
+                              <div class="br${i + 1} inbar" id="id${i}" style="background:${partyColors[partynames[i]]}">${
             partyseats[i]
           }</div> </div>`;
         }
