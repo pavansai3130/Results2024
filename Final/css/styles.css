@@ -1199,6 +1199,9 @@ button:active{
   .non-carousel-content {
       display: none !important;
   }
+  #see-more-btn {
+    margin-right: 2rem;
+  }
 }
 
 /* Show carousel between 768px and 1200px */

@@ -2682,17 +2682,11 @@ var swiper;
 
 function render_whole_carousel() {
   let heading = document.getElementById("big_fights_heading");
+  document.getElementById("carousel_part_id").style.display="";
   heading.innerHTML = `BIG FIGHTS`;
   document
     .getElementById("view_all")
     .setAttribute("href", "./bigfights_viewall.html" + "?state=" + "all");
-  // fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json")
-  //   .then((response) => {
-  //     if (!response.ok) {
-  //       throw new Error("Network response was not ok " + response.statusText);
-  //     }
-  //     return response.json();
-  //   }).then((data2024) => {
       fetch("../data/partyicon-candimg.json")
         .then((response) => {
           if (!response.ok) {
@@ -2769,10 +2763,10 @@ function render_whole_carousel_fun(data2024, data, imgjson) {
       }
       let img1 = (cid1 in imgjson) ? 
       `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png` :
-      `./images/other/partylogo/Unknown.svg`;
+      `./images/imgs2/Unknown.png`;
       let img2 = (cid2 in imgjson) ? 
       `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png` :
-      `./images/other/partylogo/Unknown.svg`;
+      `./images/imgs2/Unknown.png`;
       let bar_length1 = (parseInt(votes1) / parseInt(tot_vts)) * 100;
       let bar_length2 = (parseInt(votes2) / parseInt(tot_vts)) * 100;
       const slideMarkup = createSlide(
@@ -2853,7 +2847,7 @@ function render_whole_carousel_fun(data2024, data, imgjson) {
                 </div>
             </div>
             <div class="map_container">
-            <!-- <img class="img_map" src="${state_img}" alt=""> -->
+              <img class="img_map" src="${state_img}" alt=""> 
             </div>
         </div>
         `;
@@ -2907,6 +2901,15 @@ function render_whole_carousel_fun(data2024, data, imgjson) {
     });
 }
 function render_state_carousel(state) {
+  // console.log(state);
+  let not_available = {"Ladakh": 1, "Jammu and Kashmir": 1, "Sikkim": 1,"Andaman and Nicobar Islands": 1,"Daman and Diu": 1, "Lakshadweep" : 1, "Mizoram": 1};
+  if(state in not_available) {
+    document.getElementById("carousel_part_id").style.display="none";
+    return;
+  }
+  document.getElementById("carousel_part_id").style.display="";
+  if(state == "Delhi")
+    state = "NCT OF Delhi";
   let heading = document.getElementById("big_fights_heading");
   heading.innerHTML = `BIG FIGHTS (<span class = "heading_state">${state.toUpperCase()}</span>)`;
   let swiperContainer = document.getElementById("slider_div");
@@ -2988,7 +2991,7 @@ function render_state_carousel(state) {
               </div>
           </div>
           <div class="map_container">
-          <!--   <img class="img_map" src="${state_img}" alt=""> -->
+            <img class="img_map" src="${state_img}" alt=""> 
           </div>
       </div>
       `;
@@ -3062,11 +3065,11 @@ function render_state_carousel(state) {
               let img1 =
                 cid1 in imgjson
                   ? `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png`
-                  : `./images/partylogo/Unknown.svg`;
+                  : `./images/imgs2/Unknown.png`;
               let img2 =
                 cid2 in imgjson
                   ? `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png`
-                  : `./images/partylogo/Unknown.svg`;
+                  : `./images/imgs2/Unknown.png`;
               let bar_length1 = (parseInt(cd1_votes) / parseInt(tot_vts)) * 100;
               let bar_length2 = (parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
               const slideMarkup = createSlide(
@@ -3086,10 +3089,7 @@ function render_state_carousel(state) {
               swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
             }
           }
-          // candidates_data.forEach(data => {
-          //   const slideMarkup = createSlide(data["const_name"], data["state"], data["cand_party1"], data["cand_party2"], data["candidateImg1"], data["candidateImg2"], data["cand_name1"], data["cand_name2"], data["votes1"], data["votes2"]);
-          //   swiperContainer.insertAdjacentHTML('beforeend', slideMarkup);
-          // });
+  
 
           swiper = new Swiper(".slide-content", {
             slidesPerView: 3,

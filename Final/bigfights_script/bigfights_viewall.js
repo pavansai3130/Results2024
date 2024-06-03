@@ -144,10 +144,10 @@ function represent_All_fun(data2024, imgjson) {
             temp_data[toTitleCase(obj["name2"])] = 1;
             let img1 = (cid1 in imgjson) ?
               `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png` :
-              `./images/other/partylogo/Unknown.svg`;
+              `./images/imgs2/Unknown.png`;
             let img2 = (cid2 in imgjson) ?
               `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png` :
-              `./images/other/partylogo/Unknown.svg`;
+              `./images/imgs2/Unknown.png`;
             if (cd1_votes == 0 && cd2_votes == 0) {
               cd1_votes = "Awaited";
               cd2_votes = "Awaited";
@@ -188,7 +188,7 @@ function represent_All_fun(data2024, imgjson) {
           </div>
       </div>
       <div class="map_container">
-      <!-- <img class="img_map" src=${state_img} alt=""> -->
+          <img class="img_map" src=${state_img} alt=""> 
       </div>`;
             card_div.innerHTML = html_data;
             main_div.appendChild(card_div);
@@ -307,10 +307,10 @@ function represent_state_fun(data2024, state, imgjson) {
           temp_data.push(toTitleCase(obj["name2"]));
           let img1 = (cid1 in imgjson) ?
             `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png` :
-            `./images/other/partylogo/Unknown.svg`;
+            `./images/imgs2/Unknown.png`;
           let img2 = (cid2 in imgjson) ?
             `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png` :
-            `./images/other/partylogo/Unknown.svg`;
+            `./images/imgs2/Unknown.png`;
           let bar_length1 = (parseInt(cd1_votes) / parseInt(tot_vts)) * 100;
           let bar_length2 = (parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
           if (cd1_votes == 0 && cd2_votes == 0) {
@@ -353,7 +353,7 @@ function represent_state_fun(data2024, state, imgjson) {
               </div>
           </div>
           <div class="map_container">
-            <!--  <img class="img_map" src=${state_img} alt=""> -->
+              <img class="img_map" src=${state_img} alt="">
           </div>`;
           card_div.innerHTML = html_data;
           main_div.appendChild(card_div);

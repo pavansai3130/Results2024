@@ -2225,11 +2225,15 @@ function render_table(code, page,constiti1,st) {
       margin2.textContent = "-";
     } else if (i > 1) {
       // margin2.textContent =
+      if(candi[1].votes == candi[i].votes){
+        margin2.innerHTML = "0%"; 
+      }else{
       margin2.innerHTML = `${(
         ((candi[1].votes - candi[i].votes) /
           (candi[1].votes + candi[i].votes)) *
         100
       ).toFixed(1)} %`;
+    }
     }
     margin2.classList.add("tdata3");
     row.appendChild(margin2);
