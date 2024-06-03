@@ -74,9 +74,10 @@ async function fetchCandidateValue() {
 }
 
 function getPicMap(item){
-
+  // console.log("----------------------",item)
+  // alert(item);
   console.log(data);
-  const candidate = data[item.cId];
+  const candidate = data[item];
 
   
   if (candidate) {
@@ -84,7 +85,7 @@ function getPicMap(item){
     // alert(candidate.value);
     return candidate;
   } else {
-    console.error('Candidate not found for ID:', item.cId);
+    console.error('Candidate not found for ID:', item);
     return null;
   }
 }
@@ -95,7 +96,7 @@ async function createCard(item) {
     "INDIA": "./images/imgs/INDA.png",
     "OTH": "./images/imgs/OTH.png"
   };
-  const candidateValue = getPicMap(item);
+  const candidateValue = getPicMap(item.cId);
   
 const imageUrl = `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${candidateValue}.png` || allianceImages[item.alnce];
 console.log(imageUrl);

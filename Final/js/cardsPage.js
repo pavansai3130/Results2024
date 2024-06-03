@@ -1,5 +1,6 @@
 let candidatesData = [];
 
+
 // Fetch candidate data and store it in the global variable
 async function fetchCandidateData() {
   const response = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
@@ -201,9 +202,6 @@ console.log(imageUrl);
 
   return card;
 }
-
-
-
 async function displayCardsForState(stateName) {
   try {
     // Fetch the state-constituency-candidate JSON
@@ -266,8 +264,6 @@ async function displayCardsForState(stateName) {
     console.error("Error fetching or processing data:", error);
   }
 }
-
-
 function performSearch() {
   const searchInput = document
     .getElementById("search-input")
@@ -297,11 +293,9 @@ function performSearch() {
     noResImg.style.display = "none";
   }
 }
-
 function getURLParameter(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
-
 window.onload = async function() {
   await fetchCandidateData();  // Ensure data is fetched before proceeding
   fetchCandidateValue()
@@ -314,11 +308,9 @@ window.onload = async function() {
     fetchMoreCards1();
   }
 };
-
 document.getElementById("dropdown").addEventListener("change", () => {
   performSearch();
 });
-
 document.getElementById("delFil").addEventListener("click",()=>{
   fetchMoreCards1();
   document.getElementById("tempState1").style.display="none";

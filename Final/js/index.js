@@ -1835,7 +1835,7 @@ function render_state_table(feature, state) {
     console.log("filtered candidates are : ", filteredCandidates);
 
     let cardRowsNeeded = Math.ceil(count / 3);
-    if (cardRowsNeeded > 5) {
+    if (cardRowsNeeded > 5){
       cardRowsNeeded = 5;
     }
     for (let i = 0; i < cardRowsNeeded; i++) {

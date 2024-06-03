@@ -3,6 +3,7 @@
 
 // JSON object containing party colors
 let comparedata2019 = {};
+let tabSize=0;
 let data_201;
 let data_2019 = {};
 let alliances_rendering={};
@@ -1092,7 +1093,7 @@ async function fetchGeoJSON(file) {
 async function fetchJSON() {
   console.log(`called ${temp++}`);
   try {
-    const url = "https://results2024.s3.ap-south-1.amazonaws.com/election2024.json";
+    const url = "https://results2024.s3.ap-south-1.amazonaws.com/results.json";
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -1301,6 +1302,8 @@ $(document).ready(async function () {
     alliancePatries.others = sortObjectByValuesDesc(alliancePatries.others);
 
     populateCarousel(newJson);
+const tabSize=document.getElementById("mainTable").offsetHeight;
+      fetchTop10(tabSize);
   };
 
   // Function to render party-wise results in tabular format
@@ -2620,7 +2623,8 @@ let renderAllianceResults;
 let loadNext;
 let loadPrev;
 
-async function fetchTop10() {
+async function fetchTop10(tabSize) {
+  // alert(tabSize)
   try {
     const candidateResponse = await fetch(
       "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
@@ -2666,14 +2670,18 @@ async function fetchTop10() {
       "cand6978",
       "cand2051",
     ];
-
-    for (let i = 0; i < top10Cand.length; i += 2) {
+    let cardRowsNeeded = Math.ceil(tabSize / 380);
+    if(tabSize<=900){
+      cardRowsNeeded=5;
+    }
+    // alert(cardRowsNeeded);
+    for (let i = 0; i < cardRowsNeeded; i++) {
       const row = document.createElement("div");
       row.className = "row raw justify-content-center";
       document.getElementById("root").appendChild(row);
-
+    
       for (let j = 0; j < 2; j++) {
-        const cardIndex = i + j;
+        const cardIndex = 2 * i + j;
         if (cardIndex < top10Cand.length) {
           const candidateDetails = getCandidateDetails(top10Cand[cardIndex]);
           if (candidateDetails) {
@@ -2692,7 +2700,7 @@ async function fetchTop10() {
   }
 }
 
-fetchTop10();
+
 var swiper;
 
 function render_whole_carousel() {
