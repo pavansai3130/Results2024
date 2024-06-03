@@ -2,6 +2,7 @@
 // Ensure you have included JQuery library before this script
 
 // JSON object containing party colors
+let comparedata2019 = {};
 let data_201;
 let data_2019 = {};
 let bars;
@@ -454,6 +455,7 @@ const partyColors = {
   JKPP: "#D3D3D3",
   JKPPAP: "#D3D3D3",
   JKPS: "#D3D3D3",
+  JKNC: "#FF0000",
   JLokP: "#D3D3D3",
   JMBP: "#D3D3D3",
   "JMM(U)": "#D3D3D3",
@@ -653,6 +655,7 @@ const partyColors = {
   RJSPS: "#D3D3D3",
   RKSP: "#D3D3D3",
   RLTP: "#FFD42A",
+  RLP: "#0000FF",
   RMEP: "#D3D3D3",
   RMGLMP: "#D3D3D3",
   RMGP: "#D3D3D3",
@@ -739,6 +742,7 @@ const partyColors = {
   SJSMP: "#D3D3D3",
   SJVP: "#D3D3D3",
   skd: "#D3D3D3",
+  "SHS(UBT)": "#FF9933",
   SKPP: "#D3D3D3",
   SLDP: "#D3D3D3",
   SMARTIP: "#D3D3D3",
@@ -909,18 +913,20 @@ let names = {
   othersColor: "#EAECF0",
 };
 let temp = 1;
-async function fetchJSON2(file1, file2, file3) {
+async function fetchJSON2(file1, file2, file3,file4) {
   // data_2019 = {};
   try {
     const response1 = await fetch(file1);
     const response2 = await fetch(file2); // Fetch the JSON file
     const response3 = await fetch(file3);
+    const response4 = await fetch(file4);
     if (!response1.ok || !response2.ok) {
       throw new Error(`HTTP error! Status: ${response1.status}`);
     }
     data_201 = await response1.json();
     stateAlliance = await response2.json();
     logos = await response3.json();
+    comparedata2019 = await response4.json();
     logos = logos["images_key"];
     // console.log("JSON data fetched and stored globally:", data_201);
     function format2(data2024) {
@@ -1156,7 +1162,8 @@ $(document).ready(async function () {
   await fetchJSON2(
     "../data/election2019.json",
     "../data/stateAllianceCount.json",
-    "../data/bigfights.json"
+    "../data/bigfights.json",
+    "../data/state-parties.json"
   );
   await fetchGeoJSON("./data/geo.json");
   let intervalId = setInterval(async () => {
@@ -1465,7 +1472,7 @@ $(document).ready(async function () {
   $("#india-map").on("click", "path", function (event) {
     const state = $(this).attr("id");
     handleStateClick(state);
-    creatediv(state);
+    creatediv2024(state);
     half(event);
   });
 
@@ -2359,95 +2366,116 @@ function half(event) {
   }
 }
 // console.log(stateDataJson);
-function creatediv(state) {
-  fetch("./data/election2019.json")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok " + response.statusText);
-      }
-      return response.json();
-    })
-    .then((stateDataJson) => {
-      var obj = {};
-      var partynames = [];
-      var partyseats = [];
-      var constituencyData = stateDataJson[0][state];
-      for (let const_name in constituencyData) {
-        let party_name =
-          stateDataJson[0][state][const_name]["candidates"][0]["prty"];
+function creatediv2024(state) {
+  var obj = {};
+  var partynames = [];
+  var partyseats = [];
+  var constituencyData = stateDataJson[state];
 
-        if (party_name in obj) {
-          obj[party_name] += 1;
-        } else obj[party_name] = 1;
+  for (let const_name in constituencyData) {
+    if (stateDataJson[state][const_name]["candidates"][0]["vts"] !== 0) {
+      let party_name = stateDataJson[state][const_name]["candidates"][0]["prty"];
+      if (party_name in obj) {
+        obj[party_name] += 1;
+      } else {
+        obj[party_name] = 1;
       }
-      var sortedPartyWins = Object.entries(obj).sort((a, b) => b[1] - a[1]);
-      for (let i = 0; i < sortedPartyWins.length; i++) {
-        partynames[i] = sortedPartyWins[i][0];
-        partyseats[i] = sortedPartyWins[i][1];
-      }
-      var maindiv = document.getElementById("containertool2");
-      var mainindiamap = document.getElementById("india-map");
-      mainindiamap.append(maindiv);
-      var htmlcode = `<span class="rclose" onclick="close_btn()">&times;</span>
-                        <h2 class="sthead">${state}</h2>
-                        <table class="detailstable">
-                           <thead>
-                              <tr>
-                                 <th class="tbhead">Party</th>
-                                 <th id="wlright" class="tbhead">Won / Lead</th>
-                              </tr>
-                           </thead>`;
-      htmlcode += `</thead>`;
-      if (partynames) {
-        for (let i = 0; i < partynames.length && i < 5; i++) {
-          if (partynames[i] !== undefined) {
-            htmlcode += `<tr>
-                                  <td class="tdData"><img class="party-icon" src="${
-                                    sym[partynames[i]]
-                                  }"> ${partynames[i]}</td>
-                                  <td class="tdData" id="wlright">${
-                                    obj[partynames[i]]
-                                  }</td></tr>`;
-          }
-        }
-      }
-      htmlcode += `</tbody>
-                           </table><div class="results12">
-                            <div class="hdiv3">2019 results</div>
-                           <div class="bars">`;
+    }
+  }
 
-      for (let i = 0; i < partynames.length && i < 3; i++) {
-        if (partynames[i] !== undefined && partyseats[i] !== undefined) {
-          htmlcode += `<div class="barbox">
-                                <span id="barlabel${i}">${partynames[i]}</span>
-                                <div class="br${
-                                  i + 1
-                                } inbar" id="id${i}" style="background:${
-            partyColors[partynames[i]]
-          }">${partyseats[i]}</div> </div>`;
-        }
-      }
-      htmlcode += `</div>
-     </div> <div id="viewdetails" onclick="showmap('${state}')">Check Full Results<span id=gt>&gt</span></div>`;
+  var sortedPartyWins = Object.entries(obj).sort((a, b) => b[1] - a[1]);
 
-      maindiv.innerHTML = "";
-      maindiv.innerHTML += htmlcode;
-      maindiv.style.display = "block";
-      // Set the width after the HTML has been added to the DOM
-      if (partynames.length == 1) {
-        setTimeout(() => {
-          document.getElementById("id0").style.width = "13.215rem";
-          document.getElementById("barlabel0").style.marginLeft = "-11.8rem";
-        }, 0);
+  for (let i = 0; i < sortedPartyWins.length; i++) {
+    partynames[i] = sortedPartyWins[i][0];
+    partyseats[i] = sortedPartyWins[i][1];
+  }
+
+  var maindiv = document.getElementById("containertool2");
+  var mainindiamap = document.getElementById("india-map");
+  mainindiamap.append(maindiv);
+  
+  var htmlcode = `<span class="rclose" onclick="close_btn()">&times;</span>
+                    <h2 class="sthead">${state}</h2>
+                    <table class="detailstable">
+                      <thead>
+                        <tr>
+                          <th class="tbhead">Party</th>
+                          <th id="wlright" class="tbhead">Won / Lead</th>
+                        </tr>
+                      </thead>
+                      <tbody>`;
+
+  if (partynames.length === 0) {
+    htmlcode += `<tr>
+                   <td class="tdData"><img class="party-icon" src="${sym["BJP"]}">BJP</td>
+                   <td class="tdData" id="wlright">Results Awaited</td>
+                 </tr>
+                 <tr>
+                   <td class="tdData"><img class="party-icon" src="${sym["INC"]}">INC</td>
+                   <td class="tdData" id="wlright">Results Awaited</td>
+                 </tr>`;
+  } else {
+    for (let i = 0; i < partynames.length && i < 5; i++) {
+      if (partynames[i] !== undefined) {
+        let previousSeats = comparedata2019[state] && comparedata2019[state][partynames[i]] ? comparedata2019[state][partynames[i]] : 0;
+        let seatDifference = obj[partynames[i]] - previousSeats;
+        let seatDifferenceText = seatDifference >= 0 ? `(+${seatDifference})` : `(${seatDifference})`;
+        let seatDifferenceColor = seatDifference >= 0 ? "green" : "red";
+        htmlcode += `<tr>
+                       <td class="tdData"><img class="party-icon" src="${sym[partynames[i]]}">${partynames[i]}</td>
+                       <td class="tdData" id="wlright">${obj[partynames[i]]} <span style="color:${seatDifferenceColor}; font-weight:700;">${seatDifferenceText}</span></td>
+                     </tr>`;
       }
-      if (partynames.length == 2) {
-        setTimeout(() => {
-          document.getElementById("id0").style.width = "7.215rem";
-          document.getElementById("barlabel0").style.marginLeft = "-5.8rem";
-          document.getElementById("barlabel1").style.marginLeft = "-4.8rem";
-        }, 0);
+    }
+  }
+
+  htmlcode += `</tbody>
+               </table>
+               <div class="results12">
+                 <div class="hdiv3">2019 results</div>
+                 <div class="bars">`;
+
+  const d = comparedata2019[state];
+  if (d !== undefined) {
+    var sortedd = Object.entries(d).sort((a, b) => b[1] - a[1]);
+    var pnames = [];
+    var pseats = [];
+    for (let i = 0; i < sortedd.length; i++) {
+      pnames[i] = sortedd[i][0];
+      pseats[i] = sortedd[i][1];
+    }
+
+    for (let i = 0; i < pnames.length && i < 3; i++) {
+      if (pnames[i] !== undefined && pseats[i] !== undefined) {
+        htmlcode += `<div class="barbox">
+                       <span id="barlabel${i}">${pnames[i]}</span>
+                       <div class="br${i + 1} inbar" id="id${i}" style="background:${partyColors[pnames[i]]}">${pseats[i]}</div>
+                     </div>`;
       }
-    });
+    }
+  }
+
+  htmlcode += `</div>
+               </div>
+               <div id="viewdetails" onclick="showmap('${state}')">Check Full Results<span id=gt>&gt</span></div>`;
+
+  maindiv.innerHTML = htmlcode;
+  maindiv.style.display = "block";
+
+  if (pnames.length == 1) {
+    setTimeout(() => {
+      document.getElementById("id0").style.width = "13.215rem";
+      document.getElementById("barlabel0").style.marginLeft = "-11.8rem";
+    }, 0);
+  }
+
+  if (pnames.length == 2) {
+    setTimeout(() => {
+      document.getElementById("id0").style.width = "7.215rem";
+      document.getElementById("barlabel0").style.marginLeft = "-5.5rem";
+      document.getElementById("barlabel1").style.marginLeft = "-4.8rem";
+    }, 0);
+  }
 }
 function showmap(state) {
   document.getElementById("state-select").value = state_codes[state];
