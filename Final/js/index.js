@@ -2944,7 +2944,7 @@ async function createCard(rsdel,position,first,second,item,st,id) {
 
 
   const imageUrl = getProfilePic(item.candidateId,item.votes);
-console.log(imageUrl);
+  console.log(imageUrl);
   const card = document.createElement("div");
   card.className = "position-relative custom-container";
 
