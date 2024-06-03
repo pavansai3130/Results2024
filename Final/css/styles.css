@@ -1233,3 +1233,9 @@ button:active{
          width: 50%;
   }
 }
+
+#ndatitle1,#indiatitle1,#othtitle1{
+  font-size: 14px;
+    color: #101828;
+    font-weight: 600;
+}
