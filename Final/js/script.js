@@ -3,10 +3,10 @@
 
 // JSON object containing party colors
 let comparedata2019 = {};
-let tabSize=0;
+let tabSize = 0;
 let data_201;
 let data_2019 = {};
-let alliances_rendering={};
+let alliances_rendering = {};
 let bars;
 const initialView = [23, 82.5];
 const initialZoom = 4.8;
@@ -27,7 +27,7 @@ let sym = {
   AGP: "./images/img/AGP.svg",
   AIFB: "./images/img/AIFB.svg",
   extra: "./images/imgs/notknown.svg",
-  NOTA:"./images/imgs/NOTA.svg",
+  NOTA: "./images/imgs/NOTA.svg",
   IND: "./images/imgs/IND.svg",
   BJP: "./images/imgs/BJP.svg",
   INC: "./images/imgs/INC.svg",
@@ -109,7 +109,7 @@ let state_codes = {
   "Arunachal Pradesh": 12,
   Assam: 18,
   "Andhra Pradesh": 37,
-  "Daman and Diu":25,
+  "Daman and Diu": 25,
   "Andaman and Nicobar Islands": 35,
   Chandigarh: 4,
   Telangana: 36,
@@ -916,14 +916,14 @@ let names = {
   othersColor: "#EAECF0",
 };
 let temp = 1;
-async function fetchJSON2(file1, file2, file3,file4,file5) {
+async function fetchJSON2(file1, file2, file3, file4, file5) {
   // data_2019 = {};
   try {
     const response1 = await fetch(file1);
     const response2 = await fetch(file2); // Fetch the JSON file
     const response3 = await fetch(file3);
     const response4 = await fetch(file4);
-    const response5 =await fetch(file5);
+    const response5 = await fetch(file5);
     if (!response1.ok || !response2.ok) {
       throw new Error(`HTTP error! Status: ${response1.status}`);
     }
@@ -931,7 +931,7 @@ async function fetchJSON2(file1, file2, file3,file4,file5) {
     stateAlliance = await response2.json();
     logos = await response3.json();
     comparedata2019 = await response4.json();
-    alliances_rendering=await response5.json();
+    alliances_rendering = await response5.json();
     logos = logos["images_key"];
     // console.log("JSON data fetched and stored globally:", data_201);
     function format2(data2024) {
@@ -1116,7 +1116,7 @@ async function fetchJSON() {
       for (let state in data2024) {
         for (let const_name in data2024[state]) {
           const candidates = [];
-          candidates.push({"rsDecl": data2024[state][const_name]["rsDecl"]});
+          candidates.push({ rsDecl: data2024[state][const_name]["rsDecl"] });
           for (let item of data2024[state][const_name]["candidates"]) {
             const candidate = {
               candidateId: item.cId,
@@ -1142,7 +1142,6 @@ async function fetchJSON() {
   }
 }
 
-
 // async function fetchData() {
 //   //   console.log(`called ${temp++}`);
 //   console.log("entered");
@@ -1165,14 +1164,15 @@ async function fetchJSON() {
 $(document).ready(async function () {
   await fetchJSON();
   await fetchJSON2(
-    "../data/election2019.json",
-    "../data/stateAllianceCount.json",
-    "../data/bigfights.json",
-    "../data/state-parties.json",
-    "../data/newAlliance.json"
+    "./data/election2019.json",
+    "./data/stateAllianceCount.json",
+    "./data/bigfights.json",
+    "./data/state-parties.json",
+    "./data/newAlliance.json"
   );
   await fetchGeoJSON("./data/geo.json");
   let intervalId = setInterval(async () => {
+    window.location.reload();
     await fetchJSON();
     // handleStateClick(lastClickedState);
     // console.log(stateDataJson);
@@ -1275,15 +1275,15 @@ $(document).ready(async function () {
           let value = nda - NDA;
           cells[1].innerHTML = `${nda}<span class=${
             value < 0 ? "negative" : "positive"
-          }> (${value > 0 ? "+" +value : value})</span>`;
+          }> (${value > 0 ? "+" + value : value})</span>`;
           value = india - INDIA;
           cells[2].innerHTML = `${india}<span class=${
             value < 0 ? "negative" : "positive"
-          }> (${value > 0 ? "+" +value : value})</span>`;
+          }> (${value > 0 ? "+" + value : value})</span>`;
           value = others - OTH;
           cells[3].innerHTML = `${others}<span class=${
             value < 0 ? "negative" : "positive"
-          }> (${value > 0 ? "+" +value : value})</span>`;
+          }> (${value > 0 ? "+" + value : value})</span>`;
 
           tbody.appendChild(newRow);
         }
@@ -1302,8 +1302,8 @@ $(document).ready(async function () {
     alliancePatries.others = sortObjectByValuesDesc(alliancePatries.others);
 
     populateCarousel(newJson);
-const tabSize=document.getElementById("mainTable").offsetHeight;
-      fetchTop10(tabSize);
+    const tabSize = document.getElementById("mainTable").offsetHeight;
+    fetchTop10(tabSize);
   };
 
   // Function to render party-wise results in tabular format
@@ -1656,190 +1656,228 @@ const tabSize=document.getElementById("mainTable").offsetHeight;
   // const ctx = document.getElementById("myChart").getContext("2d");
   // new Chart(ctx, config);
 
-  google.charts.load("current", { packages: ["corechart"] });
-  google.charts.setOnLoadCallback(drawMultSeries);
-  // backgroundColor: linear-gradient(90deg, #87CEEB 0%, #3AAFDE 100%)
-  function drawMultSeries() {
-    let names2019 = {
-      NDA: 357,
-      "I.N.D.I.A": 103,
-      Others: 83,
-    };
+  let nda_seats = allianceJson.NDA;
+  let india_seats = allianceJson.INDIA;
+  let others_seats = allianceJson.OTH;
+  let na_seats = 543;
+  //if (nda_seats != 0 && india_seats != 0 && others_seats != 0) {
+    na_seats = 543-(nda_seats+india_seats+others_seats);
+  //}
 
-    let colors2019 = {
-      NDA: "#FAA958",
-      "I.N.D.I.A": "#9dd5ec",
-      Others: "#d9d9d9",
-    };
+  console.log("names[bars[0].color]", allianceJson);
 
-    console.log("names[bars[0].color]", names[bars[0].color]);
+  let pmp_data1 = [];
 
-    let resultsAwaited = false;
-    if (bars[0].value == 0 && bars[1].value == 0 && bars[2].value == 0) {
-      resultsAwaited = true;
-    }
-    let resultAwaitedText = "Result Awaited!";
-
-    var data = google.visualization.arrayToDataTable([
-      [
-        "Year",
-        names[bars[0].color],
-        { role: "annotation" },
-        names[bars[1].color],
-        { role: "annotation" },
-        names[bars[2].color],
-        { role: "annotation" },
-      ],
-      [
-        "2024",
-        bars[0].value,
-        `${resultsAwaited ? "" : bars[0].value}`,
-        bars[1].value,
-        `${resultsAwaited ? resultAwaitedText : bars[1].value}`,
-        bars[2].value,
-        `${resultsAwaited ? "" : bars[2].value}`,
-      ],
-      [
-        "2019",
-        names2019[names[bars[0].color]],
-        `${names2019[names[bars[0].color]]}`,
-        names2019[names[bars[1].color]],
-        `${names2019[names[bars[1].color]]}`,
-        names2019[names[bars[2].color]],
-        `${names2019[names[bars[2].color]]}`,
-      ],
-    ]);
-
-    var hiddenData = google.visualization.arrayToDataTable([
-      ['City', 'Baseline', 'Hidden'],
-      ['', 0, 1], // Baseline
-      ['', null, null], // Hidden series to draw the rectangle
-    ]);
-
-    let bw = "80%";
-    if (window.innerWidth < 800) {
-      console.log("width<<<<", window.innerWidth);
-      bw = "50%";
-    }
-
-    var options = {
-      chartArea: {top:35 ,height:"50%",width:"80%"},
-      hAxis: {
-        baselineColor: "#D3D3D3",
-        viewWindowMode:"explicit",
-        title: "",
-        viewWindow:{
-          min:0
-        },
-        minValue: 0,
-        // maxValue:543,
-        gridlines: { color: "transparent", count: 0 },
-        textPosition: "none",
-        // ticks:[]
-      },
-      vAxis: {
-        viewWindowMode:"explicit",
-        textStyle: {
-          fontSize: "12px",
-          fontWeight: 500,
-          lineHeight: "14px",
-          textAlign: "left",
-          color: "#000000",
-          auraColor: "#00000",
-          fontFamily: "Roboto",
-        },
-      },
-
-      colors: [bars[0].color, bars[1].color, bars[2].color],
-      legend: {
-        position: "top",
-        left: "30px",
-        titleTextStyle: {
-          fontSize: "16px",
-          fontWeight: "bold",
-          fontFamily: "Arial",
-        },
-      },
-      annotations: {
-        alwaysOutside: true,
-        textAlign: "end",
-        textStyle: {
-          fontSize: "12px",
-          fontWeight: 500,
-          lineHeight: "14px",
-          textAlign: "left",
-          color: "#000000",
-          auraColor: "none",
-          fontFamily: "Roboto",
-        },
-
-        stem: {
-          color: "none",
-          length: 8,
-        },
-      },
-      animation: {
-        startup: true,
-        duration: 1000,
-        easing: "out",
-      },
-      bars: "horizontal",
-      // height:300
-      // bar: { groupWidth:window.innerWidth<800?"80%" : "60%" },
-    };
-
-    var chart = new google.visualization.BarChart(
-      document.getElementById("myChart")
-    );
-    // var chart = new google.charts.Bar(document.getElementById("myChart"))
-
-    function drawChart() {
-      let ww = 0.45;
-      if (window.innerWidth < 800) {
-        ww = 0.8;
-      }
-
-      var windowWidth = window.innerWidth;
-      var groupWidth;
-
-      if (windowWidth < 600) {
-        groupWidth = "70%";
-      } else if (windowWidth < 800) {
-        groupWidth = "80%";
-      } else {
-        groupWidth = "90%";
-      }
-
-      options.bar = { groupWidth: groupWidth };
-      var chartWidth = window.innerWidth * ww;
-      var chartHeight = window.innerHeight * 0.6;
-
-      document.getElementById("myChart").style.width = chartWidth + "px";
-      document.getElementById("myChart").style.height = chartHeight + "px";
-
-
-      var chartDiv = document.getElementById('myChart');
-      var windowHeight = window.innerHeight;
-      var margin = windowHeight * -0.2;
-      chartDiv.style.marginBottom = margin + 'px';
-      // chart.draw(hiddenData, options);
-      chart.draw(data, options);
-    }
-
-    // google.visualization.events.addListener(chart, 'ready', function () {
-    //   var bars = document.querySelectorAll('#myChart svg g g rect');
-    //   bars.forEach((bar, index) => {
-    //     bar.id = 'bar-' + index;
-    //     bar.style.stroke = '#D3D3D3';
-    //     bar.style.strokeWidth = '2px';
-    //     bar.style.strokeDasharray = '2 2'; // This ensures the border is applied to the left side only
-    //   });
-    // });
-
-    window.addEventListener("resize", drawChart);
-
-    drawChart();
+  if (nda_seats != 0) {
+    pmp_data1.push({
+      id: "nda",
+      legend: "NDA",
+      name: "NDA",
+      seats: nda_seats,
+    });
   }
+  if (india_seats != 0) {
+    pmp_data1.push({
+      id: "upa",
+      legend: "UPA",
+      name: "UPA",
+      seats: india_seats,
+    });
+  }
+
+  if (others_seats != 0) {
+    pmp_data1.push({
+      id: "others",
+      legend: "Others",
+      name: "Others",
+      seats: others_seats,
+    });
+  }
+
+  pmp_data1.push({
+    id: "NA",
+    legend: "NA",
+    name: "NA",
+    seats: na_seats,
+  });
+
+  let pmap_data = [
+    {
+      id: "nda",
+      legend: "NDA",
+      name: "NDA",
+      seats: nda_seats || 1,
+    },
+    {
+      id: "upa",
+      legend: "UPA",
+      name: "UPA",
+      seats: india_seats,
+    },
+    {
+      id: "others",
+      legend: "Others",
+      name: "Others",
+      seats: others_seats,
+    },
+    {
+      id: "NA",
+      legend: "NO_Party",
+      name: "NA",
+      seats: 543,
+    },
+  ];
+
+  var parliament = d3.parliament().width(60).innerRadiusCoef(0.4);
+  parliament.enter.fromCenter(true).smallToBig(true);
+  parliament.exit.toCenter(true).bigToSmall(true);
+
+  var setData = function (d) {
+    d3.select("#pmap").datum(d).call(parliament);
+  };
+  setData(pmp_data1);
+
+  // google.charts.load("current", { packages: ["corechart"] });
+  // google.charts.setOnLoadCallback(drawMultSeries);
+  // function drawMultSeries() {
+  //   let names2019 = {
+  //     NDA: 357,
+  //     "I.N.D.I.A": 103,
+  //     Others: 83,
+  //   };
+
+  //   console.log("names[bars[0].color]", names[bars[0].color]);
+
+  //   let resultsAwaited = false;
+  //   if (bars[0].value == 0 && bars[1].value == 0 && bars[2].value == 0) {
+  //     resultsAwaited = true;
+  //   }
+  //   let resultAwaitedText = "Result Awaited!";
+
+  //   var data = google.visualization.arrayToDataTable([
+  //     [
+  //       "Year",
+  //       names[bars[0].color],
+  //       { role: "annotation" },
+  //       names[bars[1].color],
+  //       { role: "annotation" },
+  //       names[bars[2].color],
+  //       { role: "annotation" },
+  //     ],
+  //     [
+  //       "2024",
+  //       bars[0].value,
+  //       `${resultsAwaited ? "" : bars[0].value}`,
+  //       bars[1].value,
+  //       `${resultsAwaited ? resultAwaitedText : bars[1].value}`,
+  //       bars[2].value,
+  //       `${resultsAwaited ? "" : bars[2].value}`,
+  //     ],
+  //     [
+  //       "2019",
+  //       names2019[names[bars[0].color]],
+  //       `${names2019[names[bars[0].color]]}`,
+  //       names2019[names[bars[1].color]],
+  //       `${names2019[names[bars[1].color]]}`,
+  //       names2019[names[bars[2].color]],
+  //       `${names2019[names[bars[2].color]]}`,
+  //     ],
+  //   ]);
+
+  //   let bw = "80%";
+  //   if (window.innerWidth < 800) {
+  //     console.log("width<<<<", window.innerWidth);
+  //     bw = "50%";
+  //   }
+
+  //   var options = {
+  //     chartArea: { top: 35, height: "50%", width: "80%" },
+  //     hAxis: {
+  //       baselineColor: "#D3D3D3",
+  //       title: "",
+  //       minValue: 0,
+  //       gridlines: { color: "transparent", count: 0 },
+  //       textPosition: "none",
+  //     },
+  //     vAxis: {
+  //       textStyle: {
+  //         fontSize: 12,
+  //         color: "#000000",
+  //       },
+  //     },
+  //     colors: [bars[0].color, bars[1].color, bars[2].color],
+  //     legend: {
+  //       position: "top",
+  //       left: "30px",
+  //       textStyle: {
+  //         fontSize: 14,
+  //         bold: true,
+  //         fontName: "Arial",
+  //       },
+  //     },
+  //     annotations: {
+  //       alwaysOutside: true,
+  //       textAlign: "end",
+  //       textStyle: {
+  //         color: "#000000",
+  //         fontSize: 12,
+  //         bold: true,
+  //         fontName: "Roboto",
+  //         opacity: 0.8,
+  //         auraColor: "none",
+  //       },
+  //       stem: {
+  //         color: "none",
+  //         length: 8,
+  //       },
+  //     },
+  //     animation: {
+  //       startup: true,
+  //       duration: 1000,
+  //       easing: "out",
+  //     },
+  //     bars: "horizontal",
+  //   };
+
+  //   var chart = new google.visualization.BarChart(
+  //     document.getElementById("myChart")
+  //   );
+
+  //   function drawChart() {
+  //     let ww = 0.45;
+  //     if (window.innerWidth < 800) {
+  //       ww = 0.8;
+  //     }
+
+  //     var windowWidth = window.innerWidth;
+  //     var groupWidth;
+
+  //     if (windowWidth < 600) {
+  //       groupWidth = "70%";
+  //     } else if (windowWidth < 800) {
+  //       groupWidth = "80%";
+  //     } else {
+  //       groupWidth = "90%";
+  //     }
+
+  //     options.bar = { groupWidth: groupWidth };
+  //     var chartWidth = window.innerWidth * ww;
+  //     var chartHeight = window.innerHeight * 0.6;
+
+  //     document.getElementById("myChart").style.width = chartWidth + "px";
+  //     document.getElementById("myChart").style.height = chartHeight + "px";
+
+  //     var chartDiv = document.getElementById("myChart");
+  //     var windowHeight = window.innerHeight;
+  //     var margin = windowHeight * -0.2;
+  //     chartDiv.style.marginBottom = margin + "px";
+  //     chart.draw(data, options);
+  //   }
+
+  //   window.addEventListener("resize", drawChart);
+
+  //   drawChart();
+  // }
 
   // ----------------------------------------------------
   // var options = {
@@ -2041,15 +2079,15 @@ function toggleEntries() {
 //   }
 // }
 function populateCarousel(inputJson) {
-  populateTable("nda", "ndaCarousel",inputJson);
-  populateTable("india", "indiaCarousel",inputJson);
-  populateTable("others", "othersCarousel",inputJson);
+  populateTable("nda", "ndaCarousel", inputJson);
+  populateTable("india", "indiaCarousel", inputJson);
+  populateTable("others", "othersCarousel", inputJson);
   // newTable
-  newpopulateTable("nda", "ndaContent",inputJson);
-  newpopulateTable("india", "indiaContent",inputJson);
-  newpopulateTable("others", "othersContent",inputJson);
+  newpopulateTable("nda", "ndaContent", inputJson);
+  newpopulateTable("india", "indiaContent", inputJson);
+  newpopulateTable("others", "othersContent", inputJson);
 }
-function populateTable(alliance, carouselId,temp) {
+function populateTable(alliance, carouselId, temp) {
   console.log(temp);
   // alliancePatries = {
   //   nda: {},
@@ -2077,7 +2115,6 @@ function populateTable(alliance, carouselId,temp) {
         <td>JD(s)</td>
         <td>0</td>
      </tr>`;
-
     } else if (alliance === "india") {
       tbody1.innerHTML = `<tr>
         <td>INC</td>
@@ -2093,7 +2130,6 @@ function populateTable(alliance, carouselId,temp) {
         <td>SS(UBT)</td>
         <td>0</td>
      </tr>`;
-     ;
     } else {
       tbody1.innerHTML = `<tr>
         <td>BRS</td>
@@ -2109,13 +2145,12 @@ function populateTable(alliance, carouselId,temp) {
         <td>SAD</td>
         <td>0</td>
      </tr>`;
-      
     }
   } else {
     // let count = 1;
 
-    console.log("alliancePatries ", alliancePatries)
-    console.log("temp ", temp)
+    console.log("alliancePatries ", alliancePatries);
+    console.log("temp ", temp);
 
     let totalCount = 1; // Total count of rows added
     for (const party in alliancePatries[alliance]) {
@@ -2128,19 +2163,34 @@ function populateTable(alliance, carouselId,temp) {
       const td2 = document.createElement("td");
       td2.textContent = alliancePatries[alliance][party];
 
-      let seatValue = (alliancePatries[alliance][party] !== undefined ? alliancePatries[alliance][party] : 0) - 
-      (temp[alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"][party] !== undefined ? temp[alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"][party] : 0);
-      let spanValue = `<span class=${seatValue < 0 ? "negative" : "positive"}> (${seatValue > 0 ? "+" +seatValue : seatValue})</span>`
-      console.log("spanValue ", spanValue)
-      td2.innerHTML += spanValue
+      let seatValue =
+        (alliancePatries[alliance][party] !== undefined
+          ? alliancePatries[alliance][party]
+          : 0) -
+        (temp[
+          alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"
+        ][party] !== undefined
+          ? temp[
+              alliance === "nda"
+                ? "NDA"
+                : alliance === "india"
+                ? "INDIA"
+                : "OTH"
+            ][party]
+          : 0);
+      let spanValue = `<span class=${
+        seatValue < 0 ? "negative" : "positive"
+      }> (${seatValue > 0 ? "+" + seatValue : seatValue})</span>`;
+      console.log("spanValue ", spanValue);
+      td2.innerHTML += spanValue;
 
       tr.appendChild(td1);
       tr.appendChild(td2);
 
       if (totalCount <= 5) {
         // if (totalCount % 2 === 1) {
-          tbody1.appendChild(tr);
-          totalCount += 1;
+        tbody1.appendChild(tr);
+        totalCount += 1;
         // } else {
         //   tbody2.appendChild(tr);
         //   totalCount += 1;
@@ -2148,9 +2198,9 @@ function populateTable(alliance, carouselId,temp) {
       } else {
         // Hide one row in tbody1 and one row in tbody2 alternatively
         // if (totalCount % 2 === 1) {
-          tr.className = "hiding";
-          tbody1.appendChild(tr);
-          totalCount += 1;
+        tr.className = "hiding";
+        tbody1.appendChild(tr);
+        totalCount += 1;
         // } else {
         //   tr.className = "hiding";
         //   tbody2.appendChild(tr);
@@ -2176,51 +2226,50 @@ function populateTable(alliance, carouselId,temp) {
 
 /* NEW TABLE  */
 
-var newJson ={
-  "NDA": {
-      "TDP": 3,
-      "BJP": 303,
-      "JD(U)": 16,
-      "LJP": 6,
-      "AJSUP": 1,
-      "SHS": 18,
-      "NDPP": 1,
-      "SAD": 2,
-      "ADMK": 1,
-      "TRS": 9,
-      "ADAL": 2
+var newJson = {
+  NDA: {
+    TDP: 3,
+    BJP: 303,
+    "JD(U)": 16,
+    LJP: 6,
+    AJSUP: 1,
+    SHS: 18,
+    NDPP: 1,
+    SAD: 2,
+    ADMK: 1,
+    TRS: 9,
+    ADAL: 2,
   },
-  "INDIA": {
-      "INC": 53,
-      "JKN": 3,
-      "JMM": 1,
-      "JD(S)": 1,
-      "CPIM": 3,
-      "RSP": 1,
-      "KEC(M)": 1,
-      "IUML": 3,
-      "NCP": 5,
-      "DMK": 24,
-      "VCK": 1,
-      "CPI": 2
+  INDIA: {
+    INC: 53,
+    JKN: 3,
+    JMM: 1,
+    "JD(S)": 1,
+    CPIM: 3,
+    RSP: 1,
+    "KEC(M)": 1,
+    IUML: 3,
+    NCP: 5,
+    DMK: 24,
+    VCK: 1,
+    CPI: 2,
   },
-  "OTH": {
-      "YSRCP": 22,
-      "AIUDF": 1,
-      "IND": 4,
-      "AIMIM": 2,
-      "NPF": 1,
-      "NPEP": 1,
-      "MNF": 1,
-      "BJD": 12,
-      "RLTP": 1,
-      "SKM": 1,
-      "BSP": 10,
-      "SP": 5,
-      "AITC": 22
-  }
-}
-
+  OTH: {
+    YSRCP: 22,
+    AIUDF: 1,
+    IND: 4,
+    AIMIM: 2,
+    NPF: 1,
+    NPEP: 1,
+    MNF: 1,
+    BJD: 12,
+    RLTP: 1,
+    SKM: 1,
+    BSP: 10,
+    SP: 5,
+    AITC: 22,
+  },
+};
 
 async function newpopulateTable(alliance, carouselId, temp) {
   let carousel = document.getElementById(carouselId);
@@ -2293,9 +2342,8 @@ async function newpopulateTable(alliance, carouselId, temp) {
      </tr>`;
     }
   } else {
-
-    console.log("temp ", temp)
-    console.log("alliancePatries ", alliancePatries)
+    console.log("temp ", temp);
+    console.log("alliancePatries ", alliancePatries);
 
     let totalCount = 1; // Total count of rows added
     for (const party in alliancePatries[alliance]) {
@@ -2308,14 +2356,29 @@ async function newpopulateTable(alliance, carouselId, temp) {
       const td2 = document.createElement("td");
       td2.textContent = alliancePatries[alliance][party];
 
-      let seatValue = (alliancePatries[alliance][party] !== undefined ? alliancePatries[alliance][party] : 0) - 
-                (temp[alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"][party] !== undefined ? temp[alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"][party] : 0);
-      let spanValue = `<span class=${seatValue < 0 ? "negative" : "positive"}> (${seatValue > 0 ? "+" +seatValue : seatValue})</span>`
-      
-      td2.innerHTML += spanValue
+      let seatValue =
+        (alliancePatries[alliance][party] !== undefined
+          ? alliancePatries[alliance][party]
+          : 0) -
+        (temp[
+          alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"
+        ][party] !== undefined
+          ? temp[
+              alliance === "nda"
+                ? "NDA"
+                : alliance === "india"
+                ? "INDIA"
+                : "OTH"
+            ][party]
+          : 0);
+      let spanValue = `<span class=${
+        seatValue < 0 ? "negative" : "positive"
+      }> (${seatValue > 0 ? "+" + seatValue : seatValue})</span>`;
+
+      td2.innerHTML += spanValue;
       tr.appendChild(td1);
       tr.appendChild(td2);
-      
+
       if (totalCount <= 5) {
         tbody1.appendChild(tr);
         totalCount += 1;
@@ -2466,7 +2529,8 @@ function creatediv2024(state) {
 
   for (let const_name in constituencyData) {
     if (stateDataJson[state][const_name]["candidates"][0]["vts"] !== 0) {
-      let party_name = stateDataJson[state][const_name]["candidates"][0]["prty"];
+      let party_name =
+        stateDataJson[state][const_name]["candidates"][0]["prty"];
       if (party_name in obj) {
         obj[party_name] += 1;
       } else {
@@ -2485,7 +2549,7 @@ function creatediv2024(state) {
   var maindiv = document.getElementById("containertool2");
   var mainindiamap = document.getElementById("india-map");
   mainindiamap.append(maindiv);
-  
+
   var htmlcode = `<span class="rclose" onclick="close_btn()">&times;</span>
                     <h2 class="sthead">${state}</h2>
                     <table class="detailstable">
@@ -2509,13 +2573,21 @@ function creatediv2024(state) {
   } else {
     for (let i = 0; i < partynames.length && i < 5; i++) {
       if (partynames[i] !== undefined) {
-        let previousSeats = comparedata2019[state] && comparedata2019[state][partynames[i]] ? comparedata2019[state][partynames[i]] : 0;
+        let previousSeats =
+          comparedata2019[state] && comparedata2019[state][partynames[i]]
+            ? comparedata2019[state][partynames[i]]
+            : 0;
         let seatDifference = obj[partynames[i]] - previousSeats;
-        let seatDifferenceText = seatDifference >= 0 ? `(+${seatDifference})` : `(${seatDifference})`;
+        let seatDifferenceText =
+          seatDifference >= 0 ? `(+${seatDifference})` : `(${seatDifference})`;
         let seatDifferenceColor = seatDifference >= 0 ? "green" : "red";
         htmlcode += `<tr>
-                       <td class="tdData"><img class="party-icon" src="${sym[partynames[i]]}">${partynames[i]}</td>
-                       <td class="tdData" id="wlright">${obj[partynames[i]]} <span style="color:${seatDifferenceColor}; font-weight:700;">${seatDifferenceText}</span></td>
+                       <td class="tdData"><img class="party-icon" src="${
+                         sym[partynames[i]]
+                       }">${partynames[i]}</td>
+                       <td class="tdData" id="wlright">${
+                         obj[partynames[i]]
+                       } <span style="color:${seatDifferenceColor}; font-weight:700;">${seatDifferenceText}</span></td>
                      </tr>`;
       }
     }
@@ -2541,7 +2613,11 @@ function creatediv2024(state) {
       if (pnames[i] !== undefined && pseats[i] !== undefined) {
         htmlcode += `<div class="barbox">
                        <span id="barlabel${i}">${pnames[i]}</span>
-                       <div class="br${i + 1} inbar" id="id${i}" style="background:${partyColors[pnames[i]]}">${pseats[i]}</div>
+                       <div class="br${
+                         i + 1
+                       } inbar" id="id${i}" style="background:${
+          partyColors[pnames[i]]
+        }">${pseats[i]}</div>
                      </div>`;
       }
     }
@@ -2648,15 +2724,15 @@ async function fetchTop10(tabSize) {
       "cand2051",
     ];
     let cardRowsNeeded = Math.ceil(tabSize / 380);
-    if(tabSize<=900){
-      cardRowsNeeded=5;
+    if (tabSize <= 900) {
+      cardRowsNeeded = 5;
     }
     // alert(cardRowsNeeded);
     for (let i = 0; i < cardRowsNeeded; i++) {
       const row = document.createElement("div");
       row.className = "row raw justify-content-center";
       document.getElementById("root").appendChild(row);
-    
+
       for (let j = 0; j < 2; j++) {
         const cardIndex = 2 * i + j;
         if (cardIndex < top10Cand.length) {
@@ -2677,158 +2753,167 @@ async function fetchTop10(tabSize) {
   }
 }
 
-
 var swiper;
 
 function render_whole_carousel() {
   let heading = document.getElementById("big_fights_heading");
-  document.getElementById("carousel_part_id").style.display="";
+  document.getElementById("carousel_part_id").style.display = "";
   heading.innerHTML = `BIG FIGHTS`;
   document
     .getElementById("view_all")
     .setAttribute("href", "./bigfights_viewall.html" + "?state=" + "all");
-      fetch("../data/partyicon-candimg.json")
+  fetch("./data/partyicon-candimg.json")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok " + response.statusText);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      fetch("./data/overallpopular.json")
         .then((response) => {
           if (!response.ok) {
-            throw new Error("Network response was not ok " + response.statusText);
+            throw new Error(
+              "Network response was not ok " + response.statusText
+            );
           }
           return response.json();
         })
-        .then((data)=>{
-          fetch("./data/overallpopular.json")
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Network response was not ok " + response.statusText);
-            }
-            return response.json();
-          }).then((imgjson) => {
-            render_whole_carousel_fun(stateDataJson, data, imgjson)
-          })
-        })
-        .catch((error) => {
-          console.error(
-            "There has been a problem with your fetch operation:",
-            error
-          );
+        .then((imgjson) => {
+          render_whole_carousel_fun(stateDataJson, data, imgjson);
         });
-    //});
-
-
+    })
+    .catch((error) => {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
+    });
+  //});
 }
 
 function render_whole_carousel_fun(data2024, data, imgjson) {
   let swiperContainer = document.getElementById("slider_div");
   let party_img_json, candidates_data;
-    party_img_json = data["images_key"];
-    candidates_data = data["candidate_details"];
+  party_img_json = data["images_key"];
+  candidates_data = data["candidate_details"];
 
-    // Clear previous content and destroy previous Swiper instance if it exists
-    if (swiper) {
-      swiper.destroy(true, true);
+  // Clear previous content and destroy previous Swiper instance if it exists
+  if (swiper) {
+    swiper.destroy(true, true);
+  }
+  swiperContainer.innerHTML = "";
+
+  candidates_data.forEach((data) => {
+    let cd1_votes = 0,
+      cd2_votes = 0,
+      tot_vts = 0;
+    let cid1, cid2;
+    // console.log(data2024[0]["Andhra Pradesh"]);
+    data2024[data["state"]][data["const_name"].toLowerCase()][
+      "candidates"
+    ].forEach((candidate) => {
+      // console.log("id" + candidate["cId"]);
+      if (candidate["cId"] == data["id1"]) cd1_votes = candidate["vts"];
+      if (candidate["cId"] == data["id2"]) cd2_votes = candidate["vts"];
+      tot_vts += candidate["vts"];
+    });
+    // console.log(votes1 + " " + votes2);
+    let prty1, prty2, name1, name2, votes1, votes2;
+    if (cd1_votes > cd2_votes) {
+      cid1 = data["id1"];
+      cid2 = data["id2"];
+      prty2 = data["cand_party2"];
+      prty1 = data["cand_party1"];
+      name2 = data["cand_name2"];
+      name1 = data["cand_name1"];
+      votes2 = cd2_votes;
+      votes1 = cd1_votes;
+    } else {
+      cid2 = data["id1"];
+      cid1 = data["id2"];
+      prty1 = data["cand_party2"];
+      prty2 = data["cand_party1"];
+      name1 = data["cand_name2"];
+      name2 = data["cand_name1"];
+      votes1 = cd2_votes;
+      votes2 = cd1_votes;
     }
-    swiperContainer.innerHTML = "";
-
-    candidates_data.forEach((data) => {
-      let cd1_votes = 0, cd2_votes = 0, tot_vts = 0;
-      let cid1, cid2;
-      // console.log(data2024[0]["Andhra Pradesh"]);
-      data2024[data["state"]][data["const_name"].toLowerCase()]["candidates"].forEach((candidate) => {
-        // console.log("id" + candidate["cId"]);
-        if (candidate["cId"] == data["id1"])
-          cd1_votes = candidate["vts"];
-        if (candidate["cId"] == data["id2"])
-          cd2_votes = candidate["vts"];
-        tot_vts += candidate["vts"];
-      });
-      // console.log(votes1 + " " + votes2);
-      let prty1, prty2, name1, name2, votes1, votes2;
-      if(cd1_votes > cd2_votes) {
-        cid1 = data["id1"];
-        cid2 = data["id2"];
-        prty2 = data["cand_party2"];
-        prty1 = data["cand_party1"];
-        name2 = data["cand_name2"];
-        name1 = data["cand_name1"];
-        votes2 = cd2_votes;
-        votes1 = cd1_votes;
-      }else {
-        cid2 = data["id1"];
-        cid1 = data["id2"];
-        prty1 = data["cand_party2"];
-        prty2 = data["cand_party1"];
-        name1 = data["cand_name2"];
-        name2 = data["cand_name1"];
-        votes1 = cd2_votes;
-        votes2 = cd1_votes;
+    let img1 =
+      cid1 in imgjson
+        ? `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png`
+        : `./images/imgs2/Unknown.png`;
+    let img2 =
+      cid2 in imgjson
+        ? `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png`
+        : `./images/imgs2/Unknown.png`;
+    let bar_length1 = (parseInt(votes1) / parseInt(tot_vts)) * 100;
+    let bar_length2 = (parseInt(votes2) / parseInt(tot_vts)) * 100;
+    const slideMarkup = createSlide(
+      data["const_name"],
+      data["state"],
+      prty1,
+      prty2,
+      img1,
+      img2,
+      name1,
+      name2,
+      votes1,
+      votes2,
+      bar_length1,
+      bar_length2
+    );
+    function createSlide(
+      const_name,
+      state,
+      partySymbol1,
+      partySymbol2,
+      candidateImg1,
+      candidateImg2,
+      cand_name1,
+      cand_name2,
+      votes1,
+      votes2,
+      bar_length1,
+      bar_length2
+    ) {
+      let party_path1 =
+        partySymbol1 in party_img_json
+          ? party_img_json[partySymbol1]
+          : party_img_json["default"];
+      let party_path2 =
+        partySymbol2 in party_img_json
+          ? party_img_json[partySymbol2]
+          : party_img_json["default"];
+      let state_img =
+        state.toLowerCase() in party_img_json
+          ? party_img_json[state.toLowerCase()]
+          : "./imgs2/madhya_pradesh.jpg";
+      if (votes1 == 0 && votes2 == 0) {
+        votes1 = "Awaited";
+        votes2 = "Awaited";
+      } else {
+        votes1 = new Intl.NumberFormat("en-IN").format(votes1);
+        votes2 = new Intl.NumberFormat("en-IN").format(votes2);
       }
-      let img1 = (cid1 in imgjson) ? 
-      `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png` :
-      `./images/imgs2/Unknown.png`;
-      let img2 = (cid2 in imgjson) ? 
-      `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png` :
-      `./images/imgs2/Unknown.png`;
-      let bar_length1 = (parseInt(votes1) / parseInt(tot_vts)) * 100;
-      let bar_length2 = (parseInt(votes2) / parseInt(tot_vts)) * 100;
-      const slideMarkup = createSlide(
-        data["const_name"],
-        data["state"],
-        prty1,
-        prty2,
-        img1,
-        img2,
-        name1,
-        name2,
-        votes1,
-        votes2,
-        bar_length1,
-        bar_length2
-      );
-      function createSlide(
-        const_name,
-        state,
-        partySymbol1,
-        partySymbol2,
-        candidateImg1,
-        candidateImg2,
-        cand_name1,
-        cand_name2,
-        votes1,
-        votes2,
-        bar_length1,
-        bar_length2
-      ) {
-        let party_path1 =
-          partySymbol1 in party_img_json
-            ? party_img_json[partySymbol1]
-            : party_img_json["default"];
-        let party_path2 =
-          partySymbol2 in party_img_json
-            ? party_img_json[partySymbol2]
-            : party_img_json["default"];
-        let state_img =
-          state.toLowerCase() in party_img_json
-            ? party_img_json[state.toLowerCase()]
-            : "./imgs2/madhya_pradesh.jpg";
-            if(votes1 == 0 && votes2 == 0) {
-              votes1 = "Awaited";
-              votes2 = "Awaited";
-            }else {
-              votes1 = new Intl.NumberFormat('en-IN').format(votes1);
-              votes2 = new Intl.NumberFormat('en-IN').format(votes2)
-            }
-        return `
+      return `
         <div class="card swiper-slide">
-            <span class="state_name">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
+            <span class="state_name">${toTitleCase(
+              const_name
+            )} <span class="state_party_slot">(${toTitleCase(
+        state
+      )})</span></span>
             <div class="cand_desc1">
                 <span class="img_container">
                     <img class="party_symbol" src=${party_path1} alt="">
                     <img class="cand_img1" src="${candidateImg1}" alt="">
                 </span>
                 <div class="desc_container">
-                    <div class="cand_name1">${toTitleCase(cand_name1)} <span class="state_party_slot">(${partySymbol1})</span></div>
+                    <div class="cand_name1">${toTitleCase(
+                      cand_name1
+                    )} <span class="state_party_slot">(${partySymbol1})</span></div>
                     <span class="lead_bar">
-              <span style="width:${bar_length1
-                }%;" class="leadbar"> </span><span style="color:black;margin:3px">
+              <span style="width:${bar_length1}%;" class="leadbar"> </span><span style="color:black;margin:3px">
               ${votes1}</span>
               </span>
                 </div>
@@ -2839,10 +2924,11 @@ function render_whole_carousel_fun(data2024, data, imgjson) {
                     <img class="cand_img1" src="${candidateImg2}" alt="">
                 </span>
                 <div class="desc_container">
-                    <div class="cand_name1">${toTitleCase(cand_name2)} <span class="state_party_slot">(${partySymbol2})</span></div>
+                    <div class="cand_name1">${toTitleCase(
+                      cand_name2
+                    )} <span class="state_party_slot">(${partySymbol2})</span></div>
                     <span class="trail_bar">
-              <span style="width:${bar_length2
-                }%;" class="trailbar"></span><span style="color:black;margin:3px">${votes2}</span>
+              <span style="width:${bar_length2}%;" class="trailbar"></span><span style="color:black;margin:3px">${votes2}</span>
               </span>
                 </div>
             </div>
@@ -2851,65 +2937,72 @@ function render_whole_carousel_fun(data2024, data, imgjson) {
             </div>
         </div>
         `;
-      }
-      swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
-    });
+    }
+    swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
+  });
 
-    swiper = new Swiper(".slide-content", {
-      slidesPerView: 3,
-      spaceBetween: 50,
-      loop: true,
-      centerSlide: true,
-      fade: true,
-      grabCursor: true,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-        dynamicBullets: true,
+  swiper = new Swiper(".slide-content", {
+    slidesPerView: 3,
+    spaceBetween: 50,
+    loop: true,
+    centerSlide: true,
+    fade: true,
+    grabCursor: true,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+      dynamicBullets: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+      0: {
+        slidesPerView: 1,
       },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
+      600: {
+        slidesPerView: 2,
       },
-      breakpoints: {
-        0: {
-          slidesPerView: 1,
-        },
-        600: {
-          slidesPerView: 2,
-        },
-        950: {
-          slidesPerView: 3,
-        },
-        1600: {
-          slidesPerView: 4,
-        }
+      950: {
+        slidesPerView: 3,
       },
-      autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
+      1600: {
+        slidesPerView: 4,
       },
-      speed: 1300,
-    });
+    },
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+    speed: 1300,
+  });
 
-    swiperContainer.addEventListener("mouseenter", function () {
-      swiper.autoplay.stop();
-    });
+  swiperContainer.addEventListener("mouseenter", function () {
+    swiper.autoplay.stop();
+  });
 
-    swiperContainer.addEventListener("mouseleave", function () {
-      swiper.autoplay.start();
-    });
+  swiperContainer.addEventListener("mouseleave", function () {
+    swiper.autoplay.start();
+  });
 }
 function render_state_carousel(state) {
   // console.log(state);
-  let not_available = {"Ladakh": 1, "Jammu and Kashmir": 1, "Sikkim": 1,"Andaman and Nicobar Islands": 1,"Daman and Diu": 1, "Lakshadweep" : 1, "Mizoram": 1};
-  if(state in not_available) {
-    document.getElementById("carousel_part_id").style.display="none";
+  let not_available = {
+    Ladakh: 1,
+    "Jammu and Kashmir": 1,
+    Sikkim: 1,
+    "Andaman and Nicobar Islands": 1,
+    "Daman and Diu": 1,
+    Lakshadweep: 1,
+    Mizoram: 1,
+  };
+  if (state in not_available) {
+    document.getElementById("carousel_part_id").style.display = "none";
     return;
   }
-  document.getElementById("carousel_part_id").style.display="";
-  if(state == "Delhi")
-    state = "NCT OF Delhi";
+  document.getElementById("carousel_part_id").style.display = "";
+  if (state == "Delhi") state = "NCT OF Delhi";
   let heading = document.getElementById("big_fights_heading");
   heading.innerHTML = `BIG FIGHTS (<span class = "heading_state">${state.toUpperCase()}</span>)`;
   let swiperContainer = document.getElementById("slider_div");
@@ -2997,7 +3090,7 @@ function render_state_carousel(state) {
       `;
   }
 
-  fetch("../data/bigfights.json")
+  fetch("./data/bigfights.json")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);
@@ -3005,7 +3098,7 @@ function render_state_carousel(state) {
       return response.json();
     })
     .then((data) => {
-      fetch("../data/overallpopular.json")
+      fetch("./data/overallpopular.json")
         .then((response) => {
           if (!response.ok) {
             throw new Error(
@@ -3089,7 +3182,6 @@ function render_state_carousel(state) {
               swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
             }
           }
-  
 
           swiper = new Swiper(".slide-content", {
             slidesPerView: 3,

@@ -1,0 +1,16 @@
+            svg {
+                width: 95%;
+                height: 95%;
+            }
+            svg .seat {
+                cursor: pointer;
+                transition: all 800ms;
+            }
+
+            /* European parliament colors */
+            svg .seat.nda { fill: #FF9933 }
+            svg .seat.upa { fill: #B9E6FE }
+            svg .seat.others { fill: #B7B7B7 }
+            svg .seat.NA { fill: #909090 }
+
+
