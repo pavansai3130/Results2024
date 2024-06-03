@@ -111,6 +111,7 @@ body {
 #hoverable:hover .tooltip {
   visibility: visible;
   max-height: 200px;
+  z-index: 1000;
 }
 
 #hoverable .fa-chevron-down,
