@@ -67,31 +67,32 @@ async function fetchMoreCards1() {
     console.error("Error fetching or processing data:", error);
   }
 }
+let data={};
+async function fetchCandidateValue() {
+  const response = await fetch('./data/overallpopular.json');
+  data = await response.json();
+}
+function getPicMap(item){
 
-async function createCard(item) {
-  async function fetchCandidateValue(item) {
-    const response = await fetch('./data/overallpopular.json');
-    const data = await response.json();
-    console.log(data);
-    const candidate = data[item.cId];
-  
-    
-    if (candidate) {
-      // alert(candidate);
-      // alert(candidate.value);
-      return candidate;
-    } else {
-      console.error('Candidate not found for ID:', item.cId);
-      return null;
-    }
+  console.log(data);
+  const candidate = data[item.cId];
+  if (candidate) {
+    // alert(candidate);
+    // alert(candidate.value);
+    return candidate;
+  } else {
+    console.error('Candidate not found for ID:', item.cId);
+    return null;
   }
+}
+async function createCard(item) {
 
   const allianceImages = {
     "NDA": "./images/imgs/NDA.png",
     "INDIA": "./images/imgs/INDA.png",
     "OTH": "./images/imgs/OTH.png"
   };
-  const candidateValue = await fetchCandidateValue(item);
+  const candidateValue = getPicMap(item);
   
 const imageUrl = `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${candidateValue}.png` || allianceImages[item.alnce];
 console.log(imageUrl);
@@ -302,6 +303,7 @@ function getURLParameter(name) {
 
 window.onload = async function() {
   await fetchCandidateData();  // Ensure data is fetched before proceeding
+  fetchCandidateValue()
   const state = getURLParameter('state');
   if (state !== null) {
     displayCardsForState(state);

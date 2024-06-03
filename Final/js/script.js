@@ -2611,7 +2611,7 @@ function render_state_carousel(state) {
                   <span class="lead_bar">
           <span style="width:${bar_length1}%;" class="leadbar"> </span>
           <span style="color:black;margin:3px">
-          ${new Intl.NumberFormat("en-IN").format(votes1)}</span>
+          ${votes1}</span>
           </span>
               </div>
           </div>
