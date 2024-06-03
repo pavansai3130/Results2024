@@ -174,23 +174,23 @@ p{
   transition: all 0.5s ease;
 }
 
-/* 
-@media (max-width:500px) {
+
+/* @media (max-width:500px) {
   .custom-container{
       width: 90%;
   }
-}
+} */
 @media screen and (min-width:500px) and (max-width:720px) {
   .custom-container{
-      width: 60%;
+      width: 260px;
   }
 }
-@media screen and (min-width: 1010px) and (max-width: 1203px) {
+@media screen and (min-width: 1260px) and (max-width: 1422px) {
   .custom-container {
-    width: 70%;
+    width: 260px;
   }
 }
- */
+
 
 /* Cards displayed on the "See More" page */
 #see-more-page .custom-container {
