@@ -46,37 +46,12 @@
             <li>
               <a href="./index.html?year=2019" class="links">2019 Results</a>
             </li>
-            <li
-              id="hoverable"
-              onmouseenter="showTooltip()"
-              onmouseleave="hideTooltip()"
-              onclick="toggleTooltip()"
-            >
-              <a href="/" class="links disabled">Candidates</a>
-              <i id="downIcons" class="fa-solid fa-chevron-down"></i>
-              <i id="upIcons" class="fa-solid fa-chevron-up"></i>
-              <ul class="tooltip" id="tooltip">
-                <li id="popular">
-                  <a href="cardsPage.html">Popular Candidates</a>
-                </li>
-                <li id="celebrities">
-                  <a href="./celebCards.html">Celebrities</a>
-                </li>
-                
-              </ul>
+            <li>
+              <a href="cardsPage.html" class="links">Popular Candidates</a>
             </li>
-            <div class="hiding" id="mobile-tooltip">
-              <li>
-                <a href="cardsPage.html" class="links" id="popular2"
-                  >Popular Candidates</a
-                >
-              </li>
-              <li>
-                <a href="./celebCards.html" class="links" id="celebrities2"
-                  >Celebrities</a
-                >
-              </li>
-            </div>
+            <li>
+              <a href="./celebCards.html" class="links">Celebrities</a>
+            </li>
             <li><a href="./index.html" class="links">'24 vs '19</a></li>
             <li>
               <a href="./bigfights_viewall.html" class="links">Big fights</a>
@@ -94,9 +69,9 @@
             ></script>
           </ul>
           <ul id="mobile-links">
-            <li><a href="./about.html">About Us</a></li>
-            <li><a href="./volunteers.html">Volunteers</a></li>
-            <li><a href="./disclaimer.html">Disclaimer</a></li>
+            <li><a href="./about.html" class="links">About Us</a></li>
+            <li><a href="./volunteers.html" class="links">Volunteers</a></li>
+            <li><a href="./disclaimer.html" class="links">Disclaimer</a></li>
           </ul>
         </div>
       </div>
@@ -136,9 +111,12 @@
                       class="search-input"
                       placeholder="Search for state, constituency or candidate..."
                     />
-                    <label for="candname_search_bar1"
-                      >
-                      <img class="search_icon" src="./images/imgs/search.svg" alt="">
+                    <label for="candname_search_bar1"></label>
+                      <img
+                        class="search_icon"
+                        src="./images/imgs/search.svg"
+                        alt=""
+                      />
                       <!-- <i class="fa-solid fa-magnifying-glass search_icon"></i> -->
                     </label>
                     <ul id="search_unorderlist1"></ul>
@@ -146,9 +124,12 @@
 
                   <div class="search_button" id="search_button">
                     <!-- <img title="Search" src="./images/imgs2/search.svg" alt="search"> -->
-                    <label for="candname_search_bar2"
-                      >
-                      <img class="searchimg2" src="./images/imgs/search.svg" alt="">
+                    <label for="candname_search_bar2">
+                      <img
+                        class="searchimg2"
+                        src="./images/imgs/search.svg"
+                        alt=""
+                      />
                       <!-- <i class="fa-solid fa-magnifying-glass"></i> -->
                     </label>
                   </div>
