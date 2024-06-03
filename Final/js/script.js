@@ -1707,21 +1707,35 @@ $(document).ready(async function () {
       ],
     ]);
 
+    var hiddenData = google.visualization.arrayToDataTable([
+      ['City', 'Baseline', 'Hidden'],
+      ['', 0, 1], // Baseline
+      ['', null, null], // Hidden series to draw the rectangle
+    ]);
+
     let bw = "80%";
     if (window.innerWidth < 800) {
       console.log("width<<<<", window.innerWidth);
-      bw = "60%";
+      bw = "50%";
     }
 
     var options = {
-      chartArea: { width: "70%" },
+      chartArea: {top:35 ,height:"50%",width:"80%"},
       hAxis: {
+        baselineColor: "#D3D3D3",
+        viewWindowMode:"explicit",
         title: "",
+        viewWindow:{
+          min:0
+        },
         minValue: 0,
-        gridlines: { count: 1 }, // Display only one gridline
+        // maxValue:543,
+        gridlines: { color: "transparent", count: 0 },
         textPosition: "none",
+        // ticks:[]
       },
       vAxis: {
+        viewWindowMode:"explicit",
         textStyle: {
           fontSize: "12px",
           fontWeight: 500,
@@ -1732,17 +1746,20 @@ $(document).ready(async function () {
           fontFamily: "Roboto",
         },
       },
+
       colors: [bars[0].color, bars[1].color, bars[2].color],
       legend: {
         position: "top",
+        left: "30px",
         titleTextStyle: {
           fontSize: "16px",
           fontWeight: "bold",
-          color: "red",
           fontFamily: "Arial",
         },
       },
       annotations: {
+        alwaysOutside: true,
+        textAlign: "end",
         textStyle: {
           fontSize: "12px",
           fontWeight: 500,
@@ -1752,11 +1769,10 @@ $(document).ready(async function () {
           auraColor: "none",
           fontFamily: "Roboto",
         },
-        alwaysOutside: true,
-        textAlign: "end",
+
         stem: {
           color: "none",
-          length: 8, // This removes the connecting lines
+          length: 8,
         },
       },
       animation: {
@@ -1764,8 +1780,9 @@ $(document).ready(async function () {
         duration: 1000,
         easing: "out",
       },
-      // bars: 'horizontal', // Required for Material Bar Charts.
-      bar: { groupWidth: bw },
+      bars: "horizontal",
+      // height:300
+      // bar: { groupWidth:window.innerWidth<800?"80%" : "60%" },
     };
 
     var chart = new google.visualization.BarChart(
@@ -1778,15 +1795,43 @@ $(document).ready(async function () {
       if (window.innerWidth < 800) {
         ww = 0.8;
       }
+
+      var windowWidth = window.innerWidth;
+      var groupWidth;
+
+      if (windowWidth < 600) {
+        groupWidth = "70%";
+      } else if (windowWidth < 800) {
+        groupWidth = "80%";
+      } else {
+        groupWidth = "90%";
+      }
+
+      options.bar = { groupWidth: groupWidth };
       var chartWidth = window.innerWidth * ww;
       var chartHeight = window.innerHeight * 0.6;
 
       document.getElementById("myChart").style.width = chartWidth + "px";
       document.getElementById("myChart").style.height = chartHeight + "px";
 
-      //chart.draw(data, google.charts.Bar.convertOptions(options));
+
+      var chartDiv = document.getElementById('myChart');
+      var windowHeight = window.innerHeight;
+      var margin = windowHeight * -0.2;
+      chartDiv.style.marginBottom = margin + 'px';
+      // chart.draw(hiddenData, options);
       chart.draw(data, options);
     }
+
+    // google.visualization.events.addListener(chart, 'ready', function () {
+    //   var bars = document.querySelectorAll('#myChart svg g g rect');
+    //   bars.forEach((bar, index) => {
+    //     bar.id = 'bar-' + index;
+    //     bar.style.stroke = '#D3D3D3';
+    //     bar.style.strokeWidth = '2px';
+    //     bar.style.strokeDasharray = '2 2'; // This ensures the border is applied to the left side only
+    //   });
+    // });
 
     window.addEventListener("resize", drawChart);
 
