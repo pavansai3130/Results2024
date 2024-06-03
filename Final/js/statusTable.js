@@ -94,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
             statusCell.classList.add('trailing');
           }
           countCell.innerHTML = `${result.votes}<br><span style="color:grey; font-size:0.8rem;"> ${result.margin}</span>`;
+          countCell.style.backgroundColor = '#FFFCF5';
         }
 
         row.appendChild(countCell);
@@ -186,6 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
             statusCell.classList.add('trailing');
           }
           countCell.innerHTML = `${result.votes}<br><span style="color:grey; font-size:0.8rem;"> ${result.margin}</span>`;
+          countCell.style.backgroundColor = '#FFFCF5';
         }
 
         row.appendChild(countCell);

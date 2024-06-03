@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
           for (let margin of Object.keys(candidates).sort((a, b) => b - a)) {  // Ensure descending order
             const candidate = candidates[margin];
             const row = document.createElement('tr');
-            createDataRow(candidate, margin, row);
+            createDataRowHigh(candidate, margin, row);
             tableBody.appendChild(row);
           }
         }
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
           for (let margin of Object.keys(candidates).sort((a, b) => a - b)) {  // Ensure ascending order
             const candidate = candidates[margin];
             const row = document.createElement('tr');
-            createDataRow(candidate, margin, row);
+            createDataRowLow(candidate, margin, row);
             tableBody.appendChild(row);
           }
         }
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const lowTable = document.querySelector(".custom-table-two");
       populateLowTable(low, lowTableBody, lowTable);
   
-      function createDataRow(candidate, margin, row) {
+      function createDataRowHigh(candidate, margin, row) {
         const nameCell = document.createElement('td');
         if (sym2[candidate.party_id]) {
           nameCell.innerHTML = `${candidate.cand_name}<br><img src="${sym2[candidate.party_id]}"><span>${candidate.party_id}</span>`;
@@ -126,6 +126,38 @@ document.addEventListener('DOMContentLoaded', function () {
         const marginCell = document.createElement('td');
         let formattedMargin = new Intl.NumberFormat('en-IN').format(margin);
         marginCell.textContent = formattedMargin;
+        marginCell.style.backgroundColor = '#ECFDF3';
+        row.appendChild(marginCell);
+      }
+      function createDataRowLow(candidate, margin, row) {
+        const nameCell = document.createElement('td');
+        if (sym2[candidate.party_id]) {
+          nameCell.innerHTML = `${candidate.cand_name}<br><img src="${sym2[candidate.party_id]}"><span>${candidate.party_id}</span>`;
+        } else {
+          nameCell.innerHTML = `${candidate.cand_name}<br><img src="${sym2["extra"]}"><span>${candidate.party_id}</span>`;
+        }
+        nameCell.style.textAlign = 'left';
+        nameCell.style.paddingLeft = '1.4rem';
+        nameCell.classList.add('sticky');
+        nameCell.classList.add('columnOne')
+        row.appendChild(nameCell);
+  
+        const constCell = document.createElement('td');
+        constCell.textContent = candidate.const_name;
+        constCell.style.textTransform = "capitalize";
+        row.appendChild(constCell);
+  
+        const partyCell = document.createElement('td');
+        let candidateVotes = candidate.votes;
+        candidateVotes = new Intl.NumberFormat('en-IN').format(candidateVotes);
+        partyCell.textContent = candidateVotes;
+        partyCell.style.fontWeight = '400';
+        row.appendChild(partyCell);
+  
+        const marginCell = document.createElement('td');
+        let formattedMargin = new Intl.NumberFormat('en-IN').format(margin);
+        marginCell.textContent = formattedMargin;
+        marginCell.style.backgroundColor = '#FEF3F2';
         row.appendChild(marginCell);
       }
   
