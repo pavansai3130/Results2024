@@ -1578,8 +1578,90 @@ $(document).ready(async function () {
   };
 
   // Render the chart
-  const ctx = document.getElementById("myChart").getContext("2d");
-  new Chart(ctx, config);
+  // const ctx = document.getElementById("myChart").getContext("2d");
+  // new Chart(ctx, config);
+
+
+  let nda_seats = allianceJson.NDA;
+  let india_seats = allianceJson.INDIA;
+  let others_seats = allianceJson.OTH;
+  let na_seats = 543;
+  //if (nda_seats != 0 && india_seats != 0 && others_seats != 0) {
+    na_seats = 543-(nda_seats+india_seats+others_seats);
+  //}
+
+  console.log("names[bars[0].color]", allianceJson);
+
+  let pmp_data1 = [];
+
+  if (nda_seats != 0) {
+    pmp_data1.push({
+      id: "nda",
+      legend: "NDA",
+      name: "NDA",
+      seats: nda_seats,
+    });
+  }
+  if (india_seats != 0) {
+    pmp_data1.push({
+      id: "upa",
+      legend: "UPA",
+      name: "UPA",
+      seats: india_seats,
+    });
+  }
+
+  if (others_seats != 0) {
+    pmp_data1.push({
+      id: "others",
+      legend: "Others",
+      name: "Others",
+      seats: others_seats,
+    });
+  }
+
+  pmp_data1.push({
+    id: "NA",
+    legend: "NA",
+    name: "NA",
+    seats: na_seats,
+  });
+
+  let pmap_data = [
+    {
+      id: "nda",
+      legend: "NDA",
+      name: "NDA",
+      seats: allianceJson.NDA,
+    },
+    {
+      id: "upa",
+      legend: "UPA",
+      name: "UPA",
+      seats: allianceJson.INDIA,
+    },
+    {
+      id: "others",
+      legend: "Others",
+      name: "Others",
+      seats: allianceJson.OTH,
+    },
+    {
+      id: "NA",
+      legend: "NO_Party",
+      name: "NA",
+      seats: 0,
+    },
+  ];
+
+  var parliament = d3.parliament().width(60).innerRadiusCoef(0.4);
+  parliament.enter.fromCenter(true).smallToBig(true);
+  parliament.exit.toCenter(true).bigToSmall(true);
+
+  var setData = function (d) {
+    d3.select("#pmap").datum(d).call(parliament);
+  };
+  setData(pmap_data);
 
   // ----------------------------------------------------
   // var options = {
@@ -1762,6 +1844,10 @@ function populateTable(alliance, carouselId) {
   let tbody2 = carousel.querySelector("#tbody2");
   tbody1.innerHTML = "";
   tbody2.innerHTML = "";
+
+  document.getElementById('ndatitle1').innerHTML = `NDA (${allianceJson.NDA})`
+      document.getElementById('indiatitle1').innerHTML = `I.N.D.I.A (${allianceJson.INDIA})`
+      document.getElementById('othtitle1').innerHTML = `Others (${allianceJson.OTH})`
 
   // let count = 1;
   let totalCount = 1; // Total count of rows added
