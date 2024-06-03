@@ -1,55 +1,60 @@
-// /*-------------creating fetching 2019------*/
-// let data_201;
-// let data_2019; // Initialize data_2019 as an empty object
-// async function fetchJSON2(file) {
-//   // data_2019 = {};
-//   try {
-//     const response = await fetch(file); // Fetch the JSON file
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! Status: ${response.status}`);
-//     }
-//     data_201 = await response.json();
-//     console.log("JSON data fetched and stored globally:", data_201);
-//     function format2(data2024) {
-//       for (let state in data2024) {
-//         for (let const_name in data2024[state]) {
-//           const candidates = [];
-//           for (let item of data2024[state][const_name]["candidates"]) {
-//             const candidate = {
-//               candidateId: item.cId,
-//               candidateName: item.cName,
-//               constituencyName: const_name,
-//               party: item.prty,
-//               alliance: item.alnce,
-//               votes: item.vts,
-//             };
-//             candidates.push(candidate);
-//           }
-//           // Access constituency code from constCodes if properly defined
-//           const constituencyCode = constCodes[state][const_name];
-//           if (constituencyCode) {
-//             // Assign candidates to the corresponding constituency code in data_2019
-//             data_2019[constituencyCode] = candidates;
-//           }
-//         }
-//       }
-//     }
-//     format2(data_201[0]);
-//   } catch (error) {
-//     console.error("Error fetching the JSON file:", error);
-//     throw error; // Rethrow the error for the caller to handle
-//   }
-// }
+let s3PicUrl = "https://results2024.s3.ap-south-1.amazonaws.com/candpics/";
+fetch("./data/overallpopular.json")
+.then((response) => {
+  if (!response.ok) {
+    throw new Error("Network response was not ok " + response.statusText);
+  }
+  return response.json();
+})
+.then((picMap) => {
+  pictureMapping = picMap;
+});
 
-// // Usage example
-// (async () => {
-//   try {
-//     await fetchJSON2("./election2019.json");
-//     console.log(data_2019);
-//   } catch (error) {
-//     console.error("Error occurred:", error);
-//   }
-// })();
+let flag=0;
+let pollinfo={};
+// Declare a global variable to store the fetched data
+
+// Define the path to the JSON file
+const jsonFilePath = '../data/pollInfo.json';
+
+// Fetch and read the JSON file
+fetch(jsonFilePath)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+      function format3(data2024) {
+        for (let state in data2024) {
+          for (let const_name in data2024[state]) {
+            const constituencyDetails = data2024[state][const_name];
+            const formattedData = {
+              electors: constituencyDetails.electors,
+              phase: constituencyDetails.phase,
+              votes: constituencyDetails.votes,
+              date: constituencyDetails.date
+            };
+            
+            // Access constituency code from constCodes if properly defined
+            const constituencyCode = constCodes[state][const_name];
+            if (constituencyCode) {
+              // Assign formatted data to the corresponding constituency code in data_2019
+              pollinfo[constituencyCode] = formattedData;
+            }
+          }
+        }
+      }
+      
+      // Call the function with your data
+      format3(data);
+        console.log('Fetched data stored in global variable:', pollinfo);
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+
 let handleSelection;
 /*-------------------------Hari Js---*/
 fetchCandidateData().then(() => {
@@ -819,6 +824,7 @@ function resetBreadcrumb() {
   document.getElementById("piechart").style.display = "none";
   document.getElementById("piechart2").style.display = "none";
   document.getElementById("piechart3").style.display = "none";
+  document.getElementById("votingDetails").style.display="none";
   updateBar(Object.values(allianceJson));
   renderAllianceResults();
   const breadcrumbState = document.getElementById("breadcrumb-state");
@@ -861,7 +867,7 @@ const zooming = {
   35: [10, 93.3, 6],
   37: [16, 80, 6],
   12: [28, 95, 6],
-  18: [26, 93, 6],
+  18: [26, 93, 7],
   10: [26, 86, 6],
   4: [30.7, 76.8, 8],
   22: [21, 83, 6],
@@ -869,18 +875,18 @@ const zooming = {
   25: [20.5, 72, 7],
   7: [28.67, 77.2, 7],
   30: [15.4, 74.3, 8],
-  24: [23, 72.2, 6],
+  24: [23, 72.2, 7],
   6: [29.3, 76.6, 7],
-  2: [32, 77, 7],
-  1: [35, 77, 6],
+  2: [32, 77, 8],
+  1: [35, 77, 7],
   20: [23.6, 85.8, 7],
   29: [15, 77, 6],
-  32: [11, 76.8, 6],
-  31: [10.5, 73, 8],
+  32: [11, 76.8, 7],
+  31: [10.5, 73, 7],
   23: [24, 79, 6],
-  27: [19.2, 77, 6],
+  27: [19.2, 77, 7],
   14: [25, 94.5, 7],
-  17: [25.6, 91.4, 7],
+  17: [25.6, 91.4, 8],
   15: [23.4, 93.2, 7],
   13: [26, 94, 7],
   21: [20, 85, 6],
@@ -889,7 +895,7 @@ const zooming = {
   8: [28, 75.7, 5], //[26.7,74,7],
   11: [27.5, 88.5, 7],
   33: [11, 79.5, 6],
-  36: [18, 79.5, 6],
+  36: [18, 79.5, 7],
   16: [23.8, 92],
   9: [27, 81, 6],
   5: [30, 79.4, 8],
@@ -919,7 +925,7 @@ function render_whole_table() {
   // Create all rows first
   for (let i of ftrs) {
     if (i.pc_id == null) continue;
-
+    const firstCandidateKey = data[i.pc_id][1];
     const tr = document.createElement("tr");
     tr.className = "tr";
 
@@ -941,7 +947,7 @@ function render_whole_table() {
     let win;
     // console.log("this is");
     console.log(i.pc_id);
-    const firstCandidateKey = data[i.pc_id][1];
+   
     if (!firstCandidateKey) {
       votes = 0;
       party_name = "INDEPENDENT";
@@ -962,8 +968,19 @@ function render_whole_table() {
       }
     }
 
-    if (!partyColors[win]) tr.dataset.pccolor = "#D3D3D3";
-    else tr.dataset.pccolor = partyColors[win];
+ 
+    if (!partyColors[win]){ tr.dataset.pccolor = "#D3D3D3";
+  }
+
+    else{
+      if(firstCandidateKey.votes===0)
+        {
+          tr.dataset.pccolor = "#D3D3D3";
+        }
+        else{
+      tr.dataset.pccolor = partyColors[win];
+        }
+      }
 
     const td = document.createElement("td");
     td.textContent = name;
@@ -1553,6 +1570,7 @@ function render_state_table(feature, state) {
 
   // Create all rows first
   for (let i of feature) {
+    const firstCandidateKey = data[i.pc_id][1];
     const tr = document.createElement("tr");
     tr.className = "tr";
     tb.appendChild(tr);
@@ -1573,12 +1591,26 @@ function render_state_table(feature, state) {
       let votes2 = 0;
 
       let win;
-      const firstCandidateKey = data[i.pc_id][1];
-      if (!firstCandidateKey) {
+     
+      if (firstCandidateKey.votes===0) {
         votes = 0;
         party_name = "INDEPENDENT";
         win = "NOTA";
-      } else {
+        win = firstCandidateKey.party;
+        id = i.pc_id;
+        name = data[i.pc_id][1].constituencyName;
+        candid = "Awaited";
+        // console.log(data[i.pc_id][0]);
+        // console.log(data[i.pc_id][1]);
+        votes = data[i.pc_id][1].votes;;
+        party_name = "-";
+        if (data[i.pc_id][2] !== undefined) {
+          candid2 = "Awaited";
+          votes2 = data[i.pc_id][2].votes;
+          party_2 ="-";
+        }
+      } 
+      else {
         win = firstCandidateKey.party;
         id = i.pc_id;
         name = data[i.pc_id][1].constituencyName;
@@ -1593,8 +1625,19 @@ function render_state_table(feature, state) {
           party_2 = data[i.pc_id][2].party;
         }
       }
-      if (!partyColors[win]) tr.dataset.pccolor = "#D3D3D3";
-      else tr.dataset.pccolor = partyColors[win];
+
+      if (!partyColors[win]){ tr.dataset.pccolor = "#D3D3D3";
+    }
+
+      else{
+        if(firstCandidateKey.votes===0)
+          {
+            tr.dataset.pccolor = "#D3D3D3";
+          }
+          else{
+        tr.dataset.pccolor = partyColors[win];
+          }
+        }
       tr.className = tr;
 
       const td = document.createElement("td");
@@ -1646,15 +1689,34 @@ function render_state_table(feature, state) {
       if (firstCandidateKey.alliance === "NDA") {
         if (alliancePatries["nda"][firstCandidateKey.party] !== undefined)
           alliancePatries["nda"][firstCandidateKey.party]++;
-        else alliancePatries["nda"][firstCandidateKey.party] = 1;
-      } else if (firstCandidateKey.alliance === "OTH") {
+        else
+        {
+          if(firstCandidateKey.votes!==0)
+            {
+        alliancePatries["nda"][firstCandidateKey.party] = 1;
+            }
+        }
+      }
+       else if (firstCandidateKey.alliance === "OTH") {
         if (alliancePatries["others"][firstCandidateKey.party] !== undefined)
           alliancePatries["others"][firstCandidateKey.party]++;
-        else alliancePatries["others"][firstCandidateKey.party] = 1;
-      } else {
+
+        else 
+        {
+          if(firstCandidateKey.votes!==0){
+          alliancePatries["others"][firstCandidateKey.party] = 1;
+          }
+}
+      } 
+      else {
         if (alliancePatries["india"][firstCandidateKey.party] !== undefined)
           alliancePatries["india"][firstCandidateKey.party]++;
-        else alliancePatries["india"][firstCandidateKey.party] = 1;
+        else {
+          if(firstCandidateKey.votes!==0)
+            {
+          alliancePatries["india"][firstCandidateKey.party] = 1;
+            }
+        }
       }
     } else {
       tr.dataset.pccolor = "#fff";
@@ -1670,11 +1732,11 @@ function render_state_table(feature, state) {
   alliancePatries.india = sortObjectByValuesDesc(alliancePatries.india);
   alliancePatries.others = sortObjectByValuesDesc(alliancePatries.others);
   document.getElementById("piechart").style.display = "block";
-  drawpiechart(alliancePatries);
-  document.getElementById("piechart").style.display = "block";
-  document.getElementById("piechart2").style.display = "block";
-  drawpiechart(alliancePatries, feature);
+  document.getElementById('piechart').style.display="block";
+  document.getElementById('piechart2').style.display="block";
+  drawpiechart(alliancePatries,feature);
   populateCarousel();
+  
 
   // Update the heading with the count of candidates
   const th = document.getElementById("theading");
@@ -1790,31 +1852,30 @@ function render_state_table(feature, state) {
 }
 function drawpiechart(allainceparties, feature) {
   // Load google charts
-  google.charts.load("current", { packages: ["corechart"] });
-
-  let req_feature = feature;
-  let partyVotes = {};
-  var totalvotes1 = 0;
-  for (c in req_feature) {
-    for (actual_data in data[req_feature[c].pc_id]) {
-      if (actual_data != 0) {
-        totalvotes1 += data[req_feature[c].pc_id][actual_data]["votes"];
-        if (
-          !Object.keys(partyVotes).includes(
-            data[req_feature[c].pc_id][actual_data]["party"]
-          )
-        ) {
-          partyVotes[data[req_feature[c].pc_id][actual_data]["party"]] =
-            data[req_feature[c].pc_id][actual_data]["votes"];
-        } else {
-          partyVotes[data[req_feature[c].pc_id][actual_data]["party"]] +=
-            data[req_feature[c].pc_id][actual_data]["votes"];
-        }
+  google.charts.load('current', {'packages':['corechart']});
+ 
+  let req_feature=feature;
+  let partyVotes={};
+  var totalvotes1=0;
+  for(c in req_feature)
+    {
+      for(actual_data in data[req_feature[c].pc_id]){
+        if(actual_data!=0)
+          {
+            totalvotes1+=data[req_feature[c].pc_id][actual_data]["votes"];
+            if(!Object.keys(partyVotes).includes(data[req_feature[c].pc_id][actual_data]["party"]))
+              {
+                partyVotes[data[req_feature[c].pc_id][actual_data]["party"]] = data[req_feature[c].pc_id][actual_data]["votes"];
+              }
+              else{
+                partyVotes[data[req_feature[c].pc_id][actual_data]["party"]] += data[req_feature[c].pc_id][actual_data]["votes"];
+              }
+          }
       }
+      
     }
-  }
-  console.log(partyVotes);
-  google.charts.setOnLoadCallback(drawChart);
+    console.log(partyVotes);
+    google.charts.setOnLoadCallback(drawChart);
 
   // Draw the chart and set the chart values
   function drawChart() {
@@ -1848,7 +1909,14 @@ function drawpiechart(allainceparties, feature) {
 
     // Create the chart data table
     var chartData = google.visualization.arrayToDataTable(data);
-    var chartData2 = google.visualization.arrayToDataTable(data2);
+    var chartData2=google.visualization.arrayToDataTable(data2);
+    if (chartData.getNumberOfRows() === 0) {
+      // If chartData has no columns, display a message
+      document.getElementById("piechart").innerHTML = "Awaiting Result.";
+      document.getElementById("piechart2").innerHTML = "No data available.";
+      return;
+    }
+  
     var formatter = new google.visualization.NumberFormat({
       pattern: "#",
     });
@@ -1908,10 +1976,9 @@ function drawpiechart(allainceparties, feature) {
     );
     chart.draw(chartData, options);
     chart2.draw(chartData2, options2);
-
-
   }
 }
+
 
 // rendering
 function render() {
@@ -2004,8 +2071,8 @@ function showdatatable(
                 <div class="winner-name">${data_2019[id][1].candidateName}</div>
                 <div class="winner-votes">${data_2019[id][1].votes}</div>
             </div>
-            <div class="party"><img src="${sym[party1]}" class="party-logo">${party1}</div>
-            <div class="margin1">Margin - ${mvotes}</div>
+            <div class="party"><img src="${sym[data_2019[id][1].party]}" class="party-logo">${data_2019[id][1].party}</div>
+            <div class="margin1">Margin - ${data_2019[id][1].votes}</div>
         </div>
         <div id="checkdetails" onclick="render_table('${id}',1,'${con1}','${state}')">Check Full Results <span id="gt1">&gt</span></div>`;
   div.innerHTML = "";
@@ -2028,22 +2095,27 @@ function closedata() {
   }
   document.getElementById("Candidate-res").style.display = "none";
 }
-function render_table(code, page, constiti1, st) {
 
-  document.getElementById("chartsContainer").style.display = "none";
-  document.getElementById("carouselContainer").style.display = "none";
-  document.getElementById('piechart').style.display = "none";
-  document.getElementById('piechart2').style.display = "none";
-  document.getElementById('piechart3').style.display = "block";
-  let state_naming = document.getElementById("st_con_heading");
-  state_naming.innerHTML = `${constiti1}&nbsp(${st})`;
-  state_naming.style.marginBottom = "40px";
-  document.getElementById("st_con_heading").style.display = "block";
-  document.getElementById("newcards").style.display = "flex";
-  // var opentable = document.getElementById('Candidate-res');
-  // if(opentable){
-  //   opentable.scrollIntoView({ behavior: 'smooth' });
-  // }
+function render_table(code, page,constiti1,st) {
+
+  document.getElementById("chartsContainer").style.display="none";
+  document.getElementById("carouselContainer").style.display="none";
+  document.getElementById('piechart').style.display="none";
+  document.getElementById('piechart2').style.display="none";
+  document.getElementById('piechart3').style.display="block";
+  let state_naming=document.getElementById("st_con_heading");
+  state_naming.innerHTML=`${constiti1}&nbsp(${st})`;
+  state_naming.style.marginBottom="40px";
+  document.getElementById("st_con_heading").style.display="block";
+  document.getElementById("newcards").style.display="flex";
+  let votingDetails=document.getElementById("votingDetails");
+  votingDetails.style.display="block";
+  votingDetails.innerHTML=`<div>ELECTORS:<span id="electors">${pollinfo[code].electors}</span></div>
+  <div>VOTES:<span>${pollinfo[code].votes}</span></div>
+  <div>PHASE:<span>${pollinfo[code].phase}&nbsp(${pollinfo[code].date})</span></div>`
+  var opentable = document.getElementById('Candidate-res');
+
+
   if (!state_table_pressed) {
     breadcrumbState.style.display = "inline";
   }
@@ -2080,26 +2152,37 @@ function render_table(code, page, constiti1, st) {
     }
   });
 
+
+
   document.getElementById("stateTabeleContainer").style.display = "none";
   document.getElementById("Candidate-res").style.display = "block";
   document.getElementById("Constituency-res").style.display = "none";
   const pageSize = 10; // Number of rows per page
   const candi = data[code];
   const candi_len = candi.length;
-  const first_candi_card = candi[1];
-  const second_candi_card = candi[2];
-  document.getElementById('newcards').innerHTML = " ";
-  createCard(first_candi_card, document.getElementById('newcards'));
-  createCard(second_candi_card, document.getElementById('newcards'));
-  // Calculate start and end indices for the current page
-  let winner_2019 = document.createElement("div");
-  winner_2019.innerHTML = `<h2 style="margin-top:20px;"> 2019 Winner</h2>
+
+
+  const first_candi_card=candi[1];
+  const second_candi_card=candi[2];
+  const first_votes=candi[1].votes;
+  const second_votes=candi[2].votes;
+ const resdl=candi[0].rsDecl;
+ (async () => {
+  document.getElementById('newcards').innerHTML=" ";
+  await createCard(resdl, 1, first_votes, second_votes, first_candi_card, st, document.getElementById('newcards'));
+  await createCard(resdl, 2, first_votes, second_votes, second_candi_card, st, document.getElementById('newcards'));
+  let winner_2019=document.createElement("div");
+  winner_2019.innerHTML=`<h2 style="margin-top:20px;"> 2019 Winner</h2>
   <div class="winner_2019" style="padding:10px;"> 
   <span>${data_2019[code][1].candidateName}</span>
   <div class="winner_img"><div><img src="${sym[data_2019[code][1].party]}">${data_2019[code][1].party} </div>${(data_2019[code][1].votes.toLocaleString())} &nbspVotes
   </div>
   </div>`;
   document.getElementById("newcards").appendChild(winner_2019);
+
+})();
+
+ 
   const startIndex = (page - 1) * pageSize;
   const endIndex = Math.min(startIndex + pageSize, candi.length);
 
@@ -2559,6 +2642,7 @@ function resetstatebread() {
   document.getElementById("piechart2").style.display = "block";
   document.getElementById("piechart3").style.display = "none";
   document.getElementById("newcards").style.display = "none";
+  document.getElementById("votingDetails").style.display="none";
   document.getElementById("stateTabeleContainer").style.display = "none";
   document.getElementById("containertool").style.display = "none";
   let state_naming = document.getElementById("st_con_heading");
@@ -2750,6 +2834,7 @@ function resetstatebread_option() {
   document.getElementById("piechart").style.display = "block";
   document.getElementById("piechart2").style.display = "block";
   document.getElementById("piechart3").style.display = "none";
+  document.getElementById("votingDetails").style.display="none";
   let state_naming = document.getElementById("st_con_heading");
   state_naming.innerHTML = `${breadcrumbState.innerHTML}`;
   state_naming.style.marginBottom = "40px";
@@ -2767,6 +2852,7 @@ function resetstatebread2() {
   document.getElementById("piechart").style.display = "block";
   document.getElementById("piechart2").style.display = "block";
   document.getElementById("piechart3").style.display = "none";
+  document.getElementById("votingDetails").style.display="none";
   let state_naming = document.getElementById("st_con_heading");
   state_naming.innerHTML = `${breadcrumbState.innerHTML})`;
   state_naming.style.marginBottom = "40px";
@@ -2812,14 +2898,48 @@ function viewingstate(stateId) {
   handleSelection();
 }
 
-function createCard(item, id) {
+function getProfilePic(candId, alnce){
   const allianceImages = {
-    NDA: "./images/imgs/NDA  (1).png",
-    INDIA: "./images/imgs/NDA  (2).png",
-    OTH: "./images/imgs/NDA  (3).png",
+    "NDA": "./images/imgs/NDA.png",
+    "INDIA": "./images/imgs/INDA.png",
+    "OTH": "./images/imgs/OTH.png"
   };
-  const imageUrl = item.perimg || allianceImages[item.alliance];
+  return (pictureMapping && pictureMapping[candId]) ? s3PicUrl + pictureMapping[candId] + ".png" : allianceImages[alnce];
+}
 
+async function createCard(rsdel,position,first,second,item,st,id) {
+  // alert(item.votes);
+  async function fetchCandidateValue(item) {
+    const response = await fetch('./data/overallpopular.json');
+    const data = await response.json();
+    console.log(data);
+    const candidate = data[item];
+  // alert(candidate);
+    
+    if (candidate) {
+      // alert(candidate);
+      // alert(candidate.value);
+      return candidate;
+    } else {
+      console.error('Candidate not found for ID:', item.cId);
+      return null;
+    }
+  }
+  let margin=first-second;
+ 
+  // console.log("item@######################",item);
+  // alert(item.candidateId);
+  const allianceImages = {
+    "NDA": "./images/imgs/NDA  (1).png",
+    "INDIA": "./images/imgs/NDA  (2).png",
+    "OTH": "./images/imgs/NDA  (3).png"
+  };
+  // const imageUrl = item.perimg || allianceImages[item.alliance];
+  const candidateValue = await fetchCandidateValue(item.candidateId);
+
+
+  const imageUrl = getProfilePic(item.candidateId,item.votes);
+console.log(imageUrl);
   const card = document.createElement("div");
   card.className = "position-relative custom-container";
 
@@ -2827,26 +2947,48 @@ function createCard(item, id) {
   let bgColor;
   let arrColor;
   let nameColor;
-
+  let nameClass = "";
+  let MarginColor;
   // Adjust colors based on the alliance field
   if (item.alliance === "NDA") {
     bgColor = "linear-gradient(56deg, #FFF8DC,#FFE4BF)";
     arrColor = "linear-gradient(90deg, #EC8E30,#A65E17)";
+    nameClass = "gradient-text-nda";
     nameColor = "#FF9933";
+    MarginColor="#ffed4a"
   } else if (item.alliance === "INDIA") {
     nameColor = "#19AAED";
+    nameClass = "gradient-text-inda";
+    MarginColor="#ffffff"
   } else if (item.alliance === "OTH") {
+    nameClass = "gradient-text-oth";
     bgColor = "linear-gradient(56deg, #F5F5F5,#E0E0E0)";
     arrColor = "linear-gradient(90deg, #6F9088,#42615A)";
     nameColor = "#0c6b4b";
+    MarginColor="#ffffff"
   }
 
   card.style.background = bgColor;
-
-  const ribbonText = item.lead ? "Leading" : "Trailing";
-  const ribbonColor = item.lead
-    ? "rgba(34, 177, 76, 255)"
-    : "rgba(240, 68, 56, 255)";
+  let leadTrailText=rsdel===1 ? position === 1 ? "Won by" : "Lost by" : position === 1 ? "Leading by" : "Trailing by";
+  let ribbonText = item.lead ? "Leading" : "Trailing";
+  let ribbonColor = item.lead ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+  if (rsdel === 1) {
+    ribbonText = position === 1 ? "Won" : "Lost";
+    ribbonColor =
+    position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+  } else {
+    ribbonText = position === 1 ? "Leading" : "Trailing";
+    ribbonColor =
+    position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
+  }
+  // console.log("resdcel",rsdel);
+ 
+ 
+  if(item.votes===0){
+    ribbonText="Awaiting";
+    ribbonColor="grey";
+    leadTrailText="Results Awaited";
+  }
 
   card.innerHTML = `
   <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
@@ -2860,17 +3002,20 @@ function createCard(item, id) {
     }" alt=""></div>
               <h6 style="font-weight: bold;">${item.party}</h6>
           </div>
-          <p class="card-text custom-card-text">${item.constituencyName}</p>
+          <p class="card-text custom-card-text">${
+            item.constituencyName
+          }(${st})</p>
           <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
               <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${item.votes
     }
           </p>
       </div>
       <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
-          <p class="card-text mb-1 custom-iribbon-text">${
-            item.lead ? "Leading by" : "Trailing by"
+          <p class="card-text mb-1 custom-iribbon-text">${leadTrailText
           }</p>
-          <p class="card-text custom-iribbon-text-votes">${item.lead2votes}</p>
+          <p class="card-text custom-iribbon-text-votes">${
+            margin
+          }</p>
       </div>
   </div>
   <div class="person-image d-flex custom-person-image">

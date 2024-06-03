@@ -200,11 +200,26 @@
                </div>
                <div class="col-12 col-md-6 order-md-2 order-2">
                   <p id="st_con_heading" style="font-size: 24px; margin-top: 24px;"></p>
-                  <div style="display: flex;">
-                     <div id="piechart" style="height: 300px; width: 300px; display:none"></div>
-                     <div id="piechart2" style="height: 300px; width: 300px; display:none"></div>
-                     <div id="piechart3" style="height: 300px; width: 300px; display:none"></div>
-                  </div>
+                  <div class="container">
+                     <div class="row">
+                         <div class="col-md-6">
+                             <div id="piechart" class="chart" style="height: 300px; width: 300px; display:none"></div>
+                         </div>
+                         <div class="col-md-6">
+                             <div id="piechart2" class="chart" style="height: 300px; width: 300px; display:none"></div>
+                         </div>
+                     </div>
+                     <div class="row">
+                         <div class="col-md-6">
+                             <div id="piechart3" class="chart" style="height: 300px; width: 300px; display:none"></div>
+                         </div>
+                         <div class="col-md-6">
+                             <div id="votingDetails" style="display: none;"></div>
+                         </div>
+                     </div>
+                 </div>
+                 
+                 
                   <div id="chartsContainer">
                      <!-- <div id="square-container"></div> -->
                      <div class="p-2" id="chartContainer">
@@ -468,10 +483,10 @@
                          id="stateTable">
                         <thead>
                            <tr>
-                              <th class="col-3 col-lg-4 align-middle" id="stateRow" scope="col">State</th>
-                              <th class="col-3 col-lg-2 align-middle" id="NDA" scope="col">NDA</th>
-                              <th class="col-3 col-lg-2 align-middle" id="INDIA" scope="col">I.N.D.I.A</th>
-                              <th class="col-3 col-lg-2 align-middle" id="Others" scope="col">Others</th>
+                              <th class="col-3 col-md-2 col-lg-4  align-middle" id="stateRow" scope="col">State</th>
+                              <th class="col-3 col-md-2 col-lg-2  align-middle" id="NDA" scope="col">NDA</th>
+                              <th class="col-3 col-md-2 col-lg-2  align-middle" id="INDIA" scope="col">I.N.D.I.A</th>
+                              <th class="col-3 col-md-2 col-lg-2  align-middle" id="Others" scope="col">Others</th>
                            </tr>
                         </thead>
                         <tr id="referenceRow">
@@ -594,7 +609,7 @@
          </div>
       </div>
 
-      <div class="tablesDivOne ">
+      <div class="tablesDivOne d-none">
          <div class="table-container">
             <div class="table-header sticky">
                <h3>High Margin</h3>
@@ -603,7 +618,7 @@
             <table class="custom-table-one table-bordered">
                <thead>
                   <tr>
-                     <th class="sticky columnOne" style="text-align: left;">Candidate Name</th>
+                     <th class="sticky" style="text-align: left;margin-left:0.4rem;">Candidate Name</th>
                      <th>Constituency</th>
                      <th>Votes</th>
                      <th>Margin</th>
@@ -622,7 +637,7 @@
             <table class="custom-table-two table-bordered">
                <thead>
                   <tr>
-                     <th class="sticky columnOne" style="text-align: left;">Candidate Name</th>
+                     <th class="sticky" style="text-align: left;margin-left:0.4rem;">Candidate Name</th>
                      <th>Constituency</th>
                      <th>Votes</th>
                      <th>Margin</th>
@@ -635,7 +650,7 @@
          </div>
       </div>
 
-      <div class="tablesDivTwo">
+      <div class="tablesDivTwo d-none">
          <div class="table-container">
             <div class="table-header sticky">
                <h3>Richest Candidates</h3>
@@ -644,36 +659,36 @@
             <table class="custom-table-three table-bordered">
                <thead>
                   <tr>
-                    <th class="sticky columnOne" style="text-align: left;">Candidate Name</th>
-                    <th>Constituency</th>
-                    <th style="line-height: 1rem;">Asset <br><span>(in Rs)</span></th>
-                    <th style="line-height: 1rem;">Total Votes <br><span>(Margin)</span></th>
-                    <th>Status</th>
-                </tr>
-                </thead>
-                <tbody>
+                     <th class="sticky" style="text-align: left;">Candidate Name</th>
+                     <th>Constituency</th>
+                     <th style="line-height: 1rem;">Asset <br><span>(in Rs)</span></th>
+                     <th style="line-height: 1rem;">Total Votes <br><span>(Margin)</span></th>
+                     <th>Status</th>
+                  </tr>
+               </thead>
+               <tbody>
                   <tr class="richestOne">
-                    <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Chandra Sekhar Pemmasani <br><span><img src="./images/imgs/TDP.webp" alt="">TDP</span></td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Chandra Sekhar Pemmasani <br><span><img src="./images/imgs/TDP.webp" alt="">TDP</span></td>
                     <td>Guntur</td>
                     <td>5706+ Cr</td>
                 </tr>
                 <tr class="richestTwo">
-                    <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Konda Vishweshwar Reddy <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Konda Vishweshwar Reddy <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
                     <td>Chevella</td>
                     <td>4568+ Cr</td>
                 </tr>
                 <tr class="richestThree">
-                    <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Pallavi Shrinivas Dempo <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Pallavi Shrinivas Dempo <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
                     <td>South Goa</td>
                     <td>1361+ Cr</td>
                 </tr>
                 <tr class="richestFour">
-                    <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Naveen Jindal <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Naveen Jindal <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
                     <td>Kurukshetra</td>
                     <td>1230+ Cr</td>
                 </tr>
                 <tr class="richestFive">
-                    <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Nakul Kamalnath <br><span><img src="./images/imgs/INC.png" alt="">INC</span></td>
+                    <td class="sticky" style="text-align: left;padding-left:1.4rem;">Nakul Kamalnath <br><span><img src="./images/imgs/INC.png" alt="">INC</span></td>
                     <td>Gurugram</td>
                     <td>716+ Cr</td>
                 </tr>
@@ -691,11 +706,57 @@
               <table class="custom-table-four table-bordered">
                 <thead>
                   <tr>
-                    <th class="sticky columnOne" style="text-align: left;margin-left:0.4rem;">Candidate Name</th>
+                    <th class="sticky" style="text-align: left;margin-left:0.4rem;">Candidate Name</th>
                     <th>Constituency</th>
                     <th style="line-height: 1rem;">Total Votes 2019<br><span>(Margin)</span></th>
                     <th style="line-height: 1rem;">Total Votes <br><span>(Margin)</span></th>
                     <th>Status</th>
+                  </tr>
+                  <tr class="richestTwo">
+                     <td class="sticky" style="text-align: left;padding-left:1.4rem;">Konda Vishweshwar Reddy
+                        <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span>
+                     </td>
+                     <td>Chevella</td>
+                     <td>4568+ Cr</td>
+                  </tr>
+                  <tr class="richestThree">
+                     <td class="sticky" style="text-align: left;padding-left:1.4rem;">Pallavi Shrinivas Dempo
+                        <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span>
+                     </td>
+                     <td>South Goa</td>
+                     <td>1361+ Cr</td>
+                  </tr>
+                  <tr class="richestFour">
+                     <td class="sticky" style="text-align: left;padding-left:1.4rem;">Naveen Jindal <br><span><img
+                              src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
+                     <td>Kurukshetra</td>
+                     <td>1230+ Cr</td>
+                  </tr>
+                  <tr class="richestFive">
+                     <td class="sticky" style="text-align: left;padding-left:1.4rem;">Nakul Kamalnath <br><span><img
+                              src="./images/imgs/INC.png" alt="">INC</span></td>
+                     <td>Gurugram</td>
+                     <td>716+ Cr</td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+
+
+
+         <div class="table-container">
+            <div class="table-header sticky">
+               <h3>Poorest Candidates</h3>
+               <p>Candidates with lowest assets declared as per the Affidavit</p>
+            </div>
+            <table class="custom-table-four table-bordered">
+               <thead>
+                  <tr>
+                     <th class="sticky" style="text-align: left;margin-left:0.4rem;">Candidate Name</th>
+                     <th>Constituency</th>
+                     <th style="line-height: 1rem;">Total Votes 2019<br><span>(Margin)</span></th>
+                     <th style="line-height: 1rem;">Total Votes <br><span>(Margin)</span></th>
+                     <th>Status</th>
                   </tr>
                </thead>
                <tbody>
@@ -726,17 +787,14 @@
                   </tr>
                </tbody>
             </table>
+
          </div>
-
-
-
-         
       </div>
       <p class="notContesting d-none">Sanjay Bhatia, Subhash Chandra Baheria, Ranjanben Bhatt & Parvesh Sahib Singh Verma
          contested in 2019 but are not contesting in 2024 election. Their names have not been included.</p>
       <!-- rajendar part -->
-          <div id="selectmapbtn">Select State</div>
-          <div class="selectmap">
+      <div id="selectmapbtn" class="d-none">Select State</div>
+      <div class="selectmap d-none">
          <!-- Generate 35 grid items with images and labels -->
          <div class="grid-item1" onclick="viewingstate(37)">
             <img id="myg" src="./images/imgs2/andhra_pradesh.png">
@@ -751,7 +809,7 @@
             <p id="myp">Assam</p>
          </div>
          <div class="grid-item1" onclick="viewingstate(10)">
-            <img id="myg" src="./images/imgs2/bihar.png">
+            <img id="myg" src="./images//imgs2/bihar.png">
             <p id="myp">Bihar</p>
          </div>
          <div class="grid-item1" onclick="viewingstate(22)">
@@ -778,10 +836,10 @@
             <img id="myg" src="./images/imgs2/himachal_pradesh.png">
             <p id="myp">Himachal_pradesh</p>
          </div>
-            <div class="grid-item1" onclick="viewingstate(1)">
-               <img id="myg" src="./images/imgs2/Jammukashmir.svg">
+         <!-- <div class="grid-item1" onclick="viewingstate(1)">
+               <img id="myg" src="./images/imgs2/jammu_and_kashmir.png">
                <p id="myp">Jammu and Kashmir</p>
-             </div>
+             </div> -->
          <div class="grid-item1" onclick="viewingstate(20)">
             <img id="myg" src="./images/imgs2/jharkhand.png">
             <p id="myp">Jharkhand</p>
@@ -826,10 +884,6 @@
             <img id="myg" src="./images/imgs2/odisha.png">
             <p id="myp">Odisha</p>
          </div>
-             <div class="grid-item1" onclick="viewingstate(4)">
-               <img id="myg" src="./images/imgs2/chandigarh.svg">
-               <p id="myp">Chandigarh</p>
-             </div>
          <div class="grid-item1" onclick="viewingstate(3)">
             <img id="myg" src="./images/imgs2/punjab.png">
             <p id="myp">Punjab</p>
@@ -866,22 +920,16 @@
             <img id="myg" src="./images/imgs2/uttarakhand.png">
             <p id="myp">Uttarakhand</p>
          </div>
-             <div class="grid-item1" onclick="viewingstate(1)">
-               <img id="myg" src="./images/imgs2/Ladakh.svg">
-               <p id="myp">Ladakh</p>
-             </div>
-             <div class="grid-item1" onclick="viewingstate(24)">
-               <img id="myg" src="./images/imgs2/dadranagarhaveli.svg">
-               <p id="myp">Dadra & Nagar Haveli</p>
-             </div>
-             <div class="grid-item1" onclick="viewingstate(24)">
-               <img id="myg" src="./images/imgs2/Daman_DIu.svg">
-               <p id="myp">Daman and Diu</p>
-            </div>
-            <div class="grid-item1" onclick="viewingstate(35)">
-               <img id="myg" src="./images/imgs2/andaman nicobar.svg">
-               <p id="myp">Andaman & Nicobar</p>
-            </div>
+         <!-- <div class="grid-item1" onclick="viewingstate(5)">
+                <img id="myg" src="./images/imgs2/Daman_and_Diu.png">
+                <p id="myp">Daman_and_Diu</p>
+              </div>
+              <div class="grid-item1" onclick="viewingstate(5)">
+                <img id="myg" src="./images/imgs2/Dadra_&_Nagar_Haveli.png">
+                <p id="myp">Dagra & Nagar Haveli</p>
+              </div> -->
+      </div>
+
    </div>
    </div>
    <!-- Common Footer -->
