@@ -162,14 +162,14 @@ document.addEventListener('DOMContentLoaded', function () {
       ];
 
       candidates.forEach(candidate => {
-        const result = determineStatus(candidate.state, candidate.constit, candidate.candId);
+        const result = getStatus(candidate.state, candidate.constit, candidate.candId);
         const row = document.querySelector(`.${candidate.rowClass}`);
         const statusCell = document.createElement('td');
         const countCell = document.createElement('td');
 
         if (result.status === 'awaiting results') {
           statusCell.innerHTML = '<p>awaiting results</p>';
-          countCell.innerHTML = '<p>awaiting results</p>';
+          countCell.innerHTML = '<p>Awaiting results</p>';
           statusCell.classList.add('awaiting');
         } else {
           statusCell.innerHTML = `<p>${result.status}</p>`;
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
           } else if(result.status==='Awaiting'){
             statusCell.classList.add('awaiting');
           }
-          else{
+           else {
             statusCell.classList.add('trailing');
           }
           countCell.innerHTML = `${result.votes}<br><span style="color:grey; font-size:0.8rem;"> ${result.margin}</span>`;
