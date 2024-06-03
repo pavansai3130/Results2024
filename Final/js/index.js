@@ -38,6 +38,7 @@ const stateMapping = {
 };
 
 let show_res=0;
+var resultJSON = null;
 let s3PicUrl = "https://results2024.s3.ap-south-1.amazonaws.com/candpics/";
 fetch("./data/overallpopular.json")
 .then((response) => {
@@ -102,10 +103,17 @@ fetchCandidateData().then(() => {
 });
 let candidatesData = [];
 async function fetchCandidateData() {
-  const response = await fetch(
-    "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
-  );
-  const data = await response.json();
+  let data = null;
+  if(!resultJSON){
+    const response = await fetch(
+      "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
+    );
+    data = await response.json();
+    resultJSON = data;
+  } else {
+    data = resultJSON;
+  }
+
   candidatesData = data[0]; // Store the 1st index in the global variable
 }
 
@@ -1117,11 +1125,17 @@ async function fetchMoreCards() {
     const stateResponse = await fetch("../data/popular.json");
     const stateData = await stateResponse.json();
     console.log("State Data:", stateData);
+    let candidateData = null;
+    if(!resultJSON){
+      const candidateResponse = await fetch(
+        "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
+      );
+      candidateData = await candidateResponse.json();
+      resultJSON = candidateData;
+    } else {
+      candidateData = resultJSON;
+    }
 
-    const candidateResponse = await fetch(
-      "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
-    );
-    const candidateData = await candidateResponse.json();
     console.log("Candidate Data:", candidateData);
 
     // Function to get candidate details by ID from the fetched candidate data

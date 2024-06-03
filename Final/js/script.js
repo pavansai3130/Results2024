@@ -3,6 +3,7 @@
 
 // JSON object containing party colors
 let comparedata2019 = {};
+var resultJSON = null;
 let tabSize=0;
 let data_201;
 let data_2019 = {};
@@ -1095,17 +1096,22 @@ async function fetchGeoJSON(file) {
 async function fetchJSON() {
   console.log(`called ${temp++}`);
   try {
-    const url = "https://results2024.s3.ap-south-1.amazonaws.com/election2024.json";
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+    if(!resultJSON){
+      const url = "https://results2024.s3.ap-south-1.amazonaws.com/results.json";
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      data2024 = await response.json();
+      resultJSON = data2024;
+    } else{
+      data2024 = resultJSON;
     }
-    data2024 = await response.json();
     allianceJson = data2024[1];
     stateDataJson = data2024[0];
     console.log(stateDataJson);
@@ -2699,10 +2705,16 @@ let loadPrev;
 async function fetchTop10(tabSize) {
   // alert(tabSize)
   try {
-    const candidateResponse = await fetch(
-      "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
-    );
-    const candidateData = await candidateResponse.json();
+    let candidateData = null;
+    if(!resultJSON){
+      const candidateResponse = await fetch(
+        "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
+      );
+      candidateData = await candidateResponse.json();
+      resultJSON = candidateData;
+    } else {
+      candidateData = resultJSON;
+    }
     // console.log("Candidate Data:", candidateData);
 
     function getCandidateDetails(candidateId) {
