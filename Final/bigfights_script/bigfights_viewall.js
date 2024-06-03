@@ -11,6 +11,21 @@ var search_but = document.getElementById("search_button");
 var selectedIndex = -1;
 var back_bottom = document.getElementById("back_bottom");
 
+var data2024 = null;
+
+async function fetchdata_BF() {
+  fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok " + response.statusText);
+      }
+      return response.json();
+    }).then((data) => {
+      data2024 = data[0];
+      return Promise.resolve();
+    }).catch((error) => { return Promise.reject(error) });
+}
+
 search_but.addEventListener("click", () => {
   enable_search.style.display == "block"
     ? (enable_search.style.display = "none")
@@ -22,28 +37,43 @@ function toTitleCase(name) {
     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
   }).join(' ');
 }
-function represent_All() {
-  fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json")
+function fetching_json() {
+  return fetch("./data/overallpopular.json")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);
       }
       return response.json();
-    }).then((data2024) => {
-      fetch("./data/overallpopular.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok " + response.statusText);
-        }
-        return response.json();
-      }).then((imgjson) => {
-      represent_All_fun(data2024[0], imgjson);
-      });
-    });
+    }).then((imgjson) => imgjson)
+    .catch((error) => { console.log(error) });
 }
-function represent_All_fun(data2024, imgjson) {
+function represent_All() {
   let state_tag = document.getElementById("state_tag");
   state_tag.style.display = "none";
+  if (data2024) {
+    fetching_json().then((imgjson) => {
+      represent_All_fun(data2024, imgjson);
+    }).catch((error) => {
+      console.error("Error fetching JSON:", error);
+    });
+    return;
+  }
+  var dataLoaded = fetchdata_BF();
+  var rendercardsbf = async function () {
+    try {
+      await dataLoaded;
+      fetching_json().then((imgjson) => {
+        represent_All_fun(data2024, imgjson);
+      }).catch((error) => {
+        console.error("Error fetching JSON:", error);
+      });
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
+  }
+  rendercardsbf()
+}
+function represent_All_fun(data2024, imgjson) {
   main_div.innerHTML = "";
   fetch("./data/bigfights.json")
     .then((response) => {
@@ -54,7 +84,7 @@ function represent_All_fun(data2024, imgjson) {
     })
     .then((data) => {
       temp_const = [];
-      temp_data = [];
+      temp_data = {};
       temp_states = [];
       bigfights_data = data["candidate_details"];
       party_img_json = data["images_key"];
@@ -108,18 +138,20 @@ function represent_All_fun(data2024, imgjson) {
                 : "./images/imgs2/madhya_pradesh.png";
             let bar_length1 = (parseInt(cd1_votes) / parseInt(tot_vts)) * 100;
             let bar_length2 = (parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
-            temp_data.push(toTitleCase(obj["name1"]));
-            temp_data.push(toTitleCase(obj["name2"]));
-            let img1 = (cid1 in imgjson) ? 
-            `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png` :
-            `./images/other/partylogo/Unknown.svg`;
-            let img2 = (cid2 in imgjson) ? 
-            `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png` :
-            `./images/other/partylogo/Unknown.svg`;
-            if(cd1_votes == 0 && cd2_votes == 0) {
+            if(!(obj["name1"].toLowerCase() in temp_data))
+            temp_data[toTitleCase(obj["name1"])] = 1;
+            if(!(obj["name2"].toLowerCase() in temp_data))
+            temp_data[toTitleCase(obj["name2"])] = 1;
+            let img1 = (cid1 in imgjson) ?
+              `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png` :
+              `./images/other/partylogo/Unknown.svg`;
+            let img2 = (cid2 in imgjson) ?
+              `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png` :
+              `./images/other/partylogo/Unknown.svg`;
+            if (cd1_votes == 0 && cd2_votes == 0) {
               cd1_votes = "Awaited";
               cd2_votes = "Awaited";
-            }else {
+            } else {
               cd1_votes = new Intl.NumberFormat('en-IN').format(cd1_votes);
               cd2_votes = new Intl.NumberFormat('en-IN').format(cd2_votes);
             }
@@ -174,23 +206,28 @@ function getParameterByName(name, url = window.location.href) {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 function represent_state(state) {
-  fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok " + response.statusText);
-      }
-      return response.json();
-    }).then((data2024) => {
-      fetch("./data/overallpopular.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok " + response.statusText);
-        }
-        return response.json();
-      }).then((imgjson) => {
-      represent_state_fun(data2024[0], state, imgjson);
-      });
+  if (data2024) {
+    fetching_json().then((imgjson) => {
+      represent_state_fun(data2024, state, imgjson);
+    }).catch((error) => {
+      console.error("Error fetching JSON:", error);
     });
+    return;
+  }
+  var rendercardsbf = async function () {
+    var dataLoaded = fetchdata_BF();
+    try {
+      await dataLoaded;
+      fetching_json().then((imgjson) => {
+        represent_state_fun(data2024, state, imgjson);
+      }).catch((error) => {
+        console.error("Error fetching JSON:", error);
+      });
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
+  }
+  rendercardsbf();
 }
 function represent_state_fun(data2024, state, imgjson) {
   main_div.innerHTML = "";
@@ -221,7 +258,7 @@ function represent_state_fun(data2024, state, imgjson) {
       temp_states.push(state);
       for (let const_name in candidates_data) {
         let arr_obj = candidates_data[const_name];
-        temp_const.push(const_name);
+        temp_const.push(toTitleCase(const_name));
         for (let bigf = 0; bigf < arr_obj.length; bigf++) {
           obj = candidates_data[const_name][bigf];
           let card_div = document.createElement("div");
@@ -236,8 +273,8 @@ function represent_state_fun(data2024, state, imgjson) {
             tot_vts += candidate["vts"];
           });
           if (votes1 > votes2) {
-            cid1 = obj["id1"]; 
-            cid2 = obj["id2"]; 
+            cid1 = obj["id1"];
+            cid2 = obj["id2"];
             prty1 = obj["party1"];
             prty2 = obj["party2"];
             cd1_votes = votes1;
@@ -245,8 +282,8 @@ function represent_state_fun(data2024, state, imgjson) {
             name1 = obj["name1"];
             name2 = obj["name2"];
           } else {
-            cid2 = obj["id1"]; 
-            cid1 = obj["id2"]; 
+            cid2 = obj["id1"];
+            cid1 = obj["id2"];
             prty2 = obj["party1"];
             prty1 = obj["party2"];
             cd2_votes = votes1;
@@ -268,22 +305,22 @@ function represent_state_fun(data2024, state, imgjson) {
               : "./images/imgs2/madhya_pradesh.png";
           temp_data.push(toTitleCase(obj["name1"]));
           temp_data.push(toTitleCase(obj["name2"]));
-          let img1 = (cid1 in imgjson) ? 
+          let img1 = (cid1 in imgjson) ?
             `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png` :
             `./images/other/partylogo/Unknown.svg`;
-            let img2 = (cid2 in imgjson) ? 
+          let img2 = (cid2 in imgjson) ?
             `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png` :
             `./images/other/partylogo/Unknown.svg`;
           let bar_length1 = (parseInt(cd1_votes) / parseInt(tot_vts)) * 100;
-          let bar_length2 =(parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
-          if(cd1_votes == 0 && cd2_votes == 0) {
+          let bar_length2 = (parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
+          if (cd1_votes == 0 && cd2_votes == 0) {
             cd1_votes = "Awaited";
             cd2_votes = "Awaited";
-          }else {
+          } else {
             cd1_votes = new Intl.NumberFormat('en-IN').format(cd1_votes);
             cd2_votes = new Intl.NumberFormat('en-IN').format(cd2_votes);
           }
-          let html_data = `<span class="state_name" data-state="${state}" data-const="${const_name}">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
+          let html_data = `<span class="state_name" data-state="${toTitleCase(state)}" data-const="${toTitleCase(const_name)}">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
           <div class="cand_desc1">
               <span class="img_container">
                   <img class="party_symbol" src="${party_path1}" alt="">
@@ -442,7 +479,7 @@ function recommendations(searchBar, id_name) {
   }
   if (ct > 0) list.classList.add("search_list_last");
   var ct = 0;
-  for (let full_name of temp_data) {
+  for (let full_name in temp_data) {
     // console.log(input +' '+ name+ name.startsWith(input));
     // console.log(input);
     if (ct > 2) break;
