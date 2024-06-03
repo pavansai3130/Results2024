@@ -1167,11 +1167,11 @@ async function fetchJSON() {
 $(document).ready(async function () {
   await fetchJSON();
   await fetchJSON2(
-    "../data/election2019.json",
-    "../data/stateAllianceCount.json",
-    "../data/bigfights.json",
-    "../data/state-parties.json",
-    "../data/newAlliance.json"
+    "./data/election2019.json",
+    "./data/stateAllianceCount.json",
+    "./data/bigfights.json",
+    "./data/state-parties.json",
+    "./data/newAlliance.json"
   );
   await fetchGeoJSON("./data/geo.json");
   let intervalId = setInterval(async () => {
