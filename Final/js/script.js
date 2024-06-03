@@ -11,7 +11,6 @@ const initialZoom = 4.8;
 let state_value = 36;
 let sym = {
   extra: "./images/imgs/notknown.svg",
-
   UPPL: "./images/img/UPPL.svg",
   SDF: "./images/img/SDF.svg",
   SHS: "./images/img/SHS.svg",
@@ -26,6 +25,21 @@ let sym = {
   AGP: "./images/img/AGP.svg",
   AIFB: "./images/img/AIFB.svg",
   extra: "./images/imgs/notknown.svg",
+  NOTA:"./images/imgs/NOTA.svg",
+  UPPL:"./images/img/UPPL.svg",
+ SDF:"./images/img/SDF.svg",
+  SHS:"./images/img/SHS.svg",
+  JNKC:"./images/img/JNKC.svg",
+  JJP:"./images/img/JJP.svg",
+  INLD:"./images/img/INLD.svg",
+  BPF:"./images/img/BPF.svg",
+  INLD:"./images/img/INLD.svg",
+  AAP:"./images/imgs/AAP.svg",
+  PDP:"./images/img/PDP.svg",
+  ADMK:"./images/img/ADMK.svg",
+  AGP:"./images/img/AGP.svg",
+  AIFB:"./images/img/AIFB.svg",
+  extra:"./images/imgs/notknown.svg",
   IND: "./images/imgs/IND.svg",
   BJP: "./images/imgs/BJP.svg",
   INC: "./images/imgs/INC.svg",
@@ -107,6 +121,7 @@ let state_codes = {
   "Arunachal Pradesh": 12,
   Assam: 18,
   "Andhra Pradesh": 37,
+  "Daman and Diu":25,
   "Andaman and Nicobar Islands": 35,
   Chandigarh: 4,
   Telangana: 36,
@@ -1088,7 +1103,7 @@ async function fetchGeoJSON(file) {
 async function fetchJSON() {
   console.log(`called ${temp++}`);
   try {
-    const url = "https://results2024.s3.ap-south-1.amazonaws.com/results.json";
+    const url = "https://results2024.s3.ap-south-1.amazonaws.com/election2024.json";
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -1111,7 +1126,7 @@ async function fetchJSON() {
       for (let state in data2024) {
         for (let const_name in data2024[state]) {
           const candidates = [];
-          candidates.push({ rsDecl: data2024[state][const_name]["rsDecl"] });
+          candidates.push({"rsDecl": data2024[state][const_name]["rsDecl"]});
           for (let item of data2024[state][const_name]["candidates"]) {
             const candidate = {
               candidateId: item.cId,

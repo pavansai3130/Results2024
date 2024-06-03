@@ -370,14 +370,14 @@ input#stateinput {
   /* padding: 0 20px; */
   /* font-size: 1rem; */
   /* outline: none; */
-  background-image: url('https://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png');
+  background-image: url('../images/imgs/search.svg');
   background-repeat: no-repeat;
-  background-position: right top; /* Set background image position */
+  background-position: calc(100% - 20px) 54%; /* Set background image position */
   padding-right: 0.3rem; /* Add padding to the right to make space for the search icon */
   border-radius: 0;
   border: none;
   border-bottom: 0.0625rem solid black;
-  background-size:40px 40px;
+  background-size:12px 12px;
   /* border:none; */
   margin-left: auto;
 }
@@ -1080,7 +1080,62 @@ gap: 8px;
     grid-template-columns: repeat(13, 1fr);
   }
 }
+
 @media (min-width: 1410px) and (max-width: 1490px){
+
+@media (min-width:748px)and (max-width:992px) {
+  #theading,#theading2
+  {
+    width: 430px;
+  }
+  .newbuttons{
+    font-size: 12px;
+    width: 1.2rem;
+    padding: 0;
+    margin: 0;  
+  }
+  .pagination-button
+  {
+    font-size: 10px;
+    width: fit-content;
+    height: fit-content;
+  }
+  #theading,#theading2
+  {
+    padding: 0;
+  }
+  #theading span,
+  #theading2 span
+  {
+    font-size: 14px;
+    margin-left: auto;
+  }
+  input#stateinput
+  {
+    width: 100px;
+  }  
+  #pagination-controls,
+  #pagination-controls-candidates
+  {
+    width: 430px;
+  }
+}
+#votingDetails div
+{
+font-family: "roboto";
+font-weight: 700;
+font-size: 14px;
+padding-bottom: 10px;
+}
+#votingDetails span{
+  margin-left: 60px;
+}
+#electors
+{
+  margin-left: 36px !important;
+}
+}
+@media (min-width: 1320px) and (max-width:1420px){
   .selectmap {
     grid-template-columns: repeat(13, 1fr);
   }
