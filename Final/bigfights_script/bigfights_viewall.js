@@ -10,7 +10,7 @@ var enable_search = document.getElementById("enable_search");
 var search_but = document.getElementById("search_button");
 var selectedIndex = -1;
 var back_bottom = document.getElementById("back_bottom");
-
+var main_div = document.getElementById("more-cards-root");
 var data2024 = null;
 
 async function fetchdata_BF() {
@@ -31,7 +31,7 @@ search_but.addEventListener("click", () => {
     ? (enable_search.style.display = "none")
     : (enable_search.style.display = "block");
 });
-var main_div = document.getElementById("more-cards-root");
+
 function toTitleCase(name) {
   return name.split(' ').map(word => {
     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
@@ -48,10 +48,13 @@ function fetching_json() {
     .catch((error) => { console.log(error) });
 }
 function represent_All() {
+  removeClassFromAllElements();
+  main_div.innerHTML = "";
   let state_tag = document.getElementById("state_tag");
   state_tag.style.display = "none";
   if (data2024) {
     fetching_json().then((imgjson) => {
+      removeClassFromAllElements()
       represent_All_fun(data2024, imgjson);
     }).catch((error) => {
       console.error("Error fetching JSON:", error);
@@ -63,6 +66,8 @@ function represent_All() {
     try {
       await dataLoaded;
       fetching_json().then((imgjson) => {
+        removeClassFromAllElements();
+        main_div.innerHTML = "";
         represent_All_fun(data2024, imgjson);
       }).catch((error) => {
         console.error("Error fetching JSON:", error);
@@ -73,7 +78,108 @@ function represent_All() {
   }
   rendercardsbf()
 }
+function card_creation(data2024, state, const_name, obj, imgjson) {
+  let card_div = document.createElement("div");
+  card_div.setAttribute("class", "card");
+  let votes1, votes2, prty1, prty2, name1, name2, cd1_votes, cd2_votes;
+  let tot_vts = 0, cid1, cid2;
+  data2024[state][const_name.toLowerCase()]["candidates"].forEach((candidate) => {
+    if (candidate["cId"] == obj["id1"])
+      votes1 = candidate["vts"];
+    if (candidate["cId"] == obj["id2"])
+      votes2 = candidate["vts"];
+    tot_vts += candidate["vts"];
+  });
+  if (votes1 > votes2) {
+    cid1 = obj["id1"];
+    cid2 = obj["id2"];
+    prty1 = obj["party1"];
+    prty2 = obj["party2"];
+    cd1_votes = votes1;
+    cd2_votes = votes2;
+    name1 = obj["name1"];
+    name2 = obj["name2"];
+  } else {
+    cid2 = obj["id1"];
+    cid1 = obj["id2"];
+    prty2 = obj["party1"];
+    prty1 = obj["party2"];
+    cd2_votes = votes1;
+    cd1_votes = votes2;
+    name2 = obj["name1"];
+    name1 = obj["name2"];
+  }
+  let party_path1 =
+    prty1 in party_img_json
+      ? party_img_json[prty1]
+      : party_img_json["default"];
+  let party_path2 =
+    prty2 in party_img_json
+      ? party_img_json[prty2]
+      : party_img_json["default"];
+  let state_img =
+    state.toLowerCase() in party_img_json
+      ? party_img_json[state.toLowerCase()]
+      : "./images/imgs2/madhya_pradesh.png";
+  let bar_length1 = (parseInt(cd1_votes) / parseInt(tot_vts)) * 100;
+  let bar_length2 = (parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
+  if (!(obj["name1"].toLowerCase() in temp_data))
+    temp_data[toTitleCase(obj["name1"])] = 1;
+  if (!(obj["name2"].toLowerCase() in temp_data))
+    temp_data[toTitleCase(obj["name2"])] = 1;
+  let img1 = (cid1 in imgjson) ?
+    `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png` :
+    `./images/imgs2/Unknown.png`;
+  let img2 = (cid2 in imgjson) ?
+    `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png` :
+    `./images/imgs2/Unknown.png`;
+  if (cd1_votes == 0 && cd2_votes == 0) {
+    cd1_votes = "Awaited";
+    cd2_votes = "Awaited";
+  } else {
+    cd1_votes = new Intl.NumberFormat('en-IN').format(cd1_votes);
+    cd2_votes = new Intl.NumberFormat('en-IN').format(cd2_votes);
+  }
+  let html_data = `<span class="state_name" data-state="${toTitleCase(state)}" data-const="${toTitleCase(const_name)}">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
+      <div class="cand_desc1">
+          <span class="img_container">
+              <img class="party_symbol" src="${party_path1}" alt="">
+              <img class="cand_img1" src="${img1}" alt="">
+          </span>
+          <div class="desc_container">
+              <div class="cand_name1 render_name1" data-candname="${toTitleCase(name1)
+    }">${toTitleCase(name1)} <span class="state_party_slot">(${prty1
+    })</span></div>
+              <span class="lead_bar">
+              <span style="width:${bar_length1
+    }%;" class="leadbar"> </span><span style="color:black;margin:3px">
+              ${cd1_votes}</span>
+              </span>
+          </div>
+      </div>
+      <div class="cand_desc2">
+          <span class="img_container">
+              <img class="party_symbol" src="${party_path2}" alt="">
+              <img class="cand_img1" src="${img2}" alt="">
+          </span>
+          <div class="desc_container">
+              <div class="cand_name1 render_name2" data-candname="${toTitleCase(name2)
+    }">${toTitleCase(name2)} <span class="state_party_slot">(${prty2
+    })</span></div>
+            <span class="trail_bar">
+              <span style="width:${bar_length2
+    }%;" class="trailbar"></span><span style="color:black;margin:3px">${cd2_votes}</span>
+              </span>
+          </div>
+      </div>
+      <div class="map_container">
+          <img class="img_map" src="${state_img}" alt=""> 
+      </div>`;
+  card_div.innerHTML = html_data;
+  main_div.appendChild(card_div);
+}
 function represent_All_fun(data2024, imgjson) {
+  removeClassFromAllElements();
   main_div.innerHTML = "";
   fetch("./data/bigfights.json")
     .then((response) => {
@@ -86,112 +192,21 @@ function represent_All_fun(data2024, imgjson) {
       temp_const = [];
       temp_data = {};
       temp_states = [];
+      popular_bfs = data["popular"];
       bigfights_data = data["candidate_details"];
       party_img_json = data["images_key"];
+      for (let pop in popular_bfs) {
+        card_creation(data2024, popular_bfs[pop][0]["state"], pop, popular_bfs[pop][0], imgjson);
+      }
       for (let state in bigfights_data) {
         temp_states.push(toTitleCase(state));
         for (let const_name in bigfights_data[state]) {
           temp_const.push(toTitleCase(const_name));
           for (let bigf = 0; bigf < bigfights_data[state][const_name].length; bigf++) {
-            obj = bigfights_data[state][const_name][bigf];
-            let card_div = document.createElement("div");
-            card_div.setAttribute("class", "card");
-            let votes1, votes2, prty1, prty2, name1, name2, cd1_votes, cd2_votes;
-            let tot_vts = 0, cid1, cid2;
-            data2024[state][const_name.toLowerCase()]["candidates"].forEach((candidate) => {
-              if (candidate["cId"] == obj["id1"])
-                votes1 = candidate["vts"];
-              if (candidate["cId"] == obj["id2"])
-                votes2 = candidate["vts"];
-              tot_vts += candidate["vts"];
-            });
-            if (votes1 > votes2) {
-              cid1 = obj["id1"];
-              cid2 = obj["id2"];
-              prty1 = obj["party1"];
-              prty2 = obj["party2"];
-              cd1_votes = votes1;
-              cd2_votes = votes2;
-              name1 = obj["name1"];
-              name2 = obj["name2"];
-            } else {
-              cid2 = obj["id1"];
-              cid1 = obj["id2"];
-              prty2 = obj["party1"];
-              prty1 = obj["party2"];
-              cd2_votes = votes1;
-              cd1_votes = votes2;
-              name2 = obj["name1"];
-              name1 = obj["name2"];
+            if (!(const_name in popular_bfs)) {
+              obj = bigfights_data[state][const_name][bigf];
+              card_creation(data2024, state, const_name, obj, imgjson);
             }
-            let party_path1 =
-              prty1 in party_img_json
-                ? party_img_json[prty1]
-                : party_img_json["default"];
-            let party_path2 =
-              prty2 in party_img_json
-                ? party_img_json[prty2]
-                : party_img_json["default"];
-            let state_img =
-              state.toLowerCase() in party_img_json
-                ? party_img_json[state.toLowerCase()]
-                : "./images/imgs2/madhya_pradesh.png";
-            let bar_length1 = (parseInt(cd1_votes) / parseInt(tot_vts)) * 100;
-            let bar_length2 = (parseInt(cd2_votes) / parseInt(tot_vts)) * 100;
-            if(!(obj["name1"].toLowerCase() in temp_data))
-            temp_data[toTitleCase(obj["name1"])] = 1;
-            if(!(obj["name2"].toLowerCase() in temp_data))
-            temp_data[toTitleCase(obj["name2"])] = 1;
-            let img1 = (cid1 in imgjson) ?
-              `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png` :
-              `./images/imgs2/Unknown.png`;
-            let img2 = (cid2 in imgjson) ?
-              `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png` :
-              `./images/imgs2/Unknown.png`;
-            if (cd1_votes == 0 && cd2_votes == 0) {
-              cd1_votes = "Awaited";
-              cd2_votes = "Awaited";
-            } else {
-              cd1_votes = new Intl.NumberFormat('en-IN').format(cd1_votes);
-              cd2_votes = new Intl.NumberFormat('en-IN').format(cd2_votes);
-            }
-            let html_data = `<span class="state_name" data-state="${toTitleCase(state)}" data-const="${toTitleCase(const_name)}">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
-      <div class="cand_desc1">
-          <span class="img_container">
-              <img class="party_symbol" src="${party_path1}" alt="">
-              <img class="cand_img1" src=${img1} alt="">
-          </span>
-          <div class="desc_container">
-              <div class="cand_name1 render_name1" data-candname="${toTitleCase(name1)
-              }">${toTitleCase(name1)} <span class="state_party_slot">(${prty1
-              })</span></div>
-              <span class="lead_bar">
-              <span style="width:${bar_length1
-              }%;" class="leadbar"> </span><span style="color:black;margin:3px">
-              ${cd1_votes}</span>
-              </span>
-          </div>
-      </div>
-      <div class="cand_desc2">
-          <span class="img_container">
-              <img class="party_symbol" src=${party_path2} alt="">
-              <img class="cand_img1" src=${img2} alt="">
-          </span>
-          <div class="desc_container">
-              <div class="cand_name1 render_name2" data-candname="${toTitleCase(name2)
-              }">${toTitleCase(name2)} <span class="state_party_slot">(${prty2
-              })</span></div>
-            <span class="trail_bar">
-              <span style="width:${bar_length2
-              }%;" class="trailbar"></span><span style="color:black;margin:3px">${cd2_votes}</span>
-              </span>
-          </div>
-      </div>
-      <div class="map_container">
-          <img class="img_map" src=${state_img} alt=""> 
-      </div>`;
-            card_div.innerHTML = html_data;
-            main_div.appendChild(card_div);
           }
         }
       }
@@ -206,8 +221,12 @@ function getParameterByName(name, url = window.location.href) {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 function represent_state(state) {
+  removeClassFromAllElements();
+  main_div.innerHTML = "";
   if (data2024) {
     fetching_json().then((imgjson) => {
+      removeClassFromAllElements();
+      main_div.innerHTML = "";
       represent_state_fun(data2024, state, imgjson);
     }).catch((error) => {
       console.error("Error fetching JSON:", error);
@@ -219,6 +238,8 @@ function represent_state(state) {
     try {
       await dataLoaded;
       fetching_json().then((imgjson) => {
+        removeClassFromAllElements();
+        main_div.innerHTML = "";
         represent_state_fun(data2024, state, imgjson);
       }).catch((error) => {
         console.error("Error fetching JSON:", error);
@@ -229,8 +250,13 @@ function represent_state(state) {
   }
   rendercardsbf();
 }
+function removeClassFromAllElements() {
+  const elements = document.querySelectorAll(".card");
+  elements.forEach(element => {
+    element.remove();
+  });
+}
 function represent_state_fun(data2024, state, imgjson) {
-  main_div.innerHTML = "";
   let state_tag = document.getElementById("state_tag");
   state_tag.style.display = "block";
   let state_tag_name = document.getElementById("state_tag_name");
@@ -239,6 +265,8 @@ function represent_state_fun(data2024, state, imgjson) {
     .getElementById("state_cancel_icon")
     .addEventListener("click", function () {
       currentpage = "all";
+      removeClassFromAllElements();
+      main_div.innerHTML = "";
       represent_All();
     });
   fetch("./data/bigfights.json")
@@ -249,9 +277,8 @@ function represent_state_fun(data2024, state, imgjson) {
       return response.json();
     })
     .then((data) => {
-      // console.log(data);
       temp_const = [];
-      temp_data = [];
+      temp_data = {};
       temp_states = [];
       party_img_json = data["images_key"];
       candidates_data = data["candidate_details"][state];
@@ -303,8 +330,11 @@ function represent_state_fun(data2024, state, imgjson) {
             state.toLowerCase() in party_img_json
               ? party_img_json[state.toLowerCase()]
               : "./images/imgs2/madhya_pradesh.png";
-          temp_data.push(toTitleCase(obj["name1"]));
-          temp_data.push(toTitleCase(obj["name2"]));
+
+          if (!(obj["name1"].toLowerCase() in temp_data))
+            temp_data[toTitleCase(obj["name1"])] = 1;
+          if (!(obj["name2"].toLowerCase() in temp_data))
+            temp_data[toTitleCase(obj["name2"])] = 1;
           let img1 = (cid1 in imgjson) ?
             `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png` :
             `./images/imgs2/Unknown.png`;
@@ -324,7 +354,7 @@ function represent_state_fun(data2024, state, imgjson) {
           <div class="cand_desc1">
               <span class="img_container">
                   <img class="party_symbol" src="${party_path1}" alt="">
-                  <img class="cand_img1" src=${img1} alt="">
+                  <img class="cand_img1" src="${img1}" alt="">
               </span>
               <div class="desc_container">
                   <div class="cand_name1 render_name1" data-candname="${toTitleCase(name1)
@@ -339,8 +369,8 @@ function represent_state_fun(data2024, state, imgjson) {
           </div>
           <div class="cand_desc2">
               <span class="img_container">
-                  <img class="party_symbol" src=${party_path2} alt="">
-                  <img class="cand_img1" src=${img2} alt="">
+                  <img class="party_symbol" src="${party_path2}" alt="">
+                  <img class="cand_img1" src="${img2}" alt="">
               </span>
               <div class="desc_container">
                   <div class="cand_name1 render_name2" data-candname="${toTitleCase(name2)
@@ -353,7 +383,7 @@ function represent_state_fun(data2024, state, imgjson) {
               </div>
           </div>
           <div class="map_container">
-              <img class="img_map" src=${state_img} alt="">
+              <img class="img_map" src="${state_img}" alt="">
           </div>`;
           card_div.innerHTML = html_data;
           main_div.appendChild(card_div);
@@ -361,9 +391,16 @@ function represent_state_fun(data2024, state, imgjson) {
       }
     });
 }
-if (!getParameterByName("state") || getParameterByName("state") === "all")
+if (!getParameterByName("state") || getParameterByName("state") === "all"){
+  removeClassFromAllElements();
+  main_div.innerHTML = "";
   represent_All();
-else represent_state(getParameterByName("state"));
+}
+else{
+  removeClassFromAllElements();
+  main_div.innerHTML = "";
+represent_state(getParameterByName("state"));
+}
 searchBar1.addEventListener("keyup", function () {
   recommendations(searchBar1, "search_unorderlist1");
 });
@@ -550,7 +587,7 @@ function search_fun(searchBar, id_name) {
   const unorderList = document.getElementById(id_name);
   unorderList.style.display = "none";
   const searchInput = searchBar.value.toLowerCase();
-  const cards = document.querySelectorAll(".card");
+  const cards = main_div.querySelectorAll(".card");
   cards.forEach((card) => {
     const name1 = card
       .querySelector(".render_name1")
@@ -571,22 +608,21 @@ function search_fun(searchBar, id_name) {
         const_name.toLowerCase().startsWith(searchInput) ||
         state_name.toLowerCase().startsWith(searchInput))
     ) {
-      card.style.display = "";
       flag = false;
     } else if (
       name2.toLowerCase().startsWith(searchInput) &&
       searchInput != ""
     ) {
-      card.style.display = "";
       flag = false;
     }
     if (flag) {
-      card.style.display = "none";
+      card.remove();
     }
   });
 }
 searchBar1.addEventListener("input", function () {
   if (searchBar1.value === "") {
+    removeClassFromAllElements();
     main_div.innerHTML = "";
     back_bottom.classList.remove("blur_class");
     if (!getParameterByName("state") || getParameterByName("state") === "all" || currentpage === "all")
@@ -597,11 +633,15 @@ searchBar1.addEventListener("input", function () {
 });
 searchBar2.addEventListener("input", function () {
   if (searchBar2.value === "") {
+    removeClassFromAllElements();
     main_div.innerHTML = "";
     back_bottom.classList.remove("blur_class");
-    if (!getParameterByName("state") || getParameterByName("state") === "all" || currentpage === "all")
+    if (!getParameterByName("state") || getParameterByName("state") === "all" || currentpage === "all"){
       represent_All();
-    else represent_state(getParameterByName("state"));
+    }
+    else {
+      represent_state(getParameterByName("state"));
+    }
     return;
   }
 });

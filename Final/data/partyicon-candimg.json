@@ -97,85 +97,101 @@
             "id1": "cand5308",
             "cand_name1": "SUNETRA AJITDADA PAWAR",
             "cand_party1": "NCP",
-            "votes1": "242209",
             "cand_name2": "SUPRIYA SULE",
             "cand_party2": "NCP(SP)",
             "id2": "cand5604",
-            "votes2": "240110",
             "const_name": "Baramati",
-            "state": "Maharashtra",
-            "candidateImg1": "./images/imgs2/rahul.png",
-            "candidateImg2": "./images/imgs2/smriti_irani.png"
+            "state": "Maharashtra"
         },
         {
             "cand_name1": "Manoj Tiwari",
             "id1": "cand1379",
             "cand_party1": "BJP",
-            "votes1": "645665",
             "cand_name2": "Kanhaiya Kumar",
             "id2": "cand970",
             "cand_party2": "INC",
-            "votes2": "145987",
             "const_name": "North East Delhi",
-            "state": "NCT OF Delhi",
-            "candidateImg1": "./images/imgs2/rahul.png",
-            "candidateImg2": "./images/imgs2/smriti_irani.png"
+            "state": "NCT OF Delhi"
+        },
+        {
+            "id1": "cand4344",
+            "cand_name1": "y.s. sharmila reddy",
+            "cand_party1": "INC",
+            "id2": "cand4150",
+            "cand_name2": "y.s. avinash reddy",
+            "cand_party2": "YSRCP",
+            "const_name": "Kadapa",
+            "state": "Andhra Pradesh"
         },
         {
             "id1": "cand1125",
             "cand_name1": "Sambit Patra",
             "cand_party1": "BJP",
-            "votes1": "459877",
             "cand_name2": "Arup Patnaik",
             "cand_party2": "BJD",
             "id2": "cand2079",
-            "votes2": "456650",
             "const_name": "Puri",
-            "state": "Odisha",
-            "candidateImg1": "./images/imgs2/rahul.png",
-            "candidateImg2": "./images/imgs2/smriti_irani.png"
+            "state": "Odisha"
         },
         {
             "id1": "cand1611",
             "cand_name1": "Smriti Irani",
             "cand_party1": "BJP",
-            "votes1": "404119",
             "id2": "cand1582",
             "cand_name2": "Kishori Lal Sharma",
             "cand_party2": "INC",
-            "votes2": "401525",
             "const_name": "Amethi",
-            "state": "Uttar Pradesh",
-            "candidateImg1": "./images/imgs2/rahul.png",
-            "candidateImg2": "./images/imgs2/smriti_irani.png"
+            "state": "Uttar Pradesh"
+        },
+        {
+            "id1": "cand612",
+            "cand_name1": "sanjay tandon",
+            "cand_party1": "BJP",
+            "id2": "cand275",
+            "cand_name2": "manish tewari",
+            "cand_party2": "INC",
+            "const_name": "chandigarh",
+            "state": "Chandigarh"
+        },
+        {
+            "id1": "cand4116",
+            "cand_name1": "asaduddin owaisi",
+            "cand_party1": "AIMIM",
+            "id2": "cand3321",
+            "cand_name2": "madhavi latha kompella",
+            "cand_party2": "BJP",
+            "const_name": "hyderabad",
+            "state": "Telangana"
         },
         {
             "id1": "cand1129",
             "cand_name1": "Bansuri Swaraj",
             "cand_party1": "BJP",
-            "votes1": "522879",
             "cand_name2": "Somnath Bharti",
             "id2": "cand1069",
             "cand_party2": "AAP",
-            "votes2": "329309",
             "const_name": "New Delhi",
-            "state": "NCT OF Delhi",
-            "candidateImg1": "./images/imgs2/rahul.png",
-            "candidateImg2": "./images/imgs2/smriti_irani.png"
+            "state": "NCT OF Delhi"
         },
         {
             "cand_name1": "Rohini Acharya",
             "id1": "cand2567",
             "cand_party1": "RJD",
-            "votes1": "280198",
             "cand_name2": "Rajiv Pratap Rudy",
             "id2": "cand2053",
             "cand_party2": "BJP",
-            "votes2": "305678",
             "const_name": "Saran",
-            "state": "Bihar",
-            "candidateImg1": "./images/imgs2/rahul.png",
-            "candidateImg2": "./images/imgs2/smriti_irani.png"
-        }
+            "state": "Bihar"
+        },
+        {
+            "id1": "cand5042",
+            "cand_name1": "g. kishan reddy",
+            "cand_party1": "BJP",
+            "id2": "cand3814",
+            "cand_name2": "danam nagender",
+            "cand_party2": "INC",
+            "const_name": "secunderabad",
+            "state": "Telangana"
+          }
     ]
 }
