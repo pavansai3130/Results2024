@@ -12,6 +12,8 @@ const initialView = [23, 82.5];
 const initialZoom = 4.8;
 let state_value = 36;
 let sym = {
+  blur1: "./images/imgs/results_awaited.svg",
+  blur2: "./images/imgs/results_awaited2.svg",
   extra: "./images/imgs/notknown.svg",
   UPPL: "./images/img/UPPL.svg",
   SDF: "./images/img/SDF.svg",
@@ -159,7 +161,7 @@ const partyColors = {
   VCK: "#1E90FF",
   "Puthiya Tamilagam": "#FF9933",
   NTK: "#008000",
-  NOTA: "#fff",
+  NOTA: "#000000",
   AITC: "#D3D3D3",
   BSP: "#22409A",
   CPIM: "#cc0d0d",
@@ -1165,11 +1167,11 @@ async function fetchJSON() {
 $(document).ready(async function () {
   await fetchJSON();
   await fetchJSON2(
-    "../data/election2019.json",
-    "../data/stateAllianceCount.json",
-    "../data/bigfights.json",
-    "../data/state-parties.json",
-    "../data/newAlliance.json"
+    "./data/election2019.json",
+    "./data/stateAllianceCount.json",
+    "./data/bigfights.json",
+    "./data/state-parties.json",
+    "./data/newAlliance.json"
   );
   await fetchGeoJSON("./data/geo.json");
   let intervalId = setInterval(async () => {
@@ -1179,13 +1181,13 @@ $(document).ready(async function () {
   }, 300000);
   // console.log(data);
 
-  console.log("that is", alliances_rendering);
+  // console.log("that is", alliances_rendering);
   stateDataJson2019 = data_201[0];
   allianceJson2019 = data_201[1];
-  console.log(allianceJson);
+  /*  console.log(allianceJson);
   console.log(logos);
 
-  console.log(allianceJson);
+  console.log(allianceJson); */
   // Function to render India map with statewise colors
   function renderIndiaMap() {
     // Implement the logic to render India map using SVG or any other method
@@ -1224,7 +1226,7 @@ $(document).ready(async function () {
     for (const state in stateDataJson) {
       // console.log(unionTerritories.includes(state));
       // if (!unionTerritories.includes(state)) {
-      console.log(state);
+      // console.log(state);
       let nda = 0,
         india = 0,
         others = 0;
@@ -1391,6 +1393,13 @@ $(document).ready(async function () {
           if (leadingCandidate.alnce === "NDA") nda++;
           else if (leadingCandidate.alnce === "OTH") others++;
           else india++;
+          tbody.appendChild(newRow);
+          stateMap.style.fill =
+            nda >= india && nda >= others
+              ? names.ndaColor
+              : india > nda && india >= others
+              ? names.indiaColor
+              : names.othersColor;
         }
       }
 
@@ -1410,14 +1419,6 @@ $(document).ready(async function () {
       cells[3].innerHTML = `${others}<span class=${
         value < 0 ? "negative" : "positive"
       }> (${value})</span>`;
-
-      tbody.appendChild(newRow);
-      stateMap.style.fill =
-        nda >= india && nda >= others
-          ? names.ndaColor
-          : india > nda && india >= others
-          ? names.indiaColor
-          : names.othersColor;
 
       tbody.appendChild(newRow);
     });
@@ -2028,25 +2029,26 @@ $(document).ready(async function () {
         // Extract the text content of the clicked <td> as a string
 
         console.log(state_codes[event.target.textContent.trim()]);
-        handleSelection(event.target.textContent.trim());
+        handleSelection(state_codes[event.target.textContent.trim()]);
         // Fr(state_codes[event.target.textContent.trim()]);
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
     });
-  var tdElements = document.querySelectorAll("#stateName");
+  // var tdElements = document.querySelectorAll("#stateName");
 
   // Loop through each <td> element and attach a click event listener
-  tdElements.forEach(function (tdElement) {
+  /*   tdElements.forEach(function (tdElement) {
     tdElement.addEventListener("click", function () {
       // Extract the text content of the clicked <td>
       console.log(`stateCLicked`);
 
       var stateName = this.textContent.trim();
       console.log(stateName);
-      handleSelection(stateName);
+      console.log(state_codes[stateName]);
+      handleSelection(state_codes[stateName]);
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
-  });
+  }); */
 });
 function toggleEntries() {
   const toggleButtons = document.querySelectorAll(".toggleButton");
@@ -2224,7 +2226,7 @@ function populateTable(alliance, carouselId, temp) {
                 : "OTH"
             ][party]
           : 0);
-      console.log(seatValue);
+      // console.log(seatValue);
       let spanValue = `<span class=${
         seatValue < 0 ? "negative" : "positive"
       }> (${seatValue > 0 ? "+" + seatValue : seatValue})</span>`;
@@ -2717,7 +2719,6 @@ function showmap(state) {
   render_state_carousel(state);
   let state_naming = document.getElementById("st_con_heading");
   state_naming.innerHTML = `${state}`;
-  state_naming.style.marginBottom = "40px";
   document.getElementById("st_con_heading").style.display = "block";
   document.getElementById("myChart").style.display = "none";
   breadcrumbState.style.display = "inline";
