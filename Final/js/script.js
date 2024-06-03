@@ -1275,15 +1275,15 @@ $(document).ready(async function () {
           let value = nda - NDA;
           cells[1].innerHTML = `${nda}<span class=${
             value < 0 ? "negative" : "positive"
-          }> (${value})</span>`;
+          }> (${value > 0 ? "+" +value : value})</span>`;
           value = india - INDIA;
           cells[2].innerHTML = `${india}<span class=${
             value < 0 ? "negative" : "positive"
-          }> (${value})</span>`;
+          }> (${value > 0 ? "+" +value : value})</span>`;
           value = others - OTH;
           cells[3].innerHTML = `${others}<span class=${
             value < 0 ? "negative" : "positive"
-          }> (${value})</span>`;
+          }> (${value > 0 ? "+" +value : value})</span>`;
 
           tbody.appendChild(newRow);
         }
@@ -2059,9 +2059,9 @@ function populateTable(alliance, carouselId,temp) {
   console.log(alliancePatries);
   let carousel = document.getElementById(carouselId);
   let tbody1 = carousel.querySelector("#tbody1");
-  let tbody2 = carousel.querySelector("#tbody2");
+  // let tbody2 = carousel.querySelector("#tbody2");
   tbody1.innerHTML = "";
-  tbody2.innerHTML = "";
+  // tbody2.innerHTML = "";
   console.log(Object.keys(alliancePatries[alliance]).length);
   if (Object.keys(alliancePatries[alliance]).length === 0) {
     if (alliance === "nda") {
@@ -2077,16 +2077,7 @@ function populateTable(alliance, carouselId,temp) {
         <td>JD(s)</td>
         <td>0</td>
      </tr>`;
-      tbody2.innerHTML = `
-     <tr>
-        <td>TDP</td>
-        <td>0</td>
-     </tr>
-     <tr>
-     <td>NCP</td>
-     <td>0</td>
-  </tr>
-     `;
+
     } else if (alliance === "india") {
       tbody1.innerHTML = `<tr>
         <td>INC</td>
@@ -2102,17 +2093,7 @@ function populateTable(alliance, carouselId,temp) {
         <td>SS(UBT)</td>
         <td>0</td>
      </tr>`;
-      tbody2.innerHTML = `
-      <tr>
-        <td>SP</td>
-        <td>0</td>
-     </tr>
-     <tr>
-        <td>DMK</td>
-        <td>0</td>
-     </tr>
-     
-     `;
+     ;
     } else {
       tbody1.innerHTML = `<tr>
         <td>BRS</td>
@@ -2128,18 +2109,14 @@ function populateTable(alliance, carouselId,temp) {
         <td>SAD</td>
         <td>0</td>
      </tr>`;
-      tbody2.innerHTML = `
-     <tr>
-     <td>YSRCP</td>
-     <td>0</td>
-  </tr>
-  <tr>
-  <td>BJD</td>
-  <td>0</td>
-</tr>`;
+      
     }
   } else {
     // let count = 1;
+
+    console.log("alliancePatries ", alliancePatries)
+    console.log("temp ", temp)
+
     let totalCount = 1; // Total count of rows added
     for (const party in alliancePatries[alliance]) {
       const tr = document.createElement("tr");
@@ -2153,35 +2130,35 @@ function populateTable(alliance, carouselId,temp) {
 
       let seatValue = (alliancePatries[alliance][party] !== undefined ? alliancePatries[alliance][party] : 0) - 
       (temp[alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"][party] !== undefined ? temp[alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"][party] : 0);
-      let spanValue = `<span class=${seatValue < 0 ? "negative" : "positive"}> (${seatValue})</span>`
-
+      let spanValue = `<span class=${seatValue < 0 ? "negative" : "positive"}> (${seatValue > 0 ? "+" +seatValue : seatValue})</span>`
+      console.log("spanValue ", spanValue)
       td2.innerHTML += spanValue
 
       tr.appendChild(td1);
       tr.appendChild(td2);
-      if (totalCount <= 10) {
-        if (totalCount % 2 === 1) {
+
+      if (totalCount <= 5) {
+        // if (totalCount % 2 === 1) {
           tbody1.appendChild(tr);
           totalCount += 1;
-        } else {
-          tbody2.appendChild(tr);
-          totalCount += 1;
-        }
+        // } else {
+        //   tbody2.appendChild(tr);
+        //   totalCount += 1;
+        // }
       } else {
         // Hide one row in tbody1 and one row in tbody2 alternatively
-        if (totalCount % 2 === 1) {
-          // console.log("enter");
+        // if (totalCount % 2 === 1) {
           tr.className = "hiding";
           tbody1.appendChild(tr);
           totalCount += 1;
-        } else {
-          tr.className = "hiding";
-          tbody2.appendChild(tr);
-          totalCount += 1;
-        }
+        // } else {
+        //   tr.className = "hiding";
+        //   tbody2.appendChild(tr);
+        //   totalCount += 1;
+        // }
       }
       const toggleButtons = document.querySelectorAll(".toggleButton");
-      if (totalCount > 10) {
+      if (totalCount > 5) {
         toggleButtons.forEach((toggleButton) => {
           toggleButton.classList.remove("hidden");
         });
@@ -2333,7 +2310,7 @@ async function newpopulateTable(alliance, carouselId, temp) {
 
       let seatValue = (alliancePatries[alliance][party] !== undefined ? alliancePatries[alliance][party] : 0) - 
                 (temp[alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"][party] !== undefined ? temp[alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"][party] : 0);
-      let spanValue = `<span class=${seatValue < 0 ? "negative" : "positive"}> (${seatValue})</span>`
+      let spanValue = `<span class=${seatValue < 0 ? "negative" : "positive"}> (${seatValue > 0 ? "+" +seatValue : seatValue})</span>`
       
       td2.innerHTML += spanValue
       tr.appendChild(td1);
