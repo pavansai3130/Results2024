@@ -437,6 +437,7 @@ body {
 .custom-table-four td {
   width: 10.2rem;
   height: 6rem;
+  padding: 0.2rem 0.8rem;
 }
 .custom-table-one th,
 .custom-table-two th,
@@ -446,10 +447,6 @@ body {
   font-weight: 500;
   padding: 0.6rem 0.8rem;
   font-size: 0.875rem;
-}
-.custom-table-three th,
-.custom-table-four th {
-  padding: 0.6rem 0.8rem;
 }
 .custom-table-one td,
 .custom-table-two td,
@@ -575,6 +572,7 @@ body {
 }
 .columnOne {
   text-align: left;
+  width: 20rem !important;
 }
 @media (max-width: 1260px) {
   .custom-table-one th,
@@ -584,13 +582,13 @@ body {
     width: 20rem;
     height: 6.4rem;
   }
-  .custom-table-three th,
+  /* .custom-table-three th,
   .custom-table-three td,
   .custom-table-four th,
   .custom-table-four td {
     width: 10rem !important;
     height: 8rem !important;
-  }
+  } */
   .lost p,
   .won p {
     width: 3.6rem;
