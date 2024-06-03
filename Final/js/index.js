@@ -1726,8 +1726,8 @@ function render_state_table(feature, state) {
   document.getElementById("piechart").style.display = "block";
   document.getElementById("piechart2").style.display = "block";
   drawpiechart(alliancePatries, feature);
-  let optionElement = document.querySelector(`option[value="${stateId}"]`);
-  populateCarousel(alliances_rendering[option[(value = "${selected}")]]);
+  // let optionElement = document.querySelector(`option[value="${stateId}"]`);
+  populateCarousel(alliances_rendering[state]);
 
   // Update the heading with the count of candidates
   const th = document.getElementById("theading");
