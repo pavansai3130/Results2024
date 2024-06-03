@@ -1735,7 +1735,7 @@ function render_state_table(feature, state) {
   document.getElementById('piechart').style.display="block";
   document.getElementById('piechart2').style.display="block";
   drawpiechart(alliancePatries,feature);
-  populateCarousel();
+  populateCarousel(alliances_rendering[state]);
   
 
   // Update the heading with the count of candidates
@@ -1792,6 +1792,7 @@ function render_state_table(feature, state) {
 
   // Initialize pagination only if needed
   if (count > rowsPerPage) {
+    currentPage=1;
     updatePaginationControls(count, "pagination-controls", "#table-body tr");
     displayPage(currentPage, "#table-body tr");
   }
@@ -2854,7 +2855,7 @@ function resetstatebread2() {
   document.getElementById("piechart3").style.display = "none";
   document.getElementById("votingDetails").style.display="none";
   let state_naming = document.getElementById("st_con_heading");
-  state_naming.innerHTML = `${breadcrumbState.innerHTML})`;
+  state_naming.innerHTML = `${breadcrumbState.innerHTML}`;
   state_naming.style.marginBottom = "40px";
   document.getElementById("st_con_heading").style.display = "block";
 }
@@ -2930,9 +2931,9 @@ async function createCard(rsdel,position,first,second,item,st,id) {
   // console.log("item@######################",item);
   // alert(item.candidateId);
   const allianceImages = {
-    "NDA": "./images/imgs/NDA  (1).png",
-    "INDIA": "./images/imgs/NDA  (2).png",
-    "OTH": "./images/imgs/NDA  (3).png"
+    "NDA": "./images/imgs/NDA.png",
+    "INDIA": "./images/imgs/INDA.png",
+    "OTH": "./images/imgs/OTH.png"
   };
   // const imageUrl = item.perimg || allianceImages[item.alliance];
   const candidateValue = await fetchCandidateValue(item.candidateId);

@@ -5,6 +5,7 @@
 let comparedata2019 = {};
 let data_201;
 let data_2019 = {};
+let alliances_rendering={};
 let bars;
 const initialView = [23, 82.5];
 const initialZoom = 4.8;
@@ -26,20 +27,6 @@ let sym = {
   AIFB: "./images/img/AIFB.svg",
   extra: "./images/imgs/notknown.svg",
   NOTA:"./images/imgs/NOTA.svg",
-  UPPL:"./images/img/UPPL.svg",
- SDF:"./images/img/SDF.svg",
-  SHS:"./images/img/SHS.svg",
-  JNKC:"./images/img/JNKC.svg",
-  JJP:"./images/img/JJP.svg",
-  INLD:"./images/img/INLD.svg",
-  BPF:"./images/img/BPF.svg",
-  INLD:"./images/img/INLD.svg",
-  AAP:"./images/imgs/AAP.svg",
-  PDP:"./images/img/PDP.svg",
-  ADMK:"./images/img/ADMK.svg",
-  AGP:"./images/img/AGP.svg",
-  AIFB:"./images/img/AIFB.svg",
-  extra:"./images/imgs/notknown.svg",
   IND: "./images/imgs/IND.svg",
   BJP: "./images/imgs/BJP.svg",
   INC: "./images/imgs/INC.svg",
@@ -928,13 +915,14 @@ let names = {
   othersColor: "#EAECF0",
 };
 let temp = 1;
-async function fetchJSON2(file1, file2, file3,file4) {
+async function fetchJSON2(file1, file2, file3,file4,file5) {
   // data_2019 = {};
   try {
     const response1 = await fetch(file1);
     const response2 = await fetch(file2); // Fetch the JSON file
     const response3 = await fetch(file3);
     const response4 = await fetch(file4);
+    const response5 =await fetch(file5);
     if (!response1.ok || !response2.ok) {
       throw new Error(`HTTP error! Status: ${response1.status}`);
     }
@@ -942,6 +930,7 @@ async function fetchJSON2(file1, file2, file3,file4) {
     stateAlliance = await response2.json();
     logos = await response3.json();
     comparedata2019 = await response4.json();
+    alliances_rendering=await response5.json();
     logos = logos["images_key"];
     // console.log("JSON data fetched and stored globally:", data_201);
     function format2(data2024) {
@@ -1178,7 +1167,8 @@ $(document).ready(async function () {
     "../data/election2019.json",
     "../data/stateAllianceCount.json",
     "../data/bigfights.json",
-    "../data/state-parties.json"
+    "../data/state-parties.json",
+    "../data/newAlliance.json"
   );
   await fetchGeoJSON("./data/geo.json");
   let intervalId = setInterval(async () => {
@@ -1310,7 +1300,7 @@ $(document).ready(async function () {
     alliancePatries.india = sortObjectByValuesDesc(alliancePatries.india);
     alliancePatries.others = sortObjectByValuesDesc(alliancePatries.others);
 
-    populateCarousel();
+    populateCarousel(newJson);
   };
 
   // Function to render party-wise results in tabular format
@@ -1784,7 +1774,6 @@ $(document).ready(async function () {
     // var chart = new google.charts.Bar(document.getElementById("myChart"))
 
     function drawChart() {
-      console.log("width>>>>>>>>>", window.innerWidth);
       let ww = 0.45;
       if (window.innerWidth < 800) {
         ww = 0.8;
@@ -2003,16 +1992,17 @@ function toggleEntries() {
 //     document.getElementById("carouselProgress").style.backgroundColor = "grey";
 //   }
 // }
-function populateCarousel() {
-  populateTable("nda", "ndaCarousel");
-  populateTable("india", "indiaCarousel");
-  populateTable("others", "othersCarousel");
+function populateCarousel(inputJson) {
+  populateTable("nda", "ndaCarousel",inputJson);
+  populateTable("india", "indiaCarousel",inputJson);
+  populateTable("others", "othersCarousel",inputJson);
   // newTable
-  newpopulateTable("nda", "ndaContent");
-  newpopulateTable("india", "indiaContent");
-  newpopulateTable("others", "othersContent");
+  newpopulateTable("nda", "ndaContent",inputJson);
+  newpopulateTable("india", "indiaContent",inputJson);
+  newpopulateTable("others", "othersContent",inputJson);
 }
-function populateTable(alliance, carouselId) {
+function populateTable(alliance, carouselId,temp) {
+  console.log(temp);
   // alliancePatries = {
   //   nda: {},
   //   india: {},
@@ -2113,6 +2103,12 @@ function populateTable(alliance, carouselId) {
       const td2 = document.createElement("td");
       td2.textContent = alliancePatries[alliance][party];
 
+      let seatValue = (alliancePatries[alliance][party] !== undefined ? alliancePatries[alliance][party] : 0) - 
+      (temp[alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"][party] !== undefined ? temp[alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"][party] : 0);
+      let spanValue = `<span class=${seatValue < 0 ? "negative" : "positive"}> (${seatValue})</span>`
+
+      td2.innerHTML += spanValue
+
       tr.appendChild(td1);
       tr.appendChild(td2);
       if (totalCount <= 10) {
@@ -2155,7 +2151,53 @@ function populateTable(alliance, carouselId) {
 
 /* NEW TABLE  */
 
-async function newpopulateTable(alliance, carouselId) {
+var newJson ={
+  "NDA": {
+      "TDP": 3,
+      "BJP": 303,
+      "JD(U)": 16,
+      "LJP": 6,
+      "AJSUP": 1,
+      "SHS": 18,
+      "NDPP": 1,
+      "SAD": 2,
+      "ADMK": 1,
+      "TRS": 9,
+      "ADAL": 2
+  },
+  "INDIA": {
+      "INC": 53,
+      "JKN": 3,
+      "JMM": 1,
+      "JD(S)": 1,
+      "CPIM": 3,
+      "RSP": 1,
+      "KEC(M)": 1,
+      "IUML": 3,
+      "NCP": 5,
+      "DMK": 24,
+      "VCK": 1,
+      "CPI": 2
+  },
+  "OTH": {
+      "YSRCP": 22,
+      "AIUDF": 1,
+      "IND": 4,
+      "AIMIM": 2,
+      "NPF": 1,
+      "NPEP": 1,
+      "MNF": 1,
+      "BJD": 12,
+      "RLTP": 1,
+      "SKM": 1,
+      "BSP": 10,
+      "SP": 5,
+      "AITC": 22
+  }
+}
+
+
+async function newpopulateTable(alliance, carouselId, temp) {
   let carousel = document.getElementById(carouselId);
   let tbody1 = carousel.querySelector("#tbody1");
   tbody1.innerHTML = "";
@@ -2237,6 +2279,11 @@ async function newpopulateTable(alliance, carouselId) {
       const td2 = document.createElement("td");
       td2.textContent = alliancePatries[alliance][party];
 
+      let seatValue = (alliancePatries[alliance][party] !== undefined ? alliancePatries[alliance][party] : 0) - 
+                (temp[alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"][party] !== undefined ? temp[alliance === "nda" ? "NDA" : alliance === "india" ? "INDIA" : "OTH"][party] : 0);
+      let spanValue = `<span class=${seatValue < 0 ? "negative" : "positive"}> (${seatValue})</span>`
+      
+      td2.innerHTML += spanValue
       tr.appendChild(td1);
       tr.appendChild(td2);
       if (totalCount <= 5) {
