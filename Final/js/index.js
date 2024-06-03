@@ -1,55 +1,15 @@
-// /*-------------creating fetching 2019------*/
-// let data_201;
-// let data_2019; // Initialize data_2019 as an empty object
-// async function fetchJSON2(file) {
-//   // data_2019 = {};
-//   try {
-//     const response = await fetch(file); // Fetch the JSON file
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! Status: ${response.status}`);
-//     }
-//     data_201 = await response.json();
-//     console.log("JSON data fetched and stored globally:", data_201);
-//     function format2(data2024) {
-//       for (let state in data2024) {
-//         for (let const_name in data2024[state]) {
-//           const candidates = [];
-//           for (let item of data2024[state][const_name]["candidates"]) {
-//             const candidate = {
-//               candidateId: item.cId,
-//               candidateName: item.cName,
-//               constituencyName: const_name,
-//               party: item.prty,
-//               alliance: item.alnce,
-//               votes: item.vts,
-//             };
-//             candidates.push(candidate);
-//           }
-//           // Access constituency code from constCodes if properly defined
-//           const constituencyCode = constCodes[state][const_name];
-//           if (constituencyCode) {
-//             // Assign candidates to the corresponding constituency code in data_2019
-//             data_2019[constituencyCode] = candidates;
-//           }
-//         }
-//       }
-//     }
-//     format2(data_201[0]);
-//   } catch (error) {
-//     console.error("Error fetching the JSON file:", error);
-//     throw error; // Rethrow the error for the caller to handle
-//   }
-// }
+let s3PicUrl = "https://results2024.s3.ap-south-1.amazonaws.com/candpics/";
+fetch("./data/overallpopular.json")
+.then((response) => {
+  if (!response.ok) {
+    throw new Error("Network response was not ok " + response.statusText);
+  }
+  return response.json();
+})
+.then((picMap) => {
+  pictureMapping = picMap;
+});
 
-// // Usage example
-// (async () => {
-//   try {
-//     await fetchJSON2("./election2019.json");
-//     console.log(data_2019);
-//   } catch (error) {
-//     console.error("Error occurred:", error);
-//   }
-// })();
 let flag=0;
 let pollinfo={};
 // Declare a global variable to store the fetched data
@@ -2938,6 +2898,14 @@ function viewingstate(stateId) {
   handleSelection();
 }
 
+function getProfilePic(candId, alnce){
+  const allianceImages = {
+    "NDA": "./images/imgs/NDA.png",
+    "INDIA": "./images/imgs/INDA.png",
+    "OTH": "./images/imgs/OTH.png"
+  };
+  return (pictureMapping && pictureMapping[candId]) ? s3PicUrl + pictureMapping[candId] + ".png" : allianceImages[alnce];
+}
 
 async function createCard(rsdel,position,first,second,item,st,id) {
   // alert(item.votes);
@@ -2970,7 +2938,7 @@ async function createCard(rsdel,position,first,second,item,st,id) {
   const candidateValue = await fetchCandidateValue(item.candidateId);
 
 
-  const imageUrl = `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${candidateValue}.png` || allianceImages[item.alnce];
+  const imageUrl = getProfilePic(item.candidateId,item.votes);
 console.log(imageUrl);
   const card = document.createElement("div");
   card.className = "position-relative custom-container";

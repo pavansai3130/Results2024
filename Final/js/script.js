@@ -1103,7 +1103,7 @@ async function fetchGeoJSON(file) {
 async function fetchJSON() {
   console.log(`called ${temp++}`);
   try {
-    const url = "https://results2024.s3.ap-south-1.amazonaws.com/election2024.json";
+    const url = "https://results2024.s3.ap-south-1.amazonaws.com/results.json";
     const response = await fetch(url, {
       method: "GET",
       headers: {
