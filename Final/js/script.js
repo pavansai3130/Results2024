@@ -12,6 +12,8 @@ const initialView = [23, 82.5];
 const initialZoom = 4.8;
 let state_value = 36;
 let sym = {
+  blur1:"./images/imgs/results_awaited.svg",
+  blur2:"./images/imgs/results_awaited2.svg",
   extra: "./images/imgs/notknown.svg",
   UPPL: "./images/img/UPPL.svg",
   SDF: "./images/img/SDF.svg",
@@ -159,7 +161,7 @@ const partyColors = {
   VCK: "#1E90FF",
   "Puthiya Tamilagam": "#FF9933",
   NTK: "#008000",
-  NOTA: "#fff",
+  NOTA: "#000000",
   AITC: "#D3D3D3",
   BSP: "#22409A",
   CPIM: "#cc0d0d",
@@ -1390,6 +1392,13 @@ const tabSize=document.getElementById("mainTable").offsetHeight;
           if (leadingCandidate.alnce === "NDA") nda++;
           else if (leadingCandidate.alnce === "OTH") others++;
           else india++;
+          tbody.appendChild(newRow);
+      stateMap.style.fill =
+        nda >= india && nda >= others
+          ? names.ndaColor
+          : india > nda && india >= others
+          ? names.indiaColor
+          : names.othersColor;
         }
       }
 
@@ -1410,13 +1419,7 @@ const tabSize=document.getElementById("mainTable").offsetHeight;
         value < 0 ? "negative" : "positive"
       }> (${value})</span>`;
 
-      tbody.appendChild(newRow);
-      stateMap.style.fill =
-        nda >= india && nda >= others
-          ? names.ndaColor
-          : india > nda && india >= others
-          ? names.indiaColor
-          : names.othersColor;
+      
 
       tbody.appendChild(newRow);
     });
@@ -2668,7 +2671,6 @@ function showmap(state) {
   render_state_carousel(state);
   let state_naming = document.getElementById("st_con_heading");
   state_naming.innerHTML = `${state}`;
-  state_naming.style.marginBottom = "40px";
   document.getElementById("st_con_heading").style.display = "block";
   document.getElementById("myChart").style.display = "none";
   breadcrumbState.style.display = "inline";

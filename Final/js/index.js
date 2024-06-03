@@ -1,3 +1,43 @@
+const stateMapping = {
+  "35": "Andaman and Nicobar Islands",
+  "37": "Andhra Pradesh",
+  "12": "Arunachal Pradesh",
+  "18": "Assam",
+  "10": "Bihar",
+  "4": "Chandigarh",
+  "22": "Chhattisgarh",
+  "26": "Dadra and Nagar Haveli",
+  "25": "Daman and Diu",
+  "7": "Delhi",
+  "30": "Goa",
+  "24": "Gujarat",
+  "6": "Haryana",
+  "2": "Himachal Pradesh",
+  "1": "Jammu and Kashmir",
+  "20": "Jharkhand",
+  "29": "Karnataka",
+  "32": "Kerala",
+  "31": "Lakshadweep",
+  "23": "Madhya Pradesh",
+  "27": "Maharashtra",
+  "14": "Manipur",
+  "17": "Meghalaya",
+  "15": "Mizoram",
+  "13": "Nagaland",
+  "21": "Odisha",
+  "34": "Puducherry",
+  "3": "Punjab",
+  "8": "Rajasthan",
+  "11": "Sikkim",
+  "33": "Tamil Nadu",
+  "36": "Telangana",
+  "16": "Tripura",
+  "9": "Uttar Pradesh",
+  "5": "Uttarakhand",
+  "19": "West Bengal"
+};
+
+let show_res=0;
 let s3PicUrl = "https://results2024.s3.ap-south-1.amazonaws.com/candpics/";
 fetch("./data/overallpopular.json")
 .then((response) => {
@@ -823,7 +863,7 @@ function resetBreadcrumb() {
   document.querySelector(".bt_grp").style.display = "block";
   document.getElementById("piechart").style.display = "none";
   document.getElementById("piechart2").style.display = "none";
-  document.getElementById("piechart3").style.display = "none";
+  document.getElementById("donutchart").style.display = "none";
   document.getElementById("votingDetails").style.display="none";
   updateBar(Object.values(allianceJson));
   renderAllianceResults();
@@ -1147,21 +1187,25 @@ handleSelection = function (input) {
   document.getElementById("Candidate-res").style.display = "block";
   document.getElementById("india-map").style.display = "none";
   document.getElementById("map").style.display = "block";
-  document.getElementById("piechart3").style.display = "none";
+  document.getElementById("donutchart").style.display = "none";
 
   const selectElement = document.getElementById("state-select");
   const selectedValue =
     input !== undefined ? `${state_codes[input]}` : selectElement.value;
   console.log(selectedValue);
+  let s_value=stateMapping[selectedValue];
   const text = selectElement.options[selectElement.selectedIndex].text;
   let state_naming = document.getElementById("st_con_heading");
-  state_naming.innerHTML = `${text}`;
-  state_naming.style.marginBottom = "40px";
+  state_naming.innerHTML = `${s_value}`;
   document.getElementById("st_con_heading").style.display = "block";
+  breadcrumbState.innerHTML = `<a href="#" onclick="resetstatebread_option()">${s_value}`;
+  breadcrumbState.style.display = "inline";
+  breadcrumbConstituency.style.display = "none";
   if (selectedValue === "reset") {
     resetMap();
     return;
   }
+
   if (selectedValue) {
     geo.remove(map);
 
@@ -1294,7 +1338,8 @@ handleSelection = function (input) {
           );
         }
 
-        handleStateClick(text);
+        handleStateClick(s_value);
+        document.getElementById("state-select").value=selectedValue;
         map.setView(
           [zooming[selectedValue][0], zooming[selectedValue][1]],
           zooming[selectedValue][2]
@@ -1644,6 +1689,11 @@ function render_state_table(feature, state) {
       td.textContent = name;
       td.style.paddingLeft = "1rem";
       td.classList.add("td");
+      td.style.cursor = "pointer"; // Change cursor to indicate clickable area
+      td.onclick = function () {
+        render_table(tr.dataset.pc,1,name,tr.dataset.state);
+        // Or redirect to a new page, e.g., window.location.href = `/constituency/${id}`;
+      };
       tr.appendChild(td);
       const td1 = document.createElement("td");
       console.log(data[i.pc_id][0].rsDecl);
@@ -1913,8 +1963,9 @@ function drawpiechart(allainceparties, feature) {
     var chartData2=google.visualization.arrayToDataTable(data2);
     if (chartData.getNumberOfRows() === 0) {
       // If chartData has no columns, display a message
-      document.getElementById("piechart").innerHTML = "Awaiting Result.";
-      document.getElementById("piechart2").innerHTML = "No data available.";
+      show_res=1;
+      document.getElementById("piechart").innerHTML = `<div>Votes</div><img src="${sym['blur1']}"></img>`;
+      document.getElementById("piechart2").innerHTML = `<div>Votes Share</div><img src="${sym['blur2']}"></img>`;
       return;
     }
   
@@ -1933,7 +1984,11 @@ function drawpiechart(allainceparties, feature) {
     var legendFontSize = window.innerWidth < 600 ? 8 : 12;
     // Optional; add a title and set the width and height of the chart
     var options = {
-      title: "Votes Distribution",
+      title: "Seats",
+      titleTextStyle:{color:"#101828",
+        fontSize:16
+      },
+      titlePosition:"center",
       width: "fit-content",
       height: "fit-content",
       legend: {
@@ -1947,11 +2002,15 @@ function drawpiechart(allainceparties, feature) {
       tooltip: { trigger: "none" }, // Disable tooltip on hover
       pieSliceBorderColor: "transparent", // Hide pie slice borders
       pieSliceTextStyle: { color: "black" }, // Style for pie slice labels
-      chartArea: { left: 10, top: 20, width: "100%", height: "80%" }, // Adjust chart area
+      chartArea: { left: 10, top: 20, width: "100%", height: "60%" }, // Adjust chart area
       colors: colors, // Assign colors based on partyColors
     };
     var options2 = {
       title: "Vote Share",
+      titleTextStyle:{color:"#101828",
+      fontSize:16
+    },
+    pieHole:0.4,
       width: "fit-content",
       height: "fit-content",
       legend: {
@@ -1960,12 +2019,9 @@ function drawpiechart(allainceparties, feature) {
         formatter: function (value, index, label) {
           return label + ": " + data[index + 1][1];
         },
+        pieHole:0.4
       }, // Show legend
-      pieSliceText: "value", // Display data value in slice
-      tooltip: { trigger: "none" }, // Disable tooltip on hover
-      pieSliceBorderColor: "transparent", // Hide pie slice borders
-      pieSliceTextStyle: { color: "black" }, // Style for pie slice labels
-      chartArea: { left: 10, top: 20, width: "100%", height: "80%" }, // Adjust chart area
+       chartArea: { left: 10, top: 20, width: "80%", height: "60%" }, // Adjust chart area
       colors: color2, // Assign colors based on partyColors
     };
     // Display the chart inside the <div> element with id="piechart"
@@ -2103,10 +2159,9 @@ function render_table(code, page,constiti1,st) {
   document.getElementById("carouselContainer").style.display="none";
   document.getElementById('piechart').style.display="none";
   document.getElementById('piechart2').style.display="none";
-  document.getElementById('piechart3').style.display="block";
+  document.getElementById('donutchart').style.display="block";
   let state_naming=document.getElementById("st_con_heading");
   state_naming.innerHTML=`${constiti1}&nbsp(${st})`;
-  state_naming.style.marginBottom="40px";
   document.getElementById("st_con_heading").style.display="block";
   document.getElementById("newcards").style.display="flex";
   let votingDetails=document.getElementById("votingDetails");
@@ -2120,6 +2175,7 @@ function render_table(code, page,constiti1,st) {
   if (!state_table_pressed) {
     breadcrumbState.style.display = "inline";
   }
+  breadcrumbConstituency.textContent=constiti1;
   breadcrumbConstituency.style.display = "inline";
   breadcrumbConstituency.style.color = "block";
   const tbody = document.querySelector(".candidateBody");
@@ -2403,30 +2459,21 @@ function drawpiechart2(con) {
     // Optional; add a title and set the width and height of the chart
     var options = {
       title: "Votes Share",
-      width: "fit-content",
-      height: "fit-content",
-      legend: {
-        position: 'bottom',
-        textStyle: { fontSize: legendFontSize },
-        formatter: function (value, index, label) {
-          return label + ': ' + chartData3.getValue(index, 1).toFixed(2) + '%';
-        }
-      }, // Show legend
-      pieSliceText: "value", // Display data value in slice
-      tooltip: { trigger: "none" }, // Disable tooltip on hover
-      pieSliceBorderColor: "transparent", // Hide pie slice borders
-      pieSliceTextStyle: { color: "black" }, // Style for pie slice labels
-      chartArea: { left: 10, top: 20, width: "100%", height: "80%" }, // Adjust chart area
-      colors: colors, // Assign colors based on partyColors
+      width: 300,
+      height: 300,
+      pieHole: 0.4,
+      legend: { position: "bottom" },
+      colors: colors,
     };
 
-    // Display the chart inside the <div> element with id="piechart"
+    // Display the chart inside the <div> element with id="donutchart"
     var chart3 = new google.visualization.PieChart(
-      document.getElementById("piechart3")
+      document.getElementById("donutchart")
     );
     chart3.draw(chartData3, options);
   }
 }
+
 
 function state_map(value, text) {
   document.getElementById("stateTabeleContainer").style.display = "none";
@@ -2645,14 +2692,13 @@ function resetstatebread() {
   document.getElementById("carouselContainer").style.display = "block";
   document.getElementById("piechart").style.display = "block";
   document.getElementById("piechart2").style.display = "block";
-  document.getElementById("piechart3").style.display = "none";
+  document.getElementById("donutchart").style.display = "none";
   document.getElementById("newcards").style.display = "none";
   document.getElementById("votingDetails").style.display="none";
   document.getElementById("stateTabeleContainer").style.display = "none";
   document.getElementById("containertool").style.display = "none";
   let state_naming = document.getElementById("st_con_heading");
   state_naming.innerHTML = `${breadcrumbState.innerHTML}`;
-  state_naming.style.marginBottom = "40px";
   document.getElementById("st_con_heading").style.display = "block";
   breadcrumbConstituency.style.display = "none";
   document.querySelector("#Candidate-res").style.display = "none";
@@ -2838,11 +2884,10 @@ function resetstatebread_option() {
   document.getElementById("newcards").style.display = "none";
   document.getElementById("piechart").style.display = "block";
   document.getElementById("piechart2").style.display = "block";
-  document.getElementById("piechart3").style.display = "none";
+  document.getElementById("donutchart").style.display = "none";
   document.getElementById("votingDetails").style.display="none";
   let state_naming = document.getElementById("st_con_heading");
   state_naming.innerHTML = `${breadcrumbState.innerHTML}`;
-  state_naming.style.marginBottom = "40px";
   document.getElementById("st_con_heading").style.display = "block";
 }
 function resetstatebread2() {
@@ -2856,11 +2901,10 @@ function resetstatebread2() {
   document.getElementById("newcards").style.display = "none";
   document.getElementById("piechart").style.display = "block";
   document.getElementById("piechart2").style.display = "block";
-  document.getElementById("piechart3").style.display = "none";
+  document.getElementById("donutchart").style.display = "none";
   document.getElementById("votingDetails").style.display="none";
   let state_naming = document.getElementById("st_con_heading");
   state_naming.innerHTML = `${breadcrumbState.innerHTML}`;
-  state_naming.style.marginBottom = "40px";
   document.getElementById("st_con_heading").style.display = "block";
 }
 
@@ -2944,7 +2988,7 @@ async function createCard(rsdel,position,first,second,item,st,id) {
 
 
   const imageUrl = getProfilePic(item.candidateId,item.votes);
-  console.log(imageUrl);
+console.log(imageUrl);
   const card = document.createElement("div");
   card.className = "position-relative custom-container";
 
