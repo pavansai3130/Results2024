@@ -1078,6 +1078,7 @@ async function fetchGeoJSON(file) {
     console.error("Error loading GeoJSON:", error);
   }
 }
+
 async function fetchJSON() {
   console.log(`called ${temp++}`);
   try {
@@ -1121,12 +1122,16 @@ async function fetchJSON() {
       }
     }
     format(stateDataJson);
+    return Promise.resolve();
     // ----------------------
     // You can process the JSON data here
   } catch (error) {
     console.error("Error fetching the JSON file:", error);
+    return Promise.reject(error);
   }
 }
+
+
 // async function fetchData() {
 //   //   console.log(`called ${temp++}`);
 //   console.log("entered");
@@ -2548,7 +2553,234 @@ async function fetchTop10() {
 }
 
 fetchTop10();
+var swiper;
 
+function render_whole_carousel() {
+  let heading = document.getElementById("big_fights_heading");
+  heading.innerHTML = `BIG FIGHTS`;
+  document
+    .getElementById("view_all")
+    .setAttribute("href", "./bigfights_viewall.html" + "?state=" + "all");
+  // fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json")
+  //   .then((response) => {
+  //     if (!response.ok) {
+  //       throw new Error("Network response was not ok " + response.statusText);
+  //     }
+  //     return response.json();
+  //   }).then((data2024) => {
+      fetch("../data/partyicon-candimg.json")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok " + response.statusText);
+          }
+          return response.json();
+        })
+        .then((data)=>{
+          fetch("./data/overallpopular.json")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok " + response.statusText);
+            }
+            return response.json();
+          }).then((imgjson) => {
+            render_whole_carousel_fun(stateDataJson, data, imgjson)
+          })
+        })
+        .catch((error) => {
+          console.error(
+            "There has been a problem with your fetch operation:",
+            error
+          );
+        });
+    //});
+
+
+}
+
+function render_whole_carousel_fun(data2024, data, imgjson) {
+  let swiperContainer = document.getElementById("slider_div");
+  let party_img_json, candidates_data;
+    party_img_json = data["images_key"];
+    candidates_data = data["candidate_details"];
+
+    // Clear previous content and destroy previous Swiper instance if it exists
+    if (swiper) {
+      swiper.destroy(true, true);
+    }
+    swiperContainer.innerHTML = "";
+
+    candidates_data.forEach((data) => {
+      let cd1_votes = 0, cd2_votes = 0, tot_vts = 0;
+      let cid1, cid2;
+      // console.log(data2024[0]["Andhra Pradesh"]);
+      data2024[data["state"]][data["const_name"].toLowerCase()]["candidates"].forEach((candidate) => {
+        // console.log("id" + candidate["cId"]);
+        if (candidate["cId"] == data["id1"])
+          cd1_votes = candidate["vts"];
+        if (candidate["cId"] == data["id2"])
+          cd2_votes = candidate["vts"];
+        tot_vts += candidate["vts"];
+      });
+      // console.log(votes1 + " " + votes2);
+      let prty1, prty2, name1, name2, votes1, votes2;
+      if(cd1_votes > cd2_votes) {
+        cid1 = data["id1"];
+        cid2 = data["id2"];
+        prty2 = data["cand_party2"];
+        prty1 = data["cand_party1"];
+        name2 = data["cand_name2"];
+        name1 = data["cand_name1"];
+        votes2 = cd2_votes;
+        votes1 = cd1_votes;
+      }else {
+        cid2 = data["id1"];
+        cid1 = data["id2"];
+        prty1 = data["cand_party2"];
+        prty2 = data["cand_party1"];
+        name1 = data["cand_name2"];
+        name2 = data["cand_name1"];
+        votes1 = cd2_votes;
+        votes2 = cd1_votes;
+      }
+      let img1 = (cid1 in imgjson) ? 
+      `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid1]}.png` :
+      `./images/other/partylogo/Unknown.svg`;
+      let img2 = (cid2 in imgjson) ? 
+      `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${imgjson[cid2]}.png` :
+      `./images/other/partylogo/Unknown.svg`;
+      let bar_length1 = (parseInt(votes1) / parseInt(tot_vts)) * 100;
+      let bar_length2 = (parseInt(votes2) / parseInt(tot_vts)) * 100;
+      const slideMarkup = createSlide(
+        data["const_name"],
+        data["state"],
+        prty1,
+        prty2,
+        img1,
+        img2,
+        name1,
+        name2,
+        votes1,
+        votes2,
+        bar_length1,
+        bar_length2
+      );
+      function createSlide(
+        const_name,
+        state,
+        partySymbol1,
+        partySymbol2,
+        candidateImg1,
+        candidateImg2,
+        cand_name1,
+        cand_name2,
+        votes1,
+        votes2,
+        bar_length1,
+        bar_length2
+      ) {
+        let party_path1 =
+          partySymbol1 in party_img_json
+            ? party_img_json[partySymbol1]
+            : party_img_json["default"];
+        let party_path2 =
+          partySymbol2 in party_img_json
+            ? party_img_json[partySymbol2]
+            : party_img_json["default"];
+        let state_img =
+          state.toLowerCase() in party_img_json
+            ? party_img_json[state.toLowerCase()]
+            : "./imgs2/madhya_pradesh.jpg";
+            if(votes1 == 0 && votes2 == 0) {
+              votes1 = "Awaited";
+              votes2 = "Awaited";
+            }else {
+              votes1 = new Intl.NumberFormat('en-IN').format(votes1);
+              votes2 = new Intl.NumberFormat('en-IN').format(votes2)
+            }
+        return `
+        <div class="card swiper-slide">
+            <span class="state_name">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
+            <div class="cand_desc1">
+                <span class="img_container">
+                    <img class="party_symbol" src=${party_path1} alt="">
+                    <img class="cand_img1" src="${candidateImg1}" alt="">
+                </span>
+                <div class="desc_container">
+                    <div class="cand_name1">${toTitleCase(cand_name1)} <span class="state_party_slot">(${partySymbol1})</span></div>
+                    <span class="lead_bar">
+              <span style="width:${bar_length1
+                }%;" class="leadbar"> </span><span style="color:black;margin:3px">
+              ${votes1}</span>
+              </span>
+                </div>
+            </div>
+            <div class="cand_desc2">
+                <span class="img_container">
+                    <img class="party_symbol" src="${party_path2}" alt="">
+                    <img class="cand_img1" src="${candidateImg2}" alt="">
+                </span>
+                <div class="desc_container">
+                    <div class="cand_name1">${toTitleCase(cand_name2)} <span class="state_party_slot">(${partySymbol2})</span></div>
+                    <span class="trail_bar">
+              <span style="width:${bar_length2
+                }%;" class="trailbar"></span><span style="color:black;margin:3px">${votes2}</span>
+              </span>
+                </div>
+            </div>
+            <div class="map_container">
+            <!-- <img class="img_map" src="${state_img}" alt=""> -->
+            </div>
+        </div>
+        `;
+      }
+      swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
+    });
+
+    swiper = new Swiper(".slide-content", {
+      slidesPerView: 3,
+      spaceBetween: 50,
+      loop: true,
+      centerSlide: true,
+      fade: true,
+      grabCursor: true,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+        dynamicBullets: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      breakpoints: {
+        0: {
+          slidesPerView: 1,
+        },
+        600: {
+          slidesPerView: 2,
+        },
+        950: {
+          slidesPerView: 3,
+        },
+        1600: {
+          slidesPerView: 4,
+        }
+      },
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+      speed: 1300,
+    });
+
+    swiperContainer.addEventListener("mouseenter", function () {
+      swiper.autoplay.stop();
+    });
+
+    swiperContainer.addEventListener("mouseleave", function () {
+      swiper.autoplay.start();
+    });
+}
 function render_state_carousel(state) {
   let heading = document.getElementById("big_fights_heading");
   heading.innerHTML = `BIG FIGHTS (<span class = "heading_state">${state.toUpperCase()}</span>)`;
