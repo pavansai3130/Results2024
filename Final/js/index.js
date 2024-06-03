@@ -2073,7 +2073,7 @@ function showdatatable(
                 <div class="winner-votes">${data_2019[id][1].votes}</div>
             </div>
             <div class="party"><img src="${sym[data_2019[id][1].party]}" class="party-logo">${data_2019[id][1].party}</div>
-            <div class="margin1">Margin - ${data_2019[id][1].votes}</div>
+            <div class="margin1">Margin - ${data_2019[id][1].votes-data_2019[id][2].votes}</div>
         </div>
         <div id="checkdetails" onclick="render_table('${id}',1,'${con1}','${state}')">Check Full Results <span id="gt1">&gt</span></div>`;
   div.innerHTML = "";

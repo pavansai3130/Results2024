@@ -993,13 +993,13 @@ async function fetchGeoJSON(file) {
           breadcrumbConstituency.textContent = feature.properties.pc_name;
           breadcrumbConstituency.style.display = "inline";
           const candidate_1 =
-            data[feature.properties.pc_id][0]["candidateName"];
-          const candidate_2 =
             data[feature.properties.pc_id][1]["candidateName"];
-          const party_name_1 = data[feature.properties.pc_id][0]["party"];
-          const party_name_2 = data[feature.properties.pc_id][1]["party"];
-          const votes_1 = data[feature.properties.pc_id][0]["votes"];
-          const votes_2 = data[feature.properties.pc_id][1]["votes"];
+          const candidate_2 =
+            data[feature.properties.pc_id][2]["candidateName"];
+          const party_name_1 = data[feature.properties.pc_id][1]["party"];
+          const party_name_2 = data[feature.properties.pc_id][2]["party"];
+          const votes_1 = data[feature.properties.pc_id][1]["votes"];
+          const votes_2 = data[feature.properties.pc_id][2]["votes"];
           const margin = votes_1 - votes_2;
 
           showdatatable(
