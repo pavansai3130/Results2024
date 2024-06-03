@@ -12,7 +12,9 @@ var selectedIndex = -1;
 var back_bottom = document.getElementById("back_bottom");
 var main_div = document.getElementById("more-cards-root");
 var data2024 = null;
-
+setInterval(async () => {
+  window.location.reload();
+}, 300000);
 async function fetchdata_BF() {
   fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json")
     .then((response) => {
