@@ -609,7 +609,7 @@ gap: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   /* width: 20rem; */
   position: absolute;
-  z-index: 999;
+  z-index: 889;
   justify-content: center;
 }
 
@@ -661,11 +661,10 @@ gap: 8px;
 
 #candidatediv {
   width: 312px;
-  height: 152px;
+  /* height: 152px; */
   padding: 8px 0px 8px 0px;
   gap: 8px;
   border-radius: 8px;
-  opacity: 0px;
   background-color: #FFFFFF;
   box-shadow: 1px 1px 3px 2px #1018280F;
   margin-top: 16px;
@@ -693,7 +692,7 @@ gap: 8px;
 
 .party-logo {
   margin-inline: 7.8px;
-  width: 16px;
+  width: 21px;
   margin-top: -3px;
 }
 
@@ -729,7 +728,7 @@ gap: 8px;
   font-size: 12px;
   font-weight: 400;
   line-height: 14.06px;
-  text-align: left;
+  /* text-align: left; */
   padding-top: 14.8px;
   /* border: 0.2px solid #EAECF0 */
   /* width: 87px; */
@@ -1031,6 +1030,7 @@ gap: 8px;
   }
 }
 .selectmap {
+  margin: 0px 36px;
   display: grid;
   /* grid-template-columns: repeat(13, 1fr); */
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -1042,7 +1042,7 @@ gap: 8px;
 
 .grid-item1 {
   /* background-color: white; */
-  padding: 10px;
+  padding: 9px;
   text-align: center;
   /* border: 1px solid #ddd; */
   /* border-radius: 4px; */
@@ -1069,18 +1069,29 @@ gap: 8px;
   font-size: 14px;
   flex-shrink: 0;
 }
-
-@media (min-width: 1320px) {
+@media (min-width:1391px) {
+.selectmap{
+  grid-template-columns: repeat(13,1fr);
+  padding-left: 5px;
+}  
+} 
+@media (min-width: 1300px) and (max-width:1390px) {
   .selectmap {
-    grid-template-columns: repeat(14, 1fr);
+    grid-template-columns: repeat(13, 1fr);
   }
 }
-@media (min-width: 1320px) and (max-width:1420px){
+@media (min-width: 1410px) and (max-width: 1490px){
   .selectmap {
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(13, 1fr);
   }
 }
+@media (min-width: 1491px){
+    .selectmap {
+      grid-template-columns: repeat(14, 1fr);
+    }
+  }
 #selectmapbtn {
+  margin: 5px 52px;
   font-family: 'Roboto';
   font-size: 20px;
   font-weight: 600;

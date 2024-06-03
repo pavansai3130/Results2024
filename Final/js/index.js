@@ -1435,11 +1435,11 @@ function updatePaginationControls(totalRows, class_name, second_class_name) {
   paginationControls.innerHTML = ""; // Clear previous pagination controls
 
   // Create and add the previous button
-  const prevButton = document.createElement("button");
-  prevButton.innerHTML = `&lt; Previous`;
-  prevButton.classList.add("flex-fill");
-  prevButton.className = "pagination-button";
-  prevButton.addEventListener("click", function () {
+  const prevbt = document.createElement("button");
+  prevbt.innerHTML = `&lt; Previous`;
+  prevbt.classList.add("flex-fill");
+  prevbt.className = "pagination-button";
+  prevbt.addEventListener("click", function () {
     if (class_name == "pagination-controls") {
       if (currentPage > 1) {
         currentPage--;
@@ -1459,7 +1459,7 @@ function updatePaginationControls(totalRows, class_name, second_class_name) {
   const numberDiv = document.createElement("div");
   numberDiv.className = "number-div";
   numberDiv.classList.add("flex-fill");
-  prevButton.classList.add("col-auto"); // Adjust column width for the "Previous" button
+  prevbt.classList.add("col-auto"); // Adjust column width for the "Previous" button
   for (let i = 1; i <= numPages; i++) {
     const button = document.createElement("button");
     button.textContent = i;
@@ -1482,16 +1482,16 @@ function updatePaginationControls(totalRows, class_name, second_class_name) {
   // Add the previous button, numberDiv, and next button to the paginationControls
 
   // Adjust button alignment for smaller screens
-  prevButton.classList.add("text-center");
+  prevbt.classList.add("text-center");
 
-  paginationControls.appendChild(prevButton);
+  paginationControls.appendChild(prevbt);
   paginationControls.appendChild(numberDiv);
 
   // Create and add the next button
-  const nextButton = document.createElement("button");
-  nextButton.innerHTML = `Next &gt;`;
-  nextButton.className = "pagination-button";
-  nextButton.addEventListener("click", function () {
+  const nextbt = document.createElement("button");
+  nextbt.innerHTML = `Next &gt;`;
+  nextbt.className = "pagination-button";
+  nextbt.addEventListener("click", function () {
     if (class_name == "pagination-controls") {
       if (currentPage < numPages) {
         currentPage++;
@@ -1506,17 +1506,18 @@ function updatePaginationControls(totalRows, class_name, second_class_name) {
       }
     }
   });
-  nextButton.classList.add("col-auto"); // Adjust column width for the "Previous" button
-  nextButton.classList.add("text-center");
-  paginationControls.appendChild(nextButton);
+  nextbt.classList.add("col-auto"); // Adjust column width for the "Previous" button
+  nextbt.classList.add("text-center");
+  paginationControls.appendChild(nextbt);
 
   // Ensure the pagination controls are displayed as flex
   paginationControls.style.display = "flex";
+  // nextbt.addEventListener("click", function (event) {
+  //   event.preventDefault(); // Prevent default action
+  //   // Your existing code for handling the "Next" button click
+  // });
 }
-nextButton.addEventListener("click", function (event) {
-  event.preventDefault(); // Prevent default action
-  // Your existing code for handling the "Next" button click
-});
+
 function setActiveButton(page, class_name) {
   const paginationControls = document.getElementById(class_name);
   const buttons = paginationControls.querySelectorAll(".newbuttons");
@@ -1958,6 +1959,12 @@ function showdatatable(
   if (!sym[party2]) {
     img_none2 = sym["extra"];
   }
+  if(votes1==0){
+    votes1 = "Results Awaited";
+  }
+  if(votes2==0){
+    votes2 = "Results Awaited";
+  }
   var htmlCode = `
     <h2 id="h2"><span class="city">${con1}</span><br><span class="state">${state}</span></h2><div id="close" onclick="closedata()">&times;</div>
         <div id="candidatediv">
@@ -2089,9 +2096,7 @@ function render_table(code, page, constiti1, st) {
   winner_2019.innerHTML = `<h2 style="margin-top:20px;"> 2019 Winner</h2>
   <div class="winner_2019" style="padding:10px;"> 
   <span>${data_2019[code][1].candidateName}</span>
-  <div class="winner_img"><div><img src="${sym[data_2019[code][1].party]}">${
-    data_2019[code][1].party
-  } </div>${data[code][1].votes.toLocaleString()} &nbspVotes
+  <div class="winner_img"><div><img src="${sym[data_2019[code][1].party]}">${data_2019[code][1].party} </div>${(data_2019[code][1].votes.toLocaleString())} &nbspVotes
   </div>
   </div>`;
   document.getElementById("newcards").appendChild(winner_2019);
@@ -2778,11 +2783,11 @@ function toTitleCase(name) {
     .join(" ");
 }
 function viewingstate(stateId) {
-  var m = document.getElementById("india-map");
+  var m = document.getElementById("navHeader");
   if (m) {
     m.scrollIntoView({ behavior: "smooth" });
   }
-  var mainbar = document.getElementById("map");
+  var mainbar = document.getElementById("navHeader");
   if (mainbar) {
     mainbar.scrollIntoView({ behavior: "smooth" });
   }
