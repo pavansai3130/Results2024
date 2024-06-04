@@ -879,6 +879,15 @@ const stateMaps = {
   Uttarakhand: "./images/imgs/Uttarakhand.png",
   "West Bengal": "./images/imgs/West_Bengal.png",
 };
+let state_colr_json={};
+function req_json(data_2019)
+{
+  for(con in data_2019)
+    {
+      state_colr_json[con] = data_2019[con][0].party;
+      
+    }
+}
 const unionTerritories = [
   "Ladakh",
   "Andaman and Nicobar Islands",
@@ -902,7 +911,7 @@ let data2024 = {};
 let stateDataJson;
 let allianceJson;
 let data = {};
-let ftrs, geo, geo2, map;
+let ftrs, geo, geo2,geo_map2,geo2019, map;
 let names = {
   "#FF9933": "NDA",
   "#87CEEB": "I.N.D.I.A",
@@ -984,46 +993,8 @@ async function fetchGeoJSON(file) {
           // breadcrumbState.style.display = "inline";
           breadcrumbConstituency.textContent = feature.properties.pc_name;
           breadcrumbConstituency.style.display = "inline";
-          const candidate_1 =
-            data[feature.properties.pc_id][0]["candidateName"];
-          const candidate_2 =
-            data[feature.properties.pc_id][1]["candidateName"];
-          const party_name_1 = data[feature.properties.pc_id][0]["party"];
-          const party_name_2 = data[feature.properties.pc_id][1]["party"];
-          const votes_1 = data[feature.properties.pc_id][0]["votes"];
-          const votes_2 = data[feature.properties.pc_id][1]["votes"];
-          const margin = votes_1 - votes_2;
-
-          showdatatable(
-            feature.properties.st_name,
-            candidate_1,
-            candidate_2,
-            votes_1,
-            votes_2,
-            margin,
-            feature.properties.pc_name,
-            party_name_1,
-            party_name_2,
-            feature.properties.pc_id
-          );
-          var map = document.getElementById("map").getBoundingClientRect();
-          // console.log("map the ", map);
-          // console.log("event map the ", event);
-          var clickY = event.layerPoint.y - map.top;
-          var mapHeight = map.height;
-          var isAboveHalf = clickY < mapHeight / 2;
-          var div = document.getElementById("containertool");
-
-          if (isAboveHalf) {
-            div.classList.add("above");
-            div.classList.remove("below");
-          } else {
-            div.classList.add("below");
-            div.classList.remove("above");
-          }
           // render_table(feature.properties.pc_id,1);
-          document.getElementById("stateTabeleContainer").style.display =
-            "none";
+          document.getElementById("stateTabeleContainer").style.display ="none";
           document.querySelector("#Constituency-res").style.display = "none";
           document.querySelector("#Candidate-res").style.display = "block";
 
@@ -1033,7 +1004,10 @@ async function fetchGeoJSON(file) {
         layer._leaflet_id = feature.properties.pc_id;
       },
     });
+render_whole_table();
+    req_json(data_2019);
 
+    console.log("##################",state_colr_json);
     map.setView(initialView, initialZoom);
     geo.addTo(map);
 
@@ -1050,12 +1024,63 @@ async function fetchGeoJSON(file) {
     }));
 
     // console.log("rendered");
+     map2 = L.map("map2", {
+      attributionControl: false,
+      zoomSnap: 0.2,
+      minZoom: 5,
+    });
+
+    geo_map2 = L.geoJSON(geoJson, {
+      onEachFeature: (feature, layer) => {
+        layer.on("click", function (event) {
+          handleMapClick(feature, event, "map2");
+        });
+
+        layer._leaflet_id = feature.properties.pc_id;
+      },
+    });
+
+    map2.setView(initialView,initialZoom); // Replace with your initial view and zoom
+    geo_map2.addTo(map2);
+    geo_map2.setStyle((feature) => ({
+      fillColor:partyColors[state_colr_json[feature.properties.pc_id]],
+      weight: 0.2,
+      color: "#000",
+      fillOpacity: 0.9,
+    }));
+
+    updateMapBounds();
+    map.on("resize", delayedBoundsUpdate);
+    map2.on("resize", delayedBoundsUpdate);
+
 
     var filteredFeatures = geoJson.features.filter(
       (feature) => feature.properties.st_code == state_value
     );
     var filteredGeoJson = { ...geoJson, features: filteredFeatures };
     geo2 = L.geoJSON(filteredGeoJson, {
+      onEachFeature: (feature, layer) => {
+        //   layer.on('mouseover', function(event) {
+        //     showBox(feature.properties, layer);
+        // });
+
+        // layer.on('mouseout', function(event) {
+        //     hideBox();
+        // });
+
+        layer.on("click", function (event) {
+          // console.log("change");
+          // document.querySelector("#Constituency-res").style.display =
+          //   "none";
+          // document.querySelector("#Candidate-res").style.display = "block";
+          // breadcrumbConstituency.textContent = feature.properties.pc_name;
+          // breadcrumbConstituency.style.display = "inline";
+          // render_table(feature.properties.pc_id);
+        });
+        layer._leaflet_id = feature.properties.pc_id;
+      },
+    });
+    geo2019 = L.geoJSON(filteredGeoJson, {
       onEachFeature: (feature, layer) => {
         //   layer.on('mouseover', function(event) {
         //     showBox(feature.properties, layer);
@@ -1094,6 +1119,7 @@ async function fetchJSON() {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
+
     data2024 = await response.json();
     allianceJson = data2024[1];
     stateDataJson = data2024[0];
@@ -1188,8 +1214,6 @@ $(document).ready(async function () {
       '<svg id="india-svg-2024" viewBox="50 0 900 800" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
       pathsStr +
       "</svg>";
-    document.getElementById("map").style.display = "none";
-
     document.getElementById(
       "indiaMap2019"
     ).innerHTML = `<div id="containertool2"></div><svg id="india-svg-2019" viewBox="0 100 1000 1150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>`;
@@ -1205,6 +1229,7 @@ $(document).ready(async function () {
       pathsStr +
       "</svg>";
     document.getElementById("map").style.display = "none";
+    document.getElementById("map2").style.display="none";
   }
 
   // Function to render alliance results in tabular format
@@ -2937,3 +2962,4 @@ function toTitleCase(name) {
     })
     .join(" ");
 }
+

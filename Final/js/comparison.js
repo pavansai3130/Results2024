@@ -758,6 +758,7 @@ document.addEventListener("DOMContentLoaded", function () {
     state_button_pressed = 0;
     document.getElementById("india-map").style.display = "none";
     document.getElementById("map").style.display = "block";
+    document.getElementById("map2").style.display = "block";
     document.getElementById("stateTabeleContainer").style.display = "block";
     resetBreadcrumb();
     stateSelect.selectedIndex = 0;
@@ -766,6 +767,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("state-bt").addEventListener("click", function () {
     state_button_pressed = 1;
     document.getElementById("map").style.display = "none";
+    document.getElementById("map2").style.display = "block";
     document.getElementById("indiaMap2019").style.display = "block";
     document.getElementById("indiaMap2024").style.display = "block";
 
@@ -832,10 +834,12 @@ function resetBreadcrumb() {
   if (state_button_pressed) {
     geo2.remove(map);
     geo.addTo(map);
+    geo2019.remove(map2);
     document.getElementById("map").style.display = "none";
+    document.getElementById("map2").style.display = "none";
     document.getElementById("indiaMap2019").style.display = "block";
     document.getElementById("indiaMap2024").style.display = "block";
-        document.getElementById("Constituency-res").style.display = "none";
+    document.getElementById("Constituency-res").style.display = "none";
     document.getElementById("stateTabeleContainer").style.display = "block";
     document.getElementById("Candidate-res").style.display = "none";
   } else {
@@ -1035,7 +1039,9 @@ function updateMapStyles() {
 function updateMapBounds2() {
   if (geo2) {
     let bounds = geo2.getBounds();
+    let bounds2 = geo2019.getBounds();
     map.fitBounds(bounds);
+    map2.fitBounds(bounds2);
   }
 }
 let pressed = 0;
@@ -1123,6 +1129,7 @@ handleSelection = function (input) {
   document.getElementById("indiaMap2019").style.display = "none";
 
   document.getElementById("map").style.display = "block";
+  document.getElementById("map2").style.display="block";
   // document.getElementById("donutchart").style.display = "none";
   const selectElement = document.getElementById("state-select");
   const selectedValue = input !== undefined ? `${input}` : selectElement.value;
@@ -1145,6 +1152,7 @@ handleSelection = function (input) {
 
   if (selectedValue) {
     geo.remove(map);
+    geo_map2.remove(map2);
 
     fetch("./data/geo.json")
       .then((res) => res.json())
@@ -1211,6 +1219,7 @@ handleSelection = function (input) {
 
         if (pressed) {
           geo2.remove(map);
+          geo2019.remove(map2);
         }
         var filteredFeatures = geoJson.features.filter(
           (feature) => feature.properties.st_code == selectedValue
@@ -1246,6 +1255,7 @@ handleSelection = function (input) {
                 party_name_2,
                 feature.properties.pc_id
               );
+              
               var map = document.getElementById("map").getBoundingClientRect();
               console.log("map the ", map);
               console.log("event map the ", event);
@@ -1266,6 +1276,27 @@ handleSelection = function (input) {
           },
         });
 
+        geo2019 = L.geoJSON(filteredGeoJson, {
+          onEachFeature: (feature, layer) => {
+            layer.on("click", function (event) {
+              
+              showdatatable(
+                feature.properties.st_name,
+                candidate_1,
+                candidate_2,
+                votes_1,
+                votes_2,
+                margin,
+                feature.properties.pc_name,
+                party_name_1,
+                party_name_2,
+                feature.properties.pc_id
+              );
+            });
+            layer._leaflet_id = feature.properties.pc_id;
+          },
+        });
+
         if (document.querySelector("#Candidate-res").style.display == "block") {
           document.querySelector("#Candidate-res").style.display = "none";
           document.querySelector("#Constituency-res").style.display = "block";
@@ -1274,13 +1305,8 @@ handleSelection = function (input) {
             s_value
           );
         }
-
-        map.setView(
-          [zooming[selectedValue][0], zooming[selectedValue][1]],
-          zooming[selectedValue][2]
-        );
         geo2.addTo(map);
-
+        geo2019.addTo(map2);
         updateMapBounds2();
         map.on("resize", delayedBoundsUpdate2);
 
@@ -1288,6 +1314,12 @@ handleSelection = function (input) {
         console.log(pressed);
         render();
         render2();
+        geo2019.setStyle((feature) => ({
+          fillColor:partyColors[state_colr_json[feature.properties.pc_id]],
+          weight: 1,
+          color: "#000",
+          fillOpacity: 0.9,
+        }));
 
         // render_state_table(
         //   filteredFeatures.map((feature) => feature.properties),
@@ -1884,38 +1916,38 @@ function render_state_table(feature, state) {
     // updatePaginationControls(document.querySelectorAll("#table-body tr:visible").length);
     // displayPage(currentPage);
   });
-  const selectElement = document.getElementById("state-select");
-  const text = selectElement.options[selectElement.selectedIndex].text;
-  if (text !== "Select State") {
-    displayCardsForState(text);
-  } else if (state) {
-    displayCardsForState(state);
-  }
-  function displayCardsForState(stateName) {
-    const rootElement = document.getElementById("root");
-    rootElement.innerHTML = "";
-    // console.log("here are", candidates);
-    const filteredCandidates = candidates.filter(
-      (candidate) => candidate.state === stateName
-    );
-    // console.log("filtered candidates are : ", filteredCandidates);
+  // const selectElement = document.getElementById("state-select");
+  // const text = selectElement.options[selectElement.selectedIndex].text;
+  // if (text !== "Select State") {
+  //   displayCardsForState(text);
+  // } else if (state) {
+  //   displayCardsForState(state);
+  // }
+  // function displayCardsForState(stateName) {
+  //   const rootElement = document.getElementById("root");
+  //   rootElement.innerHTML = "";
+  //   // console.log("here are", candidates);
+  //   const filteredCandidates = candidates.filter(
+  //     (candidate) => candidate.state === stateName
+  //   );
+  //   // console.log("filtered candidates are : ", filteredCandidates);
 
-    let cardRowsNeeded = Math.ceil(count / 3);
-    if (cardRowsNeeded > 5) {
-      cardRowsNeeded = 5;
-    }
-    for (let i = 0; i < cardRowsNeeded; i++) {
-      const row = document.createElement("div");
-      row.className = "row raw justify-content-center";
-      document.getElementById("root").appendChild(row);
-      for (let j = 0; j < 2; j++) {
-        const cardIndex = i * 2 + j;
-        if (cardIndex < filteredCandidates.length) {
-          renderCandidateCards(filteredCandidates[cardIndex], row);
-        }
-      }
-    }
-  }
+  //   let cardRowsNeeded = Math.ceil(count / 3);
+  //   if (cardRowsNeeded > 5) {
+  //     cardRowsNeeded = 5;
+  //   }
+  //   for (let i = 0; i < cardRowsNeeded; i++) {
+  //     const row = document.createElement("div");
+  //     row.className = "row raw justify-content-center";
+  //     document.getElementById("root").appendChild(row);
+  //     for (let j = 0; j < 2; j++) {
+  //       const cardIndex = i * 2 + j;
+  //       if (cardIndex < filteredCandidates.length) {
+  //         renderCandidateCards(filteredCandidates[cardIndex], row);
+  //       }
+  //     }
+  //   }
+  // }
 }
 function drawpiechart(allainceparties, feature) {
   // Load google charts
@@ -2060,6 +2092,12 @@ function render2() {
         ?.dataset.pccolor || "#fff",
     fillOpacity: 0.9,
   }));
+  geo2019.setStyle((feature) => ({
+    weight: 1,
+    color: "#000",
+    fillColor:partyColors[state_colr_json[feature.properties.pc_id]],
+    fillOpacity: 0.9,
+  }));
 }
 
 function showdatatable(
@@ -2184,6 +2222,31 @@ function render_table(code, page, constiti1, st) {
   closedata();
   var splCount = 0;
   geo2.eachLayer((l) => {
+    // console.log(l.feature.properties.pc_id);
+    // alert(l.feature.properties.pc_id === code);
+    splCount++;
+    // console.log("#########splCount::", splCount);
+    if (l.feature.properties.pc_id == code) {
+      // console.log("pressed");
+      l.setStyle({
+        fillColor: document.querySelector(`#table-body tr[data-pc="${code}"]`)
+          ?.dataset.pccolor, // Specific color or default gray
+        fillOpacity: 2, // Fully opaque for the clicked layer
+        color: "#000", // Border color
+        weight: 2, // Border width
+      });
+    } else {
+      l.setStyle({
+        fillColor: document.querySelector(
+          `#table-body tr[data-pc="${l.feature.properties.pc_id}"]`
+        )?.dataset.pccolor, // Default color
+        fillOpacity: 0.4, // Semi-transparent for other layers
+        color: "#000", // Border color
+        weight: 0.3, // Border width
+      });
+    }
+  });
+  geo2019.eachLayer((l) => {
     // console.log(l.feature.properties.pc_id);
     // alert(l.feature.properties.pc_id === code);
     splCount++;
@@ -2523,6 +2586,7 @@ function state_map(value, text) {
   document.getElementById("Candidate-res").style.display = "block";
   document.getElementById("india-map").style.display = "none";
   document.getElementById("map").style.display = "block";
+  document.getElementById("map2").style.display="block";
   document.querySelector(".bt_grp").style.display = "none";
 
   if (value) {
@@ -2683,7 +2747,6 @@ function state_map(value, text) {
           );
         }
         geo.remove(map);
-        map.setView([zooming[value][0], zooming[value][1]], zooming[value][2]);
         geo2.addTo(map);
 
         updateMapBounds2();
@@ -2872,13 +2935,6 @@ function resetstatebread() {
       geo.remove(map);
       // console.log(pressed);
       handleStateClick(breadcrumbState.textContent);
-      map.setView(
-        [
-          zooming[state_codes[breadcrumbState.textContent]][0],
-          zooming[state_codes[breadcrumbState.textContent]][1],
-        ],
-        zooming[state_codes[breadcrumbState.textContent]][2]
-      );
       geo2.addTo(map);
       render2();
 
@@ -3282,3 +3338,4 @@ function createCard(item, id) {
 
   id.append(card);
 }
+
