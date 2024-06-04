@@ -4,6 +4,12 @@
   border: none !important;
 }
 
+#statePolling,
+#stateTotalElectors {
+  text-align: center;
+  background: #eaecf0;
+}
+
 .candiateNameInnerDiv {
   display: flex;
 }

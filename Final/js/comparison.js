@@ -1,55 +1,47 @@
-// /*-------------creating fetching 2019------*/
-// let data_201;
-// let data_2019; // Initialize data_2019 as an empty object
-// async function fetchJSON2(file) {
-//   // data_2019 = {};
-//   try {
-//     const response = await fetch(file); // Fetch the JSON file
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! Status: ${response.status}`);
-//     }
-//     data_201 = await response.json();
-//     console.log("JSON data fetched and stored globally:", data_201);
-//     function format2(data2024) {
-//       for (let state in data2024) {
-//         for (let const_name in data2024[state]) {
-//           const candidates = [];
-//           for (let item of data2024[state][const_name]["candidates"]) {
-//             const candidate = {
-//               candidateId: item.cId,
-//               candidateName: item.cName,
-//               constituencyName: const_name,
-//               party: item.prty,
-//               alliance: item.alnce,
-//               votes: item.vts,
-//             };
-//             candidates.push(candidate);
-//           }
-//           // Access constituency code from constCodes if properly defined
-//           const constituencyCode = constCodes[state][const_name];
-//           if (constituencyCode) {
-//             // Assign candidates to the corresponding constituency code in data_2019
-//             data_2019[constituencyCode] = candidates;
-//           }
-//         }
-//       }
-//     }
-//     format2(data_201[0]);
-//   } catch (error) {
-//     console.error("Error fetching the JSON file:", error);
-//     throw error; // Rethrow the error for the caller to handle
-//   }
-// }
+let pollinfo = {};
+// Declare a global variable to store the fetched data
 
-// // Usage example
-// (async () => {
-//   try {
-//     await fetchJSON2("./election2019.json");
-//     console.log(data_2019);
-//   } catch (error) {
-//     console.error("Error occurred:", error);
-//   }
-// })();
+// Define the path to the JSON file
+const jsonFilePath = "./data/pollInfo.json";
+
+// Fetch and read the JSON file
+fetch(jsonFilePath)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok " + response.statusText);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    function format3(data2024) {
+      for (let state in data2024) {
+        for (let const_name in data2024[state]) {
+          const constituencyDetails = data2024[state][const_name];
+          const formattedData = {
+            electors: constituencyDetails.electors,
+            phase: constituencyDetails.phase,
+            votes: constituencyDetails.votes,
+            date: constituencyDetails.date,
+            percentage: constituencyDetails.poll_percent,
+          };
+
+          // Access constituency code from constCodes if properly defined
+          const constituencyCode = constCodes[state][const_name];
+          if (constituencyCode) {
+            // Assign formatted data to the corresponding constituency code in data_2019
+            pollinfo[constituencyCode] = formattedData;
+          }
+        }
+      }
+    }
+
+    // Call the function with your data
+    format3(data);
+    console.log("Fetched data stored in global variable:", pollinfo);
+  })
+  .catch((error) => {
+    console.error("There was a problem with the fetch operation:", error);
+  });
 
 const stateMapping = {
   35: "Andaman and Nicobar Islands",
@@ -766,6 +758,7 @@ document.addEventListener("DOMContentLoaded", function () {
     state_button_pressed = 0;
     document.getElementById("india-map").style.display = "none";
     document.getElementById("map").style.display = "block";
+    document.getElementById("map2").style.display = "block";
     document.getElementById("stateTabeleContainer").style.display = "block";
     resetBreadcrumb();
     stateSelect.selectedIndex = 0;
@@ -774,7 +767,10 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("state-bt").addEventListener("click", function () {
     state_button_pressed = 1;
     document.getElementById("map").style.display = "none";
-    document.getElementById("india-map").style.display = "block";
+    document.getElementById("map2").style.display = "block";
+    document.getElementById("indiaMap2019").style.display = "block";
+    document.getElementById("indiaMap2024").style.display = "block";
+
     document.getElementById("Constituency-res").style.display = "none";
     document.getElementById("stateTabeleContainer").style.display = "block";
     resetBreadcrumb();
@@ -838,10 +834,11 @@ function resetBreadcrumb() {
   if (state_button_pressed) {
     geo2.remove(map);
     geo.addTo(map);
+    geo2019.remove(map2);
     document.getElementById("map").style.display = "none";
-    document.getElementById("indiaMap2024").style.display = "block";
+    document.getElementById("map2").style.display = "none";
     document.getElementById("indiaMap2019").style.display = "block";
-
+    document.getElementById("indiaMap2024").style.display = "block";
     document.getElementById("Constituency-res").style.display = "none";
     document.getElementById("stateTabeleContainer").style.display = "block";
     document.getElementById("Candidate-res").style.display = "none";
@@ -896,6 +893,10 @@ function updateMapBounds() {
   if (geo) {
     let bounds = geo.getBounds();
     map.fitBounds(bounds);
+  }
+  if (geo_map2) {
+    let bounds2 = geo_map2.getBounds();
+    map2.fitBounds(bounds2);
   }
 }
 
@@ -1042,7 +1043,9 @@ function updateMapStyles() {
 function updateMapBounds2() {
   if (geo2) {
     let bounds = geo2.getBounds();
+    let bounds2 = geo2019.getBounds();
     map.fitBounds(bounds);
+    map2.fitBounds(bounds2);
   }
 }
 let pressed = 0;
@@ -1130,6 +1133,7 @@ handleSelection = function (input) {
   document.getElementById("indiaMap2019").style.display = "none";
 
   document.getElementById("map").style.display = "block";
+  document.getElementById("map2").style.display = "block";
   // document.getElementById("donutchart").style.display = "none";
   const selectElement = document.getElementById("state-select");
   const selectedValue = input !== undefined ? `${input}` : selectElement.value;
@@ -1152,6 +1156,7 @@ handleSelection = function (input) {
 
   if (selectedValue) {
     geo.remove(map);
+    geo_map2.remove(map2);
 
     fetch("./data/geo.json")
       .then((res) => res.json())
@@ -1218,6 +1223,7 @@ handleSelection = function (input) {
 
         if (pressed) {
           geo2.remove(map);
+          geo2019.remove(map2);
         }
         var filteredFeatures = geoJson.features.filter(
           (feature) => feature.properties.st_code == selectedValue
@@ -1253,6 +1259,7 @@ handleSelection = function (input) {
                 party_name_2,
                 feature.properties.pc_id
               );
+
               var map = document.getElementById("map").getBoundingClientRect();
               console.log("map the ", map);
               console.log("event map the ", event);
@@ -1273,6 +1280,26 @@ handleSelection = function (input) {
           },
         });
 
+        geo2019 = L.geoJSON(filteredGeoJson, {
+          onEachFeature: (feature, layer) => {
+            layer.on("click", function (event) {
+              showdatatable(
+                feature.properties.st_name,
+                candidate_1,
+                candidate_2,
+                votes_1,
+                votes_2,
+                margin,
+                feature.properties.pc_name,
+                party_name_1,
+                party_name_2,
+                feature.properties.pc_id
+              );
+            });
+            layer._leaflet_id = feature.properties.pc_id;
+          },
+        });
+
         if (document.querySelector("#Candidate-res").style.display == "block") {
           document.querySelector("#Candidate-res").style.display = "none";
           document.querySelector("#Constituency-res").style.display = "block";
@@ -1281,13 +1308,8 @@ handleSelection = function (input) {
             s_value
           );
         }
-
-        map.setView(
-          [zooming[selectedValue][0], zooming[selectedValue][1]],
-          zooming[selectedValue][2]
-        );
         geo2.addTo(map);
-
+        geo2019.addTo(map2);
         updateMapBounds2();
         map.on("resize", delayedBoundsUpdate2);
 
@@ -1295,6 +1317,12 @@ handleSelection = function (input) {
         console.log(pressed);
         render();
         render2();
+        geo2019.setStyle((feature) => ({
+          fillColor: partyColors[state_colr_json[feature.properties.pc_id]],
+          weight: 1,
+          color: "#000",
+          fillOpacity: 0.9,
+        }));
 
         // render_state_table(
         //   filteredFeatures.map((feature) => feature.properties),
@@ -1665,14 +1693,14 @@ function render_state_table(feature, state) {
         id = i.pc_id;
         name = data[i.pc_id][1].constituencyName;
         candid = data[i.pc_id][1].candidateName;
-        candid2019 = data_2019[i.pc_id][1].candidateName;
+        candid2019 = data_2019[i.pc_id][0].candidateName;
         // console.log(data[i.pc_id][0]);
         // console.log(data[i.pc_id][1]);
         votes = data[i.pc_id][1].votes;
-        votes2019 = data_2019[i.pc_id][1].votes;
+        votes2019 = data_2019[i.pc_id][0].votes;
         party_name = data[i.pc_id][1].party;
-        party_name2019 = data_2019[i.pc_id][1].party;
-        if (data[i.pc_id][2] !== undefined) {
+        party_name2019 = data_2019[i.pc_id][0].party;
+        if (data[i.pc_id][1] !== undefined) {
           candid2 = data[i.pc_id][2].candidateName;
           votes2 = data[i.pc_id][2].votes;
           party_2 = data[i.pc_id][2].party;
@@ -1693,67 +1721,90 @@ function render_state_table(feature, state) {
       tr.appendChild(td);
 
       const td1 = document.createElement("td");
-      // console.log(data[i.pc_id][0].rsDecl);
-      if (!sym[party_name]) {
-        // console.log(candid);
-        td1.innerHTML = `${candid}<br><img src="${sym["extra"]}"><span>${party_name}</span>`;
-      } else {
-        td1.innerHTML = `${candid}<br><img src="${sym[party_name]}"><span>${party_name}</span>`;
-      }
-      td1.style.background = "#F6FEF9";
-      td1.style.color = "#344054";
-      td1.style.paddingLeft = "24px";
-      td1.classList.add("td1");
+      td1.innerHTML = `${pollinfo[i.pc_id].electors}`;
+
+      td1.style.textAlign = "center";
+      td1.style.paddingTop = "20px";
+      td1.style.background = "#ffffff";
+      td1.style.justifyContent = "center";
+      td1.style.alignItems = "center";
       tr.appendChild(td1);
 
       const td2 = document.createElement("td");
-      if (!sym[party_2]) {
-        td2.innerHTML = `${candid2}<br><img src="${sym["extra"]}"><span>${party_2}</span>`;
-      } else {
-        td2.innerHTML = `${candid2}<br><img src="${sym[party_2]}"><span>${party_2}</span>`;
-      }
+      td2.innerHTML = `${pollinfo[i.pc_id].percentage} %`;
 
-      td2.classList.add("td2");
-      td2.style.fontFamily = "Roboto";
-      td2.style.fontWeight = "600";
-      td2.style.color = "#344054";
-      td2.style.background = "#FFFAFA";
-      td2.style.paddingLeft = "1.5rem";
+      td2.style.textAlign = "center";
+      td2.style.paddingTop = "20px";
+      td2.style.background = "#ffffff";
+      td2.style.justifyContent = "center";
+      td2.style.alignItems = "center";
       tr.appendChild(td2);
 
       const td3 = document.createElement("td");
-      td3.innerHTML = `${(votes - votes2).toLocaleString()}`;
-
-      td3.style.background = "#FAF9FB";
-      td3.style.textAlign = "center";
-      td3.style.paddingTop = "20px";
-      td3.style.justifyContent = "center";
-      td3.style.alignItems = "center";
-      td3.classList.add("td3");
-      tr.appendChild(td3);
-
-      const td4 = document.createElement("td");
+      // console.log(data[i.pc_id][0].rsDecl);
       if (!sym[party_name]) {
         // console.log(candid);
-        td4.innerHTML = `${candid2019}<br><img src="${sym["extra"]}"><span>${party_name2019}</span>`;
+        td3.innerHTML = `${candid}<br><img src="${sym["extra"]}"><span>${party_name}</span><br/><span>${votes} Votes</span>`;
       } else {
-        td4.innerHTML = `${candid2019}<br><img src="${sym[party_name]}"><span>${party_name2019}</span>`;
+        td3.innerHTML = `${candid}<br><img src="${sym[party_name]}"><span>${party_name}</span><br/><span>${votes} Votes</span>`;
       }
-      td4.style.background = "#F6FEF9";
+      td3.style.background = "#F6FEF9";
+      td3.style.color = "#344054";
+      td3.style.paddingLeft = "24px";
+      td3.classList.add("td1");
+      tr.appendChild(td3);
+
+      console.log("pollinfo[i.pc_id].electors", pollinfo[i.pc_id].electors);
+
+      const td4 = document.createElement("td");
+      if (!sym[party_2]) {
+        td4.innerHTML = `${candid2}<br><img src="${sym["extra"]}"><span>${party_2}</span><br/><span>${votes2} Votes</span>`;
+      } else {
+        td4.innerHTML = `${candid2}<br><img src="${sym[party_2]}"><span>${party_2}</span><br/><span>${votes2} Votes</span>`;
+      }
+
+      td4.classList.add("td2");
+      td4.style.fontFamily = "Roboto";
+      td4.style.fontWeight = "600";
       td4.style.color = "#344054";
-      td4.classList.add("td1");
+      td4.style.background = "#FFFAFA";
+      td4.style.paddingLeft = "1.5rem";
       tr.appendChild(td4);
 
       const td5 = document.createElement("td");
-      td5.innerHTML = `${votes2019.toLocaleString()}`;
+      td5.innerHTML = `${(votes - votes2).toLocaleString()}`;
 
       td5.style.background = "#FAF9FB";
       td5.style.textAlign = "center";
       td5.style.paddingTop = "20px";
       td5.style.justifyContent = "center";
       td5.style.alignItems = "center";
-      td5.classList.add("td3");
+      td5.classList.add("td5");
       tr.appendChild(td5);
+
+      const td6 = document.createElement("td");
+      if (!sym[party_name]) {
+        // console.log(candid);
+        td6.innerHTML = `${candid2019}<br><img src="${sym["extra"]}"><span>${party_name2019}</span><br/><span>${votes2019} Votes</span>`;
+      } else {
+        td6.innerHTML = `${candid2019}<br><img src="${sym[party_name]}"><span>${party_name2019}</span><br/><span>${votes2019} Votes</span>`;
+      }
+      td6.style.background = "#F6FEF9";
+      td6.style.color = "#344054";
+      td6.style.paddingLeft = "1.5rem";
+      td6.classList.add("td2");
+      tr.appendChild(td6);
+
+      // const td5 = document.createElement("td");
+      // td5.innerHTML = `${votes2019.toLocaleString()}`;
+
+      // td5.style.background = "#FAF9FB";
+      // td5.style.textAlign = "center";
+      // td5.style.paddingTop = "20px";
+      // td5.style.justifyContent = "center";
+      // td5.style.alignItems = "center";
+      // td5.classList.add("td3");
+      // tr.appendChild(td5);
 
       count++;
       if (firstCandidateKey.alliance === "NDA") {
@@ -1868,38 +1919,38 @@ function render_state_table(feature, state) {
     // updatePaginationControls(document.querySelectorAll("#table-body tr:visible").length);
     // displayPage(currentPage);
   });
-  const selectElement = document.getElementById("state-select");
-  const text = selectElement.options[selectElement.selectedIndex].text;
-  if (text !== "Select State") {
-    displayCardsForState(text);
-  } else if (state) {
-    displayCardsForState(state);
-  }
-  function displayCardsForState(stateName) {
-    const rootElement = document.getElementById("root");
-    rootElement.innerHTML = "";
-    // console.log("here are", candidates);
-    const filteredCandidates = candidates.filter(
-      (candidate) => candidate.state === stateName
-    );
-    // console.log("filtered candidates are : ", filteredCandidates);
+  // const selectElement = document.getElementById("state-select");
+  // const text = selectElement.options[selectElement.selectedIndex].text;
+  // if (text !== "Select State") {
+  //   displayCardsForState(text);
+  // } else if (state) {
+  //   displayCardsForState(state);
+  // }
+  // function displayCardsForState(stateName) {
+  //   const rootElement = document.getElementById("root");
+  //   rootElement.innerHTML = "";
+  //   // console.log("here are", candidates);
+  //   const filteredCandidates = candidates.filter(
+  //     (candidate) => candidate.state === stateName
+  //   );
+  //   // console.log("filtered candidates are : ", filteredCandidates);
 
-    let cardRowsNeeded = Math.ceil(count / 3);
-    if (cardRowsNeeded > 5) {
-      cardRowsNeeded = 5;
-    }
-    for (let i = 0; i < cardRowsNeeded; i++) {
-      const row = document.createElement("div");
-      row.className = "row raw justify-content-center";
-      document.getElementById("root").appendChild(row);
-      for (let j = 0; j < 2; j++) {
-        const cardIndex = i * 2 + j;
-        if (cardIndex < filteredCandidates.length) {
-          renderCandidateCards(filteredCandidates[cardIndex], row);
-        }
-      }
-    }
-  }
+  //   let cardRowsNeeded = Math.ceil(count / 3);
+  //   if (cardRowsNeeded > 5) {
+  //     cardRowsNeeded = 5;
+  //   }
+  //   for (let i = 0; i < cardRowsNeeded; i++) {
+  //     const row = document.createElement("div");
+  //     row.className = "row raw justify-content-center";
+  //     document.getElementById("root").appendChild(row);
+  //     for (let j = 0; j < 2; j++) {
+  //       const cardIndex = i * 2 + j;
+  //       if (cardIndex < filteredCandidates.length) {
+  //         renderCandidateCards(filteredCandidates[cardIndex], row);
+  //       }
+  //     }
+  //   }
+  // }
 }
 function drawpiechart(allainceparties, feature) {
   // Load google charts
@@ -2042,6 +2093,12 @@ function render2() {
     fillColor:
       document.querySelector(`tr[data-pc="${feature.properties.pc_id}"]`)
         ?.dataset.pccolor || "#fff",
+    fillOpacity: 0.9,
+  }));
+  geo2019.setStyle((feature) => ({
+    weight: 1,
+    color: "#000",
+    fillColor: partyColors[state_colr_json[feature.properties.pc_id]],
     fillOpacity: 0.9,
   }));
 }
@@ -2192,6 +2249,31 @@ function render_table(code, page, constiti1, st) {
       });
     }
   });
+  geo2019.eachLayer((l) => {
+    // console.log(l.feature.properties.pc_id);
+    // alert(l.feature.properties.pc_id === code);
+    splCount++;
+    // console.log("#########splCount::", splCount);
+    if (l.feature.properties.pc_id == code) {
+      // console.log("pressed");
+      l.setStyle({
+        fillColor: document.querySelector(`#table-body tr[data-pc="${code}"]`)
+          ?.dataset.pccolor, // Specific color or default gray
+        fillOpacity: 2, // Fully opaque for the clicked layer
+        color: "#000", // Border color
+        weight: 2, // Border width
+      });
+    } else {
+      l.setStyle({
+        fillColor: document.querySelector(
+          `#table-body tr[data-pc="${l.feature.properties.pc_id}"]`
+        )?.dataset.pccolor, // Default color
+        fillOpacity: 0.4, // Semi-transparent for other layers
+        color: "#000", // Border color
+        weight: 0.3, // Border width
+      });
+    }
+  });
 
   document.getElementById("stateTabeleContainer").style.display = "none";
   document.getElementById("Candidate-res").style.display = "block";
@@ -2226,7 +2308,7 @@ function render_table(code, page, constiti1, st) {
     row.className = "tr";
 
     const candidate = document.createElement("td");
-    candidate.className = "candiateNameDiv";
+    candidate.className = "candiateNameDiv  align-middle";
     const par = candi[i].party;
 
     if (!sym[par]) {
@@ -2507,6 +2589,7 @@ function state_map(value, text) {
   document.getElementById("Candidate-res").style.display = "block";
   document.getElementById("india-map").style.display = "none";
   document.getElementById("map").style.display = "block";
+  document.getElementById("map2").style.display = "block";
   document.querySelector(".bt_grp").style.display = "none";
 
   if (value) {
@@ -2667,7 +2750,6 @@ function state_map(value, text) {
           );
         }
         geo.remove(map);
-        map.setView([zooming[value][0], zooming[value][1]], zooming[value][2]);
         geo2.addTo(map);
 
         updateMapBounds2();
@@ -2856,13 +2938,6 @@ function resetstatebread() {
       geo.remove(map);
       // console.log(pressed);
       handleStateClick(breadcrumbState.textContent);
-      map.setView(
-        [
-          zooming[state_codes[breadcrumbState.textContent]][0],
-          zooming[state_codes[breadcrumbState.textContent]][1],
-        ],
-        zooming[state_codes[breadcrumbState.textContent]][2]
-      );
       geo2.addTo(map);
       render2();
 

@@ -52,6 +52,13 @@ body {
   max-height: 50px;
 }
 
+#map2 {
+  pointer-events: none;
+  /* max-width: 630px; Ensure SVG fills the container
+  height: 630px;
+  display: flex;
+  justify-content: center; */
+}
 #map {
   overflow: hidden;
   justify-content: center;
@@ -312,7 +319,7 @@ tr {
 .tdata {
   position: sticky;
   left: 0;
-  width: 200px;
+  /* width: 200px; */
   height: 60px;
   text-align: left;
 }
