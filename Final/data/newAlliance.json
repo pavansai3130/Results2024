@@ -1,37 +1,36 @@
 {
-    "Andaman And Nicobar Islands": {
+    "Andaman and Nicobar Islands": {
         "NDA": {},
-        "INDIA": {
+        "UPA": {
             "INC": 1
         },
         "OTH": {}
     },
     "Andhra Pradesh": {
-        "NDA": {
-            "TDP": 3
-        },
-        "INDIA": {},
+        "NDA": {},
+        "UPA": {},
         "OTH": {
-            "YSRCP": 22
+            "YSRCP": 22,
+            "TDP": 3
         }
     },
     "Arunachal Pradesh": {
         "NDA": {
             "BJP": 2
         },
-        "INDIA": {},
+        "UPA": {},
         "OTH": {}
     },
     "Assam": {
         "NDA": {
-            "BJP": 9
+            "BJP": 9,
+            "BOPF": 1
         },
-        "INDIA": {
+        "UPA": {
             "INC": 3
         },
         "OTH": {
-            "AIUDF": 1,
-            "IND": 1
+            "AIUDF": 1
         }
     },
     "Bihar": {
@@ -40,7 +39,7 @@
             "JD(U)": 16,
             "LJP": 6
         },
-        "INDIA": {
+        "UPA": {
             "INC": 1
         },
         "OTH": {}
@@ -49,32 +48,30 @@
         "NDA": {
             "BJP": 1
         },
-        "INDIA": {},
+        "UPA": {},
         "OTH": {}
     },
     "Chhattisgarh": {
         "NDA": {
             "BJP": 9
         },
-        "INDIA": {
+        "UPA": {
             "INC": 2
         },
         "OTH": {}
     },
     "Dadra and Nagar Haveli": {
         "NDA": {
-            "BJP": 1
+            "BJP": 2
         },
-        "INDIA": {},
-        "OTH": {
-            "IND": 1
-        }
+        "UPA": {},
+        "OTH": {}
     },
     "Goa": {
         "NDA": {
             "BJP": 1
         },
-        "INDIA": {
+        "UPA": {
             "INC": 1
         },
         "OTH": {}
@@ -83,29 +80,29 @@
         "NDA": {
             "BJP": 26
         },
-        "INDIA": {},
+        "UPA": {},
         "OTH": {}
     },
     "Haryana": {
         "NDA": {
             "BJP": 10
         },
-        "INDIA": {},
+        "UPA": {},
         "OTH": {}
     },
     "Himachal Pradesh": {
         "NDA": {
             "BJP": 4
         },
-        "INDIA": {},
+        "UPA": {},
         "OTH": {}
     },
     "Jammu and Kashmir": {
         "NDA": {
             "BJP": 3
         },
-        "INDIA": {
-            "JKN": 3
+        "UPA": {
+            "JKNC": 3
         },
         "OTH": {}
     },
@@ -114,7 +111,7 @@
             "BJP": 11,
             "AJSUP": 1
         },
-        "INDIA": {
+        "UPA": {
             "JMM": 1,
             "INC": 1
         },
@@ -124,17 +121,15 @@
         "NDA": {
             "BJP": 25
         },
-        "INDIA": {
+        "UPA": {
             "INC": 1,
-            "JD(S)": 1
+            "JD(S)": 2
         },
-        "OTH": {
-            "IND": 1
-        }
+        "OTH": {}
     },
     "Kerala": {
         "NDA": {},
-        "INDIA": {
+        "UPA": {
             "CPIM": 1,
             "INC": 15,
             "RSP": 1,
@@ -145,8 +140,8 @@
     },
     "Lakshadweep": {
         "NDA": {},
-        "INDIA": {
-            "NCP": 1
+        "UPA": {
+            "NCP(SP)": 1
         },
         "OTH": {}
     },
@@ -154,7 +149,7 @@
         "NDA": {
             "BJP": 28
         },
-        "INDIA": {
+        "UPA": {
             "INC": 1
         },
         "OTH": {}
@@ -162,14 +157,15 @@
     "Maharashtra": {
         "NDA": {
             "BJP": 23,
-            "SHS": 18
+            "SHS": 14
         },
-        "INDIA": {
-            "NCP": 4,
-            "INC": 1
+        "UPA": {
+            "NCP(SP)": 3,
+            "INC": 1,
+            "SHS(UBT)": 5,
+            "NCP": 1
         },
         "OTH": {
-            "IND": 1,
             "AIMIM": 1
         }
     },
@@ -177,14 +173,14 @@
         "NDA": {
             "BJP": 1
         },
-        "INDIA": {},
+        "UPA": {},
         "OTH": {
             "NPF": 1
         }
     },
     "Meghalaya": {
         "NDA": {},
-        "INDIA": {
+        "UPA": {
             "INC": 1
         },
         "OTH": {
@@ -193,7 +189,7 @@
     },
     "Mizoram": {
         "NDA": {},
-        "INDIA": {},
+        "UPA": {},
         "OTH": {
             "MNF": 1
         }
@@ -202,21 +198,21 @@
         "NDA": {
             "NDPP": 1
         },
-        "INDIA": {},
+        "UPA": {},
         "OTH": {}
     },
     "NCT OF Delhi": {
         "NDA": {
             "BJP": 7
         },
-        "INDIA": {},
+        "UPA": {},
         "OTH": {}
     },
     "Odisha": {
         "NDA": {
             "BJP": 8
         },
-        "INDIA": {
+        "UPA": {
             "INC": 1
         },
         "OTH": {
@@ -225,7 +221,7 @@
     },
     "Puducherry": {
         "NDA": {},
-        "INDIA": {
+        "UPA": {
             "INC": 1
         },
         "OTH": {}
@@ -235,23 +231,24 @@
             "SAD": 2,
             "BJP": 2
         },
-        "INDIA": {
-            "INC": 9
+        "UPA": {
+            "INC": 8
         },
-        "OTH": {}
+        "OTH": {
+            "AAP": 1
+        }
     },
     "Rajasthan": {
         "NDA": {
-            "BJP": 24
+            "BJP": 24,
+            "RLP": 1
         },
-        "INDIA": {},
-        "OTH": {
-            "RLTP": 1
-        }
+        "UPA": {},
+        "OTH": {}
     },
     "Sikkim": {
         "NDA": {},
-        "INDIA": {},
+        "UPA": {},
         "OTH": {
             "SKM": 1
         }
@@ -260,7 +257,7 @@
         "NDA": {
             "ADMK": 1
         },
-        "INDIA": {
+        "UPA": {
             "DMK": 24,
             "INC": 8,
             "VCK": 1,
@@ -272,13 +269,13 @@
     },
     "Telangana": {
         "NDA": {
-            "BJP": 4,
-            "TRS": 9
+            "BJP": 4
         },
-        "INDIA": {
+        "UPA": {
             "INC": 3
         },
         "OTH": {
+            "TRS": 9,
             "AIMIM": 1
         }
     },
@@ -286,7 +283,7 @@
         "NDA": {
             "BJP": 2
         },
-        "INDIA": {},
+        "UPA": {},
         "OTH": {}
     },
     "Uttar Pradesh": {
@@ -294,7 +291,7 @@
             "BJP": 62,
             "ADAL": 2
         },
-        "INDIA": {
+        "UPA": {
             "INC": 1
         },
         "OTH": {
@@ -306,14 +303,14 @@
         "NDA": {
             "BJP": 5
         },
-        "INDIA": {},
+        "UPA": {},
         "OTH": {}
     },
     "West Bengal": {
         "NDA": {
             "BJP": 18
         },
-        "INDIA": {
+        "UPA": {
             "INC": 2
         },
         "OTH": {

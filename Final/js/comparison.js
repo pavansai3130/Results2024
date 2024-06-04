@@ -839,7 +839,9 @@ function resetBreadcrumb() {
     geo2.remove(map);
     geo.addTo(map);
     document.getElementById("map").style.display = "none";
-    document.getElementById("india-map").style.display = "block";
+    document.getElementById("indiaMap2024").style.display = "block";
+    document.getElementById("indiaMap2019").style.display = "block";
+
     document.getElementById("Constituency-res").style.display = "none";
     document.getElementById("stateTabeleContainer").style.display = "block";
     document.getElementById("Candidate-res").style.display = "none";

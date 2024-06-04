@@ -2197,6 +2197,7 @@ function render_table(code, page, constiti1, st) {
     console.log("#########splCount::", splCount);
     if (l.feature.properties.pc_id == code) {
       console.log("pressed");
+      console.log("##################", l.feature);
       l.setStyle({
         fillColor: document.querySelector(`#table-body tr[data-pc="${code}"]`)
           ?.dataset.pccolor, // Specific color or default gray

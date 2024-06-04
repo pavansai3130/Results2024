@@ -1191,10 +1191,10 @@ $(document).ready(async function () {
   // console.log("that is", alliances_rendering);
   stateDataJson2019 = data_201[0];
   allianceJson2019 = data_201[1];
-  /*  console.log(allianceJson);
+  console.log(allianceJson);
   console.log(logos);
 
-  console.log(allianceJson); */
+  console.log(stateAlliance);
   // Function to render India map with statewise colors
   function renderIndiaMap() {
     // Implement the logic to render India map using SVG or any other method
@@ -1417,15 +1417,15 @@ $(document).ready(async function () {
       let value = nda - NDA;
       cells[1].innerHTML = `${nda}<span class=${
         value < 0 ? "negative" : "positive"
-      }> (${value})</span>`;
+      }> (${value > 0 ? "+" + value : value})</span>`;
       value = india - INDIA;
       cells[2].innerHTML = `${india}<span class=${
         value < 0 ? "negative" : "positive"
-      }> (${value})</span>`;
+      }> (${value > 0 ? "+" + value : value})</span>`;
       value = others - OTH;
       cells[3].innerHTML = `${others}<span class=${
         value < 0 ? "negative" : "positive"
-      }> (${value})</span>`;
+      }> (${value > 0 ? "+" + value : value})</span>`;
 
       tbody.appendChild(newRow);
     });
