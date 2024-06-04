@@ -8,7 +8,7 @@ const stateMapping = {
   22: "Chhattisgarh",
   26: "Dadra and Nagar Haveli",
   25: "Daman and Diu",
-  7: "Delhi",
+  7: "NCT OF Delhi",
   30: "Goa",
   24: "Gujarat",
   6: "Haryana",
