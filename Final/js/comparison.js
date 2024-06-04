@@ -894,11 +894,10 @@ function updateMapBounds() {
     let bounds = geo.getBounds();
     map.fitBounds(bounds);
   }
-  if(geo_map2)
-    {
-      let bounds2 = geo_map2.getBounds();
-      map2.fitBounds(bounds2);
-    }
+  if (geo_map2) {
+    let bounds2 = geo_map2.getBounds();
+    map2.fitBounds(bounds2);
+  }
 }
 
 function delayedBoundsUpdate2() {
@@ -1134,7 +1133,7 @@ handleSelection = function (input) {
   document.getElementById("indiaMap2019").style.display = "none";
 
   document.getElementById("map").style.display = "block";
-  document.getElementById("map2").style.display="block";
+  document.getElementById("map2").style.display = "block";
   // document.getElementById("donutchart").style.display = "none";
   const selectElement = document.getElementById("state-select");
   const selectedValue = input !== undefined ? `${input}` : selectElement.value;
@@ -1260,7 +1259,7 @@ handleSelection = function (input) {
                 party_name_2,
                 feature.properties.pc_id
               );
-              
+
               var map = document.getElementById("map").getBoundingClientRect();
               console.log("map the ", map);
               console.log("event map the ", event);
@@ -1284,7 +1283,6 @@ handleSelection = function (input) {
         geo2019 = L.geoJSON(filteredGeoJson, {
           onEachFeature: (feature, layer) => {
             layer.on("click", function (event) {
-              
               showdatatable(
                 feature.properties.st_name,
                 candidate_1,
@@ -1320,7 +1318,7 @@ handleSelection = function (input) {
         render();
         render2();
         geo2019.setStyle((feature) => ({
-          fillColor:partyColors[state_colr_json[feature.properties.pc_id]],
+          fillColor: partyColors[state_colr_json[feature.properties.pc_id]],
           weight: 1,
           color: "#000",
           fillOpacity: 0.9,
@@ -2100,7 +2098,7 @@ function render2() {
   geo2019.setStyle((feature) => ({
     weight: 1,
     color: "#000",
-    fillColor:partyColors[state_colr_json[feature.properties.pc_id]],
+    fillColor: partyColors[state_colr_json[feature.properties.pc_id]],
     fillOpacity: 0.9,
   }));
 }
@@ -2591,7 +2589,7 @@ function state_map(value, text) {
   document.getElementById("Candidate-res").style.display = "block";
   document.getElementById("india-map").style.display = "none";
   document.getElementById("map").style.display = "block";
-  document.getElementById("map2").style.display="block";
+  document.getElementById("map2").style.display = "block";
   document.querySelector(".bt_grp").style.display = "none";
 
   if (value) {
@@ -3343,4 +3341,3 @@ function createCard(item, id) {
 
   id.append(card);
 }
-
