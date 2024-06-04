@@ -1,20 +1,27 @@
 let candidatesData = [];
 let s3PicUrl = "https://results2024.s3.ap-south-1.amazonaws.com/candpics/";
-fetch("./data/overallpopular.json")
-.then((response) => {
+let resultJSON = null;
+let pictureMapping = null;
+
+fetch("./data/overallpopular.json").then((response) => {
   if (!response.ok) {
     throw new Error("Network response was not ok " + response.statusText);
   }
   return response.json();
-})
-.then((picMap) => {
+}).then((picMap) => {
   pictureMapping = picMap;
 });
+
 // Fetch candidate data and store it in the global variable
 async function fetchCandidateData() {
-  const response = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
-  const data = await response.json();
-  candidatesData = data[0]; 
+  if(!resultJSON){
+    const response = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
+    const data = await response.json();
+    candidatesData = data[0];
+    resultJSON = data;
+  } else {
+    candidatesData = resultJSON[0];
+  }
 }
 
 // Fetch more cards and populate them
@@ -27,10 +34,16 @@ async function fetchMoreCards1() {
     console.log("State Data:", stateData);
 
     // Fetch the detailed candidate information JSON
-    const candidateResponse = await fetch(
-      "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
-    );
-    const candidateData = await candidateResponse.json();
+    let candidateData = null;
+    if(!resultJSON){
+      const candidateResponse = await fetch(
+        "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
+      );
+      candidateData = await candidateResponse.json();
+      resultJSON = candidateData;
+    } else {
+      candidateData = resultJSON;
+    }
     console.log("Candidate Data:", candidateData);
 
     const moreCardsRoot = document.getElementById("more-cards-root");
@@ -79,13 +92,17 @@ async function fetchMoreCards1() {
 }
 let data={};
 async function fetchCandidateValue() {
-  const response = await fetch('./data/overallpopular.json');
-  data = await response.json();
+  if(!pictureMapping){
+    const response = await fetch('./data/overallpopular.json');
+    data = await response.json();
+    pictureMapping = data;
+  } else {
+    data = pictureMapping;
+  }
 }
 function getPicMap(item){
-
-  console.log(data);
-  const candidate = data[item.cId];
+  return (pictureMapping && pictureMapping[item.cId]) ? pictureMapping[item.cId] : null;  
+  /*const candidate = data[item.cId];
   if (candidate) {
     // alert(candidate);
     // alert(candidate.value);
@@ -93,7 +110,7 @@ function getPicMap(item){
   } else {
     console.error('Candidate not found for ID:', item.cId);
     return null;
-  }
+  }*/
 }
 async function createCard(item) {
 
@@ -102,15 +119,12 @@ async function createCard(item) {
     "INDIA": "./images/imgs/INDA.png",
     "OTH": "./images/imgs/OTH.png"
   };
-  const candidateValue = getPicMap(item);
-  
-const imageUrl = `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${candidateValue}.png` || allianceImages[item.alnce];
-console.log(imageUrl);
-
-  
-
+  let candidateValue = getPicMap(item);
+  //candidateValue = (candidateValue) ? candidateValue : allianceImages[item.alnce];
+  //debugger;
+  const imageUrl = (candidateValue) ? `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${candidateValue}.png` : allianceImages[item.alnce];
+  //console.log(imageUrl);
   // const imageUrl = item.perimg || allianceImages[item.alnce];
-
 
   const card = document.createElement("div");
   card.className = "position-relative custom-container";
@@ -220,10 +234,15 @@ async function displayCardsForState(stateName) {
     const stateResponse = await fetch("./data/popular.json");
     const stateData = await stateResponse.json();
     console.log('State Data:', stateData);
-
-    // Fetch the detailed candidate information JSON
-    const candidateResponse = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
-    const candidateData = await candidateResponse.json();
+    let candidateData = null;
+    if(!resultJSON){
+      // Fetch the detailed candidate information JSON
+      const candidateResponse = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
+      candidateData = await candidateResponse.json();
+      resultJSON = candidateData;
+    } else {
+      candidatesData = resultJSON;
+    }
     console.log('Candidate Data:', candidateData);
 
     const moreCardsRoot = document.getElementById("more-cards-root");
@@ -314,7 +333,7 @@ function getURLParameter(name) {
 
 window.onload = async function() {
   await fetchCandidateData();  // Ensure data is fetched before proceeding
-  fetchCandidateValue()
+  await fetchCandidateValue();
   const state = getURLParameter('state');
   if (state !== null) {
     displayCardsForState(state);
