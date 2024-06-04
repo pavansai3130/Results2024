@@ -3,6 +3,7 @@ let s3PicUrl = "https://results2024.s3.ap-south-1.amazonaws.com/candpics/";
 let resultJSON = null;
 let pictureMapping = null;
 
+// Fetch picture mapping data
 fetch("./data/overallpopular.json").then((response) => {
   if (!response.ok) {
     throw new Error("Network response was not ok " + response.statusText);
@@ -14,7 +15,7 @@ fetch("./data/overallpopular.json").then((response) => {
 
 // Fetch candidate data and store it in the global variable
 async function fetchCandidateData() {
-  if(!resultJSON){
+  if (!resultJSON) {
     const response = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
     const data = await response.json();
     candidatesData = data[0];
@@ -24,107 +25,51 @@ async function fetchCandidateData() {
   }
 }
 
-// Fetch more cards and populate them
-async function fetchMoreCards1() {
-  document.getElementById("more-cards-root").innerHTML = "";
-  try {
-    // Fetch the state-constituency-candidate JSON
-    const stateResponse = await fetch("../data/popular.json");
-    const stateData = await stateResponse.json();
-    console.log("State Data:", stateData);
-
-    // Fetch the detailed candidate information JSON
-    let candidateData = null;
-    if(!resultJSON){
-      const candidateResponse = await fetch(
-        "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
-      );
-      candidateData = await candidateResponse.json();
-      resultJSON = candidateData;
-    } else {
-      candidateData = resultJSON;
-    }
-    console.log("Candidate Data:", candidateData);
-
-    const moreCardsRoot = document.getElementById("more-cards-root");
-
-    // Function to get candidate details by ID from the fetched candidate data
-    function getCandidateDetails(candidateId) {
-      const statesData = candidateData[0]; // Assuming 0th index contains the relevant data
-      for (let state in statesData) {
-        for (let constituency in statesData[state]) {
-          const candidates = statesData[state][constituency].candidates;
-          if (candidates) {
-            const candidate = candidates.find(candidate => candidate.cId === candidateId);
-            if (candidate) {
-              candidate.state = state;
-              candidate.constituency = constituency
-                .split(' ')
-                .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-                .join(' ');
-              return candidate;
-            }
-          } else {
-            console.error("Candidates array is undefined for", state, constituency);
-          }
-        }
-      }
-      return null;
-    }
-
-    // Loop through each state and constituency
-    Object.keys(stateData).forEach((state) => {
-      Object.keys(stateData[state]).forEach((constituency) => {
-        stateData[state][constituency].forEach(async (candidateId) => {  // Make this function async
-          const candidateDetails = getCandidateDetails(candidateId);
-          if (candidateDetails) {
-            const card = await createCard(candidateDetails);  // Wait for the Promise to resolve
-            moreCardsRoot.appendChild(card);
-          } else {
-            console.error("Candidate details not found for ID:", candidateId);
-          }
-        });
-      });
-    });
-  } catch (error) {
-    console.error("Error fetching or processing data:", error);
-  }
-}
-let data={};
-async function fetchCandidateValue() {
-  if(!pictureMapping){
+// Fetch picture mapping data
+async function fetchPictureMapping() {
+  if (!pictureMapping) {
     const response = await fetch('./data/overallpopular.json');
-    data = await response.json();
-    pictureMapping = data;
-  } else {
-    data = pictureMapping;
+    pictureMapping = await response.json();
   }
 }
-function getPicMap(item){
-  return (pictureMapping && pictureMapping[item.cId]) ? pictureMapping[item.cId] : null;  
-  /*const candidate = data[item.cId];
-  if (candidate) {
-    // alert(candidate);
-    // alert(candidate.value);
-    return candidate;
-  } else {
-    console.error('Candidate not found for ID:', item.cId);
-    return null;
-  }*/
-}
-async function createCard(item) {
 
+// Function to get candidate details by ID from the fetched candidate data
+function getCandidateDetails(candidateId) {
+  const statesData = candidatesData; // Assuming 0th index contains the relevant data
+  for (let state in statesData) {
+    for (let constituency in statesData[state]) {
+      const candidates = statesData[state][constituency].candidates;
+      if (candidates) {
+        const candidate = candidates.find(candidate => candidate.cId === candidateId);
+        if (candidate) {
+          candidate.state = state;
+          candidate.constituency = constituency
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ');
+          return candidate;
+        }
+      } else {
+        console.error("Candidates array is undefined for", state, constituency);
+      }
+    }
+  }
+  return null;
+}
+
+function getPicMap(item) {
+  return (pictureMapping && pictureMapping[item.cId]) ? pictureMapping[item.cId] : null;
+}
+
+async function createCard(item) {
   const allianceImages = {
     "NDA": "./images/imgs/NDA.png",
     "INDIA": "./images/imgs/INDA.png",
     "OTH": "./images/imgs/OTH.png"
   };
-  let candidateValue = getPicMap(item);
-  //candidateValue = (candidateValue) ? candidateValue : allianceImages[item.alnce];
-  //debugger;
-  const imageUrl = (candidateValue) ? `https://results2024.s3.ap-south-1.amazonaws.com/candpics/${candidateValue}.png` : allianceImages[item.alnce];
-  //console.log(imageUrl);
-  // const imageUrl = item.perimg || allianceImages[item.alnce];
+
+  const candidateValue = getPicMap(item);
+  const imageUrl = (candidateValue) ? `${s3PicUrl}${candidateValue}.png` : allianceImages[item.alnce];
 
   const card = document.createElement("div");
   card.className = "position-relative custom-container";
@@ -133,24 +78,24 @@ async function createCard(item) {
   let arrColor;
   let nameColor;
   let nameClass = "";
-  let MarginColor;
+  let marginColor;
 
   if (item.alnce === "NDA") {
     bgColor = "linear-gradient(56deg, #FFF8DC,#FFE4BF)";
     arrColor = "linear-gradient(90deg, #EC8E30,#A65E17)";
     nameClass = "gradient-text-nda";
     nameColor = "#FF9933";
-    MarginColor="#ffed4a"
+    marginColor = "#ffed4a";
   } else if (item.alnce === "INDIA") {
     nameColor = "#19AAED";
     nameClass = "gradient-text-inda";
-    MarginColor="#ffffff"
+    marginColor = "#ffffff";
   } else if (item.alnce === "OTH") {
     nameClass = "gradient-text-oth";
     bgColor = "linear-gradient(56deg, #F5F5F5,#E0E0E0)";
     arrColor = "linear-gradient(90deg, #6F9088,#42615A)";
     nameColor = "#0c6b4b";
-    MarginColor="#ffffff"
+    marginColor = "#ffffff";
   }
 
   card.style.background = bgColor;
@@ -158,11 +103,11 @@ async function createCard(item) {
   let voteDifference = 0;
   let rsDecl = 1;  // Default value
   const lowerCaseConstituency = item.constituency.toLowerCase();
-  
+
   if (candidatesData[item.state] && candidatesData[item.state][lowerCaseConstituency]) {
     const constituencyData = candidatesData[item.state][lowerCaseConstituency].candidates;
     rsDecl = candidatesData[item.state][lowerCaseConstituency].rsDecl;  // Get the rsDecl value
-    // alert(rsDecl);
+
     for (let i = 0; i < constituencyData.length; i++) {
       if (constituencyData[i].cId === item.cId) {
         position = i + 1;
@@ -185,103 +130,108 @@ async function createCard(item) {
     ribbonText = position === 1 ? "Leading" : "Trailing";
     ribbonColor = position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
   }
-  let leadTrailText =
-    rsDecl === 1 ? position === 1 ? "Won by" : "Lost by" : position === 1 ? "Leading by" : "Trailing by";
+
+  let leadTrailText = rsDecl === 1 ? position === 1 ? "Won by" : "Lost by" : position === 1 ? "Leading by" : "Trailing by";
   const Votes = new Intl.NumberFormat('en-IN').format(item.vts);
   let VoteDiff = new Intl.NumberFormat('en-IN').format(voteDifference);
-  if(item.vts===0){
+  if (item.vts === 0) {
     ribbonText = "Awaited";
-    leadTrailText ="Results Awaited";
-    ribbonColor="grey";
-    VoteDiff=""
+    leadTrailText = "Results Awaited";
+    ribbonColor = "grey";
+    VoteDiff = "";
   }
+
   card.innerHTML = `
-  <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
-  <div class="temp custom-temp">
+    <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
+    <div class="temp custom-temp">
       <div class="card-body w-100">
-          <h3 class="card-title custom-card-title ${nameClass}">${
-    item.cName
-  }</h3>
-          <div class="subheaders cd-flex align-items-center custom-subheaders" style="display:flex" > 
-              <div class="logo"><img class="custom-img" src="./images/partylogo/${item.prty}.svg" alt=""></div>
-              <h6 style="font-weight: bold;">${item.prty}</h6>
-          </div>
-          <p class="card-text custom-card-text">${item.constituency}(${item.state})</p>
-          <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
-              <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
-                Votes
-              }
-          </p>
+        <h3 class="card-title custom-card-title ${nameClass}">${item.cName}</h3>
+        <div class="subheaders cd-flex align-items-center custom-subheaders" style="display:flex">
+          <div class="logo"><img class="custom-img" src="./images/partylogo/${item.prty}.svg" alt=""></div>
+          <h6 style="font-weight: bold;">${item.prty}</h6>
+        </div>
+        <p class="card-text custom-card-text">${item.constituency} (${item.state})</p>
+        <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
+          <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${Votes}
+        </p>
       </div>
       <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
-      <p class="card-text mb-1 custom-iribbon-text">${leadTrailText}</p>
-      <p class="card-text custom-iribbon-text-votes" style="color:${MarginColor}">${VoteDiff}</p>
-  </div>
-  </div>
-  <div class="person-image d-flex custom-person-image">
-      <img class="person-img wid"  id="candID" src="${imageUrl}" alt="Person Image">
-  </div>
+        <p class="card-text mb-1 custom-iribbon-text">${leadTrailText}</p>
+        <p class="card-text custom-iribbon-text-votes" style="color:${marginColor}">${VoteDiff}</p>
+      </div>
+    </div>
+    <div class="person-image d-flex custom-person-image">
+      <img class="person-img wid" id="candID" src="${imageUrl}" alt="Person Image">
+    </div>
   `;
 
   return card;
 }
 
-
-
-async function displayCardsForState(stateName) {
+// Fetch and display more cards
+async function fetchMoreCards1() {
+  document.getElementById("more-cards-root").innerHTML = "";
   try {
-    // Fetch the state-constituency-candidate JSON
-    const stateResponse = await fetch("./data/popular.json");
+    const stateResponse = await fetch("../data/popular.json");
     const stateData = await stateResponse.json();
-    console.log('State Data:', stateData);
-    let candidateData = null;
-    if(!resultJSON){
-      // Fetch the detailed candidate information JSON
+    console.log("State Data:", stateData);
+
+    if (!resultJSON) {
       const candidateResponse = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
-      candidateData = await candidateResponse.json();
+      const candidateData = await candidateResponse.json();
       resultJSON = candidateData;
+      candidatesData = candidateData[0];
     } else {
-      candidatesData = resultJSON;
+      candidatesData = resultJSON[0];
     }
-    console.log('Candidate Data:', candidateData);
+    console.log("Candidate Data:", resultJSON);
 
     const moreCardsRoot = document.getElementById("more-cards-root");
 
-    // Function to get candidate details by ID from the fetched candidate data
-    function getCandidateDetails(candidateId) {
-      const statesData = candidateData[0];  // Assuming 0th index contains the relevant data
-      for (let state in statesData) {
-        if (state === stateName) {  // Only process the specified state
-          for (let constituency in statesData[state]) {
-            const candidates = statesData[state][constituency].candidates;
-            if (candidates) {
-              const candidate = candidates.find(candidate => candidate.cId === candidateId);
-              if (candidate) {
-                candidate.state = state;
-                candidate.constituency = constituency
-                  .split(' ')
-                  .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-                  .join(' ');
-                return candidate;
-              }
-            } else {
-              console.error('Candidates array is undefined for', state, constituency);  // Add log to debug
-            }
+    // Loop through each state and constituency
+    Object.keys(stateData).forEach((state) => {
+      Object.keys(stateData[state]).forEach((constituency) => {
+        stateData[state][constituency].forEach(async (candidateId) => {
+          const candidateDetails = getCandidateDetails(candidateId);
+          if (candidateDetails) {
+            const card = await createCard(candidateDetails);
+            moreCardsRoot.appendChild(card);
+          } else {
+            console.error("Candidate details not found for ID:", candidateId);
           }
-        }
-      }
-      return null;
+        });
+      });
+    });
+  } catch (error) {
+    console.error("Error fetching or processing data:", error);
+  }
+}
+
+async function displayCardsForState(stateName) {
+  try {
+    const stateResponse = await fetch("./data/popular.json");
+    const stateData = await stateResponse.json();
+    console.log('State Data:', stateData);
+
+    if (!resultJSON) {
+      const candidateResponse = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
+      const candidateData = await candidateResponse.json();
+      resultJSON = candidateData;
+      candidatesData = candidateData[0];
+    } else {
+      candidatesData = resultJSON[0];
     }
+    console.log('Candidate Data:', resultJSON);
+
+    const moreCardsRoot = document.getElementById("more-cards-root");
 
     // Loop through each state and constituency
-    if (stateData[stateName]) {  // Only process the specified state
+    if (stateData[stateName]) {
       for (const constituency of Object.keys(stateData[stateName])) {
         for (const candidateId of stateData[stateName][constituency]) {
           const candidateDetails = getCandidateDetails(candidateId);
-          
           if (candidateDetails) {
-            
-            const card = await createCard(candidateDetails);  // Wait for the card to be created
+            const card = await createCard(candidateDetails);
             moreCardsRoot.appendChild(card);
           } else {
             console.error('Candidate details not found for ID:', candidateId);
@@ -296,18 +246,15 @@ async function displayCardsForState(stateName) {
   }
 }
 
-
 function performSearch() {
-  const searchInput = document
-    .getElementById("search-input")
-    .value.toLowerCase();
+  const searchInput = document.getElementById("search-input").value.toLowerCase();
   const selectedState = document.getElementById("dropdown").value.toLowerCase();
   const cards = document.querySelectorAll(".custom-container");
   let noRes = true;
 
   cards.forEach((card) => {
     const title = card.querySelector(".card-title").textContent.toLowerCase();
-    const place = card.querySelector(".card-text").textContent.toLowerCase(); // Changed from '.card-place'
+    const place = card.querySelector(".card-text").textContent.toLowerCase();
 
     if (
       (title.includes(searchInput) || searchInput === "") &&
@@ -319,6 +266,7 @@ function performSearch() {
       card.style.display = "none";
     }
   });
+
   const noResImg = document.getElementById('no-results-img');
   if (noRes) {
     noResImg.style.display = "block";
@@ -332,8 +280,8 @@ function getURLParameter(name) {
 }
 
 window.onload = async function() {
-  await fetchCandidateData();  // Ensure data is fetched before proceeding
-  await fetchCandidateValue();
+  await fetchCandidateData();
+  await fetchPictureMapping();
   const state = getURLParameter('state');
   if (state !== null) {
     displayCardsForState(state);
@@ -348,9 +296,7 @@ document.getElementById("dropdown").addEventListener("change", () => {
   performSearch();
 });
 
-document.getElementById("delFil").addEventListener("click",()=>{
+document.getElementById("delFil").addEventListener("click", () => {
   fetchMoreCards1();
-  document.getElementById("tempState1").style.display="none";
+  document.getElementById("tempState1").style.display = "none";
 });
-
-
