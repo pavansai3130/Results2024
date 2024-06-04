@@ -1176,15 +1176,32 @@ $(document).ready(async function () {
     // Implement the logic to render India map using SVG or any other method
     // Add paths to the SVG map
     //alert("aa");
+    let temp = 1;
     document.getElementById(
-      "india-map"
-    ).innerHTML = `<div id="containertool2"></div><svg id="india-svg" viewBox="0 100 1000 1150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>`;
+      "indiaMap2024"
+    ).innerHTML = `<div id="containertool2"></div><svg id="india-svg-2024" viewBox="0 100 1000 1150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>`;
     var pathsStr = "";
     for (let state in paths) {
       pathsStr += `<path id="${states[state]}" d="${paths[state]}"></path>`;
     }
-    document.getElementById("india-svg").innerHTML =
-      '<svg id="india-svg" viewBox="50 0 900 800" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
+    document.getElementById("india-svg-2024").innerHTML =
+      '<svg id="india-svg-2024" viewBox="50 0 900 800" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
+      pathsStr +
+      "</svg>";
+    document.getElementById("map").style.display = "none";
+
+    document.getElementById(
+      "indiaMap2019"
+    ).innerHTML = `<div id="containertool2"></div><svg id="india-svg-2019" viewBox="0 100 1000 1150" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"></svg>`;
+    var pathsStr = "";
+    for (let state in paths) {
+      pathsStr += `<path id="${states[state]}" class="${states[state].replace(
+        / /g,
+        ""
+      )}" d="${paths[state]}"></path>`;
+    }
+    document.getElementById("india-svg-2019").innerHTML =
+      '<svg id="india-svg-2019" viewBox="50 0 900 800" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
       pathsStr +
       "</svg>";
     document.getElementById("map").style.display = "none";
@@ -1231,6 +1248,11 @@ $(document).ready(async function () {
         OTH = state != "Ladakh" ? stateAlliance[state]["OTH"] : 0;
 
       for (const consti2019 in stateDataJson2019[state]) {
+        let ref = `${state}`;
+        ref = ref.replace(/ /g, "");
+        // console.log(ref);
+        const stateMap2019 = document.querySelector(`.${ref}`);
+
         // console.log("stateDataJson2019", stateDataJson2019);
         const leadingCandidate =
           stateDataJson2019[state][consti2019]["candidates"][0];
@@ -1252,19 +1274,19 @@ $(document).ready(async function () {
               alliancePatries["india"][leadingCandidate.prty]++;
             else alliancePatries["india"][leadingCandidate.prty] = 1;
           }
-          // stateMap.style.fill =
-          //   nda2019 >= india2019 && nda2019 >= others2019
-          //     ? names.ndaColor
-          //     : india2019 > nda2019 && india2019 >= others2019
-          //     ? names.indiaColor
-          //     : names.othersColor;
+          console.log(stateMap2019);
+          stateMap2019.style.fill =
+            nda2019 >= india2019 && nda2019 >= others2019
+              ? names.ndaColor
+              : india2019 > nda2019 && india2019 >= others2019
+              ? names.indiaColor
+              : names.othersColor;
         }
 
         // console.log("stateCount 2024", stateCount);
       }
 
       // console.log(state);
-      const stateMap = document.getElementById(state);
       // console.log(stateMap);
 
       const newRow = referenceRow.cloneNode(true);
@@ -1276,6 +1298,7 @@ $(document).ready(async function () {
       for (const consti in stateDataJson[state]) {
         // console.log("stateDataJson", stateDataJson);
         // console.log("stateDataJson2019", stateDataJson2019[state]);
+        const stateMap = document.getElementById(state);
         const leadingCandidate = stateDataJson[state][consti]["candidates"][0];
         if (leadingCandidate.vts !== 0) {
           if (leadingCandidate.alnce === "NDA") {
