@@ -1202,7 +1202,7 @@ handleSelection = function (input) {
 
   document.getElementById("piechart").style.display = "none";
   document.getElementById("piechart2").style.display = "none";
-  document.getElementById("donuchart").style.display = "none";
+  document.getElementById("donutchart").style.display = "none";
   document.getElementById("votingDetails").style.display = "none";
   document.getElementById("newcards").style.display = "none";
   document.getElementById("carouselContainer").style.display = "block";
