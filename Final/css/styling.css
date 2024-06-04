@@ -39,13 +39,12 @@
 
 /* Set color for the second breadcrumb item when the third item is active */
 
-
 body {
   margin-top: 10px;
   /* background-color: #F5F5F5; */
   /* */
   padding-top: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 /* Add your custom styles here */
@@ -73,9 +72,7 @@ body {
   margin-top: 50px;
 } */
 
-
 /* Add your custom styles here */
-
 
 .navbar-brand {
   color: #ff4500;
@@ -128,16 +125,15 @@ thead {
   text-align: left;
 }
 
-.divv
-{
+.divv {
   background-color: white !important;
   margin-right: auto;
   display: flex;
-  gap:2;
+  gap: 2;
   margin-right: 1px !important;
   margin-left: 8px !important;
 }
-.divv button{
+.divv button {
   background-color: white;
   margin: 0;
 }
@@ -149,19 +145,17 @@ thead {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   background-color: white;
-  border: solid #EAECF0;
+  border: solid #eaecf0;
   border-bottom: none;
   height: 52px;
   gap: 0px;
   box-shadow: 0 4px 6px rgba(16, 24, 40, 0.05);
-   padding: 20px 24px 19px 24px;
+  padding: 20px 24px 19px 24px;
 }
-
 
 #theading div,
 #theading2 div {
-
-  background: #F2F4F7;
+  background: #f2f4f7;
   width: fit-content;
   height: 22px;
   padding: 4px 8px 2px 8px;
@@ -170,7 +164,6 @@ thead {
   opacity: 0px;
   font-size: 10px;
   font-family: "roboto";
-
 }
 
 #theading span,
@@ -183,7 +176,6 @@ thead {
   margin-right: 8px;
 }
 
-
 #tbody tr:last-child {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -194,12 +186,10 @@ thead {
   padding: 10px;
 }
 
-#table-body
-{
-  border:solid #EAECF0;
+#table-body {
+  border: solid #eaecf0;
   box-shadow: 0 4px 6px rgba(16, 24, 40, 0.05);
 }
-
 
 #candidateinput {
   width: 120px;
@@ -208,17 +198,16 @@ thead {
   /* padding: 0 20px; */
   /* font-size: 1rem; */
   /* outline: none; */
-  background-image: url('https://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png');
+  background-image: url("https://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png");
   background-repeat: no-repeat;
   background-position: right top; /* Set background image position */
   padding-right: 0.3rem; /* Add padding to the right to make space for the search icon */
   border-radius: 0;
   border: none;
   border-bottom: 0.0625rem solid black;
-  background-size:40px 40px;
+  background-size: 40px 40px;
   /* border:none; */
   margin-left: auto;
-
 }
 
 .constituency-res {
@@ -238,7 +227,7 @@ thead {
   left: 0;
   z-index: 2;
   /* Ensure it stays on top of other columns */
-  background: #EAECF0;
+  background: #eaecf0;
   /* Same background as the header */
 }
 
@@ -272,21 +261,18 @@ thead {
   font-size: 16px;
   text-align: left;
 }
-.votes_2019 img
-{
-height: 1rem;
-width: 1rem;
+.votes_2019 img {
+  height: 1rem;
+  width: 1rem;
 }
 
 .td3 {
-  
   width: 7.625rem;
   height: 3.75rem;
   background: #f9fafb;
   padding-top: 40px;
   text-align: center;
 }
-
 
 .td1,
 .td2,
@@ -306,13 +292,13 @@ width: 1rem;
   width: 24px;
   margin-right: 0.1rem;
 }
-.td1 span{
+.td1 span {
   padding-top: 16px;
   margin-left: 0.2rem;
   font-weight: 500;
   color: #667085;
 }
-.td2 span{
+.td2 span {
   margin-top: 1.5rem;
   margin-left: 0.2rem;
   font-weight: 500;
@@ -344,12 +330,15 @@ tr {
 .tdata2 {
   width: 180px;
   height: 60px;
+  text-align: center;
 }
 
 .tdata3 {
   width: 122px;
   height: 60px;
+  text-align: center;
 }
+
 .form-control#stateinput:focus {
   outline: none !important; /* Ensure outline is removed when input is focused */
   box-shadow: none !important; /* Remove Bootstrap's default box-shadow on focus */
@@ -360,13 +349,12 @@ tr {
 }
 
 /* navigaiton buttons */
-.navibut
-{
+.navibut {
   background-color: white;
 }
 /* search */
 input#stateinput {
-  width:120px;
+  width: 120px;
   height: 2.1875rem;
   background-color: transparent;
   /* padding: 0 20px; */
@@ -384,8 +372,6 @@ input#stateinput {
   margin-left: auto;
 }
 
-
-
 input#stateinput:focus {
   /* border: 1px solid #008ABF; */
   transition: 0.35s ease;
@@ -397,14 +383,11 @@ input#stateinput::-webkit-input-placeholder {
 
 input#stateinput::-moz-placeholder {
   transition: opacity 0.45s ease;
- 
 }
 
 input#stateinput:-ms-placeholder {
   transition: opacity 0.45s ease;
 }
-
-
 
 /* pagenation */
 #pagination-controls,
@@ -416,7 +399,7 @@ input#stateinput:-ms-placeholder {
   background-color: white;
   padding: 12px 24px 16px 24px;
   gap: 10px;
-  border: solid #EAECF0;
+  border: solid #eaecf0;
   border-top: none;
   opacity: 1;
   border-bottom-left-radius: 0.4rem;
@@ -434,10 +417,10 @@ input#stateinput:-ms-placeholder {
 .pagination-button {
   margin: 0 5px;
   border: none;
-  border:1px solid#D0D5DD;
+  border: 1px solid#D0D5DD;
   background-color: white;
-padding: 8px 14px 8px 14px;
-gap: 8px;
+  padding: 8px 14px 8px 14px;
+  gap: 8px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(16, 24, 40, 0.05);
 }
@@ -455,25 +438,23 @@ gap: 8px;
 .newbuttons:focus {
   outline: none;
   /* Remove focus outline when button is focused */
-  background-color: #FCEBE8;
+  background-color: #fcebe8;
   border-radius: 0.5rem;
 }
 
 .newbuttons:active {
   border: none;
-  background-color: #FCEBE8;
+  background-color: #fcebe8;
   border-radius: 0.5rem;
   outline: none;
   /* Remove focus outline when button is active */
 }
 .newbuttons.active {
   border: none;
-  background-color: #FCEBE8;
+  background-color: #fcebe8;
   border-radius: 0.5rem;
   outline: none;
 }
-
-
 
 /* bt */
 .bt_grp {
@@ -485,7 +466,7 @@ gap: 8px;
 .button_years {
   height: 1.875rem;
   background-color: white;
-  border: 1px solid #D0D5DD;
+  border: 1px solid #d0d5dd;
   border-radius: 0.5rem;
   padding: 0 1rem;
   /* Add padding for a better look */
@@ -551,14 +532,13 @@ gap: 8px;
   background-color: white;
   padding: 0.2rem 1rem 0.75rem 1rem;
   color: black;
-  border: 1px solid #D0D5DD;
+  border: 1px solid #d0d5dd;
   border-radius: 0.5rem;
   /* Add padding for a better look */
   margin: 0;
   /* Remove margin */
   cursor: pointer;
   transition: background-color 0.3s ease, border-color 0.3s ease;
-
 }
 
 #state-bt {
@@ -616,14 +596,14 @@ gap: 8px;
 }
 
 .city {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 14px;
   font-weight: 600;
   line-height: 18px;
 }
 
 .state {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 12px;
   font-weight: 400;
   line-height: 18px;
@@ -643,7 +623,7 @@ gap: 8px;
 }
 
 .header-item1 {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 12px;
   font-weight: 500;
   line-height: 14.06px;
@@ -653,7 +633,7 @@ gap: 8px;
 }
 
 .header-item2 {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 12px;
   font-weight: 500;
   line-height: 14.06px;
@@ -684,7 +664,6 @@ gap: 8px;
   /* border-bottom: 1px solid #ddd; */
   border-radius: 0.813rem;
   justify-content: space-between;
-  
 }
 
 .candidate-info {
@@ -699,7 +678,7 @@ gap: 8px;
 }
 
 .candidate-name {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 14px;
   font-weight: 600;
   line-height: 16.41px;
@@ -709,7 +688,7 @@ gap: 8px;
 }
 
 .party {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 14px;
   font-weight: 400;
   line-height: 16.41px;
@@ -726,7 +705,7 @@ gap: 8px;
 }
 
 .margin {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 12px;
   font-weight: 400;
   line-height: 14.06px;
@@ -737,7 +716,7 @@ gap: 8px;
 }
 
 .margin1 {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 12px;
   font-weight: 400;
   line-height: 14.06px;
@@ -753,13 +732,13 @@ gap: 8px;
 }
 
 .previous-winner .winner-title {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 10px;
   font-weight: 500;
   line-height: 11.72px;
   text-align: left;
   margin-left: 8px;
-  margin-bottom: 8px
+  margin-bottom: 8px;
 }
 
 .previous-winner .winner-info {
@@ -769,7 +748,7 @@ gap: 8px;
 }
 
 .previous-winner .winner-name {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 14px;
   font-weight: 600;
   line-height: 16.41px;
@@ -779,24 +758,24 @@ gap: 8px;
 }
 
 .previous-winner .winner-votes {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 14px;
   font-weight: 550;
   line-height: 16.41px;
-  color: #12B76A;
+  color: #12b76a;
 }
 
 #v2 {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 14px;
   font-weight: 550;
   line-height: 16.41px;
-  color: #F04438;
-  margin-top: -26px
+  color: #f04438;
+  margin-top: -26px;
 }
 
 .previous-winner .vote-title {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 10px;
   font-weight: 500;
   line-height: 11.72px;
@@ -822,21 +801,21 @@ gap: 8px;
 }
 
 #vs {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 14px;
   font-weight: 550;
   line-height: 16.41px;
-  color: #12B76A;
+  color: #12b76a;
 }
 
 #checkdetails {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-size: 14px;
   font-weight: 600;
   line-height: 20px;
   text-align: right;
   padding-top: 18px;
-  color: #007BFF;
+  color: #007bff;
   cursor: pointer;
 }
 
@@ -848,7 +827,7 @@ gap: 8px;
   gap: 0px;
   border: 1.67px 0px 0px 0px;
   opacity: 0px;
-  color: #007BFF;
+  color: #007bff;
   display: inline;
   cursor: pointer;
 }
@@ -863,8 +842,6 @@ gap: 8px;
   border-radius: 0;
   border-bottom: 1px solid black;
   padding: 0;
-  
-
 }
 
 #state-select option {
@@ -891,7 +868,7 @@ gap: 8px;
   margin-left: -14px;
 }
 
-@media (min-width:440px) {
+@media (min-width: 440px) {
   .above {
     left: 5rem;
     top: 7.6rem;
@@ -903,7 +880,7 @@ gap: 8px;
   }
 }
 
-@media (min-width:760px) and (max-width:999px) {
+@media (min-width: 760px) and (max-width: 999px) {
   .above {
     left: 2rem;
     top: 7.6rem;
@@ -913,10 +890,9 @@ gap: 8px;
     left: 2em;
     top: 20rem;
   }
-
 }
 
-@media (min-width:600px) and (max-width:768px) {
+@media (min-width: 600px) and (max-width: 768px) {
   .above {
     left: 15.1rem;
     top: 7.6rem;
@@ -928,7 +904,7 @@ gap: 8px;
   }
 }
 
-@media (min-width:1000px) and (max-width:1149px) {
+@media (min-width: 1000px) and (max-width: 1149px) {
   .above {
     left: 8rem;
     top: 7.6rem;
@@ -940,7 +916,7 @@ gap: 8px;
   }
 }
 
-@media (min-width:1150px) {
+@media (min-width: 1150px) {
   .above {
     left: 13rem;
     top: 7.6rem;
@@ -952,7 +928,7 @@ gap: 8px;
   }
 }
 
-@media (min-width:1150px) {
+@media (min-width: 1150px) {
   .above {
     left: 12rem;
     top: 7.6rem;
@@ -964,7 +940,7 @@ gap: 8px;
   }
 }
 
-@media (min-width:1380px) {
+@media (min-width: 1380px) {
   .above {
     left: 20rem;
     top: 7.6rem;
@@ -976,32 +952,28 @@ gap: 8px;
   }
 }
 
-@media(max-width:600px)
-{
-  .newbuttons{
+@media (max-width: 600px) {
+  .newbuttons {
     font-size: 8px;
     width: 1rem;
     padding: 0;
-    margin: 0;  
+    margin: 0;
   }
-  .pagination-button
-  {
+  .pagination-button {
     font-size: 10px;
     width: fit-content;
     height: fit-content;
   }
-  #theading,#theading2
-  {
+  #theading,
+  #theading2 {
     padding: 0;
   }
   #theading span,
-  #theading2 span
-  {
+  #theading2 span {
     font-size: 14px;
     margin-left: auto;
   }
-  input#stateinput
-  {
+  input#stateinput {
     width: 40px;
   }
   input#stateinput:focus {
@@ -1009,25 +981,23 @@ gap: 8px;
     transition: 0.35s ease;
     opacity: 0;
   }
-  
+
   input#stateinput::-webkit-input-placeholder {
     transition: opacity 0.45s ease;
     opacity: 0;
   }
-  
+
   input#stateinput::-moz-placeholder {
-    transition: opacity 0.45s ease;
-    opacity: 0;
-   
-  }
-  
-  input#stateinput:-ms-placeholder {
     transition: opacity 0.45s ease;
     opacity: 0;
   }
 
+  input#stateinput:-ms-placeholder {
+    transition: opacity 0.45s ease;
+    opacity: 0;
+  }
 }
-@media (min-width:2500px) {
+@media (min-width: 2500px) {
   .above {
     left: 54rem;
     top: 7.6rem;
@@ -1162,26 +1132,22 @@ padding-bottom: 10px;
   margin-left: 56px;
 }
 /* new buttons */
-.party_name
-{
+.party_name {
   display: flex;
   align-items: center;
 }
-.winner_2019{
-  background:#EAECF0;
-  width:300px;
-  height:fit-content;
+.winner_2019 {
+  background: #eaecf0;
+  width: 300px;
+  height: fit-content;
   border-radius: 8px;
 }
-.winner_2019 img
-{
+.winner_2019 img {
   margin-top: 5px;
   height: 16px;
   width: 16px;
-
 }
-.winner_img
-{
+.winner_img {
   display: flex;
   justify-content: space-between;
 }
