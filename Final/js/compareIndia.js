@@ -1228,8 +1228,8 @@ $(document).ready(async function () {
       '<svg id="india-svg-2019" viewBox="50 0 900 800" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">' +
       pathsStr +
       "</svg>";
-    document.getElementById("map").style.display = "none";
-    document.getElementById("map2").style.display="none";
+    document.getElementById("map").style.display = "block";
+    document.getElementById("map2").style.display="block";
   }
 
   // Function to render alliance results in tabular format

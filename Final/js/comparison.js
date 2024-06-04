@@ -894,6 +894,11 @@ function updateMapBounds() {
     let bounds = geo.getBounds();
     map.fitBounds(bounds);
   }
+  if(geo_map2)
+    {
+      let bounds2 = geo_map2.getBounds();
+      map2.fitBounds(bounds2);
+    }
 }
 
 function delayedBoundsUpdate2() {
