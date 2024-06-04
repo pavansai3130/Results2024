@@ -1308,7 +1308,10 @@ $(document).ready(async function () {
         const cells = newRow.getElementsByTagName("td");
         console.log("sym[state]", sym[state] === undefined && state);
         // console.log("state]", state);
-        cells[0].innerHTML = `<img id="stateLogo" src='${sym[state]}'>${state}`;
+        // cells[0].innerHTML = `<img id="stateLogo" src='${sym[state]}'>${state}`;
+        cells[0].innerHTML = `<img id="stateLogo" src='${
+          logos[state.toLowerCase()]
+        }'>${state}`;
 
         //   console.log("cells 2024", cells);
 
@@ -1434,7 +1437,10 @@ $(document).ready(async function () {
       newRow.style.display = "";
       const cells = newRow.getElementsByTagName("td");
       //   console.log("cells", cells);
-      cells[0].innerHTML = `<img id="stateLogo" src='${stateMaps[state]}'>${state}`;
+      //   cells[0].innerHTML = `<img id="stateLogo" src='${stateMaps[state]}'>${state}`;
+      cells[0].innerHTML = `<img id="stateLogo" src='${
+        logos[state.toLowerCase()]
+      }'>${state}`;
 
       //   console.log("stateDataJson2019", stateDataJson2019);
 
@@ -1468,7 +1474,10 @@ $(document).ready(async function () {
         }
       }
 
-      cells[0].innerHTML = `<img id="stateLogo" src='${sym[state]}'>${state}`;
+      //   cells[0].innerHTML = `<img id="stateLogo" src='${sym[state]}'>${state}`;
+      cells[0].innerHTML = `<img id="stateLogo" src='${
+        logos[state.toLowerCase()]
+      }'>${state}`;
 
       let value = nda - NDA;
       cells[1].innerHTML = `${nda}`;
