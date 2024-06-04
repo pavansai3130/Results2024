@@ -62,7 +62,21 @@
   /* Change cursor on hover */
 }
 #mapsContainer{
-  border:2px solid black
+  padding-top:10px ;
+  /* border:2px solid black; */
+  display: flex;
+  justify-content: center;
+  
+}
+.yearTitle{
+  font-size: 1.5rem;
+  font-family: "Roboto", sans-serif !important;
+
+  color: #344054;
+  font-weight: 600;
+  text-align: center;
+  transform:translateX(-20%);
+
 }
 
 #stateNDADifference,
