@@ -12,9 +12,11 @@ var selectedIndex = -1;
 var back_bottom = document.getElementById("back_bottom");
 var main_div = document.getElementById("more-cards-root");
 var data2024 = null;
-setInterval(async () => {
+
+setInterval(() => {
   window.location.reload();
 }, 300000);
+
 async function fetchdata_BF() {
   fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json")
     .then((response) => {
@@ -39,8 +41,8 @@ function toTitleCase(name) {
     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
   }).join(' ');
 }
-function fetching_json() {
-  return fetch("./data/overallpopular.json")
+async function fetching_json() {
+  return await fetch("./data/overallpopular.json")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);
@@ -49,13 +51,13 @@ function fetching_json() {
     }).then((imgjson) => imgjson)
     .catch((error) => { console.log(error) });
 }
-function represent_All() {
+async function represent_All() {
   removeClassFromAllElements();
   main_div.innerHTML = "";
   let state_tag = document.getElementById("state_tag");
   state_tag.style.display = "none";
   if (data2024) {
-    fetching_json().then((imgjson) => {
+    await fetching_json().then((imgjson) => {
       removeClassFromAllElements()
       represent_All_fun(data2024, imgjson);
     }).catch((error) => {
@@ -67,7 +69,7 @@ function represent_All() {
   var rendercardsbf = async function () {
     try {
       await dataLoaded;
-      fetching_json().then((imgjson) => {
+      await fetching_json().then((imgjson) => {
         removeClassFromAllElements();
         main_div.innerHTML = "";
         represent_All_fun(data2024, imgjson);
@@ -222,11 +224,11 @@ function getParameterByName(name, url = window.location.href) {
   if (!results[2]) return "";
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
-function represent_state(state) {
+async function represent_state(state) {
   removeClassFromAllElements();
   main_div.innerHTML = "";
   if (data2024) {
-    fetching_json().then((imgjson) => {
+    await fetching_json().then((imgjson) => {
       removeClassFromAllElements();
       main_div.innerHTML = "";
       represent_state_fun(data2024, state, imgjson);
@@ -239,7 +241,7 @@ function represent_state(state) {
     var dataLoaded = fetchdata_BF();
     try {
       await dataLoaded;
-      fetching_json().then((imgjson) => {
+      await fetching_json().then((imgjson) => {
         removeClassFromAllElements();
         main_div.innerHTML = "";
         represent_state_fun(data2024, state, imgjson);

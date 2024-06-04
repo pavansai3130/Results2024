@@ -1,10 +1,16 @@
 let candidatesData = [];
+var resultJSON = null;
 
 // Fetch candidate data and store it in the global variable
 async function fetchCandidateData() {
-  const response = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
-  const data = await response.json();
-  candidatesData = data[0]; 
+  if(!resultJSON){
+    const response = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
+    const data = await response.json();
+    candidatesData = data[0];
+    resultJSON = data;
+  } else {
+    candidatesData = resultJSON[0];
+  }
 }
 
 // Fetch more cards and populate them
@@ -14,13 +20,18 @@ async function fetchMoreCards1() {
     // Fetch the state-constituency-candidate JSON
     const stateResponse = await fetch("../data/celebrity.json");
     const stateData = await stateResponse.json();
+    let candidateData = null;
     console.log("State Data:", stateData);
-
-    // Fetch the detailed candidate information JSON
-    const candidateResponse = await fetch(
-      "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
-    );
-    const candidateData = await candidateResponse.json();
+    if(!resultJSON){
+      // Fetch the detailed candidate information JSON
+      const candidateResponse = await fetch(
+        "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
+      );
+      candidateData = await candidateResponse.json();
+      resultJSON = candidateData;
+    } else {
+      candidateData = resultJSON;
+    }
     console.log("Candidate Data:", candidateData);
 
     const moreCardsRoot = document.getElementById("more-cards-root");
@@ -214,10 +225,15 @@ async function displayCardsForState(stateName) {
     const stateResponse = await fetch("./data/popular.json");
     const stateData = await stateResponse.json();
     console.log('State Data:', stateData);
-
-    // Fetch the detailed candidate information JSON
-    const candidateResponse = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
-    const candidateData = await candidateResponse.json();
+    let candidateData = null;
+    if(!resultJSON){
+      // Fetch the detailed candidate information JSON
+      const candidateResponse = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
+      candidateData = await candidateResponse.json();
+      resultJSON = candidateData;
+    } else {
+      candidateData = resultJSON;
+    }
     console.log('Candidate Data:', candidateData);
 
     const moreCardsRoot = document.getElementById("more-cards-root");
@@ -308,7 +324,7 @@ function getURLParameter(name) {
 
 window.onload = async function() {
   await fetchCandidateData();  // Ensure data is fetched before proceeding
-  fetchCandidateValue()
+  await fetchCandidateValue()
   const state = getURLParameter('state');
   if (state !== null) {
     displayCardsForState(state);
