@@ -2942,7 +2942,8 @@ function render_whole_carousel_fun(data2024, data, imgjson) {
       votes1,
       votes2,
       bar_length1,
-      bar_length2
+      bar_length2,
+      cid1
     );
     function createSlide(
       const_name,
@@ -2956,7 +2957,8 @@ function render_whole_carousel_fun(data2024, data, imgjson) {
       votes1,
       votes2,
       bar_length1,
-      bar_length2
+      bar_length2,
+      cid1
     ) {
       let party_path1 =
         partySymbol1 in party_img_json
@@ -2977,6 +2979,15 @@ function render_whole_carousel_fun(data2024, data, imgjson) {
         votes1 = new Intl.NumberFormat("en-IN").format(votes1);
         votes2 = new Intl.NumberFormat("en-IN").format(votes2);
       }
+      let disp = "none", res = "";
+      if(stateDataJson[state][const_name.toLowerCase()]["candidates"][0]["cId"] == cid1  && stateDataJson[state][const_name.toLowerCase()]["rsDecl"]) 
+        {
+          disp = "";
+          res = "Won";
+        } else if(stateDataJson[state][const_name.toLowerCase()]["rsDecl"]){
+          disp = "";
+          res = "Lost";
+        }
       return `
         <div class="card swiper-slide">
             <span class="state_name">${toTitleCase(
@@ -2994,7 +3005,7 @@ function render_whole_carousel_fun(data2024, data, imgjson) {
                       cand_name1
                     )} <span class="state_party_slot">(${partySymbol1})</span></div>
                     <span class="lead_bar">
-              <span style="width:${bar_length1}%;" class="leadbar"> </span><span style="color:black;margin:3px">
+              <span style="width:${bar_length1}%;" class="leadbar">  <span class="won_class" style="display:${disp};">${res}</span>  </span><span style="color:black;margin:3px">
               ${votes1}</span>
               </span>
                 </div>
@@ -3005,6 +3016,7 @@ function render_whole_carousel_fun(data2024, data, imgjson) {
                     <img class="cand_img1" src="${candidateImg2}" alt="">
                 </span>
                 <div class="desc_container">
+                <div class="lost_class" style="display:${disp};">Lost</div>
                     <div class="cand_name1">${toTitleCase(
                       cand_name2
                     )} <span class="state_party_slot">(${partySymbol2})</span></div>
@@ -3103,7 +3115,8 @@ function render_state_carousel(state) {
     votes1,
     votes2,
     bar_length1,
-    bar_length2
+    bar_length2,
+    cid1
   ) {
     let party_path1 =
       partySymbol1 in party_img_json
@@ -3124,6 +3137,15 @@ function render_state_carousel(state) {
       votes1 = new Intl.NumberFormat("en-IN").format(votes1);
       votes2 = new Intl.NumberFormat("en-IN").format(votes2);
     }
+    let disp = "none", res = "";
+    if(stateDataJson[state][const_name.toLowerCase()]["candidates"][0]["cId"] == cid1  && stateDataJson[state][const_name.toLowerCase()]["rsDecl"]) 
+    {
+      disp = "";
+      res = "Won";
+    } else if(stateDataJson[state][const_name.toLowerCase()]["rsDecl"]){
+      disp = "";
+      res = "Lost";
+    }
     return `
       <div class="card swiper-slide">
           <span class="state_name">${toTitleCase(
@@ -3143,7 +3165,7 @@ function render_state_carousel(state) {
       partySymbol1
     )})</span></div>
                   <span class="lead_bar">
-          <span style="width:${bar_length1}%;" class="leadbar"> </span>
+          <span style="width:${bar_length1}%;" class="leadbar">  <span class="won_class" style="display:${disp};">${res}</span>  </span>
           <span style="color:black;margin:3px">
           ${votes1}</span>
           </span>
@@ -3258,7 +3280,8 @@ function render_state_carousel(state) {
                 cd1_votes,
                 cd2_votes,
                 bar_length1,
-                bar_length2
+                bar_length2,
+                cid1,
               );
               swiperContainer.insertAdjacentHTML("beforeend", slideMarkup);
             }

@@ -143,6 +143,14 @@ function card_creation(data2024, state, const_name, obj, imgjson) {
   } else {
     cd1_votes = new Intl.NumberFormat('en-IN').format(cd1_votes);
     cd2_votes = new Intl.NumberFormat('en-IN').format(cd2_votes);
+  } 
+  let disp = "none", res = "";
+  if(data2024[state][const_name.toLowerCase()]["candidates"][0]["cId"] == cid1 && data2024[state][const_name.toLowerCase()]["rsDecl"]) {
+    disp = "";
+    res = "Won"
+  } else if(data2024[state][const_name.toLowerCase  ()]["rsDecl"]) {
+    disp = "";
+    res = "Lost"
   }
   let html_data = `<span class="state_name" data-state="${toTitleCase(state)}" data-const="${toTitleCase(const_name)}">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
       <div class="cand_desc1">
@@ -151,12 +159,13 @@ function card_creation(data2024, state, const_name, obj, imgjson) {
               <img class="cand_img1" src="${img1}" alt="">
           </span>
           <div class="desc_container">
+          
               <div class="cand_name1 render_name1" data-candname="${toTitleCase(name1)
     }">${toTitleCase(name1)} <span class="state_party_slot">(${prty1
     })</span></div>
               <span class="lead_bar">
               <span style="width:${bar_length1
-    }%;" class="leadbar"> </span><span style="color:black;margin:3px">
+    }%;" class="leadbar"> <span class="won_class" style="display:${disp};">${res}</span> </span><span style="color:black;margin:3px">
               ${cd1_votes}</span>
               </span>
           </div>
@@ -354,6 +363,14 @@ function represent_state_fun(data2024, state, imgjson) {
             cd1_votes = new Intl.NumberFormat('en-IN').format(cd1_votes);
             cd2_votes = new Intl.NumberFormat('en-IN').format(cd2_votes);
           }
+          let disp = "none", res = "";
+  if(data2024[state][const_name.toLowerCase()]["candidates"][0]["cId"] == cid1 && data2024[state][const_name.toLowerCase()]["rsDecl"]) {
+    disp = "";
+    res = "Won"
+  } else if(data2024[state][const_name.toLowerCase()]["rsDecl"]) {
+    disp = "";
+    res = "Lost"
+  }
           let html_data = `<span class="state_name" data-state="${toTitleCase(state)}" data-const="${toTitleCase(const_name)}">${toTitleCase(const_name)} <span class="state_party_slot">(${toTitleCase(state)})</span></span>
           <div class="cand_desc1">
               <span class="img_container">
@@ -366,7 +383,7 @@ function represent_state_fun(data2024, state, imgjson) {
             })</span></div>
           <span class="lead_bar">
           <span style="width:${bar_length1
-            }%;" class="leadbar"> </span><span style="color:black;margin:3px">
+            }%;" class="leadbar"> <span class="won_class" style="display:${disp};">${res}</span> </span><span style="color:black;margin:3px">
           ${cd1_votes}</span>
           </span>
               </div>

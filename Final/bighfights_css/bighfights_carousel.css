@@ -60,6 +60,16 @@
      width: 75%; 
 } */
 
+
+.won_class {
+    color: #FFFFFF;
+}
+
+.lost_class {
+    color: #EB6161;
+}
+
+
 .hands_div {
     position: relative;
     width: 30%;
@@ -206,21 +216,18 @@
     width: 190px;
     top: 52px;
     left: 2px;
-    align-items: center;
     padding: 5px 10px;
     font-size: 70%;
-    color: white;
+    justify-content: left;
     box-sizing: content-box;
 }
 
 .leadbar {
     display: inline-block;
-    justify-content: center;
     align-items: center;
+    padding: 5px 10px;
     /* width: 70%; */
     height: 25px;
-    text-align: center;
-    vertical-align: middle;
     background: linear-gradient(90deg, #5DB455 0%, #517F4D 100%);
 }
 
@@ -324,7 +331,6 @@
         height: 7vw;
         margin-bottom: 3vw;
     }
-
     .big_fights {
         font-size: 15px;
         font-weight: 900;
@@ -406,6 +412,13 @@
         width: 8vw;
         height: 6vw;
         margin-bottom: 2vw;
+    }
+
+    .won_class, .lost_class {
+        font-family: 'Roboto';
+        font-size: 0.7rem;
+        margin-left: 10px;
+        margin-top: 3px;
     }
 
     .hands {

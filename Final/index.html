@@ -8,7 +8,7 @@
    <meta name="2024 Indian Election Result Visualisation Live"
       content="Detailed visualisation of 2024 Indian election with interactive graphs and tables">
    <title>India General Election 2024</title>
-    
+
    <meta property="og:title" content="India General Election Results 2024" />
    <meta property="og:url" content="https://www.results2024.in" />
    <meta property="og:description" content="Crowdsourced insightful data visualizations for Lok Sabha Election Results 2024">
@@ -18,14 +18,15 @@
 
    <!-- Twitter open-graph tags -->
 
-   <meta name="twitter:site" value="@gradiouslabs"/>
+   <meta name="twitter:site" value="@gradiouslabs" />
    <meta name="twitter:card" content="summary_large_image">
    
    
    <meta property="twitter:url" content="https://www.results2024.in"/>
    <meta property="twitter:image:alt" content="Election 2024 Results">
    <meta property="twitter:title" content="India General Election Results 2024">
-   <meta property="twitter:description" content="Crowdsourced insightful data visualizations for Lok Sabha Election Results 2024">
+   <meta property="twitter:description"
+      content="Crowdsourced insightful data visualizations for Lok Sabha Election Results 2024">
    <meta property="twitter:image" content="https://results2024.s3.ap-south-1.amazonaws.com/india_map.jpg">
 
    <link rel="icon" type="image/x-icon" href="./images/imgs/Favion results2024.svg">
@@ -84,16 +85,14 @@
    <link itemprop="thumbnailUrl" href="https://results2024.s3.ap-south-1.amazonaws.com/india_map.jpg">
 
    <span itemprop="thumbnail" itemscope itemtype="http://schema.org/ImageObject">
-   <link itemprop="url" href="https://results2024.s3.ap-south-1.amazonaws.com/india_map.jpg">
+      <link itemprop="url" href="https://results2024.s3.ap-south-1.amazonaws.com/india_map.jpg">
    </span>
-<!-- 
+   <!-- 
    <div id="disclaimer2024">You are viewing sample data.
       2024 Results awaited.</div> -->
    <nav class="navbarHead blur" id="navHeader">
       <div class="headerlogo">
-        <a href="./index.html"
-          ><img src="./images/imgs/RESULTS2024LOGO.png" alt="Logo"
-        /></a>
+         <a href="./index.html"><img src="./images/imgs/RESULTS2024LOGO.png" alt="Logo" /></a>
       </div>
       <div class="navigations">
         <span id="menu" class="d-lg-none" onclick="toggleMenu()">
@@ -133,8 +132,8 @@
           </ul>
         </div>
       </div>
-    </nav>
-  
+   </nav>
+
    <!-- Common Header -->
    <header class="header">
       <div class="container">
@@ -153,7 +152,7 @@
                   <nav aria-label="breadcrumb">
                      <ol class="breadcrumb">
                         <li class="breadcrumb-item" id="breadcrumb-india" style="display: none;"><a href="#"
-                           onclick="resetBreadcrumb()">India</a></li>
+                              onclick="resetBreadcrumb()">India</a></li>
                         <li class="breadcrumb-item" id="breadcrumb-state" style="display: none;"></a></li>
                         <li class="breadcrumb-item active" id="breadcrumb-constituency" style="display: none;"
                            aria-current="page"></li>
@@ -174,7 +173,7 @@
                               <option data-st_code="22" value="22">Chhattisgarh</option>
                               <option data-st_code="26" value="26">Dadra and Nagar Haveli</option>
                               <option data-st_code="25" value="25">Daman and Diu</option>
-                              <option data-st_code="7" value="7">NCT Of Delhi</option>
+                              <option data-st_code="7" value="7">NCT OF Delhi</option>
                               <option data-st_code="30" value="30">Goa</option>
                               <option data-st_code="24" value="24">Gujarat</option>
                               <option data-st_code="6" value="6">Haryana</option>
@@ -217,27 +216,27 @@
                   <div id="containertool"></div>
                </div>
                <div class="col-12 col-md-6 order-md-2 order-2">
-                 
+
                   <div class="container">
                      <div class="row">
-                         <div class="col-md-6">
-                             <div id="piechart" class="chart" style="height: 300px; width: 300px; display:none"></div>
-                         </div>
-                         <div class="col-md-6">
-                             <div id="piechart2" class="chart" style="height: 300px; width: 300px; display:none"></div>
-                         </div>
+                        <div class="col-md-6">
+                           <div id="piechart" class="chart" style="height: 300px; width: 300px; display:none"></div>
+                        </div>
+                        <div class="col-md-6">
+                           <div id="piechart2" class="chart" style="height: 300px; width: 300px; display:none"></div>
+                        </div>
                      </div>
                      <div class="row">
-                         <div class="col-md-6">
-                             <div id="donutchart" class="chart" style="height: 300px; width: 300px; display:none"></div>
-                         </div>
-                         <div class="col-md-6">
-                             <div id="votingDetails" style="display: none;"></div>
-                         </div>
+                        <div class="col-md-6">
+                           <div id="donutchart" class="chart" style="height: 300px; width: 300px; display:none"></div>
+                        </div>
+                        <div class="col-md-6">
+                           <div id="votingDetails" style="display: none;"></div>
+                        </div>
                      </div>
-                 </div>
-                 
-                 
+                  </div>
+
+
                   <div id="chartsContainer">
                      <!-- <div id="square-container"></div> -->
                      <div class="p-2" id="chartContainer">
@@ -245,7 +244,7 @@
                         <div id="myChart">
                            <svg id="pmap" viewBox="0 0 60 30"></svg>
                         </div>
-                        
+
                         <!-- <div id="allianceChart2"></div> -->
                         <!-- <div class="d-flex justify-content-center w-80 " style="height: 227px;">
                            <svg id="allianceChart"  viewBox="1 900 900"></svg>
@@ -309,7 +308,7 @@
                                           </tr>
                                        </thead>
                                        <tbody id="tbody1">
-                                          
+
 
                                        </tbody>
                                     </table>
@@ -420,8 +419,8 @@
                            </button> -->
                      </div>
 
-         <!-- NEW -->
-                  <!-- <div class="totaldetails">
+                     <!-- NEW -->
+                     <!-- <div class="totaldetails">
                      <div class="resultdesc">
                         <div>W - won</div>
                         <div class="leaddescdiv">L - Leading</div>
@@ -494,121 +493,127 @@
                      </div>
                   </div>
                   <div id="newcards" style="display: none;" class="row">
-                     </div>
                   </div>
                </div>
             </div>
-            <div class="row row2 mt-3 mx-lg-5 g-6 mx-sm-2">
-               <div class="col-12 col-md-6" id="mainContainer" style="width: 642px;">
-                  <div id="stateTabeleContainer" class="table-responsive-sm rounded-3 " style="margin-top: 0.9375rem; box-shadow: 0px 1px 3px 0px rgba(16, 24, 40, 0.1);" >
-                     <div class="d-flex justify-content-end">
-                        <!-- <input class="form-control order-2" id="stateSearch" type="text" placeholder="Search"> -->
-                        <form class="search-container">
-                           <input class="form-control " type="text" id="stateSearch" placeholder="Search">
-                           <a href="#"><img class="search-icon"
+         </div>
+         <div class="row row2 mt-3 mx-lg-5 g-6 mx-sm-2">
+            <div class="col-12 col-md-6" id="mainContainer" style="width: 642px;">
+               <div id="stateTabeleContainer" class="table-responsive-sm rounded-3 "
+                  style="margin-top: 0.9375rem; box-shadow: 0px 1px 3px 0px rgba(16, 24, 40, 0.1);">
+                  <div class="d-flex justify-content-end">
+                     <!-- <input class="form-control order-2" id="stateSearch" type="text" placeholder="Search"> -->
+                     <form class="search-container">
+                        <input class="form-control " type="text" id="stateSearch" placeholder="Search">
+                        <a href="#"><img class="search-icon"
                               src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"></a>
-                        </form>
-                        <div class="btn-group stateTableChevrons" role="group" aria-label="Basic example">
-                           <button type="button" class="fa fa-chevron-left" onclick="loadPrev()"></button>
-                           <button type="button" class="fa fa-chevron-right" onclick="loadNext()"></button>
-                         </div>
+                     </form>
+                     <div class="btn-group stateTableChevrons" role="group" aria-label="Basic example">
+                        <button type="button" class="fa fa-chevron-left" onclick="loadPrev()"></button>
+                        <button type="button" class="fa fa-chevron-right" onclick="loadNext()"></button>
+                     </div>
 
-                     </div>
-                     <table id="mainTable" class="table table-bordered rounded-2 mt-2"
-                         id="stateTable">
-                        <thead>
-                           <tr>
-                              <th class="col-3 col-md-2 col-lg-4  align-middle" id="stateRow" scope="col">State</th>
-                              <th class="col-3 col-md-2 col-lg-2  align-middle" id="NDA" scope="col">NDA</th>
-                              <th class="col-3 col-md-2 col-lg-2  align-middle" id="INDIA" scope="col">I.N.D.I.A</th>
-                              <th class="col-3 col-md-2 col-lg-2  align-middle" id="Others" scope="col">Others</th>
-                           </tr>
-                        </thead>
-                        <tr id="referenceRow">
-                           <td id="stateName"></td>
-                           <td id="NDASeats">nda<span class="positive">()</span></td>
-                           <td id="INDIASeats"><span class="positive">()</span></td>
-                           <td id="OthersSeats"></td>
+                  </div>
+                  <table id="mainTable" class="table table-bordered rounded-2 mt-2" id="stateTable">
+                     <thead>
+                        <tr>
+                           <th class="col-3 col-md-2 col-lg-4  align-middle" id="stateRow" scope="col">State</th>
+                           <th class="col-3 col-md-2 col-lg-2  align-middle" id="NDA" scope="col">NDA</th>
+                           <th class="col-3 col-md-2 col-lg-2  align-middle" id="INDIA" scope="col">I.N.D.I.A</th>
+                           <th class="col-3 col-md-2 col-lg-2  align-middle" id="Others" scope="col">Others</th>
                         </tr>
-                        <tbody id="allianceBody">
-                        </tbody>
-                     </table>
-                     <div id="statePagination" class="d-flex justify-content-between">
-                        <button id="prevButton" type="button" class="btn border rounded-3 px-3 ml-4 mb-2">< Previous</button>
-                        <button id="nextButton" type="button" class="btn border rounded-3 px-3 mr-4 mb-2">Next ></button>
-                     </div>
-                  </div>
-                  <!-- ----------------State Table------------------------------------ -->
-                  <!-- Constitunecy Table -->
-                  <div id="Constituency-res" style="margin-top: 0.9375rem;" class="table-responsive-sm"
-                     style="display: none;">
-                     <table id="constTable" class="table  table-bordered" style="margin-top: 0rem;margin-bottom: 0rem;">
-                        <div id="theading" class="d-flex" style="display: flex; align-items: center; ">
-                        </div>
-                        
-                        <thead class="thead">
-                           <tr>
-                              <th class="col-1 col-lg-3 align-middle sticky" style="background:#EAECF0; color: #101828; font-weight: 400;">Constituency
-                              </th>
-                              <th class="col-1 col-lg-3 align-middle"
-                                 style="background: #12B76A; text-align: center; color: white; ">Leading/Won</th>
-                              <th class="col-1 col-lg-3 align-middle"
-                                 style="background: #F96343; text-align: center;color: white;"> Trailing/Lost
-                              </th>
-                              <th class="col-1 col-lg-3 align-middle" style=" text-align: center;background:#EAECF0; color: #101828; font-weight: 400;">Margin</th>
-                           </tr>
-                        </thead>
-                        <tbody id="table-body">
-                           <!-- Dynamic rows will be inserted here -->
-                        </tbody>
-                     </table>
-                     <div id="pagination-controls" style="display: flex; justify-content: space-between; margin-top: 0rem;">
-                        <!-- Pagination buttons will be inserted here -->
-                     </div>
-                  </div>
-                  <!-- table2 pavan -->
-                  <div class="table-responsive-sm" id="Candidate-res" style="margin-top: 0.9375rem; display: none;">
-                     <table class="table table-bordered" style="margin-top: 0rem; margin-bottom: 0rem;">
-                        <div id="theading2" style="display: flex;align-items: center; ">
-                           <span id="constituency-name"></span>
-                           <input class="form-control" id="candidateinput" type="text" placeholder="Search">
-                        </div>
-                        <thead class="thead">
-                           <tr>
-                              <th style="background:#F9FAFB; color: #101828; position: sticky; left: 0;">Candidate</th>
-                              <th style="background: #F9FAFB; text-align: center; color: 101828;">Party</th>
-                              <th style="background: #F9FAFB; text-align: center;color: 101828; ">Votes</th>
-                              <th style="background:#F9FAFB; color: #101828;">Margin</th>
-                              <th style="background:#F9FAFB; color: #101828;">Margin</th>
-                              <th style="background:#F9FAFB; color: #101828;">2019Votes</th>
-                           </tr>
-                        </thead>
-                        <tbody class="candidateBody">
-                           <!-- Dynamic rows will be inserted here -->
-                        </tbody>
-                     </table>
-                     <div id="pagination-controls-candidates"
-                        style="display: flex; justify-content: space-between; margin-top: 0rem;">
-                        <!-- Pagination buttons will be inserted here -->
-                     </div>
+                     </thead>
+                     <tr id="referenceRow">
+                        <td id="stateName"></td>
+                        <td id="NDASeats">nda<span class="positive">()</span></td>
+                        <td id="INDIASeats"><span class="positive">()</span></td>
+                        <td id="OthersSeats"></td>
+                     </tr>
+                     <tbody id="allianceBody">
+                     </tbody>
+                  </table>
+                  <div id="statePagination" class="d-flex justify-content-between">
+                     <button id="prevButton" type="button" class="btn border rounded-3 px-3 ml-4 mb-2">
+                        < Previous</button>
+                           <button id="nextButton" type="button" class="btn border rounded-3 px-3 mr-4 mb-2">Next
+                              ></button>
                   </div>
                </div>
-               <!-- HARI CONTAINER----------------------------------------------------- -->
-               <div class="col-12 col-md-6" id="cardsContainer" >
-                  <div class="root">
-                     <div class="cardsHeader">
-                        <h2>Popular Candidates</h2>
-                        
+               <!-- ----------------State Table------------------------------------ -->
+               <!-- Constitunecy Table -->
+               <div id="Constituency-res" style="margin-top: 0.9375rem;" class="table-responsive-sm"
+                  style="display: none;">
+                  <table id="constTable" class="table  table-bordered" style="margin-top: 0rem;margin-bottom: 0rem;">
+                     <div id="theading" class="d-flex" style="display: flex; align-items: center; ">
                      </div>
-                     <div class="container-fluid" id="cardsID" style="padding: 0;">
-                        <div id="root">
-                          <!-- Rows with cards will be added here -->
-                        </div>
-                        <!-- End of the root -->
-                      </div>
-                      <button id="see-more-btn" class="button">View More</button>
+
+                     <thead class="thead">
+                        <tr>
+                           <th class="col-1 col-lg-3 align-middle sticky"
+                              style="background:#EAECF0; color: #101828; font-weight: 400;">Constituency
+                           </th>
+                           <th class="col-1 col-lg-3 align-middle"
+                              style="background: #12B76A; text-align: center; color: white; ">Leading/Won</th>
+                           <th class="col-1 col-lg-3 align-middle"
+                              style="background: #F96343; text-align: center;color: white;"> Trailing/Lost
+                           </th>
+                           <th class="col-1 col-lg-3 align-middle"
+                              style=" text-align: center;background:#EAECF0; color: #101828; font-weight: 400;">Margin
+                           </th>
+                        </tr>
+                     </thead>
+                     <tbody id="table-body">
+                        <!-- Dynamic rows will be inserted here -->
+                     </tbody>
+                  </table>
+                  <div id="pagination-controls"
+                     style="display: flex; justify-content: space-between; margin-top: 0rem;">
+                     <!-- Pagination buttons will be inserted here -->
                   </div>
                </div>
+               <!-- table2 pavan -->
+               <div class="table-responsive-sm" id="Candidate-res" style="margin-top: 0.9375rem; display: none;">
+                  <table class="table table-bordered" style="margin-top: 0rem; margin-bottom: 0rem;">
+                     <div id="theading2" style="display: flex;align-items: center; ">
+                        <span id="constituency-name"></span>
+                        <input class="form-control" id="candidateinput" type="text" placeholder="Search">
+                     </div>
+                     <thead class="thead">
+                        <tr>
+                           <th style="background:#F9FAFB; color: #101828; position: sticky; left: 0;">Candidate</th>
+                           <th style="background: #F9FAFB; text-align: center; color: 101828;">Party</th>
+                           <th style="background: #F9FAFB; text-align: center;color: 101828; ">Votes</th>
+                           <th style="background:#F9FAFB; color: #101828;">Margin</th>
+                           <th style="background:#F9FAFB; color: #101828;">Margin</th>
+                           <th style="background:#F9FAFB; color: #101828;">2019Votes</th>
+                        </tr>
+                     </thead>
+                     <tbody class="candidateBody">
+                        <!-- Dynamic rows will be inserted here -->
+                     </tbody>
+                  </table>
+                  <div id="pagination-controls-candidates"
+                     style="display: flex; justify-content: space-between; margin-top: 0rem;">
+                     <!-- Pagination buttons will be inserted here -->
+                  </div>
+               </div>
+            </div>
+            <!-- HARI CONTAINER----------------------------------------------------- -->
+            <div class="col-12 col-md-6" id="cardsContainer">
+               <div class="root">
+                  <div class="cardsHeader">
+                     <h2>Popular Candidates</h2>
+
+                  </div>
+                  <div class="container-fluid" id="cardsID" style="padding: 0;">
+                     <div id="root">
+                        <!-- Rows with cards will be added here -->
+                     </div>
+                     <!-- End of the root -->
+                  </div>
+                  <button id="see-more-btn" class="button">View More</button>
+               </div>
+            </div>
 
 
          </div>
@@ -694,96 +699,114 @@
             <table class="custom-table-three table-bordered">
                <thead>
                   <tr>
-                    <th class="sticky columnOne" style="text-align: left;">Candidate Name</th>
-                    <th>Constituency</th>
-                    <th style="background-color:#D1FADF;">Asset <br><span>(in Rs)</span></th>
-                    <th style="background-color:#FFFAEB;">2024 Votes <br><span>(Margin)</span></th>
-                    <th>Status</th>
-                </tr>
-                </thead>
-                <tbody>
+                     <th class="sticky columnOne" style="text-align: left;">Candidate Name</th>
+                     <th>Constituency</th>
+                     <th style="background-color:#D1FADF;">Asset <br><span>(in Rs)</span></th>
+                     <th style="background-color:#FFFAEB;">2024 Votes <br><span>(Margin)</span></th>
+                     <th>Status</th>
+                  </tr>
+               </thead>
+               <tbody>
                   <tr class="richestOne">
-                    <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Chandra Sekhar Pemmasani <br><span><img src="./images/imgs/TDP.webp" alt="">TDP</span></td>
-                    <td>Guntur</td>
-                    <td style="background-color: #ECFDF3;">5706+ Cr</td>
-                </tr>
-                <tr class="richestTwo">
-                    <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Konda Vishweshwar Reddy <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
-                    <td>Chevella</td>
-                    <td style="background-color: #ECFDF3;">4568+ Cr</td>
-                </tr>
-                <tr class="richestThree">
-                    <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Pallavi Shrinivas Dempo <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
-                    <td>South Goa</td>
-                    <td style="background-color: #ECFDF3;">1361+ Cr</td>
-                </tr>
-                <tr class="richestFour">
-                    <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Naveen Jindal <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
-                    <td>Kurukshetra</td>
-                    <td style="background-color: #ECFDF3;">1230+ Cr</td>
-                </tr>
-                <tr class="richestFive">
-                    <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Nakul Kamalnath <br><span><img src="./images/imgs/INC.png" alt="">INC</span></td>
-                    <td>Gurugram</td>
-                    <td style="background-color: #ECFDF3;">716+ Cr</td>
-                </tr>
-                </tbody>
-              </table>
+                     <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Chandra Sekhar Pemmasani
+                        <br><span><img src="./images/imgs/TDP.webp" alt="">TDP</span>
+                     </td>
+                     <td>Guntur</td>
+                     <td style="background-color: #ECFDF3;">5706+ Cr</td>
+                  </tr>
+                  <tr class="richestTwo">
+                     <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Konda Vishweshwar Reddy
+                        <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span>
+                     </td>
+                     <td>Chevella</td>
+                     <td style="background-color: #ECFDF3;">4568+ Cr</td>
+                  </tr>
+                  <tr class="richestThree">
+                     <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Pallavi Shrinivas Dempo
+                        <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span>
+                     </td>
+                     <td>South Goa</td>
+                     <td style="background-color: #ECFDF3;">1361+ Cr</td>
+                  </tr>
+                  <tr class="richestFour">
+                     <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Naveen Jindal
+                        <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span>
+                     </td>
+                     <td>Kurukshetra</td>
+                     <td style="background-color: #ECFDF3;">1230+ Cr</td>
+                  </tr>
+                  <tr class="richestFive">
+                     <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Nakul Kamalnath
+                        <br><span><img src="./images/imgs/INC.png" alt="">INC</span>
+                     </td>
+                     <td>Gurugram</td>
+                     <td style="background-color: #ECFDF3;">716+ Cr</td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+
+
+
+         <div class="table-container">
+            <div class="table-header sticky">
+               <h3>2019 High Margin Winners</h3>
+               <p class="candy">Candidates that won in 2019 with highest margin, contesting in 2024</p>
             </div>
-        
-        
-            
-            <div class="table-container">
-              <div class="table-header sticky">
-                <h3>2019 High Margin Winners</h3>
-                <p class="candy">Candidates that won in 2019 with highest margin, contesting in 2024</p>
-              </div>
-              <table class="custom-table-four table-bordered">
-                <thead>
+            <table class="custom-table-four table-bordered">
+               <thead>
                   <tr>
-                    <th class="sticky columnOne" style="text-align: left;margin-left:0.4rem;">Candidate Name</th>
-                    <th>Constituency</th>
-                    <th style="line-height: 1rem;background-color:#D6F0FF">2019 Votes<br><span>(Margin)</span></th>
-                    <th style="line-height: 1rem; background-color:#FFFAEB;">2024 Votes <br><span>(Margin)</span></th>
-                    <th>Status</th>
+                     <th class="sticky columnOne" style="text-align: left;margin-left:0.4rem;">Candidate Name</th>
+                     <th>Constituency</th>
+                     <th style="line-height: 1rem;background-color:#D6F0FF">2019 Votes<br><span>(Margin)</span></th>
+                     <th style="line-height: 1rem; background-color:#FFFAEB;">2024 Votes <br><span>(Margin)</span></th>
+                     <th>Status</th>
                   </tr>
                </thead>
                <tbody>
                   <tr class="poorestOne">
-                    <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">C R Patil <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
-                    <td>Navsari</td>
-                    <td style="background-color: #EBF8FF;">9,72,739 <br><span>6,89,668</span></td>
+                     <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">C R Patil <br><span><img
+                              src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
+                     <td>Navsari</td>
+                     <td style="background-color: #EBF8FF;">9,72,739 <br><span>6,89,668</span></td>
                   </tr>
                   <tr class="poorestTwo">
-                    <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Krishan Pal <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
-                    <td>Faridabad</td>
-                    <td style="background-color: #EBF8FF;">9,13,222<br><span>6,38,239</span></td>
+                     <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Krishan Pal
+                        <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span>
+                     </td>
+                     <td>Faridabad</td>
+                     <td style="background-color: #EBF8FF;">9,13,222<br><span>6,38,239</span></td>
                   </tr>
                   <tr class="poorestThree">
-                    <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Chandra Prakash Joshi <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
-                    <td>Chittorgarh</td>
-                    <td style="background-color: #EBF8FF;">9,82,942<br><span>5,76,247</span></td>
+                     <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Chandra Prakash Joshi
+                        <br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span>
+                     </td>
+                     <td>Chittorgarh</td>
+                     <td style="background-color: #EBF8FF;">9,82,942<br><span>5,76,247</span></td>
                   </tr>
                   <tr class="poorestFour">
-                    <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Amit Anilchandra Shah<br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
-                    <td>Gandhinagar</td>
-                    <td style="background-color: #EBF8FF;">8,94,624 <br><span>5,57,014</span></td>
+                     <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Amit Anilchandra
+                        Shah<br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
+                     <td>Gandhinagar</td>
+                     <td style="background-color: #EBF8FF;">8,94,624 <br><span>5,57,014</span></td>
                   </tr>
                   <tr class="poorestFive">
-                    <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Hans Raj Hans<br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
-                    <td>Faridkot(2024) <br>North West Delhi(2019)</td>
-                    <td style="background-color: #EBF8FF;">8,48,663 <br><span>5,53,897</span></td>
+                     <td class="sticky columnOne" style="text-align: left;padding-left:1.4rem;">Hans Raj
+                        Hans<br><span><img src="./images/imgs/BJP.jpg" alt="">BJP</span></td>
+                     <td>Faridkot(2024) <br>North West Delhi(2019)</td>
+                     <td style="background-color: #EBF8FF;">8,48,663 <br><span>5,53,897</span></td>
                   </tr>
                </tbody>
             </table>
 
          </div>
       </div>
-      <p class="notContesting d-none">Sanjay Bhatia, Subhash Chandra Baheria, Ranjanben Bhatt & Parvesh Sahib Singh Verma
+      <p class="notContesting d-none">Sanjay Bhatia, Subhash Chandra Baheria, Ranjanben Bhatt & Parvesh Sahib Singh
+         Verma
          contested in 2019 but are not contesting in 2024 election. Their names have not been included.</p>
       <!-- rajendar part -->
-          <div id="selectmapbtn">Select State</div>
-          <div class="selectmap">
+      <div id="selectmapbtn">Select State</div>
+      <div class="selectmap">
          <!-- Generate 35 grid items with images and labels -->
          <div class="grid-item1" onclick="viewingstate(37)">
             <img id="myg" src="./images/imgs2/andhra_pradesh.png">
@@ -825,10 +848,10 @@
             <img id="myg" src="./images/imgs2/himachal_pradesh.png">
             <p id="myp">Himachal pradesh</p>
          </div>
-            <div class="grid-item1" onclick="viewingstate(1)">
-               <img id="myg" src="./images/imgs2/Jammukashmir.svg">
-               <p id="myp">Jammu and Kashmir</p>
-             </div>
+         <div class="grid-item1" onclick="viewingstate(1)">
+            <img id="myg" src="./images/imgs2/Jammukashmir.svg">
+            <p id="myp">Jammu and Kashmir</p>
+         </div>
          <div class="grid-item1" onclick="viewingstate(20)">
             <img id="myg" src="./images/imgs2/jharkhand.png">
             <p id="myp">Jharkhand</p>
@@ -873,10 +896,10 @@
             <img id="myg" src="./images/imgs2/odisha.png">
             <p id="myp">Odisha</p>
          </div>
-             <div class="grid-item1" onclick="viewingstate(4)">
-               <img id="myg" src="./images/imgs2/chandigarh.svg">
-               <p id="myp">Chandigarh</p>
-             </div>
+         <div class="grid-item1" onclick="viewingstate(4)">
+            <img id="myg" src="./images/imgs2/chandigarh.svg">
+            <p id="myp">Chandigarh</p>
+         </div>
          <div class="grid-item1" onclick="viewingstate(3)">
             <img id="myg" src="./images/imgs2/punjab.png">
             <p id="myp">Punjab</p>
@@ -913,23 +936,23 @@
             <img id="myg" src="./images/imgs2/uttarakhand.png">
             <p id="myp">Uttarakhand</p>
          </div>
-             <div class="grid-item1" onclick="viewingstate(1)">
-               <img id="myg" src="./images/imgs2/Ladakh.svg">
-               <p id="myp">Ladakh</p>
-             </div>
-             <div class="grid-item1" onclick="viewingstate(24)">
-               <img id="myg" src="./images/imgs2/dadranagarhaveli.svg">
-               <p id="myp">Dadra & Nagar Haveli</p>
-             </div>
-             <div class="grid-item1" onclick="viewingstate(24)">
-               <img id="myg" src="./images/imgs2/Daman_DIu.svg">
-               <p id="myp">Daman and Diu</p>
-            </div>
-            <div class="grid-item1" onclick="viewingstate(35)">
-               <img id="myg" src="./images/imgs2/andaman_and_nicobar.svg">
-               <p id="myp">Andaman & Nicobar</p>
-            </div>
-   </div>
+         <div class="grid-item1" onclick="viewingstate(1)">
+            <img id="myg" src="./images/imgs2/Ladakh.svg">
+            <p id="myp">Ladakh</p>
+         </div>
+         <div class="grid-item1" onclick="viewingstate(24)">
+            <img id="myg" src="./images/imgs2/dadranagarhaveli.svg">
+            <p id="myp">Dadra & Nagar Haveli</p>
+         </div>
+         <div class="grid-item1" onclick="viewingstate(24)">
+            <img id="myg" src="./images/imgs2/Daman_DIu.svg">
+            <p id="myp">Daman and Diu</p>
+         </div>
+         <div class="grid-item1" onclick="viewingstate(35)">
+            <img id="myg" src="./images/imgs2/andaman_and_nicobar.svg">
+            <p id="myp">Andaman & Nicobar</p>
+         </div>
+      </div>
    </div>
    <!-- Common Footer -->
    <div class="consent" id="consent">
@@ -1004,8 +1027,10 @@
    <script src="./js/navbar.js"></script>
    <script src="./bigfights_script/swiper-bundle.min.js"></script>
 
-   <link rel='stylesheet' href='https://bots.kore.ai/webclient/UI/dist/kore-ai-sdk.min.css'></link>
-   <script src='https://bots.kore.ai/api/platform/websdkjs/7e0b057f4c7245008eb306284fc8e93465e45753a25445218226f4df69e851e0stbf'></script>
+   <link rel='stylesheet' href='https://bots.kore.ai/webclient/UI/dist/kore-ai-sdk.min.css'>
+   </link>
+   <script
+      src='https://bots.kore.ai/api/platform/websdkjs/7e0b057f4c7245008eb306284fc8e93465e45753a25445218226f4df69e851e0stbf'></script>
    <script>KoreSDK.show(KoreSDK.chatConfig);</script>
 
 </body>
