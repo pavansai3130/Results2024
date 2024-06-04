@@ -1350,6 +1350,10 @@ handleSelection = function (input) {
         if (document.querySelector("#Candidate-res").style.display == "block") {
           document.querySelector("#Candidate-res").style.display = "none";
           document.querySelector("#Constituency-res").style.display = "block";
+          // alert(s_value);
+          if (s_value == 'Delhi') {
+            // alert("abcd");
+          }
           render_state_table(
             filteredFeatures.map((feature) => feature.properties),
             s_value
@@ -1473,8 +1477,8 @@ function renderCandidateCards(item, row) {
         ? "Won by"
         : "Lost by"
       : position === 1
-      ? "Leading by"
-      : "Trailing by";
+        ? "Leading by"
+        : "Trailing by";
   const Votes = new Intl.NumberFormat("en-IN").format(item.vts);
   let VoteDiff = new Intl.NumberFormat("en-IN").format(voteDifference);
   if (item.vts === 0) {
@@ -1623,6 +1627,8 @@ function displayPage(page, class_name) {
 }
 
 function render_state_table(feature, state) {
+  debugger;
+  // alert(state);
   console.log("req data", data);
   state_table_pressed = 1;
   let count = 0;
@@ -1796,7 +1802,6 @@ function render_state_table(feature, state) {
   document.getElementById("piechart2").style.display = "block";
   drawpiechart(alliancePatries, feature);
   // let optionElement = document.querySelector(`option[value="${stateId}"]`);
-  console.log(state);
   populateCarousel(alliances_rendering[state]);
 
   // Update the heading with the count of candidates
@@ -2340,17 +2345,15 @@ function render_table(code, page, constiti1, st) {
               votes_2019.style.background = "#ECFDF3";
             } else if (data_2019[con][can].party != candi[i].party) {
               if (!sym[data_2019[con][can].party]) {
-                votes_2019.innerHTML = `<div>Contested From <img src="${
-                  sym["extra"]
-                }"> ${data_2019[con][can].party}</div><div>votes:${data_2019[
-                  con
-                ][can].votes.toLocaleString()}</div>`;
+                votes_2019.innerHTML = `<div>Contested From <img src="${sym["extra"]
+                  }"> ${data_2019[con][can].party}</div><div>votes:${data_2019[
+                    con
+                  ][can].votes.toLocaleString()}</div>`;
               } else {
-                votes_2019.innerHTML = `<div>Contested From <img src="${
-                  sym[data_2019[con][can].party]
-                }"> ${data_2019[con][can].party}</div><div>votes:${data_2019[
-                  con
-                ][can].votes.toLocaleString()}</div>`;
+                votes_2019.innerHTML = `<div>Contested From <img src="${sym[data_2019[con][can].party]
+                  }"> ${data_2019[con][can].party}</div><div>votes:${data_2019[
+                    con
+                  ][can].votes.toLocaleString()}</div>`;
               }
             } else if (data_2019[con][can].party == "IND") {
               votes_2019.innerHTML = `<div>Contested as Independent</div><div>${data_2019[
@@ -2959,11 +2962,11 @@ function viewingstate(stateId) {
       var option = dropdown.options[i];
       console.log(
         option.dataset.st_code +
-          " " +
-          stateId +
-          " " +
-          option.dataset.st_code ===
-          stateId
+        " " +
+        stateId +
+        " " +
+        option.dataset.st_code ===
+        stateId
       );
       if (option.dataset.st_code == stateId) {
         dropdown.selectedIndex = i;
@@ -3057,8 +3060,8 @@ async function createCard(rsdel, position, first, second, item, st, id) {
         ? "Won by"
         : "Lost by"
       : position === 1
-      ? "Leading by"
-      : "Trailing by";
+        ? "Leading by"
+        : "Trailing by";
   let ribbonText = item.lead ? "Leading" : "Trailing";
   let ribbonColor = item.lead
     ? "rgba(34, 177, 76, 255)"
@@ -3084,22 +3087,18 @@ async function createCard(rsdel, position, first, second, item, st, id) {
   <div class="ribbon" style="background-color: ${ribbonColor};">${ribbonText}</div>
   <div class="temp custom-temp">
       <div class="card-body w-100">
-          <h3 class="card-title custom-card-title" style="color:${nameColor}">${
-    item.candidateName
-  }</h3>
+          <h3 class="card-title custom-card-title" style="color:${nameColor}">${item.candidateName
+    }</h3>
           <div class="subheaders cd-flex align-items-center custom-subheaders" style="display:flex">
-              <div class="logo"><img class="custom-img" src="${
-                sym[item.party]
-              }" alt=""></div>
+              <div class="logo"><img class="custom-img" src="${sym[item.party]
+    }" alt=""></div>
               <h6 style="font-weight: bold;">${item.party}</h6>
           </div>
-          <p class="card-text custom-card-text">${
-            item.constituencyName
-          }(${st})</p>
+          <p class="card-text custom-card-text">${item.constituencyName
+    }(${st})</p>
           <p class="card-text custom-card-text-votes" style="color:${nameColor};font-size:12px;font-weight:700">
-              <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${
-                item.votes
-              }
+              <span style="color:gray;font-weight:500;font-size:12px">Votes : </span>${item.votes
+    }
           </p>
       </div>
       <div class="iribbon d-flex flex-column bg-white position-relative custom-iribbon" style="background:${arrColor}">
