@@ -1199,7 +1199,13 @@ handleSelection = function (input) {
   document.getElementById("Candidate-res").style.display = "block";
   document.getElementById("india-map").style.display = "none";
   document.getElementById("map").style.display = "block";
-  document.getElementById("donutchart").style.display = "none";
+
+  document.getElementById("piechart").style.display = "none";
+  document.getElementById("piechart2").style.display = "none";
+  document.getElementById("donuchart").style.display = "none";
+  document.getElementById("votingDetails").style.display = "none";
+  document.getElementById("newcards").style.display = "none";
+  document.getElementById("carouselContainer").style.display = "block";
   const selectElement = document.getElementById("state-select");
   const selectedValue = input !== undefined ? `${input}` : selectElement.value;
   console.log(selectedValue);

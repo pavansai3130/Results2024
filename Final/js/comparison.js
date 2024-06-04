@@ -1,55 +1,47 @@
-// /*-------------creating fetching 2019------*/
-// let data_201;
-// let data_2019; // Initialize data_2019 as an empty object
-// async function fetchJSON2(file) {
-//   // data_2019 = {};
-//   try {
-//     const response = await fetch(file); // Fetch the JSON file
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! Status: ${response.status}`);
-//     }
-//     data_201 = await response.json();
-//     console.log("JSON data fetched and stored globally:", data_201);
-//     function format2(data2024) {
-//       for (let state in data2024) {
-//         for (let const_name in data2024[state]) {
-//           const candidates = [];
-//           for (let item of data2024[state][const_name]["candidates"]) {
-//             const candidate = {
-//               candidateId: item.cId,
-//               candidateName: item.cName,
-//               constituencyName: const_name,
-//               party: item.prty,
-//               alliance: item.alnce,
-//               votes: item.vts,
-//             };
-//             candidates.push(candidate);
-//           }
-//           // Access constituency code from constCodes if properly defined
-//           const constituencyCode = constCodes[state][const_name];
-//           if (constituencyCode) {
-//             // Assign candidates to the corresponding constituency code in data_2019
-//             data_2019[constituencyCode] = candidates;
-//           }
-//         }
-//       }
-//     }
-//     format2(data_201[0]);
-//   } catch (error) {
-//     console.error("Error fetching the JSON file:", error);
-//     throw error; // Rethrow the error for the caller to handle
-//   }
-// }
+let pollinfo = {};
+// Declare a global variable to store the fetched data
 
-// // Usage example
-// (async () => {
-//   try {
-//     await fetchJSON2("./election2019.json");
-//     console.log(data_2019);
-//   } catch (error) {
-//     console.error("Error occurred:", error);
-//   }
-// })();
+// Define the path to the JSON file
+const jsonFilePath = "./data/pollInfo.json";
+
+// Fetch and read the JSON file
+fetch(jsonFilePath)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok " + response.statusText);
+    }
+    return response.json();
+  })
+  .then((data) => {
+    function format3(data2024) {
+      for (let state in data2024) {
+        for (let const_name in data2024[state]) {
+          const constituencyDetails = data2024[state][const_name];
+          const formattedData = {
+            electors: constituencyDetails.electors,
+            phase: constituencyDetails.phase,
+            votes: constituencyDetails.votes,
+            date: constituencyDetails.date,
+            percentage: constituencyDetails.poll_percent,
+          };
+
+          // Access constituency code from constCodes if properly defined
+          const constituencyCode = constCodes[state][const_name];
+          if (constituencyCode) {
+            // Assign formatted data to the corresponding constituency code in data_2019
+            pollinfo[constituencyCode] = formattedData;
+          }
+        }
+      }
+    }
+
+    // Call the function with your data
+    format3(data);
+    console.log("Fetched data stored in global variable:", pollinfo);
+  })
+  .catch((error) => {
+    console.error("There was a problem with the fetch operation:", error);
+  });
 
 const stateMapping = {
   35: "Andaman and Nicobar Islands",
@@ -774,7 +766,9 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("state-bt").addEventListener("click", function () {
     state_button_pressed = 1;
     document.getElementById("map").style.display = "none";
-    document.getElementById("india-map").style.display = "block";
+    document.getElementById("indiaMap2019").style.display = "block";
+    document.getElementById("indiaMap2024").style.display = "block";
+
     document.getElementById("Constituency-res").style.display = "none";
     document.getElementById("stateTabeleContainer").style.display = "block";
     resetBreadcrumb();
@@ -839,8 +833,9 @@ function resetBreadcrumb() {
     geo2.remove(map);
     geo.addTo(map);
     document.getElementById("map").style.display = "none";
-    document.getElementById("india-map").style.display = "block";
-    document.getElementById("Constituency-res").style.display = "none";
+    document.getElementById("indiaMap2019").style.display = "block";
+    document.getElementById("indiaMap2024").style.display = "block";
+        document.getElementById("Constituency-res").style.display = "none";
     document.getElementById("stateTabeleContainer").style.display = "block";
     document.getElementById("Candidate-res").style.display = "none";
   } else {
@@ -1663,14 +1658,14 @@ function render_state_table(feature, state) {
         id = i.pc_id;
         name = data[i.pc_id][1].constituencyName;
         candid = data[i.pc_id][1].candidateName;
-        candid2019 = data_2019[i.pc_id][1].candidateName;
+        candid2019 = data_2019[i.pc_id][0].candidateName;
         // console.log(data[i.pc_id][0]);
         // console.log(data[i.pc_id][1]);
         votes = data[i.pc_id][1].votes;
-        votes2019 = data_2019[i.pc_id][1].votes;
+        votes2019 = data_2019[i.pc_id][0].votes;
         party_name = data[i.pc_id][1].party;
-        party_name2019 = data_2019[i.pc_id][1].party;
-        if (data[i.pc_id][2] !== undefined) {
+        party_name2019 = data_2019[i.pc_id][0].party;
+        if (data[i.pc_id][1] !== undefined) {
           candid2 = data[i.pc_id][2].candidateName;
           votes2 = data[i.pc_id][2].votes;
           party_2 = data[i.pc_id][2].party;
@@ -1691,67 +1686,90 @@ function render_state_table(feature, state) {
       tr.appendChild(td);
 
       const td1 = document.createElement("td");
-      // console.log(data[i.pc_id][0].rsDecl);
-      if (!sym[party_name]) {
-        // console.log(candid);
-        td1.innerHTML = `${candid}<br><img src="${sym["extra"]}"><span>${party_name}</span>`;
-      } else {
-        td1.innerHTML = `${candid}<br><img src="${sym[party_name]}"><span>${party_name}</span>`;
-      }
-      td1.style.background = "#F6FEF9";
-      td1.style.color = "#344054";
-      td1.style.paddingLeft = "24px";
-      td1.classList.add("td1");
+      td1.innerHTML = `${pollinfo[i.pc_id].electors}`;
+
+      td1.style.textAlign = "center";
+      td1.style.paddingTop = "20px";
+      td1.style.background = "#ffffff";
+      td1.style.justifyContent = "center";
+      td1.style.alignItems = "center";
       tr.appendChild(td1);
 
       const td2 = document.createElement("td");
-      if (!sym[party_2]) {
-        td2.innerHTML = `${candid2}<br><img src="${sym["extra"]}"><span>${party_2}</span>`;
-      } else {
-        td2.innerHTML = `${candid2}<br><img src="${sym[party_2]}"><span>${party_2}</span>`;
-      }
+      td2.innerHTML = `${pollinfo[i.pc_id].percentage} %`;
 
-      td2.classList.add("td2");
-      td2.style.fontFamily = "Roboto";
-      td2.style.fontWeight = "600";
-      td2.style.color = "#344054";
-      td2.style.background = "#FFFAFA";
-      td2.style.paddingLeft = "1.5rem";
+      td2.style.textAlign = "center";
+      td2.style.paddingTop = "20px";
+      td2.style.background = "#ffffff";
+      td2.style.justifyContent = "center";
+      td2.style.alignItems = "center";
       tr.appendChild(td2);
 
       const td3 = document.createElement("td");
-      td3.innerHTML = `${(votes - votes2).toLocaleString()}`;
-
-      td3.style.background = "#FAF9FB";
-      td3.style.textAlign = "center";
-      td3.style.paddingTop = "20px";
-      td3.style.justifyContent = "center";
-      td3.style.alignItems = "center";
-      td3.classList.add("td3");
-      tr.appendChild(td3);
-
-      const td4 = document.createElement("td");
+      // console.log(data[i.pc_id][0].rsDecl);
       if (!sym[party_name]) {
         // console.log(candid);
-        td4.innerHTML = `${candid2019}<br><img src="${sym["extra"]}"><span>${party_name2019}</span>`;
+        td3.innerHTML = `${candid}<br><img src="${sym["extra"]}"><span>${party_name}</span><br/><span>${votes} Votes</span>`;
       } else {
-        td4.innerHTML = `${candid2019}<br><img src="${sym[party_name]}"><span>${party_name2019}</span>`;
+        td3.innerHTML = `${candid}<br><img src="${sym[party_name]}"><span>${party_name}</span><br/><span>${votes} Votes</span>`;
       }
-      td4.style.background = "#F6FEF9";
+      td3.style.background = "#F6FEF9";
+      td3.style.color = "#344054";
+      td3.style.paddingLeft = "24px";
+      td3.classList.add("td1");
+      tr.appendChild(td3);
+
+      console.log("pollinfo[i.pc_id].electors", pollinfo[i.pc_id].electors);
+
+      const td4 = document.createElement("td");
+      if (!sym[party_2]) {
+        td4.innerHTML = `${candid2}<br><img src="${sym["extra"]}"><span>${party_2}</span><br/><span>${votes2} Votes</span>`;
+      } else {
+        td4.innerHTML = `${candid2}<br><img src="${sym[party_2]}"><span>${party_2}</span><br/><span>${votes2} Votes</span>`;
+      }
+
+      td4.classList.add("td2");
+      td4.style.fontFamily = "Roboto";
+      td4.style.fontWeight = "600";
       td4.style.color = "#344054";
-      td4.classList.add("td1");
+      td4.style.background = "#FFFAFA";
+      td4.style.paddingLeft = "1.5rem";
       tr.appendChild(td4);
 
       const td5 = document.createElement("td");
-      td5.innerHTML = `${votes2019.toLocaleString()}`;
+      td5.innerHTML = `${(votes - votes2).toLocaleString()}`;
 
       td5.style.background = "#FAF9FB";
       td5.style.textAlign = "center";
       td5.style.paddingTop = "20px";
       td5.style.justifyContent = "center";
       td5.style.alignItems = "center";
-      td5.classList.add("td3");
+      td5.classList.add("td5");
       tr.appendChild(td5);
+
+      const td6 = document.createElement("td");
+      if (!sym[party_name]) {
+        // console.log(candid);
+        td6.innerHTML = `${candid2019}<br><img src="${sym["extra"]}"><span>${party_name2019}</span><br/><span>${votes2019} Votes</span>`;
+      } else {
+        td6.innerHTML = `${candid2019}<br><img src="${sym[party_name]}"><span>${party_name2019}</span><br/><span>${votes2019} Votes</span>`;
+      }
+      td6.style.background = "#F6FEF9";
+      td6.style.color = "#344054";
+      td6.style.paddingLeft = "1.5rem";
+      td6.classList.add("td2");
+      tr.appendChild(td6);
+
+      // const td5 = document.createElement("td");
+      // td5.innerHTML = `${votes2019.toLocaleString()}`;
+
+      // td5.style.background = "#FAF9FB";
+      // td5.style.textAlign = "center";
+      // td5.style.paddingTop = "20px";
+      // td5.style.justifyContent = "center";
+      // td5.style.alignItems = "center";
+      // td5.classList.add("td3");
+      // tr.appendChild(td5);
 
       count++;
       if (firstCandidateKey.alliance === "NDA") {
@@ -2224,7 +2242,7 @@ function render_table(code, page, constiti1, st) {
     row.className = "tr";
 
     const candidate = document.createElement("td");
-    candidate.className = "candiateNameDiv";
+    candidate.className = "candiateNameDiv  align-middle";
     const par = candi[i].party;
 
     if (!sym[par]) {

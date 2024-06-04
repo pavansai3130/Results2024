@@ -312,7 +312,7 @@ tr {
 .tdata {
   position: sticky;
   left: 0;
-  width: 200px;
+  /* width: 200px; */
   height: 60px;
   text-align: left;
 }

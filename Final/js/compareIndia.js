@@ -1338,26 +1338,26 @@ $(document).ready(async function () {
 
         //   console.log("cells 2024", cells);
 
-        let value = nda - NDA;
+        let value = nda - nda2019;
         cells[1].innerHTML = `${nda}`;
         cells[2].innerHTML = `${nda2019}`;
         cells[3].innerHTML = `<span class=${
           value < 1 ? "negative" : "positive"
         }> ${nda - nda2019}</span>`;
         //   <span class=${value < 0 ? "negative" : "positive"}> (${value})</span>
-        value = india - INDIA;
-        cells[4].innerHTML = `${nda}`;
-        cells[5].innerHTML = `${nda2019}`;
+        value = india - india2019;
+        cells[4].innerHTML = `${india}`;
+        cells[5].innerHTML = `${india2019}`;
         cells[6].innerHTML = `<span class=${
           value < 1 ? "negative" : "positive"
-        }> ${nda - nda2019}</span>`;
+        }> ${india - india2019}</span>`;
         //   <span class=${value < 0 ? "negative" : "positive"}> (${value})</span>
-        value = others - OTH;
-        cells[7].innerHTML = `${nda}`;
-        cells[8].innerHTML = `${nda2019}`;
+        value = others - others2019;
+        cells[7].innerHTML = `${others}`;
+        cells[8].innerHTML = `${others2019}`;
         cells[9].innerHTML = `<span class=${
           value < 1 ? "negative" : "positive"
-        }> ${nda - nda2019}</span>`;
+        }> ${others - others2019}</span>`;
         //   <span class=${value < 0 ? "negative" : "positive"}> (${value})</span>
 
         tbody.appendChild(newRow);
@@ -1502,26 +1502,26 @@ $(document).ready(async function () {
         logos[state.toLowerCase()]
       }'>${state}`;
 
-      let value = nda - NDA;
+      let value = nda - nda2019;
       cells[1].innerHTML = `${nda}`;
       cells[2].innerHTML = `${nda2019}`;
       cells[3].innerHTML = `<span class=${
-        value < 0 ? "negative" : "positive"
+        value < 1 ? "negative" : "positive"
       }> ${nda - nda2019}</span>`;
       //   <span class=${value < 0 ? "negative" : "positive"}> (${value})</span>
-      value = india - INDIA;
-      cells[4].innerHTML = `${nda}`;
-      cells[5].innerHTML = `${nda2019}`;
+      value = india - india2019;
+      cells[4].innerHTML = `${india}`;
+      cells[5].innerHTML = `${india2019}`;
       cells[6].innerHTML = `<span class=${
-        value < 0 ? "negative" : "positive"
-      }> ${nda - nda2019}</span>`;
+        value < 1 ? "negative" : "positive"
+      }> ${india - india2019}</span>`;
       //   <span class=${value < 0 ? "negative" : "positive"}> (${value})</span>
-      value = others - OTH;
-      cells[7].innerHTML = `${nda}`;
-      cells[8].innerHTML = `${nda2019}`;
+      value = others - others2019;
+      cells[7].innerHTML = `${others}`;
+      cells[8].innerHTML = `${others2019}`;
       cells[9].innerHTML = `<span class=${
-        value < 0 ? "negative" : "positive"
-      }> ${nda - nda2019}</span>`;
+        value < 1 ? "negative" : "positive"
+      }> ${others - others2019}</span>`;
       //   <span class=${value < 0 ? "negative" : "positive"}> (${value})</span>
 
       tbody.appendChild(newRow);
