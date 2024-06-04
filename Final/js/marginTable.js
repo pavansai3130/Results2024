@@ -205,7 +205,7 @@ let sym2 = {
     Bihar: "./images/imgs/Bihar.jpg",
     Chandigarh: "./images/imgs/Chandigarh.png",
     Chhattisgarh: "./images/imgs/Chhattisgarh.jpg",
-    "Dadra & Nagar Haveli": "./images/imgs/Dadra_&_Nagar_Haveli.png",
+    "Dadra & Nagar Haveli": "./images/imgs/dadra_and_nagar_haveli.png",
     "Daman & Diu": "./images/imgs/Daman_&_Diu.jpg",
     Goa: "./images/imgs/Goa.jpg",
     Gujarat: "./images/imgs/Gujarat.jpg",
