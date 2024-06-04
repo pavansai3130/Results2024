@@ -40,6 +40,7 @@ const stateMapping = {
 let show_res = 0;
 var resultJSON = null;
 let s3PicUrl = "https://results2024.s3.ap-south-1.amazonaws.com/candpics/";
+let pictureMapping;
 fetch("./data/overallpopular.json")
   .then((response) => {
     if (!response.ok) {
@@ -3003,16 +3004,17 @@ async function createCard(rsdel, position, first, second, item, st, id) {
 
   // console.log("item@######################",item);
   // alert(item.candidateId);
-  const allianceImages = {
+  /*const allianceImages = {
     NDA: "./images/imgs/NDA.png",
     INDIA: "./images/imgs/INDA.png",
     OTH: "./images/imgs/OTH.png",
   };
   // const imageUrl = item.perimg || allianceImages[item.alliance];
-  const candidateValue = await fetchCandidateValue(item.candidateId);
+  const candidateValue = await fetchCandidateValue(item.candidateId);*/
 
-  const imageUrl = getProfilePic(item.candidateId, item.votes);
+  const imageUrl = getProfilePic(item.candidateId, item.alliance);
   console.log(imageUrl);
+  debugger;
   const card = document.createElement("div");
   card.className = "position-relative custom-container";
 
