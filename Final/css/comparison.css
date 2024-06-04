@@ -51,6 +51,19 @@
   text-align: center;
   background: #ffe7d6;
 }
+#india-svg-2024 path,#india-svg-2019 path{
+  fill: #faf9f9;
+  /* Default color for states */
+  stroke: #000;
+  /* Border color */
+  stroke-width: 1;
+  /* Border width */
+  cursor: pointer;
+  /* Change cursor on hover */
+}
+#mapsContainer{
+  border:2px solid black
+}
 
 #stateNDADifference,
 #stateINDIADifference,

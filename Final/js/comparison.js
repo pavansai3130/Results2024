@@ -1124,7 +1124,9 @@ handleSelection = function (input) {
   document.getElementById("breadcrumb-india").style.display = "block";
   document.getElementById("stateTabeleContainer").style.display = "none";
   document.getElementById("Candidate-res").style.display = "block";
-  document.getElementById("india-map").style.display = "none";
+  document.getElementById("indiaMap2024").style.display = "none";
+  document.getElementById("indiaMap2019").style.display = "none";
+
   document.getElementById("map").style.display = "block";
   // document.getElementById("donutchart").style.display = "none";
   const selectElement = document.getElementById("state-select");
