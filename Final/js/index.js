@@ -2129,14 +2129,14 @@ function showdatatable(
                 <div class="vote-title">Votes</div>
             </span>
             <div class="winner-info">
-                <div class="winner-name">${data_2019[id][1].candidateName}</div>
-                <div class="winner-votes">${data_2019[id][1].votes}</div>
+                <div class="winner-name">${data_2019[id][0].candidateName}</div>
+                <div class="winner-votes">${data_2019[id][0].votes}</div>
             </div>
             <div class="party"><img src="${
-              sym[data_2019[id][1].party]
-            }" class="party-logo">${data_2019[id][1].party}</div>
+              sym[data_2019[id][0].party]
+            }" class="party-logo">${data_2019[id][0].party}</div>
             <div class="margin1">Margin - ${
-              data_2019[id][1].votes - data_2019[id][2].votes
+              data_2019[id][0].votes - data_2019[id][1].votes
             }</div>
         </div>
         <div id="checkdetails" onclick="render_table('${id}',1,'${con1}','${state}')">Check Full Results <span id="gt1">&gt</span></div>`;
@@ -2250,10 +2250,10 @@ function render_table(code, page, constiti1, st) {
     let winner_2019 = document.createElement("div");
     winner_2019.innerHTML = `<h2 style="margin-top:20px;"> 2019 Winner</h2>
   <div class="winner_2019" style="padding:10px;"> 
-  <span>${data_2019[code][1].candidateName}</span>
-  <div class="winner_img"><div><img src="${sym[data_2019[code][1].party]}">${
-      data_2019[code][1].party
-    } </div>${data_2019[code][1].votes.toLocaleString()} &nbspVotes
+  <span>${data_2019[code][0].candidateName}</span>
+  <div class="winner_img"><div><img src="${sym[data_2019[code][0].party]}">${
+      data_2019[code][0].party
+    } </div>${data_2019[code][0].votes.toLocaleString()} &nbspVotes
   </div>
   </div>`;
     document.getElementById("newcards").appendChild(winner_2019);
