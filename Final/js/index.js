@@ -1627,7 +1627,6 @@ function displayPage(page, class_name) {
 }
 
 function render_state_table(feature, state) {
-  debugger;
   // alert(state);
   console.log("req data", data);
   state_table_pressed = 1;
@@ -3024,7 +3023,6 @@ async function createCard(rsdel, position, first, second, item, st, id) {
 
   const imageUrl = getProfilePic(item.candidateId, item.alliance);
   console.log(imageUrl);
-  debugger;
   const card = document.createElement("div");
   card.className = "position-relative custom-container";
 

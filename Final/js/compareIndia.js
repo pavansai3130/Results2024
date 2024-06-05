@@ -1183,12 +1183,9 @@ $(document).ready(async function () {
     "./data/bigfights.json"
   );
   await fetchGeoJSON("./data/geo.json");
-  let intervalId = setInterval(async () => {
+  /*let intervalId = setInterval(async () => {
     await fetchJSON();
-    // handleStateClick(lastClickedState);
-    // console.log(stateDataJson);
-  }, 300000);
-  // console.log(data);
+  }, 300000);*/
 
   // console.log(stateDataJson);
   stateDataJson2019 = data_201[0];

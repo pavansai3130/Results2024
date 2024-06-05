@@ -1180,13 +1180,13 @@ $(document).ready(async function () {
     "./data/newAlliance.json"
   );
   await fetchGeoJSON("./data/geo.json");
-  let intervalId = setInterval(async () => {
+  /*let intervalId = setInterval(async () => {
     window.location.reload();
     await fetchJSON();
     // handleStateClick(lastClickedState);
     // console.log(stateDataJson);
   }, 300000);
-  // console.log(data);
+  // console.log(data);*/
 
   // console.log("that is", alliances_rendering);
   stateDataJson2019 = data_201[0];
