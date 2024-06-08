@@ -16,7 +16,7 @@ fetch("./data/overallpopular.json").then((response) => {
 // Fetch candidate data and store it in the global variable
 async function fetchCandidateData() {
   if (!resultJSON) {
-    const response = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
+    const response = await fetch("./data/election2024.json");
     const data = await response.json();
     candidatesData = data[0];
     resultJSON = data;
@@ -177,7 +177,7 @@ async function fetchMoreCards1() {
     console.log("State Data:", stateData);
 
     if (!resultJSON) {
-      const candidateResponse = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
+      const candidateResponse = await fetch("./data/election2024.json");
       const candidateData = await candidateResponse.json();
       resultJSON = candidateData;
       candidatesData = candidateData[0];
@@ -214,7 +214,7 @@ async function displayCardsForState(stateName) {
     console.log('State Data:', stateData);
 
     if (!resultJSON) {
-      const candidateResponse = await fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json");
+      const candidateResponse = await fetch("./data/election2024.json");
       const candidateData = await candidateResponse.json();
       resultJSON = candidateData;
       candidatesData = candidateData[0];

@@ -107,7 +107,7 @@ async function fetchCandidateData() {
   let data = null;
   if (!resultJSON) {
     const response = await fetch(
-      "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
+      "./data/election2024.json"
     );
     data = await response.json();
     resultJSON = data;
@@ -1125,7 +1125,7 @@ async function fetchMoreCards() {
     let candidateData = null;
     if (!resultJSON) {
       const candidateResponse = await fetch(
-        "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
+        "./data/election2024.json"
       );
       candidateData = await candidateResponse.json();
       resultJSON = candidateData;
@@ -1350,10 +1350,6 @@ handleSelection = function (input) {
         if (document.querySelector("#Candidate-res").style.display == "block") {
           document.querySelector("#Candidate-res").style.display = "none";
           document.querySelector("#Constituency-res").style.display = "block";
-          // alert(s_value);
-          if (s_value == 'Delhi') {
-            // alert("abcd");
-          }
           render_state_table(
             filteredFeatures.map((feature) => feature.properties),
             s_value
@@ -1471,14 +1467,7 @@ function renderCandidateCards(item, row) {
     ribbonColor =
       position === 1 ? "rgba(34, 177, 76, 255)" : "rgba(240, 68, 56, 255)";
   }
-  let leadTrailText =
-    rsDecl === 1
-      ? position === 1
-        ? "Won by"
-        : "Lost by"
-      : position === 1
-        ? "Leading by"
-        : "Trailing by";
+  let leadTrailText = (rsDecl === 1) ? (position === 1) ? "Won by" : "Lost by" : (position === 1) ? "Leading by" : "Trailing by";
   const Votes = new Intl.NumberFormat("en-IN").format(item.vts);
   let VoteDiff = new Intl.NumberFormat("en-IN").format(voteDifference);
   if (item.vts === 0) {

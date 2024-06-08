@@ -90,7 +90,7 @@ fetchCandidateData().then(() => {
 let candidatesData = [];
 async function fetchCandidateData() {
   const response = await fetch(
-    "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
+    "./data/election2024.json"
   );
   const data = await response.json();
   candidatesData = data[0]; // Store the 1st index in the global variable
@@ -1058,7 +1058,7 @@ async function fetchMoreCards() {
     // console.log("State Data:", stateData);
 
     const candidateResponse = await fetch(
-      "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
+      "./data/election2024.json"
     );
     const candidateData = await candidateResponse.json();
     // console.log("Candidate Data:", candidateData);
@@ -2995,7 +2995,7 @@ function render_whole_carousel() {
   document
     .getElementById("view_all")
     .setAttribute("href", "./bigfights_viewall.html" + "?state=" + "all");
-  fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json")
+  fetch("./data/election2024.json")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);

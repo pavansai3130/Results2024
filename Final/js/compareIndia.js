@@ -1109,7 +1109,7 @@ render_whole_table();
 async function fetchJSON() {
   // console.log(`called ${temp++}`);
   try {
-    const url = "https://results2024.s3.ap-south-1.amazonaws.com/results.json";
+    const url = "./data/election2024.json";
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -2627,11 +2627,8 @@ let loadPrev;
 
 async function fetchTop10() {
   try {
-    const candidateResponse = await fetch(
-      "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
-    );
+    const candidateResponse = await fetch("./data/election2024.json");
     const candidateData = await candidateResponse.json();
-    // console.log("Candidate Data:", candidateData);
 
     function getCandidateDetails(candidateId) {
       const statesData = candidateData[0];

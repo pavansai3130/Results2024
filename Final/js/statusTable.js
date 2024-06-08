@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   async function fetchData() {
     try {
-      const response = await fetch('https://results2024.s3.ap-south-1.amazonaws.com/results.json');
+      const response = await fetch("./data/election2024.json");
       const data = await response.json();
       return data;
     } catch (error) {
