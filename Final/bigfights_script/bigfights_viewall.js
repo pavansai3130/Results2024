@@ -14,7 +14,7 @@ var main_div = document.getElementById("more-cards-root");
 var data2024 = null;
 
 async function fetchdata_BF() {
-  fetch("https://results2024.s3.ap-south-1.amazonaws.com/results.json")
+  fetch("./data/election2024.json")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok " + response.statusText);

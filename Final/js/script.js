@@ -1098,7 +1098,7 @@ async function fetchJSON() {
   try {
     if (!resultJSON) {
       const url =
-        "https://results2024.s3.ap-south-1.amazonaws.com/results.json";
+        "./data/election2024.json";
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -2757,7 +2757,7 @@ async function fetchTop10(tabSize) {
     let candidateData = null;
     if (!resultJSON) {
       const candidateResponse = await fetch(
-        "https://results2024.s3.ap-south-1.amazonaws.com/results.json"
+        "./data/election2024.json"
       );
       candidateData = await candidateResponse.json();
       resultJSON = candidateData;
