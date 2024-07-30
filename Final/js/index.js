@@ -2133,7 +2133,7 @@ function render_table(code, page,constiti1,st) {
     splCount++;
     console.log("#########splCount::", splCount);
     if (l.feature.properties.pc_id == code) {
-      console.log("pressed");
+      alert("pressed");
       l.setStyle({
         fillColor: document.querySelector(`#table-body tr[data-pc="${code}"]`)
           ?.dataset.pccolor, // Specific color or default gray
@@ -2153,8 +2153,7 @@ function render_table(code, page,constiti1,st) {
     }
   });
 
-
-
+``
   document.getElementById("stateTabeleContainer").style.display = "none";
   document.getElementById("Candidate-res").style.display = "block";
   document.getElementById("Constituency-res").style.display = "none";
@@ -2886,14 +2885,7 @@ function viewingstate(stateId) {
   if (dropdown) {
     for (var i = 0; i < dropdown.options.length; i++) {
       var option = dropdown.options[i];
-      console.log(
-        option.dataset.st_code +
-          " " +
-          stateId +
-          " " +
-          option.dataset.st_code ===
-          stateId
-      );
+      // console.log(option.dataset.st_code +" " +stateId +" " +option.dataset.st_code ===stateId);
       if (option.dataset.st_code == stateId) {
         dropdown.selectedIndex = i;
         break;
